@@ -13,7 +13,7 @@ export class AuthService {
     // Para este ejemplo, simplemente comprobamos los datos del usuario contra los datos mockup.
     if (user.user === '1-1' && user.password === 'usuario-12345') {
       localStorage.setItem('user', JSON.stringify(user));
-      this.router.navigate(['main']);  // Aquí es donde rediriges al usuario al componente 'main'.
+      this.router.navigate(['mibanco']);  // Aquí es donde rediriges al usuario al componente 'main'.
     } else {
       alert('Invalid credentials');
     }

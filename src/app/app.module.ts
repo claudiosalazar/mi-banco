@@ -7,12 +7,22 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ResumenUsuarioComponent } from './components/resumen-usuario/resumen-usuario.component';
+import { TransaccionesComponent } from './components/transacciones/transacciones.component';
+import { ContactanosComponent } from './components/contactanos/contactanos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    HeaderComponent,
+    FooterComponent,
+    ResumenUsuarioComponent,
+    TransaccionesComponent,
+    ContactanosComponent
   ],
   imports: [
     BrowserModule,

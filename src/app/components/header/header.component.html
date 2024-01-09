@@ -1,0 +1,49 @@
+<header class="mi-banco-header p-3">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/mibanco/">
+        <div class="logo-mb-blanco"></div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco/transacciones">Transacciones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco/contactanos">Contactanos</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <span class="navbar-text me-3 nombre-usuario">Nombre de usuario</span>
+          <div class="dropdown">
+            <a class="btn-header" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined">
+                settings
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item px-4 py-3" href="#">Mis datos</a></li>
+              <li><a class="dropdown-item px-4 py-3" href="#">Emergencias</a></li>
+              <li>
+                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#">
+                  <span class="material-symbols-outlined">
+                  close
+                  </span>
+                  <span>
+                    Cerrar sesión
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
