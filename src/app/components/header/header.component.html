@@ -31,9 +31,10 @@
               <li><a class="dropdown-item px-4 py-3" href="#">Mis datos</a></li>
               <li><a class="dropdown-item px-4 py-3" href="#">Emergencias</a></li>
               <li>
-                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#">
+                <!-- <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#" (click)="showConfirmLogoutModal()"> -->
+                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
                   <span class="material-symbols-outlined">
-                  close
+                    close
                   </span>
                   <span>
                     Cerrar sesión
@@ -47,3 +48,19 @@
     </div>
   </nav>
 </header>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Estas cerrando tu sesion</p>
+        <p>Para confirmar da click en el boton</p>
+        <button type="button" class="btn btn-primary" (click)="logout()" data-bs-dismiss="modal">Cerrar sesion</button>
+      </div>
+    </div>
+  </div>
+</div>
