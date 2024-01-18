@@ -2,11 +2,11 @@ export interface DatosInicio {
   datosUsuarioInicio: {
     user: string;
     ctaCteN: string;
-    ctaCteMonto: string;
+    ctaCteMonto: number;
     lineaCreN: string;
-    lineaCreMonto: string;
+    lineaCreMonto: number;
     tarjetaVisaN: string;
-    tarjetaVisaMonto: string;
+    tarjetaVisaMonto: number;
     creditoPre: number;
     seguro: string;
     oferta: string;

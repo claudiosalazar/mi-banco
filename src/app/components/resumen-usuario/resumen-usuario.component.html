@@ -23,7 +23,7 @@
       <div class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid">
           <h3>Tienes un crédito pre-aprobado de </h3>
-          <h1 class="mb-4">$ {{ DatosInicio.datosUsuarioInicio.creditoPre | pesos }}</h1>
+          <h1 class="mb-4">{{ DatosInicio.datosUsuarioInicio.creditoPre | pesos }}</h1>
           <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
         </div>
       </div>
@@ -33,7 +33,7 @@
           <div class="h-100 p-5 text-bg-dark rounded-3">
             <h4>Cuenta Corriente</h4>
             <p><strong>N° {{ DatosInicio.datosUsuarioInicio.ctaCteN }}</strong></p>
-            <p>Disponible: {{ DatosInicio.datosUsuarioInicio.ctaCteMonto }}</p>
+            <p>Disponible: {{ DatosInicio.datosUsuarioInicio.ctaCteMonto | pesos }}</p>
           </div>
         </div>
         <div class="col-md-6">
@@ -43,7 +43,7 @@
               <span><button class="btn btn-outline-secondary" type="button">Pagar</button></span>
             </h4>
             <p><strong>N° {{ DatosInicio.datosUsuarioInicio.lineaCreN }}</strong></p>
-            <p>Disponible: {{ DatosInicio.datosUsuarioInicio.lineaCreMonto }}</p>
+            <p>Disponible: {{ DatosInicio.datosUsuarioInicio.lineaCreMonto | pesos }}</p>
           </div>
         </div>
       </div>
