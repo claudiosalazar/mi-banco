@@ -13,6 +13,10 @@ import { ResumenUsuarioComponent } from './components/resumen-usuario/resumen-us
 import { TransaccionesComponent } from './components/transacciones/transacciones.component';
 import { ContactanosComponent } from './components/contactanos/contactanos.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
+import { DatosInicioService } from './services/datos-inicio.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,9 +31,10 @@ import { ContactanosComponent } from './components/contactanos/contactanos.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DatosInicioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

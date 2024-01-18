@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { DatosInicio } from '../../assets/models/datos-inicio.model';
 
-@Injectable()
-
+@Injectable({
+  providedIn: 'root'
+})
 export class DatosInicioService {
-  getdatosInicio() {
-    throw new Error('Method not implemented.');
+
+  constructor(private http: HttpClient) { }
+
+  getDatosInicio(): Observable<DatosInicio> {
+    return this.http.get<DatosInicio>('assets/data/datos-inicio.json');
   }
-
-  private ROOT_URL = '../../assets/data/datos-inicio.json';
-
-  constructor(private http: HttpClient) {}
-
-  getPosts() {
-    return this.http.get(`${this.ROOT_URL}`);
-  }
-  
 }
