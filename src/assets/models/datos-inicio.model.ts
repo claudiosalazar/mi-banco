@@ -7,7 +7,7 @@ export interface DatosInicio {
     lineaCreMonto: string;
     tarjetaVisaN: string;
     tarjetaVisaMonto: string;
-    creditoPre: string;
+    creditoPre: number;
     seguro: string;
     oferta: string;
   }
