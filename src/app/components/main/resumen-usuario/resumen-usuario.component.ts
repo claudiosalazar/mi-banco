@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DatosInicioService } from '../../services/datos-inicio.service';
-import { DatosInicio } from '../../../assets/models/datos-inicio.model';
+import { DatosInicioService } from '../../../services/datos-inicio.service';
+import { DatosInicio } from '../../../../assets/models/datos-inicio.model';
 
 @Component({
   selector: 'app-resumen-usuario',

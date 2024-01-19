@@ -9,8 +9,8 @@ import { MainComponent } from './components/main/main.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ResumenUsuarioComponent } from './components/resumen-usuario/resumen-usuario.component';
-import { TransaccionesComponent } from './components/transacciones/transacciones.component';
+import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resumen-usuario.component';
+import { TransaccionesComponent } from './components/main/transacciones/transacciones.component';
 import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
 
 import { HttpClientModule } from '@angular/common/http';
