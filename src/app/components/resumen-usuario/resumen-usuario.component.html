@@ -22,21 +22,21 @@
     <div class="col-12">
       <div class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid">
-          <h3>Tienes un crédito pre-aprobado de </h3>
+          <h3>Hola {{ DatosInicio.datosUsuarioInicio.nombreUser }}, tienes un crédito pre-aprobado de </h3>
           <h1 class="mb-4">{{ DatosInicio.datosUsuarioInicio.creditoPre | pesos }}</h1>
           <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
         </div>
       </div>
       
       <div class="row align-items-md-stretch">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="h-100 p-5 text-bg-dark rounded-3">
             <h4>Cuenta Corriente</h4>
             <p><strong>N° {{ DatosInicio.datosUsuarioInicio.ctaCteN }}</strong></p>
             <p>Disponible: {{ DatosInicio.datosUsuarioInicio.ctaCteMonto | pesos }}</p>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="h-100 p-5 bg-body-tertiary border rounded-3">
             <h4 class="d-flex justify-content-between">
               <span>Línea de Crédito</span>
@@ -44,6 +44,31 @@
             </h4>
             <p><strong>N° {{ DatosInicio.datosUsuarioInicio.lineaCreN }}</strong></p>
             <p>Disponible: {{ DatosInicio.datosUsuarioInicio.lineaCreMonto | pesos }}</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h4 class="d-flex justify-content-between">
+              <span>Visa</span>
+              <span><button class="btn btn-outline-secondary" type="button">Pagar</button></span>
+            </h4>
+            <p><strong>N° {{ DatosInicio.datosUsuarioInicio.tarjetaVisaN }}</strong></p>
+            <p>Disponible: {{ DatosInicio.datosUsuarioInicio.tarjetaVisaMonto | pesos }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
+            <h4 class="d-flex justify-content-between mt-3">Seguro hogar</h4>
+            <p>Contrata Seguro Hogar, oferta exclusiva para el presente mes.</p>
+            <p>Valor mensual: {{ DatosInicio.datosUsuarioInicio.seguro | pesos }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
+            <h4 class="d-flex justify-content-between">Paga con Visa este mes y
+            </h4>
+            <p>Obten un descuento en restaurantes de:</p>
+            <p class="display-6"><strong>{{ DatosInicio.datosUsuarioInicio.oferta | percent }}</strong></p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 export interface DatosInicio {
   datosUsuarioInicio: {
     user: string;
+    nombreUser: string;
     ctaCteN: string;
     ctaCteMonto: number;
     lineaCreN: string;
@@ -8,7 +9,7 @@ export interface DatosInicio {
     tarjetaVisaN: string;
     tarjetaVisaMonto: number;
     creditoPre: number;
-    seguro: string;
-    oferta: string;
+    seguro: number;
+    oferta: number;
   }
 }
