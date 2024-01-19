@@ -5,7 +5,7 @@ import { MainComponent } from './components/main/main.component';
 import { AuthGuard } from './auth.guard';
 import { ResumenUsuarioComponent } from './components/resumen-usuario/resumen-usuario.component';
 import { TransaccionesComponent } from './components/transacciones/transacciones.component';
-import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

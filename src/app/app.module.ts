@@ -11,7 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ResumenUsuarioComponent } from './components/resumen-usuario/resumen-usuario.component';
 import { TransaccionesComponent } from './components/transacciones/transacciones.component';
-import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
