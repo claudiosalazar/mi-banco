@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DatosInicioService } from './services/datos-inicio.service';
 import { PesosPipe } from './pipe/pesos.pipe';
+import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PesosPipe } from './pipe/pesos.pipe';
     ResumenUsuarioComponent,
     TransaccionesComponent,
     ContactanosComponent,
-    PesosPipe
+    PesosPipe,
+    DatosUsuarioComponent
   ],
   imports: [
     BrowserModule,
