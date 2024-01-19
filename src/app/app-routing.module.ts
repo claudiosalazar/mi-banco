@@ -7,6 +7,7 @@ import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resum
 import { TransaccionesComponent } from './components/main/transacciones/transacciones.component';
 import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
+import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'transacciones', component: TransaccionesComponent },
       { path: 'contactanos', component: ContactanosComponent },
       { path: 'mis-datos', component: DatosUsuarioComponent },
+      { path: 'emergencias', component: EmergenciasComponent }
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
