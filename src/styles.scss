@@ -12,6 +12,13 @@
 
 
 @import 'components/login';
+@import 'components/main';
+
+body, html {
+  height: 100vh !important;
+  
+}
+
 
 // Body
 body {

@@ -1,0 +1,14 @@
+.contenido-general {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: stretch; 
+  flex-direction: column;  
+  height: 100%;
+
+  #informacion {
+    flex-grow:1;
+    align-self:auto;
+  }
+
+}
+
