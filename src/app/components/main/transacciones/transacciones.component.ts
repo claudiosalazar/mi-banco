@@ -19,7 +19,7 @@ export class TransaccionesComponent implements OnInit {
 
   ngOnInit() {
     this.historialTransaccionesService.getTransacciones().subscribe(transacciones => {
-      this.data = transacciones;
+      this.data = transacciones.reverse();
       this.updateDisplayedData();
     });
   }
