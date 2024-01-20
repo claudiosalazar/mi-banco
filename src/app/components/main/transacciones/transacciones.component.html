@@ -8,29 +8,30 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th (click)="sort('col1')">
+                <span>Fecha</span>
+              </th>
+              <th (click)="sort('col2')">
+                <span>Movimientos</span>
+              </th>
+              <th (click)="sort('col3')">
+                <span>Cargos</span>
+              </th>
+              <th (click)="sort('col4')">
+                <span>Abonos</span>
+              </th>
+              <th (click)="sort('col5')">
+                <span>Saldo</span>
+              </th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
+          <tbody>
+            <tr *ngFor="let row of data">
+              <td>{{ row.col1 }}</td>
+              <td>{{ row.col2 }}</td>
+              <td>{{ row.col3 }}</td>
+              <td>{{ row.col4 }}</td>
+              <td>{{ row.col5 }}</td>
             </tr>
           </tbody>
         </table>
