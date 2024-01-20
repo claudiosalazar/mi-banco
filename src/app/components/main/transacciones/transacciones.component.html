@@ -29,12 +29,13 @@
             <tr *ngFor="let row of displayedData">
               <td>{{ row.col1 | date:"dd / MM / yyyy" }}</td>
               <td>{{ row.col2 }}</td>
-              <td>{{ row.col3 }}</td>
-              <td>{{ row.col4 }}</td>
-              <td>{{ row.col5 }}</td>
+              <td><span *ngIf="row.col3 > 0">{{ row.col3 | pesos }}</span></td>
+              <td><span *ngIf="row.col4 > 0">{{ row.col4 | pesos }}</span></td>
+              <td><span *ngIf="row.col5 > 0">{{ row.col5 | pesos }}</span></td>
             </tr>
           </tbody>
         </table>
+        <ng-template #empty></ng-template>
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <li class="page-item" [class.disabled]="currentPage === 1">
