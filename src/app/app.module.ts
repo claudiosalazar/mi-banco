@@ -19,6 +19,7 @@ import { DatosInicioService } from './services/datos-inicio.service';
 import { PesosPipe } from './pipe/pesos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EmergenciasComponent } from './components/main/emergencias/emergencias.
     ContactanosComponent,
     PesosPipe,
     DatosUsuarioComponent,
-    EmergenciasComponent
+    EmergenciasComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,

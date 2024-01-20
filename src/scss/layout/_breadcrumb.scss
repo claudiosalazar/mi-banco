@@ -1,0 +1,19 @@
+nav.migas {
+    background-color: $gris-claro;
+    ol {
+      display: flex;
+      li {
+        list-style: none;
+        margin-right: 10px;
+        &::after {
+          content: "> ";
+          margin-left: 10px;
+        }
+        &:last-child {
+          &::after {
+            content: "";
+          }
+        }
+      }
+    }
+}

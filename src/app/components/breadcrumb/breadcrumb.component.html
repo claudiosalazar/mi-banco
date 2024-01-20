@@ -1,0 +1,13 @@
+<nav class="migas p-3" aria-label="breadcrumb" *ngIf="breadcrumbService.showBreadcrumb$ | async">
+  <ol class="p-0 m-0 px-3">
+    <li aria-current="page" *ngFor="let breadcrumb of breadcrumbs; let isLast = last" class="d-flex align-items-center">
+      <ng-container *ngIf="!isLast; else lastBreadcrumb">
+        <!-- <a [href]="breadcrumb.url">{{ breadcrumb.label | titlecase }}</a> -->
+        <a [href]="breadcrumb.url">
+          <span class="material-symbols-outlined">home</span>
+        </a>
+      </ng-container>
+      <ng-template #lastBreadcrumb>{{ breadcrumb.label | titlecase }}</ng-template>
+    </li>
+  </ol>
+</nav>
