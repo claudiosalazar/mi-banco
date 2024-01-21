@@ -15,7 +15,7 @@ import { ContactanosComponent } from './components/main/contactanos/contactanos.
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { DatosInicioService } from './services/datos-inicio.service';
+import { DatosUsuarioService } from './services/datos-usuario.service';
 import { PesosPipe } from './pipe/pesos.pipe';
 import { RangosPipe } from './pipe/rangos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
@@ -44,7 +44,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     FormsModule,
     HttpClientModule
   ],
-  providers: [DatosInicioService],
+  providers: [DatosUsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

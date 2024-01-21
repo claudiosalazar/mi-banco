@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { DatosUsuarioService } from '../../../services/datos-usuario.service';
-import { DatosUsuario } from '../../../../assets/models/datos-usuario.model';
+import { DatosUsuarioActual } from '../../../../assets/models/datos-usuario.model';
 
 @Component({
   selector: 'app-datos-usuario',
   templateUrl: './datos-usuario.component.html'
 })
 export class DatosUsuarioComponent {
-  DatosUsuario: DatosUsuario | undefined;
+  datosUsuarioActual: DatosUsuarioActual | undefined;
 
   constructor(private datosUsuarioService: DatosUsuarioService) { }
 
@@ -17,8 +17,8 @@ export class DatosUsuarioComponent {
 
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.DatosUsuario = data;
-      console.log(this.DatosUsuario);
+      this.datosUsuarioActual = data;
+      console.log(this.datosUsuarioActual);
     }); 
   }
 

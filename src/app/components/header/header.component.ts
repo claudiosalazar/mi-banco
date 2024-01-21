@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
-      this.nombreUserCompleto = datos.nombreUserCompleto;
+      this.nombreUserCompleto = datos.datosUsuario.nombreUserCompleto;
     });
   }
 

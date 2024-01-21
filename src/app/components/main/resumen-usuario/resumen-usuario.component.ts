@@ -1,34 +1,41 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DatosInicioService } from '../../../services/datos-inicio.service';
+import { DatosUsuarioService } from '../../../services/datos-usuario.service';
 import { BreadcrumbService } from '../../../services/breadcrumb.service';
-import { DatosInicio } from '../../../../assets/models/datos-inicio.model';
+import { DatosUsuarioActual } from '../../../../assets/models/datos-usuario.model';
 
 @Component({
   selector: 'app-resumen-usuario',
   templateUrl: './resumen-usuario.component.html'
 })
 export class ResumenUsuarioComponent implements OnInit, OnDestroy {
-  DatosInicio: DatosInicio | undefined;
+  datosUsuarioActual: DatosUsuarioActual | undefined;
 
   constructor(
-    private datosInicioService: DatosInicioService,
+    private datosUsuarioService: DatosUsuarioService,
+    private montosUsuarioService: DatosUsuarioService,
     private breadcrumbService: BreadcrumbService
   ) { }
 
   ngOnInit() {
-    this.getDatosInicio();
+    this.getDatosUsuario();
     this.breadcrumbService.hide();
   }
+  
 
   ngOnDestroy() {
     this.breadcrumbService.show();
   }
 
-  getDatosInicio(): void {
-    this.datosInicioService.getDatosInicio().subscribe(data => {
-      this.DatosInicio = data;
-      console.log(this.DatosInicio);
-    }); 
+  getDatosUsuario(): void {
+    this.datosUsuarioService.getDatosUsuario().subscribe(data => {
+      this.datosUsuarioActual = data;
+    });
+  }
+
+  getMontosUsuario(): void {
+    this.montosUsuarioService.getDatosUsuario().subscribe(data => {
+      this.datosUsuarioActual = data;
+    });
   }
 
 }

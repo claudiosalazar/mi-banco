@@ -1,8 +1,22 @@
-export interface DatosUsuario {
-  nombreUserCompleto: string;
-  rut: string;
-  email: string;
-  fonoCelular: string;
-  fonoParticular: string;
-  direccion: string
+export interface DatosUsuarioActual {
+  datosUsuario: {
+    nombreUserCompleto: string;
+    nombreUser: string;
+    rut: string;
+    email: string;
+    fonoCelular: string;
+    fonoParticular: string;
+    direccion: string;
+    ctaCteN: string;
+    lineaCreN: string;
+    tarjetaVisaN: string;
+  }
+  montosUsuario: {
+    ctaCteMonto: number;
+    lineaCreMonto: number;
+    tarjetaVisaMonto: number;
+    creditoPre: number;
+    seguro: number;
+    oferta: number;
+  }
 }
