@@ -29,9 +29,9 @@
             <tr *ngFor="let transaccion of transaccionesPaginadas">
               <td>{{ transaccion.col1 }}</td>
               <td>{{ transaccion.col2 }}</td>
-              <td>{{ transaccion.col3 | pesos }}</td>
-              <td>{{ transaccion.col4 | pesos }}</td>
-              <td>{{ transaccion.col5 | pesos }}</td>
+              <td>{{ transaccion.col3 !== 0 ? (transaccion.col3 | pesos) : '' }}</td>
+              <td>{{ transaccion.col4 !== 0 ? (transaccion.col4 | pesos) : '' }}</td>
+              <td>{{ transaccion.col5 !== 0 ? (transaccion.col5 | pesos) : '' }}</td>
             </tr>
           </tbody>
         </table>

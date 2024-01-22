@@ -1,4 +1,5 @@
 export interface DatosUsuarioActual {
+  ctaCteMonto(ctaCteMonto: any): number | undefined;
   datosUsuario: {
     nombreUserCompleto: string;
     nombreUser: string;
@@ -20,6 +21,7 @@ export interface DatosUsuarioActual {
     oferta: number;
   },
   transacciones: {
+    slice(): unknown;
     col1: number;
     col2: number;
     col3: number;
