@@ -12,7 +12,12 @@ export class DatosUsuarioService {
   getDatosUsuario(): Observable<DatosUsuarioActual> {
     return this.http.get<DatosUsuarioActual>('assets/data/datos-usuario.json');
   }
+
+  getTransacciones(): Observable<DatosUsuarioActual['transacciones']> {
+    return this.http.get<DatosUsuarioActual['transacciones']>('assets/data/datos-usuario.json');
+  }
 }
+
 
 export class MontosUsuarioService {
   constructor(private http: HttpClient) { }

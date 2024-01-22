@@ -18,5 +18,12 @@ export interface DatosUsuarioActual {
     creditoPre: number;
     seguro: number;
     oferta: number;
+  },
+  transacciones: {
+    col1: number;
+    col2: number;
+    col3: number;
+    col4: number;
+    col5: number;
   }
 }

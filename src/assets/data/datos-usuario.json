@@ -1,6 +1,5 @@
 {
-  "datosUsuario":
-  {
+  "datosUsuario": {
     "nombreUserCompleto": "Juan Antonio Perez Soto",
     "nombreUser": "Juan",
     "rut": "00.000.000-0",
@@ -19,5 +18,17 @@
     "creditoPre": "10000000",
     "seguro": "15000",
     "oferta": "0.50"
-  }
+  },
+  "transacciones":[
+    { "col1": "2023-01-01", "col2": "Transferencia a Pepito", "col3": 10000, "col4": 0, "col5": "" },
+    { "col1": "2023-01-06", "col2": "Pago Bazar de la esquina", "col3": 500, "col4": 0, "col5": "" },
+    { "col1": "2023-01-20", "col2": "Deposito de Mario", "col3": 0, "col4": 25000, "col5": "" },
+    { "col1": "2023-04-05", "col2": "Pago Bazar de la esquina", "col3": 2500, "col4": 0, "col5": "" },
+    { "col1": "2023-04-15", "col2": "Pago Bazar de la esquina", "col3": 30000, "col4": 0, "col5": "" },
+    { "col1": "2023-04-30", "col2": "Transferencia a Maria", "col3": 5000, "col4": 0, "col5": "" },
+    { "col1": "2023-06-10", "col2": "Transferencia a Jose", "col3": 500000, "col4": 0, "col5": "" },
+    { "col1": "2023-06-13", "col2": "Pago Bazar de la esquina", "col3": 15000, "col4": 0, "col5": "" },
+    { "col1": "2023-08-11", "col2": "Deposito de Constanza", "col3": 0, "col4": 25000, "col5": "" },
+    { "col1": "2023-08-23", "col2": "Pago Bazar de la esquina", "col3": 1000, "col4": 0, "col5": "" }  
+  ]
 }
