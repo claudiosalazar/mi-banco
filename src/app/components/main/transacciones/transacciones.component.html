@@ -2,53 +2,38 @@
   <div class="row">
     <div class="mt-5">
       <h1>Saldo y últimos movimientos</h1>
+      <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
     </div>
-    <div class="col-12 mt-5">
-      <!-- <div class="card p-4">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>
-                <span>Fecha</span>
-              </th>
-              <th>
-                <span>Movimientos</span>
-              </th>
-              <th>
-                <span>Cargos</span>
-              </th>
-              <th>
-                <span>Abonos</span>
-              </th>
-              <th>
-                <span>Saldo</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let transaccion of transaccionesPaginadas">
-              <td>{{ transaccion.col1 }}</td>
-              <td>{{ transaccion.col2 }}</td>
-              <td>{{ transaccion.col3 !== 0 ? (transaccion.col3 | pesos) : '' }}</td>
-              <td>{{ transaccion.col4 !== 0 ? (transaccion.col4 | pesos) : '' }}</td>
-              <td>{{ transaccion.col5 !== 0 ? (transaccion.col5 | pesos) : '' }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <nav>
-          <ul class="pagination d-flex justify-content-center mt-4">
-            <li class="page-item" [class.disabled]="paginaActual === 1">
-              <a class="page-link" (click)="paginaAnterior()">Anterior</a>
-            </li>
-            <li class="page-item" *ngFor="let i of range(1, (transacciones.length / elementosPorPagina) + 1)">
-              <a class="page-link" [class.active]="i === paginaActual" (click)="paginaActual = i">{{ i }}</a>
-            </li>
-            <li class="page-item" [class.disabled]="paginaActual === (transacciones.length / elementosPorPagina)">
-              <a class="page-link" (click)="siguientePagina()">Siguiente</a>
-            </li>
-          </ul>
-        </nav>
-      </div> -->
+    <div class="col-md-4">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h4>Cuenta Corriente</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN }}</strong></p>
+        <p>Disponible: {{ saldoCtaCte ?? 0 | pesos }}</p>
+        <button class="btn btn-info w-100" type="button">Ver movimientos</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h4>Línea de Crédito</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN }}</strong></p>
+        <p>Disponible: {{ saldoLineaCre ?? 0 | pesos }}</p>
+        <button class="btn btn-info w-100" type="button">Ver movimientos</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h4>Visa</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaN }}</strong></p>
+        <p>Disponible: {{ saldoVisa ?? 0 | pesos }}</p>
+        <button class="btn btn-info w-100" type="button">Ver movimientos</button>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card p-5 mt-4">
+        <h3>{{ datosUsuarioActual?.datosUsuario?.nombreUser }}, tienes un crédito pre-aprobado de </h3>
+        <h1 class="mb-4">{{ datosUsuarioActual?.datosUsuario?.ofertasProductos?.creditoPre ?? 0 | pesos }}</h1>
+        <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
+      </div>
     </div>
   </div>
 </div>

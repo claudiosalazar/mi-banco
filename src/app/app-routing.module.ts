@@ -15,7 +15,14 @@ const routes: Routes = [
   { path: 'mibanco', component: MainComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: ResumenUsuarioComponent },
-      { path: 'transacciones', component: TransaccionesComponent },
+      { path: 'transacciones', component: TransaccionesComponent , canActivate: [AuthGuard], data: { breadcrumb: 'Transacciones' },
+        children: [
+          { path: 'transacciones', redirectTo: 'transacciones', pathMatch: 'full' },
+          { path: 'cuenta-corriente', component: TransaccionesComponent, data: { breadcrumb: 'Cuenta Corriente' } },
+          { path: 'linea-credito', component: TransaccionesComponent, data: { breadcrumb: 'Linea de Crédito' } },
+          { path: 'visa', component: TransaccionesComponent, data: { breadcrumb: 'Visa' } }
+        ]
+      },
       { path: 'contactanos', component: ContactanosComponent },
       { path: 'mis-datos', component: DatosUsuarioComponent },
       { path: 'emergencias', component: EmergenciasComponent }

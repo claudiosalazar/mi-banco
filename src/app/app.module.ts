@@ -21,6 +21,9 @@ import { RangosPipe } from './pipe/rangos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
+import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
+import { VisaComponent } from './components/main/transacciones/visa/visa.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     RangosPipe,
     DatosUsuarioComponent,
     EmergenciasComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    CuentaCorrienteComponent,
+    LineaCreditoComponent,
+    VisaComponent
   ],
   imports: [
     BrowserModule,
