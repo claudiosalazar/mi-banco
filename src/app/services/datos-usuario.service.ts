@@ -14,8 +14,8 @@ export class DatosUsuarioService {
     return this.http.get<any>(this.url);
   }
 
-  getTransacciones(): Observable<DatosUsuarioActual['transacciones']> {
-    return this.http.get<DatosUsuarioActual['transacciones']>('assets/data/datos-usuario.json');
+  getTransacciones(): Observable<DatosUsuarioActual['datosUsuario']> {
+    return this.http.get<DatosUsuarioActual['datosUsuario']>('assets/data/datos-usuario.json');
   }
 }
 

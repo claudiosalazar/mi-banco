@@ -1,5 +1,6 @@
 export interface DatosUsuarioActual {
-  ctaCteMonto(ctaCteMonto: any): number | undefined;
+
+  // Datos de usuario
   datosUsuario: {
     nombreUserCompleto: string;
     nombreUser: string;
@@ -8,24 +9,58 @@ export interface DatosUsuarioActual {
     fonoCelular: string;
     fonoParticular: string;
     direccion: string;
-    ctaCteN: string;
-    lineaCreN: string;
-    tarjetaVisaN: string;
-  }
-  montosUsuario: {
-    ctaCteMonto: number;
-    lineaCreMonto: number;
-    tarjetaVisaMonto: number;
-    creditoPre: number;
-    seguro: number;
-    oferta: number;
-  },
-  transacciones: {
-    slice(): unknown;
-    col1: number;
-    col2: number;
-    col3: number;
-    col4: number;
-    col5: number;
+
+    // Ofertas de productos
+    ofertasProductos: {
+      creditoPre: number,
+      seguroOferta: number,
+      ofertaVisa: number
+    },
+
+    // Montos de productos
+    montosUsuario: {
+      ctaCte: {
+        ctaCteN: number;
+        ctaCteSaldo: number;
+        ctaCteTrans: {
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
+      };
+      lineaCredito: {
+        lineaCreN: number;
+        lineaCreSaldo: number;
+        lineaCreTrans:{
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
+      };
+      visa: {
+        visaN: number;
+        visaSaldo: number;
+        visaTrans:{
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
+      }
+    }
   }
 }

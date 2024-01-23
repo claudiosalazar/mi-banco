@@ -5,8 +5,8 @@ import { DatosUsuarioService } from '../../../services/datos-usuario.service';
   selector: 'app-transacciones',
   templateUrl: './transacciones.component.html'
 })
-export class TransaccionesComponent implements OnInit {
-  transacciones: any[] = [];
+export class TransaccionesComponent  {
+  /* transacciones: any[] = [];
   paginaActual = 1;
   elementosPorPagina = 5;
   ctaCteMonto!: number;
@@ -16,7 +16,6 @@ export class TransaccionesComponent implements OnInit {
   ngOnInit() {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.ctaCteMonto = Number(datos.montosUsuario.ctaCteMonto);
-      // Ordena las transacciones por fecha en orden ascendente
       if (Array.isArray(datos.transacciones)) {
         this.transacciones = datos.transacciones.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
       } else {
@@ -29,7 +28,6 @@ export class TransaccionesComponent implements OnInit {
         transaccion.col5 = this.ctaCteMonto;
         return transaccion;
       });
-      // Ordena las transacciones por fecha en orden descendente para mostrarlas en la tabla
       this.transacciones = this.transacciones.reverse();
     });
   }
@@ -54,5 +52,5 @@ export class TransaccionesComponent implements OnInit {
 
   range(start: number, end: number) {
     return Array.from({length: end - start}, (v, k) => k + start);
-  }
+  } */
 }

@@ -30,7 +30,7 @@
       <div class="p-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid">
           <h3>Hola {{ datosUsuarioActual.datosUsuario.nombreUser }}, tienes un crédito pre-aprobado de </h3>
-          <h1 class="mb-4">{{ datosUsuarioActual.montosUsuario.creditoPre | pesos }}</h1>
+          <h1 class="mb-4">{{ datosUsuarioActual.datosUsuario.ofertasProductos.creditoPre | pesos }}</h1>
           <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
         </div>
       </div>
@@ -39,8 +39,8 @@
         <div class="col-md-4">
           <div class="h-100 p-5 text-bg-dark rounded-3">
             <h4>Cuenta Corriente</h4>
-            <p><strong>N° {{ datosUsuarioActual.datosUsuario.ctaCteN }}</strong></p>
-            <p>Disponible: {{ datosUsuarioActual.montosUsuario.ctaCteMonto | pesos }}</p>
+            <p><strong>N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</strong></p>
+            <p>Disponible: {{ saldoCtaCte ?? 0 | pesos }}</p>
           </div>
         </div>
         <div class="col-md-4">
@@ -49,8 +49,8 @@
               <span>Línea de Crédito</span>
               <span><button class="btn btn-outline-secondary" type="button">Pagar</button></span>
             </h4>
-            <p><strong>N° {{ datosUsuarioActual.datosUsuario.lineaCreN }}</strong></p>
-            <p>Disponible: {{ datosUsuarioActual.montosUsuario.lineaCreMonto | pesos }}</p>
+            <p><strong>N° {{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreN }}</strong></p>
+            <p>Disponible: {{ saldoLineaCre ?? 0 | pesos }}</p>
           </div>
         </div>
         <div class="col-md-4">
@@ -59,15 +59,15 @@
               <span>Visa</span>
               <span><button class="btn btn-outline-secondary" type="button">Pagar</button></span>
             </h4>
-            <p><strong>N° {{ datosUsuarioActual.datosUsuario.tarjetaVisaN }}</strong></p>
-            <p>Disponible: {{ datosUsuarioActual.montosUsuario.tarjetaVisaMonto | pesos }}</p>
+            <p><strong>N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</strong></p>
+            <p>Disponible: {{ saldoVisa ?? 0 | pesos }}</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
             <h4 class="d-flex justify-content-between mt-3">Seguro hogar</h4>
             <p>Contrata Seguro Hogar, oferta exclusiva para el presente mes.</p>
-            <p>Valor mensual: {{ datosUsuarioActual.montosUsuario.seguro | pesos }}</p>
+            <!-- <p>Valor mensual: {{ datosUsuarioActual.ofertasProductos.seguroOferta| pesos }}</p> -->
           </div>
         </div>
         <div class="col-md-6">
@@ -75,7 +75,7 @@
             <h4 class="d-flex justify-content-between">Paga con Visa este mes y
             </h4>
             <p>Obten un descuento en restaurantes de:</p>
-            <p class="display-6"><strong>{{ datosUsuarioActual.montosUsuario.oferta | percent }}</strong></p>
+            <!-- <p class="display-6"><strong>{{ datosUsuarioActual.ofertasProductos.ofertaVisa| percent }}</strong></p> -->
           </div>
         </div>
       </div>
