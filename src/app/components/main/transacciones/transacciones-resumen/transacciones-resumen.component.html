@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="mt-5">
+      <h1>Últimos movimientos</h1>
+      <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
+    </div>
+    <div class="col-md-4">
+      <div class="h-100 p-5 text-bg-dark rounded-3">
+        <h4>Cuenta Corriente</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN }}</strong></p>
+        <p>Disponible: {{ saldoCtaCte ?? 0 | pesos }}</p>
+        <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/cuenta-corriente">Ver movimientos</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h4>Línea de Crédito</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN }}</strong></p>
+        <p>Disponible: {{ saldoLineaCre ?? 0 | pesos }}</p>
+        <a class="btn btn-info w-100" routerLink="/mibanco/linea-credito">Ver movimientos</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <h4>Visa</h4>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaN }}</strong></p>
+        <p>Disponible: {{ saldoVisa ?? 0 | pesos }}</p>
+        <button class="btn btn-info w-100" type="button" routerLink="/mibanco/visa">Ver movimientos</button>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card p-5 mt-4">
+        <h3>{{ datosUsuarioActual?.datosUsuario?.nombreUser }}, tienes un crédito pre-aprobado de </h3>
+        <h1 class="mb-4">{{ datosUsuarioActual?.datosUsuario?.ofertasProductos?.creditoPre ?? 0 | pesos }}</h1>
+        <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
+      </div>
+    </div>
+  </div>
+</div>

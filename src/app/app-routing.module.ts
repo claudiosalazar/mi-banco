@@ -8,6 +8,10 @@ import { TransaccionesComponent } from './components/main/transacciones/transacc
 import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
+import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
+import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
+import { VisaComponent } from './components/main/transacciones/visa/visa.component';
+import { TransaccionesResumenComponent } from './components/main/transacciones/transacciones-resumen/transacciones-resumen.component';
 
 
 const routes: Routes = [
@@ -15,12 +19,13 @@ const routes: Routes = [
   { path: 'mibanco', component: MainComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: ResumenUsuarioComponent },
-      { path: 'transacciones', component: TransaccionesComponent , canActivate: [AuthGuard], data: { breadcrumb: 'Transacciones' },
+      { 
+        path: 'transacciones', component: TransaccionesComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'transacciones', redirectTo: 'transacciones', pathMatch: 'full' },
-          { path: 'cuenta-corriente', component: TransaccionesComponent, data: { breadcrumb: 'Cuenta Corriente' } },
-          { path: 'linea-credito', component: TransaccionesComponent, data: { breadcrumb: 'Linea de Crédito' } },
-          { path: 'visa', component: TransaccionesComponent, data: { breadcrumb: 'Visa' } }
+          { path: '', component: TransaccionesResumenComponent },
+          { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
+          { path: 'linea-credito', component: LineaCreditoComponent },
+          { path: 'visa', component: VisaComponent },
         ]
       },
       { path: 'contactanos', component: ContactanosComponent },

@@ -24,6 +24,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
 import { VisaComponent } from './components/main/transacciones/visa/visa.component';
+import { TransaccionesResumenComponent } from './components/main/transacciones/transacciones-resumen/transacciones-resumen.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { VisaComponent } from './components/main/transacciones/visa/visa.compone
     BreadcrumbComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,
-    VisaComponent
+    VisaComponent,
+    TransaccionesResumenComponent
   ],
   imports: [
     BrowserModule,
