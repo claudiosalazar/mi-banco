@@ -19,13 +19,13 @@
         "ctaCteTrans":[
           { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20 },
           { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20 },
           { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" }    
         ]
       },
@@ -35,13 +35,13 @@
         "lineaCreTrans":[
           { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20 },
           { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20 },
           { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" }  
         ]
       },
@@ -51,13 +51,13 @@
         "visaTrans":[
           { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20 },
           { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 10, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20, "saldo": "" },
+          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20 },
           { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" }  
         ]
       }

@@ -1,10 +1,14 @@
 import { DatosUsuarioActual } from './../../assets/models/datos-usuario.model';
 import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
+import * as data from '../../assets/models/datos-usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaldosService {
+  
+
   calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): number {
     let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
     let totalCargosCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.cargo, 0) as number;

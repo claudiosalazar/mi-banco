@@ -8,27 +8,20 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Fecha</th>
-              <th scope="col">Detalle</th>
-              <th scope="col">Cargo</th>
-              <th scope="col">Abono</th>
-              <th scope="col">Saldo</th>
+              <th>Fecha</th>
+              <th>Detalle</th>
+              <th>Cargo</th>
+              <th>Abono</th>
+              <th>Saldo</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@fat</td>
-              <td>@fat</td>
+            <tr *ngFor="let trans of datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans">
+              <td>{{ trans.fecha }}</td>
+              <td>{{ trans.detalle }}</td>
+              <td>{{ trans.cargo }}</td>
+              <td>{{ trans.abono }}</td>
+              <td>{{ trans.saldo }}</td>
             </tr>
           </tbody>
         </table>

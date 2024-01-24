@@ -1,5 +1,5 @@
 export interface DatosUsuarioActual {
-
+  montosUsuario: any;
   // Datos de usuario
   datosUsuario: {
     nombreUserCompleto: string;
@@ -9,6 +9,7 @@ export interface DatosUsuarioActual {
     fonoCelular: string;
     fonoParticular: string;
     direccion: string;
+   
 
     // Ofertas de productos
     ofertasProductos: {

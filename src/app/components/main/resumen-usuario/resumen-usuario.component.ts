@@ -23,9 +23,6 @@ export class ResumenUsuarioComponent implements OnInit {
     this.getDatosUsuario();
   }
   
-
-
-
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;

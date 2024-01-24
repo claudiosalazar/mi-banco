@@ -67,7 +67,7 @@
           <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
             <h4 class="d-flex justify-content-between mt-3">Seguro hogar</h4>
             <p>Contrata Seguro Hogar, oferta exclusiva para el presente mes.</p>
-            <!-- <p>Valor mensual: {{ datosUsuarioActual.ofertasProductos.seguroOferta| pesos }}</p> -->
+            <p>Valor mensual: {{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</p>
           </div>
         </div>
         <div class="col-md-6">
@@ -75,7 +75,7 @@
             <h4 class="d-flex justify-content-between">Paga con Visa este mes y
             </h4>
             <p>Obten un descuento en restaurantes de:</p>
-            <!-- <p class="display-6"><strong>{{ datosUsuarioActual.ofertasProductos.ofertaVisa| percent }}</strong></p> -->
+            <p class="display-6"><strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.ofertaVisa| percent }}</strong></p>
           </div>
         </div>
       </div>
