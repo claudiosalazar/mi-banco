@@ -7,6 +7,8 @@ import { DatosUsuarioService } from '../../../../services/datos-usuario.service'
 })
 export class CuentaCorrienteComponent implements OnInit {
   datosUsuarioActual: any;
+  saldoCtaCte: any;
+  saldo: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService
@@ -15,11 +17,14 @@ export class CuentaCorrienteComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
+      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo);
+      for (let trans of this.datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteTrans) {
+        this.saldo = this.saldo - trans.cargo + trans.abono;
+        trans.saldoFinal = this.saldo;
+      }
       console.log(this.datosUsuarioActual);
     }, error => {
       console.error('Error obteniendo los datos: ', error);
     });
-
-    
   }
 }
