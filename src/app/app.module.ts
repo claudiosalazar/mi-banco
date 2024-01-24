@@ -20,7 +20,6 @@ import { PesosPipe } from './pipe/pesos.pipe';
 import { RangosPipe } from './pipe/rangos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
 import { VisaComponent } from './components/main/transacciones/visa/visa.component';
@@ -40,7 +39,6 @@ import { TransaccionesResumenComponent } from './components/main/transacciones/t
     RangosPipe,
     DatosUsuarioComponent,
     EmergenciasComponent,
-    BreadcrumbComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,
     VisaComponent,

@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BreadcrumbService } from '../../../services/breadcrumb.service';
+import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../../services/datos-usuario.service';
 import { SaldosService } from '../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../assets/models/datos-usuario.model';
@@ -8,7 +7,7 @@ import { DatosUsuarioActual } from '../../../../assets/models/datos-usuario.mode
   selector: 'app-resumen-usuario',
   templateUrl: './resumen-usuario.component.html'
 })
-export class ResumenUsuarioComponent implements OnInit, OnDestroy {
+export class ResumenUsuarioComponent implements OnInit {
   saldoCtaCte: number | undefined;
   saldoLineaCre: number | undefined;
   saldoVisa: number | undefined;
@@ -17,19 +16,15 @@ export class ResumenUsuarioComponent implements OnInit, OnDestroy {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
-    private breadcrumbService: BreadcrumbService,
     private saldosService: SaldosService
   ) { }
 
   ngOnInit(): void {
     this.getDatosUsuario();
-    this.breadcrumbService.hide();
   }
   
 
-  ngOnDestroy() {
-    this.breadcrumbService.show();
-  }
+
 
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
