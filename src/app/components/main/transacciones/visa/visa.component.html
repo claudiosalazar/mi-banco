@@ -1,8 +1,94 @@
 <div class="container">
   <div class="row">
-    <div class="mt-5">
-      <h1>Movimientos Visa</h1>
-      <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
+    <div class="col-12">
+      <div class="mt-5">
+        <h1>Movimientos Visa</h1>
+        <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
+        <div class="card p-4 mt-4">
+          <div class="d-flex align-items-center">
+            <h6 class="mb-0">Pagar Visa</h6>
+            <a class="btn btn-info pagar">Pagar</a>
+          </div>
+          <p class="mt-3 mb-1">Último pago realizado el <span>00 / 00 / 0000</span></p>
+        </div>
+        <div class="card p-4 mt-4">
+          <table class="table">
+            <thead>
+              <tr>
+                <th [class.rotated]="isColumnRotated('fecha')" (click)="sortTableFecha()">
+                  <div class="d-flex">
+                    Fecha
+                    <span class="material-symbols-outlined">
+                      expand_more
+                    </span>
+                  </div>
+                </th>
+                <th [class.rotated]="isColumnRotated('detalle')" (click)="sortTableDetalle()">
+                  <div class="d-flex">
+                    Detalle
+                    <span class="material-symbols-outlined">
+                      expand_more
+                    </span>
+                  </div></th>
+                <th [class.rotated]="isColumnRotated('cargo')" (click)="sortTableNumero('cargo')">
+                  <div class="d-flex">
+                    Cargo
+                    <span class="material-symbols-outlined">
+                      expand_more
+                    </span>
+                  </div>
+                </th>
+                <th [class.rotated]="isColumnRotated('abono')" (click)="sortTableNumero('abono')">
+                  <div class="d-flex">
+                    Abono
+                    <span class="material-symbols-outlined">
+                      expand_more
+                    </span>
+                  </div>
+                </th>
+                <th [class.rotated]="isColumnRotated('saldoFinal')" (click)="sortTableNumero('saldoFinal')">
+                  <div class="d-flex">
+                    Saldo
+                    <span class="material-symbols-outlined">
+                      expand_more
+                    </span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trans of getPaginatedData()">
+                <td>{{ trans.fecha | date:"dd / MM / yyyy" }}</td>
+                <td>{{ trans.detalle }}</td>
+                <td>{{ trans.cargo ? (trans.cargo | pesos) : '' }}</td>
+                <td>{{ trans.abono ? (trans.abono | pesos) : '' }}</td>
+                <td>{{ trans.saldoFinal | pesos }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <nav class="d-flex justify-content-center mt-3">
+            <ul class="pagination">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
+                  <span class="material-symbols-outlined">
+                    chevron_left
+                  </span>
+                </a>
+              </li>
+              <li class="page-item" *ngFor="let page of pages; let i = index" [class.active]="currentPage === i + 1">
+                <a class="page-link" href="javascript:void(0);" (click)="setPage(i)">{{ i + 1 }}</a>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === pages.length">
+                <a class="page-link" href="javascript:void(0);" (click)="nextPage()">
+                  <span class="material-symbols-outlined">
+                    chevron_right
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
 </div>
