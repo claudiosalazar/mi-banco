@@ -31,34 +31,34 @@
       },
       "lineaCredito": {
         "lineaCreN": "0987654",
-        "lineaCreSaldo": "100",
+        "lineaCreSaldo": "3000000",
         "lineaCreTrans":[
-          { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20 },
-          { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20 },
-          { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" }  
+          { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 68000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 500, "abono": 0, "saldo": "" },
+          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 50000 },
+          { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 20500, "abono": 0, "saldo": "" },
+          { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 100000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 1500, "abono": 0, "saldo": "" },
+          { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 6000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 10000 },
+          { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 200000, "abono": 0, "saldo": "" }  
         ]
       },
       "visa": {
         "visaN": "****-****-****-5555",
-        "visaSaldo": "100",
+        "visaSaldo": "5000000",
         "visaTrans":[
-          { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 20 },
-          { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20 },
-          { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 10, "abono": 0, "saldo": "" }  
+          { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 450000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 100000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-01-20", "detalle": "Deposito de Mario", "cargo": 0, "abono": 200000 },
+          { "fecha": "2023-04-05", "detalle": "Pago Bazar de la esquina", "cargo": 30000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-04-15", "detalle": "Pago Bazar de la esquina", "cargo": 50000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 1000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 900000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 1000000, "abono": 0, "saldo": "" },
+          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20000 },
+          { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 5000, "abono": 0, "saldo": "" }  
         ]
       }
     }
