@@ -3,14 +3,13 @@
     <div class="col-12">
       <div class="mt-5">
         <h1>Movimientos Línea de Crédito</h1>
-        <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
         <div class="card p-4 mt-4">
+          <p class="mb-1">Último pago realizado el <strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>.</p>
+          <p>El último pago realizado fue por un valor de <strong>{{ ultimoMontoAbono | pesos }}</strong>.</p>
           <div class="d-flex align-items-center">
             <h6 class="mb-0">Pagar Línea de Crédito</h6>
             <a class="btn btn-info ms-3">Pagar</a>
           </div>
-          <p class="mt-3 mb-1">Último pago realizado el <span>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</span>.</p>
-          <p>El último pago realizado fue por un valor de <strong>{{ ultimoMontoAbono | pesos }}</strong></p>
         </div>
         <div class="card p-4 mt-4">
           <div class="row">
