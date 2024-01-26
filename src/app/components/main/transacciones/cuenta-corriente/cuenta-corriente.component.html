@@ -8,19 +8,53 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Fecha</th>
-              <th>Detalle</th>
-              <th>Cargo</th>
-              <th>Abono</th>
-              <th>Saldo</th>
+              <th [class.rotated]="isColumnRotated('fecha')" (click)="sortTableFecha()">
+                <div class="d-flex">
+                  Fecha
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th [class.rotated]="isColumnRotated('detalle')" (click)="sortTableDetalle()">
+                <div class="d-flex">
+                  Detalle
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div></th>
+              <th [class.rotated]="isColumnRotated('cargo')" (click)="sortTableNumero('cargo')">
+                <div class="d-flex">
+                  Cargo
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th [class.rotated]="isColumnRotated('abono')" (click)="sortTableNumero('abono')">
+                <div class="d-flex">
+                  Abono
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th [class.rotated]="isColumnRotated('saldoFinal')" (click)="sortTableNumero('saldoFinal')">
+                <div class="d-flex">
+                  Saldo
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let trans of datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans">
-              <td>{{ trans.fecha }}</td>
+              <td>{{ trans.fecha | date:"dd / MM / yyyy" }}</td>
               <td>{{ trans.detalle }}</td>
-              <td>{{ trans.cargo }}</td>
-              <td>{{ trans.abono }}</td>
+              <td>{{ trans.cargo ? (trans.cargo | pesos) : '' }}</td>
+              <td>{{ trans.abono ? (trans.abono | pesos) : '' }}</td>
               <td>{{ trans.saldoFinal | pesos }}</td>
             </tr>
           </tbody>

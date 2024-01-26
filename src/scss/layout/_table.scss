@@ -2,8 +2,15 @@
   thead {
     th {
       cursor: pointer;
-      span {
-        display: block;
+      position: relative;
+
+      .material-symbols-outlined {
+        display: inline-block;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      &.rotated .material-symbols-outlined {
+        transform: rotate(180deg);
       }
     }
   }
