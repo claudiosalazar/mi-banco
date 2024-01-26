@@ -9,6 +9,9 @@ export class CuentaCorrienteComponent implements OnInit {
   datosUsuarioActual: any;
   saldoCtaCte: any;
   saldo: any;
+  currentPage = 1;
+  itemsPerPage = 5;
+  pages: number[] = [];
 
   constructor(
     private datosUsuarioService: DatosUsuarioService
@@ -23,6 +26,7 @@ export class CuentaCorrienteComponent implements OnInit {
         trans.saldoFinal = this.saldo;
       }
       this.datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reverse();
+      this.calculatePages();
       console.log(this.datosUsuarioActual);
     }, error => {
       console.error('Error obteniendo los datos: ', error);
@@ -63,18 +67,6 @@ export class CuentaCorrienteComponent implements OnInit {
     }
   }
 
-  /* sortTableNumero(column: string): void {
-    if (this.currentColumn === column) {
-      this.sortOrder = -this.sortOrder;
-    } else {
-      this.sortOrder = -1;
-      this.currentColumn = column;
-    }
-    this.datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
-      return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
-    });
-  } */
-
   sortTableNumero(column: string): void {
     if (this.currentSortColumn === column) {
       this.sortAscending = !this.sortAscending;
@@ -90,7 +82,35 @@ export class CuentaCorrienteComponent implements OnInit {
     });
   }
 
+  // Funcion para animacion de icono en th
   isColumnRotated(column: string): boolean {
     return this.currentSortColumn === column && this.sortAscending;
   }
+
+  getPaginatedData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+  
+  nextPage() {
+    if (this.currentPage < this.pages.length) {
+      this.currentPage++;
+    }
+  }
+  
+  setPage(i: number) {
+    this.currentPage = i + 1;
+  }
+
+  calculatePages() {
+    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans.length || 0) / this.itemsPerPage);
+    this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
+  }
+
 }

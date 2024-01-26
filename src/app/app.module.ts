@@ -17,7 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DatosUsuarioService } from './services/datos-usuario.service';
 import { PesosPipe } from './pipe/pesos.pipe';
-import { RangosPipe } from './pipe/rangos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
@@ -36,7 +35,6 @@ import { TransaccionesResumenComponent } from './components/main/transacciones/t
     TransaccionesComponent,
     ContactanosComponent,
     PesosPipe,
-    RangosPipe,
     DatosUsuarioComponent,
     EmergenciasComponent,
     CuentaCorrienteComponent,
