@@ -22,14 +22,31 @@ header.mi-banco-header {
     color: $blanco;
   }
 
+  .nav-link {
+    &.active, &.show {
+      color: $dorado
+    }
+  }
+
   // Menu usuario
   .dropdown-menu {
     background-color: $rojo-claro;
+    box-shadow: $shadow-heavy;
     li {
       border-bottom: 1px solid $blanco ;
       &:last-child {
         border-bottom: none;
       }
+      &.dropdown-item:focus, .dropdown-item:hover {
+        color: $blanco;
+        background-color: $rojo;
+      }
     } 
   }
+  .nav-item {
+    &.menu-transacciones{
+      position: relative;
+    }
+  }
 }
+

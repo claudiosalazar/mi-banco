@@ -22,7 +22,7 @@ const routes: Routes = [
       { 
         path: 'transacciones', component: TransaccionesComponent, canActivate: [AuthGuard],
         children: [
-          { path: '', component: TransaccionesResumenComponent },
+          { path: 'resumen', component: TransaccionesResumenComponent },
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'visa', component: VisaComponent },
