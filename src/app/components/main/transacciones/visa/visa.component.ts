@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../../../services/datos-usuario.service';
+import { FormControl } from '@angular/forms'
+import { DatosUsuarioActual } from '../../../../../assets/models/datos-usuario.model';
 
 @Component({
   selector: 'app-visa',
@@ -7,11 +9,17 @@ import { DatosUsuarioService } from '../../../../services/datos-usuario.service'
 })
 export class VisaComponent implements OnInit {
   datosUsuarioActual: any;
-  visaSaldo: any;
   saldo: any;
   currentPage = 1;
   itemsPerPage = 5;
   pages: number[] = [];
+  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['visaTrans'][] = [];
+
+  // Tus datos actuales que se mostrarán en la tabla
+  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['visaTrans'][] = [];
+
+  // FormControl para el campo de búsqueda
+  campoBusqueda = new FormControl('');
 
   constructor(
     private datosUsuarioService: DatosUsuarioService
@@ -20,11 +28,24 @@ export class VisaComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
+      this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans;
+      // Inicialmente, los datos actuales son todos los datos
+      this.datosActuales = this.datosOriginales;
       this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaSaldo);
-      for (let trans of this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans) {
+      for (let trans of this.datosOriginales) {
         this.saldo = this.saldo - trans.cargo + trans.abono;
         trans.saldoFinal = this.saldo;
       }
+      this.campoBusqueda.valueChanges.subscribe(textoBusqueda => {
+        if (textoBusqueda) {
+          // Filtrar los datos basándose en el texto de búsqueda
+          this.datosActuales = this.datosOriginales.filter(trans => trans.detalle.toLowerCase().includes(textoBusqueda.toLowerCase()));
+        } else {
+          // Si no hay texto de búsqueda, mostrar todos los datos
+          this.datosActuales = this.datosOriginales;
+        }
+      });
+      this.datosActuales = this.datosOriginales;
       this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans.reverse();
       this.calculatePages();
       console.log(this.datosUsuarioActual);
@@ -88,8 +109,9 @@ export class VisaComponent implements OnInit {
   }
 
   getPaginatedData() {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaTrans.slice(startIndex, startIndex + this.itemsPerPage);
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = this.currentPage * this.itemsPerPage;
+    return this.datosActuales.slice(start, end);
   }
 
   prevPage() {

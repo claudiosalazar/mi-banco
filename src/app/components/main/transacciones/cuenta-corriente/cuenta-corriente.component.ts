@@ -9,7 +9,7 @@ import { DatosUsuarioActual } from '../../../../../assets/models/datos-usuario.m
 })
 export class CuentaCorrienteComponent implements OnInit {
   datosUsuarioActual: any;
-  saldoCtaCte: any;
+  // saldoCtaCte: any;
   saldo: any;
   currentPage = 1;
   itemsPerPage = 5;

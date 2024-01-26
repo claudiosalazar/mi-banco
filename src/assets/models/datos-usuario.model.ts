@@ -39,6 +39,7 @@ export interface DatosUsuarioActual {
         lineaCreN: number;
         lineaCreSaldo: number;
         lineaCreTrans:{
+          saldoFinal: any;
           reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
           map(arg0: (trans: any) => any): number[];
           slice(): unknown;
@@ -53,6 +54,7 @@ export interface DatosUsuarioActual {
         visaN: number;
         visaSaldo: number;
         visaTrans:{
+          saldoFinal: any;
           reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
           map(arg0: (trans: any) => any): number[];
           slice(): unknown;
