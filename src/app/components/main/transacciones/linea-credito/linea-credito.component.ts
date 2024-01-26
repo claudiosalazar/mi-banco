@@ -20,6 +20,8 @@ export class LineaCreditoComponent implements OnInit {
 
   // FormControl para el campo de búsqueda
   campoBusqueda = new FormControl('');
+  fechaUltimoAbono: any;
+  ultimoMontoAbono: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService
@@ -36,6 +38,12 @@ export class LineaCreditoComponent implements OnInit {
         this.saldo = this.saldo - trans.cargo + trans.abono;
         trans.saldoFinal = this.saldo;
       }
+      let ultimoAbono = this.datosOriginales
+        .filter(trans => trans.abono > 0)
+        .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
+
+      this.fechaUltimoAbono = ultimoAbono ? ultimoAbono.fecha : null;
+      this.ultimoMontoAbono = ultimoAbono ? ultimoAbono.abono : null;
       this.campoBusqueda.valueChanges.subscribe(textoBusqueda => {
         if (textoBusqueda) {
           // Filtrar los datos basándose en el texto de búsqueda

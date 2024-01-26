@@ -57,7 +57,7 @@
           { "fecha": "2023-04-30", "detalle": "Transferencia a Maria", "cargo": 1000, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-10", "detalle": "Transferencia a Jose", "cargo": 900000, "abono": 0, "saldo": "" },
           { "fecha": "2023-06-13", "detalle": "Pago Bazar de la esquina", "cargo": 1000000, "abono": 0, "saldo": "" },
-          { "fecha": "2023-08-11", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20000 },
+          { "fecha": "2023-08-15", "detalle": "Deposito de Constanza", "cargo": 0, "abono": 20000 },
           { "fecha": "2023-08-23", "detalle": "Pago Bazar de la esquina", "cargo": 5000, "abono": 0, "saldo": "" }  
         ]
       }
