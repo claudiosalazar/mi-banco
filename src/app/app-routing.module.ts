@@ -12,6 +12,9 @@ import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
 import { VisaComponent } from './components/main/transacciones/visa/visa.component';
 import { TransaccionesResumenComponent } from './components/main/transacciones/transacciones-resumen/transacciones-resumen.component';
+import { SegurosComponent } from './components/main/seguros/seguros.component';
+import { SegurosResumenComponent } from './components/main/seguros/seguros-resumen/seguros-resumen.component';
+import { SegurosContratarComponent } from './components/main/seguros/seguros-contratar/seguros-contratar.component';
 
 
 const routes: Routes = [
@@ -26,6 +29,13 @@ const routes: Routes = [
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'visa', component: VisaComponent },
+        ]
+      },
+      { 
+        path: 'seguros', component: SegurosComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'resumen', component: SegurosResumenComponent },
+          { path: 'contratar-seguro', component: SegurosContratarComponent },
         ]
       },
       { path: 'contactanos', component: ContactanosComponent },
