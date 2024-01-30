@@ -19,7 +19,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatosUsuarioService } from './services/datos-usuario.service';
 import { PesosPipe } from './pipe/pesos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
-import { EmergenciasComponent } from './components/main/emergencias/emergencias.component';
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
 import { VisaComponent } from './components/main/transacciones/visa/visa.component';
@@ -27,6 +26,7 @@ import { TransaccionesResumenComponent } from './components/main/transacciones/t
 import { SegurosComponent } from './components/main/seguros/seguros.component';
 import { SegurosResumenComponent } from './components/main/seguros/seguros-resumen/seguros-resumen.component';
 import { SegurosContratarComponent } from './components/main/seguros/seguros-contratar/seguros-contratar.component';
+import { AyudaComponent } from './components/main/ayuda/ayuda.component';
 
 @NgModule({
   declarations: [
@@ -40,14 +40,14 @@ import { SegurosContratarComponent } from './components/main/seguros/seguros-con
     ContactanosComponent,
     PesosPipe,
     DatosUsuarioComponent,
-    EmergenciasComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,
     VisaComponent,
     TransaccionesResumenComponent,
     SegurosComponent,
     SegurosResumenComponent,
-    SegurosContratarComponent
+    SegurosContratarComponent,
+    AyudaComponent
   ],
   imports: [
     BrowserModule,
