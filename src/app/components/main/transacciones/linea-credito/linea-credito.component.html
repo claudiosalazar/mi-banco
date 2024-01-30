@@ -76,7 +76,7 @@
               </tr>
             </tbody>
           </table>
-          <nav class="d-flex justify-content-center mt-3">
+          <nav class="d-flex justify-content-center mt-3" *ngIf="datosActuales.length > 5">
             <ul class="pagination">
               <li class="page-item" [class.disabled]="currentPage === 1">
                 <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
