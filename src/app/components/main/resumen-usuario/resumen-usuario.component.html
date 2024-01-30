@@ -65,9 +65,10 @@
         </div>
         <div class="col-md-6">
           <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
-            <h4 class="d-flex justify-content-between mt-3">Seguro hogar</h4>
-            <p>Contrata Seguro Hogar, oferta exclusiva para el presente mes.</p>
-            <p>Valor mensual: {{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</p>
+            <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
+            <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
+            <p>Valor mensual: <strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</strong></p>
+            <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
           </div>
         </div>
         <div class="col-md-6">

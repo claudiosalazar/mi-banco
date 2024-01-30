@@ -18,6 +18,32 @@ export interface DatosUsuarioActual {
       ofertaVisa: number
     },
 
+    // Seguros
+    seguros: {
+      seguroHogar: {
+        plan: string;
+        cuotaMensual: number;
+        cuotas: number;
+        compania: string;
+        nSeguro: number;
+        fechaInicio: number;
+        fechaTermino: number;
+        poliza: number;
+        formaPago: string;
+      };
+      seguroVida: {
+        plan: string;
+        cuotaMensual: number;
+        cuotas: number;
+        compania: string;
+        nSeguro: number;
+        fechaInicio: number;
+        fechaTermino: number;
+        poliza: number;
+        formaPago: string;
+      }
+    }
+
     // Montos de productos
     montosUsuario: {
       ctaCte: {

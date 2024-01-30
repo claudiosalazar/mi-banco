@@ -9,8 +9,32 @@
     "direccion": "Caller 677, Temuco, Chile.",
     "ofertasProductos": {
       "creditoPre": "10000000",
-      "seguroOferta": "15000",
+      "seguroOferta": "0.12",
       "ofertaVisa": "0.50"
+    },
+    "seguros": {
+      "seguroHogar": {
+        "plan": "Plan Full Hogar",
+        "cuotaMensual": "0.15",
+        "cuotas": "12",
+        "compania": "Mi Banco Seguros S.A.",
+        "nSeguro": "1234567890",
+        "fechaInicio": "2022-01-01",
+        "fechaTermino": "2023-01-01",
+        "poliza": "0987654321",
+        "formaPago": "Cuenta Corriente"
+      },
+      "seguroVida": {
+        "plan": "Plan Basico Vida",
+        "cuotaMensual": "0.10",
+        "cuotas": "24",
+        "compania": "Mi Banco Seguros S.A.",
+        "nSeguro": "1234567890",
+        "fechaInicio": "2022-01-01",
+        "fechaTermino": "2023-01-01",
+        "poliza": "0987654321",
+        "formaPago": "Cuenta Corriente"
+      }
     },
     "montosUsuario": {
       "ctaCte": {

@@ -1,9 +1,95 @@
 <div class="container">
   <div class="row">
-    <div class="mt-5">
-      <h1>Mis Seguros</h1>
-      <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
+    <div class="col-12">
+      <div class="my-5">
+        <h1>Mis Seguros</h1>
+      </div>
     </div>
-    
+    <div class="col-md-12">
+      <div class="card p-4 mb-4">
+        <div class="row">
+          <div class="col-12 d-flex align-items-center mb-4">
+            <div class="pe-4">
+              <span class="material-symbols-outlined fs-2">home</span>
+            </div>
+            <h4>Seguro Hogar</h4>
+          </div>
+          <div class="col-5">
+            <div class="d-flex">
+              <div>
+                <p class="mb-0">Plan</p>
+                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.plan }}</strong></p>
+                <p class="mb-0">Cuota Mensual</p>
+                <p><strong>UF {{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.cuotaMensual }}</strong></p>
+                <p class="mb-0">Cuotas</p>
+                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.cuotas }}</strong></p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <p class="mb-0">Compañia</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.compania }}</strong></p>
+            <p class="mb-0">N° Seguro</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.nSeguro }}</strong></p>
+            <p class="mb-0">Vigencia</p>
+            <p class="mb-0">Inicio <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.fechaTermino }}</strong></p>
+          </div>
+          <div class="col">
+            <p class="mb-0">Póliza</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.poliza }}</strong></p>
+            <p class="mb-0">Forma de pago</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.formaPago }} N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN }}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="card p-4 mb-4">
+        <div class="row">
+          <div class="col-12 d-flex align-items-center mb-4">
+            <div class="pe-4">
+              <span class="material-symbols-outlined fs-2">favorite</span>
+            </div>
+            <h4>Seguro Vida</h4>
+          </div>
+          <div class="col-5">
+            <div class="d-flex">
+              <div>
+                <p class="mb-0">Plan</p>
+                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.plan }}</strong></p>
+                <p class="mb-0">Cuota Mensual</p>
+                <p><strong>UF {{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.cuotaMensual }}</strong></p>
+                <p class="mb-0">Cuotas</p>
+                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.cuotas }}</strong></p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <p class="mb-0">Compañia</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.compania }}</strong></p>
+            <p class="mb-0">N° Seguro</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.nSeguro }}</strong></p>
+            <p class="mb-0">Vigencia</p>
+            <p class="mb-0">Inicio <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.fechaTermino }}</strong></p>
+          </div>
+          <div class="col">
+            <p class="mb-0">Póliza</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.poliza }}</strong></p>
+            <p class="mb-0">Forma de pago</p>
+            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.formaPago }} N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN }}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card p-5">
+        <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
+        <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
+        <p>Valor mensual: <strong>{{ datosUsuarioActual?.datosUsuario?.ofertasProductos?.seguroOferta ?? 0 | pesos }}</strong></p>
+        <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
+      </div>
+    </div>
   </div>
 </div>
