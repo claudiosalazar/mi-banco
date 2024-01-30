@@ -15,5 +15,6 @@ export class FooterComponent {
   onLinkClick(title: string) {
     this.footerLinkService.changeTitle(title);
     this.router.navigate(['/mibanco/ayuda', title]);
+    window.scrollTo(0, 0);
   }
 }
