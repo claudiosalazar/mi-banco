@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FooterLinkService } from '../../../services/footerLink.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ayuda',
@@ -8,9 +9,17 @@ import { FooterLinkService } from '../../../services/footerLink.service';
 export class AyudaComponent {
   title: string | undefined;
 
-  constructor(private footerLinkService: FooterLinkService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private footerLinkService: FooterLinkService
+  ) { }
 
   ngOnInit() {
-    this.footerLinkService.currentTitle.subscribe(title => this.title = title);
+    this.route.params.subscribe((params: { [x: string]: string | undefined; }) => {
+      this.title = params['id'];
+      if (this.title !== undefined) {
+        this.footerLinkService.changeTitle(this.title);
+      }
+    });
   }
 }

@@ -1,9 +1,30 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 mt-5">
-      <h1>{{ title }}</h1>
-      <!-- <h1>{{ title }}</h1>
-      <p>{{ content }}</p> -->
+
+    <div class="col-12 mt-5" id="centro-de-ayuda" *ngIf="title === 'centro-de-ayuda'">
+      <h1>Centro de Ayuda</h1>
+      asdasd
     </div>
+
+    <div class="col-12 mt-5" id="emergencias-bancarias" *ngIf="title === 'emergencias-bancarias'">
+      <h1>Emergencias Bancarias</h1>
+      asdasd
+    </div>
+    
+    <div class="col-12 mt-5" id="bloqueo-tarjeta-debito" *ngIf="title === 'bloqueo-tarjeta-debito'">
+      <h1>Bloqueo de Tarjeta de Débito</h1>
+      asdasd
+    </div>
+
+    <div class="col-12 mt-5" id="bloqueo-tarjeta-credito" *ngIf="title === 'bloqueo-tarjeta-credito'">
+      <h1>Bloqueo de Tarjeta de Crédito</h1>
+      asdasd
+    </div>
+
+    <div class="col-12 mt-5" id="canales-de-atencion" *ngIf="title === 'canales-de-atencion'">
+      <h1>Canales de Atención</h1>
+      asdasd
+    </div>
+
   </div>
 </div>

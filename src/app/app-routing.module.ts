@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       { path: 'contactanos', component: ContactanosComponent },
       { path: 'mis-datos', component: DatosUsuarioComponent },
-      { path: 'ayuda', component: AyudaComponent }
+      { path: 'ayuda/:id', component: AyudaComponent }
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
