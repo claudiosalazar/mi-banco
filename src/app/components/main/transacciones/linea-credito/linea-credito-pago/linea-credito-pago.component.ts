@@ -19,6 +19,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   pagoTotalCheck = false;
   montoApagarOption = 'otroMontoPago';
   otroMontoPago: any;
+  emailModificado = false;
 
   form = this.fb.group({
     productoParaPago: ['', Validators.required],
@@ -69,6 +70,8 @@ export class LineaCreditoPagoComponent implements OnInit {
     const numericValue = parseFloat(value.replace(/\D/g, ''));
     this.otroMontoPago = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CO');
   }
+
+  
 
   onSubmit(): void {
     if (this.form.valid) {

@@ -15,7 +15,7 @@
               <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
               <hr class="mb-4">
               <div class="form-floating">
-                <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago">
+                <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago" [ngClass]="{'is-invalid': form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched}">
                   <option selected>-</option>
                   <option value="0">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
                   <option value="1">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
@@ -50,7 +50,7 @@
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" [(ngModel)]="otroMontoPago" (ngModelChange)="onOtroMontoPagoChange($event)">
+                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" [(ngModel)]="otroMontoPago" (ngModelChange)="onOtroMontoPagoChange($event)" [ngClass]="{'is-invalid': form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched}">
                 <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
                   Debe ingresar un monto mayor a 0.
                 </div>
@@ -60,9 +60,9 @@
             <div class="col-12">
               <h3>Enviar comprobante a:</h3>
               <div class="form-floating">
-                <input type="text" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante">
+                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}">
                 <label for="emailComprobante">Email</label>
-                <div *ngIf="form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched" class="invalid-feedback d-block">
+                <div *ngIf="form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched && emailModificado" class="invalid-feedback d-block">
                   Debe ingresar un email válido.
                 </div>
               </div>
