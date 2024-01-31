@@ -60,10 +60,12 @@
             <div class="col-12">
               <h3>Enviar comprobante a:</h3>
               <div class="form-floating">
-                <!-- <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}"> -->
-                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}">
+                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.dirty}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
                 <label for="emailComprobante">Email</label>
-                <div *ngIf="form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched && emailModificado" class="invalid-feedback d-block">
+                <div *ngIf="form.get('emailComprobante')?.errors?.['required'] && form.get('emailComprobante')?.dirty" class="invalid-feedback d-block">
+                  Debe ingresar un email.
+                </div>
+                <div *ngIf="(form.get('emailComprobante')?.errors?.['email'] || form.get('emailComprobante')?.errors?.['pattern']) && form.get('emailComprobante')?.dirty" class="invalid-feedback d-block">
                   Debe ingresar un email válido.
                 </div>
               </div>
