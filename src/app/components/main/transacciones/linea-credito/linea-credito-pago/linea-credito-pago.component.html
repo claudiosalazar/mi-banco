@@ -26,29 +26,27 @@
               <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
             </div>
     
-            <div class="col-12 mb-5">
+            <div class="col-12 mb-5" id="montoApagar">
               <h3>Monto a Pagar</h3>
               <div class="d-flex mb-4">
                 <div class="form-check me-3">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                  <label class="form-check-label" for="flexRadioDefault1">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="pagoTotalCheck" (change)="onMontoApagarOptionChange('pagoTotal')">
+                  <label class="form-check-label" for="pagoTotalCheck">
                     Pago Total
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                  <label class="form-check-label" for="flexRadioDefault2">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="otroMontoCheck" checked (change)="onMontoApagarOptionChange('otroMontoPago')">
+                  <label class="form-check-label" for="otroMontoCheck">
                     Otro Monto
                   </label>
                 </div>
               </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="pagoTotal">
-                <label for="pagoTotal">Pago Total</label>
+              <div class="input-group" *ngIf="montoApagarOption === 'pagoTotal'">
+                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal">
               </div>
-              <div class="form-floating">
-                <input type="text" class="form-control" id="montoPago" placeholder="Ingresar monto a pagar">
-                <label for="montoPago">Monto</label>
+              <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
+                <input type="text" class="form-control" id="otroMontoPago" placeholder="Ingresar monto a pagar">
               </div>
             </div>
     

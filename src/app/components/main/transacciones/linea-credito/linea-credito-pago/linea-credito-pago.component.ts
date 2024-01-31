@@ -13,12 +13,15 @@ export class LineaCreditoPagoComponent implements OnInit {
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
-  cupoUtilizado: number | undefined;
+  cupoUtilizado: any;
+  pagoTotalCheck = false;
+  montoApagarOption = 'otroMontoPago';
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
-    private saldosService: SaldosService
+    private saldosService: SaldosService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -47,4 +50,9 @@ export class LineaCreditoPagoComponent implements OnInit {
       this.productoSeleccionado = target.value;
     }
   }
+
+  onMontoApagarOptionChange(option: string): void {
+    this.montoApagarOption = option;
+  }
+  
 }
