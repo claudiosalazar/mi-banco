@@ -9,6 +9,7 @@ import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuari
 })
 export class LineaCreditoPagoComponent implements OnInit {
   saldoCtaCte: number | undefined;
+  saldoLineaCredito: number | undefined;
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
@@ -27,6 +28,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
       this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
+      this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
       this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
     });
   }
