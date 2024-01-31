@@ -37,6 +37,11 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDatosUsuario();
+    this.form = this.fb.group({
+      productoParaPago: ['', Validators.required],
+      otroMontoPago: ['', [Validators.required, Validators.min(1)]],
+      emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
+    });
   }
 
   getDatosUsuario(): void {
@@ -71,7 +76,15 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.otroMontoPago = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CO');
   }
 
-  
+  onEmailChange(): void {
+    this.emailModificado = true;
+    if (this.form.get('emailComprobante')?.value === '') {
+      this.form.get('emailComprobante')?.setValidators([Validators.required, Validators.email]);
+    } else {
+      this.form.get('emailComprobante')?.setValidators([Validators.email]);
+    }
+    this.form.get('emailComprobante')?.updateValueAndValidity();
+  }
 
   onSubmit(): void {
     if (this.form.valid) {

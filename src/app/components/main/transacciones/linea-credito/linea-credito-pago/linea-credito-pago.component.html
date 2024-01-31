@@ -60,7 +60,8 @@
             <div class="col-12">
               <h3>Enviar comprobante a:</h3>
               <div class="form-floating">
-                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}">
+                <!-- <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}"> -->
+                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched}">
                 <label for="emailComprobante">Email</label>
                 <div *ngIf="form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched && emailModificado" class="invalid-feedback d-block">
                   Debe ingresar un email válido.
