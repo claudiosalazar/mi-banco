@@ -54,7 +54,7 @@
             <div class="col-12">
               <h3>Enviar comprobante a:</h3>
               <div class="form-floating">
-                <input type="text" class="form-control" id="emailComprobante" >
+                <input type="text" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email">
                 <label for="emailComprobante">Email</label>
               </div>
             </div>
