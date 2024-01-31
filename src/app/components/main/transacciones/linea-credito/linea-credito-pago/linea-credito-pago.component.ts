@@ -11,6 +11,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   saldoCtaCte: number | undefined;
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
+  productoSeleccionado: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -34,5 +35,12 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.montosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
     });
+  }
+
+  onProductoSeleccionado(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    if (target) {
+      this.productoSeleccionado = target.value;
+    }
   }
 }
