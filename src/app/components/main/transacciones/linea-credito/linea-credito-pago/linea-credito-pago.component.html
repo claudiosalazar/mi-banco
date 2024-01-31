@@ -7,7 +7,7 @@
         </div>
 
         <div class="col-12">
-          <div class="row">
+          <form class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="col-12 mb-5" *ngIf="datosUsuarioActual">
               <h3>Datos Pago</h3>
               <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizado ?? 0 | pesos}}</strong></p>
@@ -15,12 +15,15 @@
               <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
               <hr class="mb-4">
               <div class="form-floating">
-                <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)">
+                <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago">
                   <option selected>-</option>
                   <option value="0">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
                   <option value="1">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
                 </select>
                 <label for="productoParaPago">Seleccione producto para el pago</label>
+                <div *ngIf="form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched" class="invalid-feedback d-block">
+                  Debe seleccionar un producto para el pago.
+                </div>
               </div>
               <small class="pt-2 d-block" *ngIf="productoSeleccionado === '0'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
               <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
@@ -47,27 +50,34 @@
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" id="otroMontoPago" placeholder="Ingresar monto a pagar" [(ngModel)]="otroMontoPago" (ngModelChange)="onOtroMontoPagoChange($event)">
+                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" [(ngModel)]="otroMontoPago" (ngModelChange)="onOtroMontoPagoChange($event)">
+                <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
+                  Debe ingresar un monto mayor a 0.
+                </div>
               </div>
             </div>
     
             <div class="col-12">
               <h3>Enviar comprobante a:</h3>
               <div class="form-floating">
-                <input type="text" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email">
+                <input type="text" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante">
                 <label for="emailComprobante">Email</label>
+                <div *ngIf="form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.touched" class="invalid-feedback d-block">
+                  Debe ingresar un email válido.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-5">
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-3">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Pagar</button>
               </div>
             </div>
     
-          </div>
+          </form>
         </div>
     
-        <div class="col-12 mt-5">
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-secondary me-3">Cancelar</button>
-            <button type="button" class="btn btn-primary">Pagar</button>
-          </div>
-        </div>
       </div>
     </div>
 

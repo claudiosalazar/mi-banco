@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../../../../services/datos-usuario.service';
 import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-linea-credito-pago',
   templateUrl: './linea-credito-pago.component.html'
 })
 export class LineaCreditoPagoComponent implements OnInit {
+
   saldoCtaCte: number | undefined;
   saldoLineaCredito: number | undefined;
   saldoVisa: number | undefined;
@@ -18,10 +20,17 @@ export class LineaCreditoPagoComponent implements OnInit {
   montoApagarOption = 'otroMontoPago';
   otroMontoPago: any;
 
+  form = this.fb.group({
+    productoParaPago: ['', Validators.required],
+    otroMontoPago: ['', [Validators.required, Validators.min(1)]],
+    emailComprobante: ['', [Validators.required, Validators.email]]
+  });
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
     private saldosService: SaldosService,
+    private fb: FormBuilder
     
   ) { }
 
@@ -59,6 +68,14 @@ export class LineaCreditoPagoComponent implements OnInit {
   onOtroMontoPagoChange(value: string): void {
     const numericValue = parseFloat(value.replace(/\D/g, ''));
     this.otroMontoPago = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CO');
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      // Aquí puedes manejar el envío del formulario
+    } else {
+      this.form.markAllAsTouched(); // Marca todos los form controls como "touched" para que se muestren los mensajes de error
+    }
   }
   
 }
