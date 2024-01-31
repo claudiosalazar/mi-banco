@@ -16,6 +16,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   cupoUtilizado: any;
   pagoTotalCheck = false;
   montoApagarOption = 'otroMontoPago';
+  otroMontoPago: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -53,6 +54,11 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   onMontoApagarOptionChange(option: string): void {
     this.montoApagarOption = option;
+  }
+
+  onOtroMontoPagoChange(value: string): void {
+    const numericValue = parseFloat(value.replace(/\D/g, ''));
+    this.otroMontoPago = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CO');
   }
   
 }

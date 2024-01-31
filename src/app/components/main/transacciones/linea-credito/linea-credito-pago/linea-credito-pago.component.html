@@ -43,10 +43,11 @@
                 </div>
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'pagoTotal'">
-                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal">
+                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal" [value]="cupoUtilizado | pesos" disabled>
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
-                <input type="text" class="form-control" id="otroMontoPago" placeholder="Ingresar monto a pagar">
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" id="otroMontoPago" placeholder="Ingresar monto a pagar" [(ngModel)]="otroMontoPago" (ngModelChange)="onOtroMontoPagoChange($event)">
               </div>
             </div>
     
