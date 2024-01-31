@@ -10,6 +10,8 @@ import { ContactanosComponent } from './components/main/contactanos/contactanos.
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
+import { LineaCreditoPagoComponent } from './components/main/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
+import { LineaCreditoComprobanteComponent } from './components/main/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
 import { VisaComponent } from './components/main/transacciones/visa/visa.component';
 import { TransaccionesResumenComponent } from './components/main/transacciones/transacciones-resumen/transacciones-resumen.component';
 import { SegurosComponent } from './components/main/seguros/seguros.component';
@@ -28,6 +30,8 @@ const routes: Routes = [
           { path: 'resumen', component: TransaccionesResumenComponent },
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
+          { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
+          { path: 'comprobante-pago', component: LineaCreditoComprobanteComponent },
           { path: 'visa', component: VisaComponent },
         ]
       },

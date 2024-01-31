@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row">
+    <div class="col-7 mt-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="mb-5">Pago Linea de Crédito</h1>
+        </div>
+
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12 mb-5">
+              <h3>Datos Pago</h3>
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelectGrid">
+                  <option selected>-</option>
+                  <option value="1">Cuenta Corriente N° 4563</option>
+                  <option value="1">Visa N° 4563</option>
+                </select>
+                <label for="floatingSelectGrid">Seleccione producto para el pago</label>
+              </div>
+            </div>
+    
+            <div class="col-12 mb-5">
+              <h3>Monto a Pagar</h3>
+              <div class="d-flex mb-4">
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Pago Total
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Otro Monto
+                  </label>
+                </div>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGrid" placeholder="Monto">
+                <label for="floatingInputGrid">Monto</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGrid" placeholder="Monto">
+                <label for="floatingInputGrid">Monto</label>
+              </div>
+            </div>
+    
+            <div class="col-12">
+              <h3>Enviar comprobante a:</h3>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInputGrid" placeholder="Email">
+                <label for="floatingInputGrid">cargar correo usuario</label>
+              </div>
+            </div>
+    
+          </div>
+        </div>
+    
+        <div class="col-12 mt-5">
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-3">Cancelar</button>
+            <button type="button" class="btn btn-primary">Pagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-5">
+      <div class="h-75 p-5 bg-body-tertiary border rounded-3 mt-5 ms-4">
+        <h4 class="d-flex justify-content-between">Seguro Accidentes</h4>
+        <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
+        <!-- <p>Valor mensual: <strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</strong></p> -->
+        <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
+      </div>
+    </div>
+
+  </div>
+</div>

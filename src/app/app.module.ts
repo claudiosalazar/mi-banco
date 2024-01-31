@@ -27,6 +27,8 @@ import { SegurosComponent } from './components/main/seguros/seguros.component';
 import { SegurosResumenComponent } from './components/main/seguros/seguros-resumen/seguros-resumen.component';
 import { SegurosContratarComponent } from './components/main/seguros/seguros-contratar/seguros-contratar.component';
 import { AyudaComponent } from './components/main/ayuda/ayuda.component';
+import { LineaCreditoPagoComponent } from './components/main/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
+import { LineaCreditoComprobanteComponent } from './components/main/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { AyudaComponent } from './components/main/ayuda/ayuda.component';
     SegurosComponent,
     SegurosResumenComponent,
     SegurosContratarComponent,
-    AyudaComponent
+    AyudaComponent,
+    LineaCreditoPagoComponent,
+    LineaCreditoComprobanteComponent
   ],
   imports: [
     BrowserModule,
