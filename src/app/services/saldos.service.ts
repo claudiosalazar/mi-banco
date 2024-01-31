@@ -1,7 +1,5 @@
 import { DatosUsuarioActual } from './../../assets/models/datos-usuario.model';
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import * as data from '../../assets/models/datos-usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +21,13 @@ export class SaldosService {
     let totalAbonosLineaCre: number = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.abono, 0) as number;
     let saldoFinalLineaCre = saldoInicialLineaCre - totalCargosLineaCre + totalAbonosLineaCre;
     return saldoFinalLineaCre;
+  }
+
+  calcularDiferenciaLineaCre(datosLineaCre: DatosUsuarioActual): number {
+    let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
+    let saldoFinalLineaCre = this.calcularSaldoLineaCre(datosLineaCre);
+    let cupoUtilizado = saldoInicialLineaCre - saldoFinalLineaCre;
+    return cupoUtilizado;
   }
 
   calcularSaldoVisa(datosVisa: DatosUsuarioActual): number {

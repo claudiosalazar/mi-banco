@@ -13,6 +13,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
+  cupoUtilizado: number | undefined;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -29,6 +30,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       this.datosUsuarioActual = data;
       this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
       this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
+      this.cupoUtilizado = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
       this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
     });
   }
