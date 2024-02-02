@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../../../../services/datos-usuario.service';
 import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-linea-credito-pago',
@@ -16,12 +16,14 @@ export class LineaCreditoPagoComponent implements OnInit {
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
   cupoUtilizado: any;
-  pagoTotalCheck = false;
   montoApagarOption = 'otroMontoPago';
   otroMontoPago: any;
   emailModificado = false;
+  mostrarPagoTotalCheck: boolean = false;
+  mostrarOtroMontoCheck: boolean = true;
 
-  form = this.fb.group({
+  form: FormGroup = this.fb.group({
+    monto: ['otroMontoCheck'],
     productoParaPago: ['', Validators.required],
     otroMontoPago: ['', [Validators.required, Validators.min(1)]],
     emailComprobante: ['', [Validators.required, Validators.email]]
@@ -38,6 +40,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   ngOnInit(): void {
     this.getDatosUsuario();
     this.form = this.fb.group({
+      monto: ['otroMontoCheck'],
       productoParaPago: ['', Validators.required],
       otroMontoPago: ['', [Validators.required, Validators.min(1)]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
@@ -72,8 +75,10 @@ export class LineaCreditoPagoComponent implements OnInit {
   }
 
   onOtroMontoPagoChange(value: string): void {
-    const numericValue = parseFloat(value.replace(/\D/g, ''));
-    this.otroMontoPago = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CO');
+    if (value === 'otroMontoCheck') {
+      this.mostrarOtroMontoCheck = true;
+      this.mostrarPagoTotalCheck = false;
+    }
   }
 
   onEmailChange(): void {
