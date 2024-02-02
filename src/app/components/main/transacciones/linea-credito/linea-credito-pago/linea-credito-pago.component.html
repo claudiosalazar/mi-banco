@@ -16,17 +16,17 @@
               <hr class="mb-4">
               <div class="form-floating">
                 <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago" [ngClass]="{'is-invalid': form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched}">
-                  <option selected>-</option>
-                  <option value="0">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
-                  <option value="1">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
+                  <option value="0">-</option>
+                  <option value="1">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
+                  <option value="2">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
                 </select>
                 <label for="productoParaPago">Seleccione producto para el pago</label>
                 <div *ngIf="form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched" class="invalid-feedback d-block">
                   Debe seleccionar un producto para el pago.
                 </div>
               </div>
-              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '0'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
-              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
+              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
+              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
             </div>
     
             <div class="col-12 mb-5" id="montoApagar">
@@ -73,7 +73,7 @@
 
             <div class="col-12 mt-5">
               <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary me-3">Cancelar</button>
+                <button type="button" class="btn btn-secondary me-3" (click)="onCancelarClick()">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Pagar</button>
               </div>
             </div>

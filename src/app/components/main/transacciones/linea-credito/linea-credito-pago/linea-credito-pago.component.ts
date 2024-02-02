@@ -41,7 +41,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.form = this.fb.group({
       monto: ['otroMontoCheck'],
-      productoParaPago: ['', Validators.required],
+      productoParaPago: [0, Validators.required],
       otroMontoPago: ['', [Validators.required, Validators.min(1)]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
     });
@@ -100,9 +100,15 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      // Aquí puedes manejar el envío del formulario
     } else {
-      this.form.markAllAsTouched(); // Marca todos los form controls como "touched" para que se muestren los mensajes de error
+      this.form.markAllAsTouched();
+    }
+  }
+
+  onCancelarClick(): void {
+    const control = this.form.get('productoParaPago');
+    if (control) {
+      control.setValue(0);
     }
   }
   
