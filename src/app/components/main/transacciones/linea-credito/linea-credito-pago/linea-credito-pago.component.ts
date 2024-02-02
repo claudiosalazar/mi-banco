@@ -26,7 +26,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   form: FormGroup = this.fb.group({
     monto: ['otroMontoCheck'],
     productoParaPago: ['', Validators.required],
-    otroMontoPago: ['', [Validators.required, Validators.min(1)]],
+    otroMontoPago: ['', [Validators.required, Validators.min(1), ]],
     emailComprobante: ['', [Validators.required, Validators.email]]
   });
 
@@ -43,7 +43,11 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.form = this.fb.group({
       monto: ['otroMontoCheck'],
       productoParaPago: [0, Validators.required, this.nonZeroValidator],
-      otroMontoPago: ['', [Validators.required, Validators.min(1)]],
+      otroMontoPago: ['', [
+        Validators.required,
+        Validators.min(1),
+        Validators.max((this.saldoCtaCte ?? 0) || (this.saldoVisa ?? 0)),
+      ]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
     });
   }
@@ -108,7 +112,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
     } else {
-      this.form.markAllAsTouched();
+      this.form.get('otroMontoPago')?.markAsTouched();
     }
   }
 
