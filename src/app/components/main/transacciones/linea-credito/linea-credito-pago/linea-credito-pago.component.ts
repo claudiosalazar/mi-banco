@@ -113,11 +113,23 @@ export class LineaCreditoPagoComponent implements OnInit {
   }
 
   onCancelarClick(): void {
-    const control = this.form.get('productoParaPago');
-    if (control) {
-      control.setValue(0);
+    // Logica para select
+    const controlSelect = this.form.get('productoParaPago');
+    if (controlSelect) {
+      controlSelect.setValue(0);
     }
     this.productoSeleccionado = '0';
+
+    // Logica para monto
+    const controlMonto = this.form.get('monto');
+
+    if (controlMonto && controlMonto.value === 'pagoTotalCheck') {
+      controlMonto.setValue('otroMontoCheck'); // Esto cambiará la selección del radio 'pagoTotalCheck' al radio 'otroMontoCheck'
+    }
+
+    if (this.montoApagarOption === 'pagoTotal') {
+      this.montoApagarOption = 'otroMontoPago'; // Cambia la opción a 'otroMontoPago'
+    }
   }
   
 }
