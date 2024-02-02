@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../../../../services/datos-usuario.service';
 import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-linea-credito-pago',
@@ -41,10 +41,14 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.form = this.fb.group({
       monto: ['otroMontoCheck'],
-      productoParaPago: [0, Validators.required],
+      productoParaPago: [0, Validators.required, this.nonZeroValidator],
       otroMontoPago: ['', [Validators.required, Validators.min(1)]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
     });
+  }
+
+  nonZeroValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value === 0 ? { nonZero: true } : null;
   }
 
   getDatosUsuario(): void {
@@ -110,6 +114,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     if (control) {
       control.setValue(0);
     }
+    this.productoSeleccionado = '0';
   }
   
 }
