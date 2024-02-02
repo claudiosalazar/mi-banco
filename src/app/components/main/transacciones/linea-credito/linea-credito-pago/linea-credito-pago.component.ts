@@ -74,10 +74,17 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.montoApagarOption = option;
   }
 
-  onOtroMontoPagoChange(value: string): void {
-    if (value === 'otroMontoCheck') {
-      this.mostrarOtroMontoCheck = true;
-      this.mostrarPagoTotalCheck = false;
+  onOtroMontoPagoChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (!target.value) {
+      return;
+    }
+  
+    const numericValue = parseFloat(target.value.replace(/\D/g, ''));
+    const formattedValue = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CL', { minimumFractionDigits: 0 });
+    const otroMontoPagoControl = this.form.get('otroMontoPago');
+    if (otroMontoPagoControl) {
+      otroMontoPagoControl.setValue(formattedValue, { emitEvent: false });
     }
   }
 
