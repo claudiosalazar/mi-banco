@@ -130,6 +130,12 @@ export class LineaCreditoPagoComponent implements OnInit {
     if (this.montoApagarOption === 'pagoTotal') {
       this.montoApagarOption = 'otroMontoPago'; // Cambia la opción a 'otroMontoPago'
     }
+
+    const controlOtroMontoPago = this.form.get('otroMontoPago');
+
+    if (controlOtroMontoPago) {
+      controlOtroMontoPago.setValue(''); // Esto limpiará el input 'otroMontoPago'
+    }
   }
   
 }
