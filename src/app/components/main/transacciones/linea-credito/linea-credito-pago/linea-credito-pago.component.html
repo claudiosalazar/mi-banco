@@ -50,7 +50,7 @@
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
                 <span class="input-group-text">$</span>
-                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" (input)="onOtroMontoPagoChange($event)" [ngClass]="{'is-invalid': form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched}">
+                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" (input)="onOtroMontoPagoChange($event)" [ngClass]="{'is-invalid': form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched}"  >
                 <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
                   <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
                     <div *ngIf="form.get('otroMontoPago')?.errors?.['required']">
@@ -59,7 +59,7 @@
                     <div *ngIf="form.get('otroMontoPago')?.errors?.['min']">
                       Debe ingresar un monto mayor a 0.
                     </div>
-                    <div *ngIf="form.get('otroMontoPago')?.errors?.['max']">
+                    <div *ngIf="form.get('otroMontoPago')?.errors?.['max'] && form.get('otroMontoPago')?.dirty">
                       El monto ingresado supera el saldo disponible.
                     </div>
                   </div>

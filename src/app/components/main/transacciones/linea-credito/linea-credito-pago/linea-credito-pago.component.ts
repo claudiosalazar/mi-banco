@@ -11,9 +11,9 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 })
 export class LineaCreditoPagoComponent implements OnInit {
 
-  saldoCtaCte: number | undefined;
+  saldoCtaCte: any;
   saldoLineaCredito: number | undefined;
-  saldoVisa: number | undefined;
+  saldoVisa: any;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
   cupoUtilizado: any;
@@ -30,6 +30,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     emailComprobante: ['', [Validators.required, Validators.email]]
   });
 
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
@@ -43,12 +44,26 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.form = this.fb.group({
       monto: ['otroMontoCheck'],
       productoParaPago: [0, Validators.required, this.nonZeroValidator],
-      otroMontoPago: ['', [
+      otroMontoPago: [{value: '', disabled: true}, [
         Validators.required,
         Validators.min(1),
         Validators.max((this.saldoCtaCte ?? 0) || (this.saldoVisa ?? 0)),
       ]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
+    });
+  
+    this.form.get('productoParaPago')?.valueChanges.subscribe(value => {
+      if (value == '1' || value == '2') {
+        this.form.get('otroMontoPago')?.enable();
+      } else {
+        this.form.get('otroMontoPago')?.disable();
+      }
+    });
+  
+    this.form.get('otroMontoPago')?.valueChanges.subscribe(value => {
+      if (value <= (this.saldoCtaCte ?? 0) && value <= (this.saldoVisa ?? 0)) {
+        this.form.get('otroMontoPago')?.setErrors(null);
+      }
     });
   }
 
