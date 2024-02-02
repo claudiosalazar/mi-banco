@@ -4,6 +4,7 @@ import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-linea-credito-pago',
   templateUrl: './linea-credito-pago.component.html'
@@ -47,8 +48,10 @@ export class LineaCreditoPagoComponent implements OnInit {
     });
   }
 
-  nonZeroValidator(control: AbstractControl): ValidationErrors | null {
-    return control.value === 0 ? { nonZero: true } : null;
+  nonZeroValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return new Promise(resolve => {
+      resolve(control.value === 0 ? { nonZero: true } : null);
+    });
   }
 
   getDatosUsuario(): void {
