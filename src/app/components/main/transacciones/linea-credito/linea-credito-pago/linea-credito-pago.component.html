@@ -31,10 +31,7 @@
     
             <div class="col-12 mb-5" id="montoApagar">
               <h3>Monto a Pagar</h3>
-
               <div class="d-flex mb-4">
-              
-
                 <div class="form-check me-3">
                   <input class="form-check-input" type="radio" formControlName="monto" value="pagoTotalCheck" id="pagoTotalCheck" (change)="onMontoApagarOptionChange('pagoTotal')">
                   <label class="form-check-label" for="pagoTotalCheck">
@@ -47,15 +44,7 @@
                     Otro Monto
                   </label>
                 </div>
-
-
-
-
-
               </div>
-
-
-
               <div class="input-group" *ngIf="montoApagarOption === 'pagoTotal'">
                 <input type="text" class="form-control" id="pagoTotal" for="pagoTotal" [value]="cupoUtilizado | pesos" disabled>
               </div>
@@ -66,10 +55,6 @@
                   Debe ingresar un monto mayor a 0.
                 </div>
               </div>
-
-
-
-
             </div>
     
             <div class="col-12">

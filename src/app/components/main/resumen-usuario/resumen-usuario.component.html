@@ -67,7 +67,7 @@
           <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
             <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
             <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
-            <p>Valor mensual: <strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</strong></p>
+            <p>Valor mensual: <strong>UF {{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta }}</strong></p>
             <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
           </div>
         </div>
@@ -76,7 +76,7 @@
             <h4 class="d-flex justify-content-between">Paga con Visa este mes y
             </h4>
             <p>Obten un descuento en restaurantes de:</p>
-            <p class="display-6"><strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.ofertaVisa| percent }}</strong></p>
+            <p class="display-6"><strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.ofertaVisa | percent }}</strong></p>
           </div>
         </div>
       </div>
