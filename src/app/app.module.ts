@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { MiBancoComponent } from './mi-banco.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 
-import { FormsModule } from '@angular/forms';
+
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resumen-usuario.component';
@@ -33,7 +33,7 @@ import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pag
 
 @NgModule({
   declarations: [
-    AppComponent,
+    MiBancoComponent,
     LoginComponent,
     MainComponent,
     HeaderComponent,
@@ -63,6 +63,6 @@ import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pag
     ReactiveFormsModule
   ],
   providers: [DatosUsuarioService],
-  bootstrap: [AppComponent]
+  bootstrap: [MiBancoComponent]
 })
 export class AppModule { }

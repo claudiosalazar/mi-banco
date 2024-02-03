@@ -23,6 +23,14 @@ export class SaldosService {
     return saldoFinalLineaCre;
   }
 
+  calcularSaldoVisa(datosVisa: DatosUsuarioActual): number {
+    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
+    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let totalAbonosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.abono, 0) as number;
+    let saldoFinalVisa = saldoInicialVisa - totalCargosVisa + totalAbonosVisa;
+    return saldoFinalVisa;
+  }
+
   calcularDiferenciaLineaCre(datosLineaCre: DatosUsuarioActual): number {
     let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
     let saldoFinalLineaCre = this.calcularSaldoLineaCre(datosLineaCre);
@@ -30,11 +38,10 @@ export class SaldosService {
     return cupoUtilizado;
   }
 
-  calcularSaldoVisa(datosVisa: DatosUsuarioActual): number {
+  calcularDiferenciaVisa(datosVisa: DatosUsuarioActual): number {
     let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
-    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let totalAbonosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.abono, 0) as number;
-    let saldoFinalVisa = saldoInicialVisa - totalCargosVisa + totalAbonosVisa;
-    return saldoFinalVisa;
+    let saldoFinalVisa = this.calcularSaldoVisa(datosVisa);
+    let cupoUtilizadoVisa = saldoInicialVisa - saldoFinalVisa;
+    return cupoUtilizadoVisa;
   }
 }
