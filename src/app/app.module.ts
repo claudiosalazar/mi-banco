@@ -29,6 +29,7 @@ import { SegurosContratarComponent } from './components/main/seguros/seguros-con
 import { AyudaComponent } from './components/main/ayuda/ayuda.component';
 import { LineaCreditoPagoComponent } from './components/main/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { LineaCreditoComprobanteComponent } from './components/main/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
+import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pago/visa-pago.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { LineaCreditoComprobanteComponent } from './components/main/transaccione
     SegurosContratarComponent,
     AyudaComponent,
     LineaCreditoPagoComponent,
-    LineaCreditoComprobanteComponent
+    LineaCreditoComprobanteComponent,
+    VisaPagoComponent
   ],
   imports: [
     BrowserModule,

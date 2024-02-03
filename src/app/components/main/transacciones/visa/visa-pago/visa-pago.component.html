@@ -1,0 +1,227 @@
+<div class="container">
+  <div class="row">
+    <div class="col-7 mt-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="mb-5">Pago Visa</h1>
+          <div class="card p-4">
+
+            <h5>Datos de pago</h5>
+            <div class="row">
+
+              <!-- Datos del productos -->
+              <div class="col-12 d-flex justify-content-between">
+                <div>
+                  <p class="mb-0">Visa N°: <strong>6546544</strong></p>
+                  <p>Cupo Utilizado: <strong>000000</strong></p>
+                </div>
+                <div>
+                  <p class="mb-0">Cupo Total: <strong>000000</strong></p>
+                  <p>Cupo Disponible: <strong>000000</strong></p>
+                </div>
+              </div>
+
+              <hr>
+
+              <!-- Inicio formulario -->
+              <form>
+                <!-- Producto para pago -->
+                <div class="col-12 mb-4">
+                  <h6>Seleccione un producto para realizar el pago</h6>
+                  <div class="form-floating">
+                    <select class="form-select" id="selectProducto" aria-label="Floating label select example">
+                      <option value="0" selected>-</option>
+                      <option value="1">Cuenta Corriente N° 0000</option>
+                      <option value="2">Línea de Crédito N° 0000</option>
+                    </select>
+                    <label for="selectProducto" class="form-label">Producto</label>
+                    <div class="valid-feedback">
+                      Producto seleccionado.
+                    </div>
+                    <div class="invalid-feedback">
+                      Debe seleccionar un producto para el pago.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Monto a pagar -->
+                <div class="col-12 mb-4">
+                  <h6>Monto a pagar</h6>
+                  <div class="d-flex mb-3">
+                    <!-- Pago total -->
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" name="montoPago" id="montoPagoTotal">
+                      <label class="form-check-label" for="montoPagoTotal">
+                        Pago Total
+                      </label>
+                    </div>
+                    <!-- Otro monto -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="montoPago" id="montoOtroMonto">
+                      <label class="form-check-label" for="montoOtroMonto">
+                        Otro Monto 
+                      </label>
+                    </div>
+                  </div>
+                  <!-- Input pago total -->
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="inputPagoTotal">
+                    <label for="inputPagoTotal">Pago Total</label>
+                    <div class="valid-feedback">
+                      Monto correcto.
+                    </div>
+                    <div class="invalid-feedback">
+                      El monto a pagar supera el saldo del producto NOMBREPRODUCTO.
+                    </div>
+                  </div>
+                  <!-- Input otro monto -->
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="inputOtroMonto">
+                    <label for="inputOtroMonto">Ingrese un monto a pagar</label>
+                    <div class="valid-feedback">
+                      Monto correcto.
+                    </div>
+                    <div class="invalid-feedback">
+                      Debes ingresar un monto para el pago
+                    </div>
+                    <div class="invalid-feedback">
+                      El monto debe ser mayor a 0.
+                    </div>
+                    <div class="invalid-feedback">
+                      El monto a pagar supera el saldo del producto NOMBREPRODUCTO.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email para comprobante -->
+                <div class="col-12 mb-4">
+                  <h6>Enviar comprobante a:</h6>
+                  <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="inputEmail">
+                    <label for="inputEmail">Email</label>
+                    <div class="valid-feedback">
+                      Email correcto.
+                    </div>
+                    <div class="invalid-feedback">
+                      El email ingresado no es válido.
+                    </div>
+                    <div class="invalid-feedback">
+                      Debe ingresar un email para el envio del comprobante.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="col-12">
+                  <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-3">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Pagar</button>
+                  </div>
+                </div>
+
+              </form>
+              
+
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-12">
+          <form class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="col-12 mb-5" *ngIf="datosUsuarioActual">
+              <h3>Datos Pago</h3>
+              <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizado ?? 0 | pesos}}</strong></p>
+              <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo | pesos }}</strong></p>
+              <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
+              <hr class="mb-4">
+              <div class="form-floating">
+                <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago" [ngClass]="{'is-invalid': form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched}">
+                  <option value="0">-</option>
+                  <option value="1">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
+                  <option value="2">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
+                </select>
+                <label for="productoParaPago">Seleccione producto para el pago</label>
+                <div *ngIf="form.get('productoParaPago')?.errors?.['nonZero'] && form.get('productoParaPago')?.touched" class="invalid-feedback d-block">
+                  Debe seleccionar un producto para el pago.
+                </div>
+              </div>
+              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
+              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
+            </div>
+    
+            <div class="col-12 mb-5" id="montoApagar">
+              <h3>Monto a Pagar</h3>
+              <div class="d-flex mb-4">
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="radio" formControlName="monto" value="pagoTotalCheck" id="pagoTotalCheck" (change)="onMontoApagarOptionChange('pagoTotal')">
+                  <label class="form-check-label" for="pagoTotalCheck">
+                    Pago Total
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="monto" value="otroMontoCheck" id="otroMontoCheck" (change)="onMontoApagarOptionChange('otroMontoPago')">
+                  <label class="form-check-label" for="otroMontoCheck">
+                    Otro Monto
+                  </label>
+                </div>
+              </div>
+              <div class="input-group" *ngIf="montoApagarOption === 'pagoTotal'">
+                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal" [value]="cupoUtilizado | pesos" disabled>
+              </div>
+              <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
+                <span class="input-group-text">$</span>
+                <input type="text" class="form-control" id="otroMontoPago" formControlName="otroMontoPago" placeholder="Ingresar monto a pagar" (input)="onOtroMontoPagoChange($event)" [ngClass]="{'is-invalid': form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched}"  >
+                <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
+                  <div *ngIf="form.get('otroMontoPago')?.invalid && form.get('otroMontoPago')?.touched" class="invalid-feedback d-block">
+                    <div *ngIf="form.get('otroMontoPago')?.errors?.['required']">
+                      Debe ingresar un monto.
+                    </div>
+                    <div *ngIf="form.get('otroMontoPago')?.errors?.['min']">
+                      Debe ingresar un monto mayor a 0.
+                    </div>
+                    <div *ngIf="form.get('otroMontoPago')?.errors?.['max'] && form.get('otroMontoPago')?.dirty">
+                      El monto ingresado supera el saldo disponible.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="col-12">
+              <h3>Enviar comprobante a:</h3>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email" formControlName="emailComprobante" (change)="onEmailChange()" [ngClass]="{'is-invalid': form.get('emailComprobante')?.invalid && form.get('emailComprobante')?.dirty}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
+                <label for="emailComprobante">Email</label>
+                <div *ngIf="form.get('emailComprobante')?.errors?.['required'] && form.get('emailComprobante')?.dirty" class="invalid-feedback d-block">
+                  Debe ingresar un email.
+                </div>
+                <div *ngIf="(form.get('emailComprobante')?.errors?.['email'] || form.get('emailComprobante')?.errors?.['pattern']) && form.get('emailComprobante')?.dirty" class="invalid-feedback d-block">
+                  Debe ingresar un email válido.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-5">
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-3" (click)="onCancelarClick()">Cancelar</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Pagar</button>
+              </div>
+            </div>
+    
+          </form>
+        </div> -->
+    
+      </div>
+    </div>
+
+    <div class="col-5">
+      <div class="h-75 p-5 bg-body-tertiary border rounded-3 mt-5 ms-4">
+        <h4 class="d-flex justify-content-between">Seguro Accidentes</h4>
+        <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
+        <!-- <p>Valor mensual: <strong>{{ datosUsuarioActual.datosUsuario.ofertasProductos.seguroOferta| pesos }}</strong></p> -->
+        <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
+      </div>
+    </div>
+
+  </div>
+</div>
