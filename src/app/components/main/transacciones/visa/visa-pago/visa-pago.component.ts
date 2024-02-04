@@ -23,6 +23,7 @@ export class VisaPagoComponent implements OnInit {
   visaSaldo: any | undefined;
   cupoUtilizadoVisa: any;
   productoSeleccionado: any;
+  elementosHabilitados = false;
 
 
   constructor(
@@ -66,10 +67,29 @@ export class VisaPagoComponent implements OnInit {
     });
   }
 
+  /* onProductoSeleccionado(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    if (target) {
+      this.productoSeleccionado = target.value;
+    }
+  } */
+
   onProductoSeleccionado(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
       this.productoSeleccionado = target.value;
+    }
+    this.elementosHabilitados = this.productoSeleccionado === '1' || this.productoSeleccionado === '2';
+  
+    // Habilitar o deshabilitar los FormControl dependiendo del valor seleccionado
+    if (this.elementosHabilitados) {
+      this.pagoVisaForm.controls['checkMontoPagoTotal'].enable();
+      this.pagoVisaForm.controls['checkMontoOtroMonto'].enable();
+      this.pagoVisaForm.controls['inputOtroMonto'].enable();
+    } else {
+      this.pagoVisaForm.controls['checkMontoPagoTotal'].disable();
+      this.pagoVisaForm.controls['checkMontoOtroMonto'].disable();
+      this.pagoVisaForm.controls['inputOtroMonto'].disable();
     }
   }
 
