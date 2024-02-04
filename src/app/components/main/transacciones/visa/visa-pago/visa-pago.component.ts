@@ -56,7 +56,20 @@ export class VisaPagoComponent implements OnInit {
         this.pagoVisaForm.controls['inputOtroMonto'].reset();
       }
     });
+
+    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
+    });
     
+  }
+
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 
   onRadioChange(event: any) {
