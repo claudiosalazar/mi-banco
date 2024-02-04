@@ -21,8 +21,7 @@ export class VisaPagoComponent implements OnInit {
   submitted = false;
   contenedorPagoTotal = false;
   contenedorOtroPago = true;
-  inputValue: string | undefined;
-
+  
   // Variables para datos de usuario
   visaN: any;
   visaSaldo: any | undefined;
@@ -65,6 +64,7 @@ export class VisaPagoComponent implements OnInit {
     if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
       const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
       this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
+      this.pagoVisaForm.controls['inputOtroMonto'].reset();
     } else {
       this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
       this.pagoVisaForm.controls['inputOtroMonto'].reset();
