@@ -36,8 +36,7 @@ export class VisaPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validateProductoParaPago()]),
-      checkMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),  
-      checkMontoOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),  
+      montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl('', [Validators.required]),
@@ -67,13 +66,6 @@ export class VisaPagoComponent implements OnInit {
     });
   }
 
-  /* onProductoSeleccionado(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    if (target) {
-      this.productoSeleccionado = target.value;
-    }
-  } */
-
   onProductoSeleccionado(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
@@ -83,12 +75,10 @@ export class VisaPagoComponent implements OnInit {
   
     // Habilitar o deshabilitar los FormControl dependiendo del valor seleccionado
     if (this.elementosHabilitados) {
-      this.pagoVisaForm.controls['checkMontoPagoTotal'].enable();
-      this.pagoVisaForm.controls['checkMontoOtroMonto'].enable();
+      this.pagoVisaForm.controls['montoPago'].enable();
       this.pagoVisaForm.controls['inputOtroMonto'].enable();
     } else {
-      this.pagoVisaForm.controls['checkMontoPagoTotal'].disable();
-      this.pagoVisaForm.controls['checkMontoOtroMonto'].disable();
+      this.pagoVisaForm.controls['montoPago'].disable();
       this.pagoVisaForm.controls['inputOtroMonto'].disable();
     }
   }
