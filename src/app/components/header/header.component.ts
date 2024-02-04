@@ -1,7 +1,6 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
-import * as $ from 'jquery'; // Importar la biblioteca jQuery
 import { DatosUsuarioService } from 'src/app/services/datos-usuario.service';
 
 @Component({
