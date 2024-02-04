@@ -5,34 +5,25 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PesosPipe implements PipeTransform {
 
-  /* transform(value: number): string | null {
-    if (value !== undefined && value !== null) {
-      return this.formatNumber(value);
-    } else {
-      return null;
+  transform(value: any): string {
+    if (!value) {
+      return '';
     }
-  }
-
-  private formatNumber(value: number): string {
-    return '$ ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  } */
-
-  transform(value: any): string | null {
-    if (value !== undefined && value !== null) {
-      // Si el valor ya empieza con un signo de dólar, simplemente devolvemos el valor sin cambios
-      if (typeof value === 'string' && value.trim().startsWith('$')) {
-        return value;
-      } else {
-        // Si el valor no empieza con un signo de dólar, añadimos uno
-        return this.formatNumber(value);
-      }
-    } else {
-      return null;
+    // Quita cualquier signo de '$' existente, cualquier espacio después y los puntos
+    const cleanValue = value.toString().replace(/\$\s*/g, '').replace(/\./g, '');
+    // Convierte a número
+    let numberValue = Number(cleanValue);
+    // Verifica si el valor es un número válido
+    if (isNaN(numberValue)) {
+      return value;
     }
-  }
-
-  private formatNumber(value: number): string {
-    return '$ ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
+    // Formatea el número con separadores de miles
+    let formattedValue = numberValue.toLocaleString('es-CL');
+    // Reemplaza las comas por puntos
+    formattedValue = formattedValue.replace(/,/g, '.');
+    // Agrega el signo de '$' al inicio
+    formattedValue = '$ ' + formattedValue;
+    return formattedValue;
+}
 
 }
