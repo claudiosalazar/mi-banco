@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import * as $ from 'jquery'; // Importar la biblioteca jQuery
@@ -15,7 +15,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private datosUsuarioService: DatosUsuarioService
+    private datosUsuarioService: DatosUsuarioService,
+    private renderer: Renderer2, // Inyecta Renderer2
+    private el: ElementRef // Inyecta ElementRef
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,9 @@ export class HeaderComponent implements OnInit {
 
   showConfirmLogoutModal() {
     // Muestra el modal de confirmación
-    ($('#confirmLogoutModal') as any).modal('show'); // Agregar el tipo de dato correcto para el objeto jQuery
+    const modal = this.el.nativeElement.querySelector('#confirmLogoutModal');
+    this.renderer.addClass(modal, 'show');
+    this.renderer.setStyle(modal, 'display', 'block');
   }
 
   logout() {
