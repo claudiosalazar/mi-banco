@@ -16,6 +16,7 @@ export class VisaPagoComponent implements OnInit {
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   submitted = false;
+  mostrarInputMontoPagoTotal = false;
 
   // Variables para datos de usuario
   visaN: any;
@@ -34,7 +35,8 @@ export class VisaPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validateProductoParaPago()]),
-      montoPago: new FormControl({value: '', disabled: true}, [Validators.required]),  
+      checkMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),  
+      checkMontoOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl('', [Validators.required]),

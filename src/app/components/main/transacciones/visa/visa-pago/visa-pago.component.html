@@ -49,21 +49,21 @@
                   <div class="d-flex mb-3">
                     <!-- Pago total -->
                     <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoPagoTotal">
-                      <label class="form-check-label" for="checkMontoPagoTotal">
+                      <input class="form-check-input" type="radio" formControlName="checkMontoPagoTotal" name="montoPago">
+                      <label class="form-check-label" for="montoPago">
                         Pago Total
                       </label>
                     </div>
                     <!-- Otro monto -->
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoOtroMonto">
-                      <label class="form-check-label" for="checkMontoOtroMonto">
+                      <input class="form-check-input" type="radio" formControlName="checkMontoOtroMonto" name="montoPago" >
+                      <label class="form-check-label" for="montoPago">
                         Otro Monto 
                       </label>
                     </div>
                   </div>
                   <!-- Input pago total -->
-                  <div class="form-floating mb-3">
+                  <div class="form-floating mb-3" *ngIf="mostrarInputMontoPagoTotal">
                     <input type="text" class="form-control" formControlName="inputMontoPagoTotal" id="pagoTotal" [value]="cupoUtilizadoVisa | pesos">
                     <label for="pagoTotal">Pago Total</label>
                     <div class="valid-feedback">
