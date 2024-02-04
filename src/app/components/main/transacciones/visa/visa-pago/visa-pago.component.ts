@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from
 import { DatosUsuarioService } from '../../../../../services/datos-usuario.service';
 import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
+import { PesosPipe } from '../../../../../pipes/pesos.pipe';
 
 @Component({
   selector: 'app-visa-pago',
@@ -10,13 +11,17 @@ import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuari
 })
 export class VisaPagoComponent implements OnInit {
 
+  private pesosPipe = new PesosPipe();
+
   pagoVisaForm: FormGroup = new FormGroup({});
   saldoCtaCte: number | undefined;
   saldoLineaCre: number | undefined;
   saldoVisa: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   submitted = false;
-  mostrarInputMontoPagoTotal = false;
+  contenedorPagoTotal = false;
+  contenedorOtroPago = true;
+  inputValue: string | undefined;
 
   // Variables para datos de usuario
   visaN: any;
@@ -25,12 +30,11 @@ export class VisaPagoComponent implements OnInit {
   productoSeleccionado: any;
   elementosHabilitados = false;
 
-
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
-    private saldosService: SaldosService
-  ) {}
+    private saldosService: SaldosService,
+  ) { }
 
   ngOnInit(): void {
     this.getDatosUsuario();
@@ -40,7 +44,31 @@ export class VisaPagoComponent implements OnInit {
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl('', [Validators.required]),
-    })
+      radio: new FormControl(''),
+    });
+    
+
+    this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
+      if (value === 'checkMontoPagoTotal') {
+        const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
+        this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
+      } else {
+        this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
+        this.pagoVisaForm.controls['inputOtroMonto'].reset();
+      }
+    });
+    
+  }
+
+  onRadioChange(event: any) {
+    const montoPagoControl = this.pagoVisaForm.get('montoPago');
+    if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
+      const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
+    } else {
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
+      this.pagoVisaForm.controls['inputOtroMonto'].reset();
+    }
   }
 
   getDatosUsuario(): void {

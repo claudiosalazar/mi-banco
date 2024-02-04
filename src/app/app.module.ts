@@ -17,7 +17,7 @@ import { ContactanosComponent } from './components/main/contactanos/contactanos.
 import { HttpClientModule } from '@angular/common/http';
 
 import { DatosUsuarioService } from './services/datos-usuario.service';
-import { PesosPipe } from './pipe/pesos.pipe';
+import { PesosPipe } from './pipes/pesos.pipe';
 import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
 import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
