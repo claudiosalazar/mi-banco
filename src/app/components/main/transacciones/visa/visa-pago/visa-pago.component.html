@@ -110,10 +110,10 @@
                       El email es correcto.
                     </div>
                     <!-- Mensajes de error -->
-                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)" class="invalid-feedback d-block">
+                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)" class="invalid-feedback">
                       Este campo es requerido.
                     </div>
-                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['customEmail'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)" class="invalid-feedback d-block">
+                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['customEmail'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted) && pagoVisaForm.controls['inputEmail'].value" class="invalid-feedback">
                       Debe ser un email válido.
                     </div>
                   </div>
