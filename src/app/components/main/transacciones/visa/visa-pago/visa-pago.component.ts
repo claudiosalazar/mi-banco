@@ -42,9 +42,10 @@ export class VisaPagoComponent implements OnInit {
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
-      inputEmail: new FormControl('', [Validators.required, this.customEmailValidator]),
+      inputEmail: new FormControl(['', [Validators.required, this.customEmailValidator]]),
       radio: new FormControl(''),
     });
+    
     
 
     this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
@@ -62,6 +63,17 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
     
+  }
+
+  getDatosUsuario(): void {
+    this.datosUsuarioService.getDatosUsuario().subscribe(data => {
+      this.datosUsuarioActual = data;
+      this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
+      this.saldoLineaCre = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
+      this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+      this.cupoUtilizadoVisa = this.saldosService.calcularDiferenciaVisa(this.datosUsuarioActual);
+      this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
+    });
   }
 
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -84,21 +96,18 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  getDatosUsuario(): void {
-    this.datosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.datosUsuarioActual = data;
-      this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
-      this.saldoLineaCre = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
-      this.cupoUtilizadoVisa = this.saldosService.calcularDiferenciaVisa(this.datosUsuarioActual);
-    });
-  }
-
   validateProductoParaPago(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const isInvalid = control.value === '0';
       return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
     };
+  }
+
+  resetAndValidate(inputEmail: string) {
+    this.pagoVisaForm.controls[inputEmail].markAsPristine();
+    this.pagoVisaForm.controls[inputEmail].markAsUntouched();
+    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.customEmailValidator]);
+    this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
   getMontosUsuario(): void {
