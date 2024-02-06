@@ -41,7 +41,7 @@ export class VisaPagoComponent implements OnInit {
       productoParaPago: new FormControl('0', [Validators.required, this.validateProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
-      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, this.montoMayorACero]),
       inputEmail: new FormControl(['', [Validators.required, this.customEmailValidator]]),
       radio: new FormControl(''),
     });
@@ -101,6 +101,14 @@ export class VisaPagoComponent implements OnInit {
       const isInvalid = control.value === '0';
       return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
     };
+  }
+
+  montoMayorACero(control: AbstractControl) {
+    const monto = control.value;
+    if (monto !== null && monto !== undefined && (monto <= 0 || monto.trim() === '$ 0')) {
+      return { montoInvalido: true };
+    }
+    return null;
   }
 
   resetAndValidate(inputEmail: string) {
