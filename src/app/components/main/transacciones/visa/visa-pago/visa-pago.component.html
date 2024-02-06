@@ -29,7 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event)" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']}">
+                    <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event)" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
                       <option value="0">-</option>
                       <option value="1">Cuenta Corriente N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN}}</option>
                       <option value="2">Línea de Crédito N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN}}</option>
@@ -97,16 +97,24 @@
                 <div class="col-12 mb-4">
                   <h6>Enviar comprobante a:</h6>
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" formControlName="inputEmail" id="emailComprobante" [value]="datosUsuarioActual?.datosUsuario?.email">
-                    <label for="emailComprobante">Email</label>
-                    <div class="valid-feedback">
-                      Email correcto.
+                    <input type="email" class="form-control" id="inputEmail" formControlName="inputEmail" [value]="datosUsuarioActual?.datosUsuario?.email" [ngClass]="{
+                      'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || pagoVisaForm.controls['inputEmail'].touched),
+                      'is-valid': pagoVisaForm.controls['inputEmail'].valid && (pagoVisaForm.controls['inputEmail'].dirty || pagoVisaForm.controls['inputEmail'].touched)
+                    }">
+                    <label for="inputEmail">Email</label>
+                    
+                    <!-- Mensaje valido -->
+                    <div *ngIf="pagoVisaForm.controls['inputEmail'].valid && (pagoVisaForm.controls['inputEmail'].dirty || pagoVisaForm.controls['inputEmail'].touched)" class="valid-feedback">
+                      El email es correcto.
                     </div>
-                    <div class="invalid-feedback">
-                      El email ingresado no es válido.
-                    </div>
-                    <div class="invalid-feedback">
-                      Debe ingresar un email para el envio del comprobante.
+                    <!-- Mensajes de error -->
+                    <div *ngIf="pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || pagoVisaForm.controls['inputEmail'].touched)" class="invalid-feedback">
+                        <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required']">
+                        Este campo es requerido.
+                      </div>
+                        <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['customEmail'] && !pagoVisaForm.controls['inputEmail'].errors?.['required']">
+                        Debe ser un email válido.
+                      </div>
                     </div>
                   </div>
                 </div>

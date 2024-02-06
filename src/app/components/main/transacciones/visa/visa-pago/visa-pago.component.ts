@@ -42,7 +42,7 @@ export class VisaPagoComponent implements OnInit {
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
-      inputEmail: new FormControl('', [Validators.required]),
+      inputEmail: new FormControl('', [Validators.required, this.customEmailValidator]),
       radio: new FormControl(''),
     });
     
@@ -122,6 +122,18 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['montoPago'].disable();
       this.pagoVisaForm.controls['inputOtroMonto'].disable();
     }
+  }
+
+  // Valida input Email
+  customEmailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (value && typeof value === 'string') {
+      const split = value.split('.');
+      if (split.length > 1 && split[1].length >= 2) {
+        return null;
+      }
+    }
+    return { customEmail: true };
   }
 
   onSubmit(): void {

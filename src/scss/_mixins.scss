@@ -3,3 +3,26 @@
   transition: transform 0.3s ease-in-out;
   transform: rotate(180deg);
 }
+
+// Input error
+// Animacion
+@keyframes fade {
+  0%, 33% {
+    opacity: 0;
+  }
+  16%, 50% {
+    opacity: 1;
+  }
+  66%, 83% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// mixin
+@mixin fade-animation($duration: .8s) {
+  animation: fade $duration ease-in-out;
+  animation-iteration-count: 1;
+}
