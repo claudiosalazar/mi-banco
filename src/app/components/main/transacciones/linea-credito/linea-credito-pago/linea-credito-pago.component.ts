@@ -16,7 +16,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   saldoVisa: any;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
-  cupoUtilizado: any;
+  cupoUtilizadoLineaCre: any;
   montoApagarOption = 'otroMontoPago';
   otroMontoPago: any;
   emailModificado = false;
@@ -78,7 +78,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       this.datosUsuarioActual = data;
       this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
       this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      this.cupoUtilizado = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
+      this.cupoUtilizadoLineaCre = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
       this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
     });
   }

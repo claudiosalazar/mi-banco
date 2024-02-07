@@ -10,7 +10,7 @@
           <form class="row" [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="col-12 mb-5" *ngIf="datosUsuarioActual">
               <h3>Datos Pago</h3>
-              <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizado ?? 0 | pesos}}</strong></p>
+              <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizadoLineaCre ?? 0 | pesos}}</strong></p>
               <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo | pesos }}</strong></p>
               <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
               <hr class="mb-4">
@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'pagoTotal'">
-                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal" [value]="cupoUtilizado | pesos" disabled>
+                <input type="text" class="form-control" id="pagoTotal" for="pagoTotal" [value]="cupoUtilizadoLineaCre | pesos" disabled>
               </div>
               <div class="input-group" *ngIf="montoApagarOption === 'otroMontoPago'" for="otroMonto">
                 <span class="input-group-text">$</span>

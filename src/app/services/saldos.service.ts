@@ -31,11 +31,18 @@ export class SaldosService {
     return saldoFinalVisa;
   }
 
+  calcularDiferenciaCtaCte(datosCtaCte: DatosUsuarioActual): number {
+    let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
+    let saldoFinalCtaCte = this.calcularDiferenciaCtaCte(datosCtaCte);
+    let cupoUtilizadoCtaCte = saldoInicialCtaCte - saldoFinalCtaCte;
+    return cupoUtilizadoCtaCte;
+  }
+  
   calcularDiferenciaLineaCre(datosLineaCre: DatosUsuarioActual): number {
     let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
     let saldoFinalLineaCre = this.calcularSaldoLineaCre(datosLineaCre);
-    let cupoUtilizado = saldoInicialLineaCre - saldoFinalLineaCre;
-    return cupoUtilizado;
+    let cupoUtilizadoLineaCre = saldoInicialLineaCre - saldoFinalLineaCre;
+    return cupoUtilizadoLineaCre;
   }
 
   calcularDiferenciaVisa(datosVisa: DatosUsuarioActual): number {
