@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SaldosService {
+  validarCupo() {
+    throw new Error('Method not implemented.');
+  }
   
 
   calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): number {

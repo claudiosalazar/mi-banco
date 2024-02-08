@@ -29,7 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event)" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
+                    <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event); validarMonto()" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
                       <option value="0">-</option>
                       <option value="1">Cuenta Corriente N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN}}</option>
                       <option value="2">Línea de Crédito N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN}}</option>
@@ -49,7 +49,7 @@
                   <div class="d-flex mb-3">
                     <!-- Pago total -->
                     <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoPagoTotal" value="pagoTotal" (change)="onRadioChange($event)">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoPagoTotal" value="pagoTotal" (change)="onRadioChange($event);">
                       <label class="form-check-label" for="checkMontoPagoTotal">
                         Pago Total
                       </label>
@@ -62,17 +62,27 @@
                       </label>
                     </div>
                   </div>
+
+
+
+
+
+
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'" id="contenedorPagoTotal">
-                    <input type="text" class="form-control" formControlName="inputMontoPagoTotal" id="pagoTotal">
+                    <input type="text" class="form-control" [class.is-valid]="" [class.is-invalid]="" formControlName="inputMontoPagoTotal" id="pagoTotal" (change)="validarMonto()">
                     <label for="pagoTotal">Pago Total</label>
-                    <div class="valid-feedback">
-                      Monto correcto.
+                    <div class="valid-feedback" *ngIf="">
+                      <p>valido</p>
                     </div>
-                    <div class="invalid-feedback">
-                      El monto a pagar supera el saldo del producto NOMBREPRODUCTO.
+                    <div class="invalid-feedback" *ngIf="">
+                      <p>error</p>
                     </div>
                   </div>
+
+
+
+
                   
                   <!-- Input otro monto -->
                   <div class="form-floating" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'" id="contenedorOtroPago">
@@ -88,6 +98,12 @@
                       Debe ingresar un monto mayor a 0.
                     </div>
                   </div>
+
+
+
+
+
+                  
                 </div>
 
                 <!-- Email para comprobante -->

@@ -14,13 +14,14 @@ export class VisaPagoComponent implements OnInit {
   private pesosPipe = new PesosPipe();
 
   pagoVisaForm: FormGroup = new FormGroup({});
-  saldoCtaCte: number | undefined;
-  saldoLineaCre: number | undefined;
-  saldoVisa: number | undefined;
+  saldoCtaCte: any;
+  saldoLineaCre: any;
+  saldoVisa: any;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   submitted = false;
   contenedorPagoTotal = false;
   contenedorOtroPago = true;
+  cupoValido: boolean | undefined;;
   
   // Variables para datos de usuario
   visaN: any;
@@ -45,8 +46,6 @@ export class VisaPagoComponent implements OnInit {
       inputEmail: new FormControl(['', [Validators.required, this.customEmailValidator]]),
       radio: new FormControl(''),
     });
-    
-    
 
     this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
       if (value === 'checkMontoPagoTotal') {
@@ -62,6 +61,8 @@ export class VisaPagoComponent implements OnInit {
       const transformedValue = this.pesosPipe.transform(value);
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
+
+    
     
   }
 
@@ -74,6 +75,7 @@ export class VisaPagoComponent implements OnInit {
       this.cupoUtilizadoVisa = this.saldosService.calcularDiferenciaVisa(this.datosUsuarioActual);
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
     });
+    
   }
 
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -94,6 +96,7 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
       this.pagoVisaForm.controls['inputOtroMonto'].reset();
     }
+    
   }
 
   validateProductoParaPago(): ValidatorFn {
@@ -152,6 +155,26 @@ export class VisaPagoComponent implements OnInit {
     }
     return { customEmail: true };
   }
+
+  //
+  validarMonto(): void {
+    let montoPagoTotal = Number(this.pagoVisaForm.controls['inputMontoPagoTotal'].value);
+    let seleccion = this.pagoVisaForm.controls['productoParaPago'].value; // Asegúrate de reemplazar 'tuSelect' con el nombre real de tu control de formulario para el select
+  
+    let esMontoValido;
+    if (seleccion === '1') {
+      esMontoValido = montoPagoTotal <= this.saldoCtaCte;
+    } else if (seleccion === '2') {
+      esMontoValido = montoPagoTotal <= this.saldoLineaCre;
+    }
+  
+    if (esMontoValido) {
+      console.log('El monto es válido.');
+    } else {
+      console.log('El monto es inválido.');
+    }
+  }
+  
 
   onSubmit(): void {
     this.submitted = true;
