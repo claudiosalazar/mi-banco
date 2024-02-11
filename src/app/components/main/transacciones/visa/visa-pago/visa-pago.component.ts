@@ -44,8 +44,8 @@ export class VisaPagoComponent implements OnInit {
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: this.cupoUtilizadoVisa, disabled: true}, [Validators.required]),
-      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, this.montoMayorACero]),
-      inputEmail: new FormControl(['', [Validators.required, this.customEmailValidator]]),
+      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
       radio: new FormControl(''),
     });
 
@@ -121,50 +121,6 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  
-  
-
-  /* ngOnInit(): void {
-    this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
-      if (value === 'checkMontoPagoTotal') {
-        const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
-        this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
-      } else {
-        this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
-        this.pagoVisaForm.controls['inputOtroMonto'].reset();
-      }
-    });
-    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
-      const transformedValue = this.pesosPipe.transform(value);
-      this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
-    });
-  }
-  getMontosUsuario(): void {
-    this.montosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.datosUsuarioActual = data;
-    });
-  }
-
-
-  validarMonto(): void {
-    let montoPagoTotal = Number(this.pagoVisaForm.controls['inputMontoPagoTotal'].value);
-    let seleccion = this.pagoVisaForm.controls['productoParaPago'].value;
-  
-    let esMontoValido;
-    if (seleccion === '1') {
-      esMontoValido = montoPagoTotal <= this.saldoCtaCte;
-    } else if (seleccion === '2') {
-      esMontoValido = montoPagoTotal <= this.saldoLineaCre;
-    }
-  
-    if (esMontoValido) {
-      console.log('El monto es válido.');
-    } else {
-      console.log('El monto es inválido.');
-    }
-  }
-  */
-
   // Permite ingresar solo caracteres numéricos en el input
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -174,8 +130,8 @@ export class VisaPagoComponent implements OnInit {
     return true;
   }
   
-  // Valida input Email
-  customEmailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  // Valida que el mail tengo un punto y al menos dos caracteres después del punto
+  formatoEmail(control: AbstractControl): { [key: string]: boolean } | null {
     const value = control.value;
     if (value && typeof value === 'string') {
       const split = value.split('.');
@@ -184,6 +140,14 @@ export class VisaPagoComponent implements OnInit {
       }
     }
     return { customEmail: true };
+  }
+
+  // Valida que el email este escrito correctamente
+  emailValido(inputEmail: string) {
+    this.pagoVisaForm.controls[inputEmail].markAsPristine();
+    this.pagoVisaForm.controls[inputEmail].markAsUntouched();
+    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.formatoEmail]);
+    this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
   onSubmit(): void {

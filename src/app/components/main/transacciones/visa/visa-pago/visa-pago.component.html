@@ -78,31 +78,29 @@
 
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'" id="contenedorPagoTotal">
-                    <!-- <input type="text" class="form-control" [class.is-valid]="" [class.is-invalid]="" formControlName="inputMontoPagoTotal" id="pagoTotal" (change)="validarMonto()"> -->
                     <input type="text" class="form-control" formControlName="inputMontoPagoTotal" id="pagoTotal">
                     <label for="pagoTotal">Pago Total</label>
                     <div class="valid-feedback">
-                      <p>valido</p>
+                      <span>El monto es correcto.</span>
                     </div>
                     <div class="invalid-feedback">
-                      <p>error</p>
+                      <span>El monto para el pago es superior al saldo.</span>
                     </div>
                   </div>
 
 
                   <!-- Input otro monto -->
-                  <div class="form-floating" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'" id="contenedorOtroPago">
-                    <!-- <input type="text" class="form-control" id="otroMonto" formControlName="inputOtroMonto" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputOtroMonto'].invalid && (pagoVisaForm.controls['inputOtroMonto'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputOtroMonto'].valid && pagoVisaForm.controls['inputOtroMonto'].dirty }" (keypress)="soloNumeros($event)"> -->
-                    <input type="text" class="form-control" id="otroMonto" formControlName="inputOtroMonto" (keypress)="soloNumeros($event)" 
-                    [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputOtroMonto'].invalid && (pagoVisaForm.controls['inputOtroMonto'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputOtroMonto'].valid && pagoVisaForm.controls['inputOtroMonto'].dirty }">
+                  <div class="form-floating" id="contenedorOtroPago">
+                    <input type="text" class="form-control" id="otroMonto" formControlName="inputOtroMonto" (keypress)="soloNumeros($event)">
                     <label for="otroMonto">Ingrese un monto a pagar</label>
-                    <!-- Mensaje valido -->
-                    <div *ngIf="pagoVisaForm.controls['inputOtroMonto'].valid && pagoVisaForm.controls['inputOtroMonto'].dirty" class="valid-feedback">
-                      El monto es correcto.
+                    <div class="valid-feedback">
+                      <span>El monto es correcto.</span>
                     </div>
-                    <!-- Mensajes de error -->
-                    <div *ngIf="pagoVisaForm.controls['inputOtroMonto'].errors?.['montoInvalido'] && (pagoVisaForm.controls['inputOtroMonto'].dirty || submitted)" class="invalid-feedback">
-                      Debe ingresar un monto mayor a 0.
+                    <div class="invalid-feedback">
+                      <span>Debe ingresar un monto mayor a 0.</span>
+                    </div>
+                    <div class="invalid-feedback">
+                      <span>El monto ingresado para el pago es superior al saldo.</span>
                     </div>
                   </div>
 
@@ -115,7 +113,7 @@
                   <h6>Enviar comprobante a:</h6>
                   <div class="form-floating mb-3">
                     <!-- <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="resetAndValidate('inputEmail')"> -->
-                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }">
+                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="emailValido('inputEmail')">
                     <label for="inputEmail">Email</label>
                     
                     <!-- Mensaje valido -->
