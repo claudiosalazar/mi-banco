@@ -116,7 +116,6 @@ export class VisaPagoComponent implements OnInit {
     if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
       this.pagoVisaForm.controls['inputOtroMonto'].reset();
       this.pagoVisaForm.controls['inputOtroMonto'].setErrors(null);
-      this.pagoVisaForm.controls['inputOtroMonto'].setValue(true);
     } else {
       this.pagoVisaForm.controls['inputOtroMonto'].setErrors(null);
     }
