@@ -21,7 +21,7 @@ export class VisaPagoComponent implements OnInit {
   submitted = false;
   contenedorPagoTotal = false;
   contenedorOtroPago = true;
-  cupoValido: boolean | undefined;;
+  cupoValido: boolean | undefined;
   
   // Variables para datos de usuario
   visaN: any;
@@ -30,42 +30,33 @@ export class VisaPagoComponent implements OnInit {
   productoSeleccionado: any;
   elementosHabilitados = false;
 
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
     private saldosService: SaldosService,
   ) { }
 
+  // Inicialización de formulario
   ngOnInit(): void {
     this.getDatosUsuario();
     this.pagoVisaForm = new FormGroup({
-      productoParaPago: new FormControl('0', [Validators.required, this.validateProductoParaPago()]),
+      productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
-      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputMontoPagoTotal: new FormControl({value: this.cupoUtilizadoVisa, disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, this.montoMayorACero]),
       inputEmail: new FormControl(['', [Validators.required, this.customEmailValidator]]),
       radio: new FormControl(''),
     });
 
-    this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
-      if (value === 'checkMontoPagoTotal') {
-        const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
-        this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
-      } else {
-        this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
-        this.pagoVisaForm.controls['inputOtroMonto'].reset();
-      }
+    // Se llama a la function onInputOtroMontoPipe para aplicar el pipe el input inputOtroMonto
+    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe(value => {
+      this.onInputOtroMontoPipe(value);
     });
-
-    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
-      const transformedValue = this.pesosPipe.transform(value);
-      this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
-    });
-
-    
-    
   }
+  
 
+  // LLamada a servicio para obtener datos de usuario
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
@@ -74,38 +65,19 @@ export class VisaPagoComponent implements OnInit {
       this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
       this.cupoUtilizadoVisa = this.saldosService.calcularDiferenciaVisa(this.datosUsuarioActual);
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.cupoUtilizadoVisa));
     });
-    
   }
 
-  soloNumeros(event: { which: any; keyCode: any; }): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-  }
-
-  onRadioChange(event: any) {
-    const montoPagoControl = this.pagoVisaForm.get('montoPago');
-    if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
-      const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
-      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
-      this.pagoVisaForm.controls['inputOtroMonto'].reset();
-    } else {
-      this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
-      this.pagoVisaForm.controls['inputOtroMonto'].reset();
-    }
-    
-  }
-
-  validateProductoParaPago(): ValidatorFn {
+  // Valida que el en select se selecciono un producto para el pago
+  validaProductoParaPago(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const isInvalid = control.value === '0';
       return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
     };
   }
 
+  // Validación de monto mayor a cero en input inputOtroMonto
   montoMayorACero(control: AbstractControl) {
     const monto = control.value;
     if (monto !== null && monto !== undefined && (monto <= 0 || monto.trim() === '$ 0')) {
@@ -114,19 +86,7 @@ export class VisaPagoComponent implements OnInit {
     return null;
   }
 
-  resetAndValidate(inputEmail: string) {
-    this.pagoVisaForm.controls[inputEmail].markAsPristine();
-    this.pagoVisaForm.controls[inputEmail].markAsUntouched();
-    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.customEmailValidator]);
-    this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
-  }
-
-  getMontosUsuario(): void {
-    this.montosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.datosUsuarioActual = data;
-    });
-  }
-
+  // Quita el estado disables a los radio e input de monto
   onProductoSeleccionado(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
@@ -143,23 +103,53 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['inputOtroMonto'].disable();
     }
   }
-
-  // Valida input Email
-  customEmailValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const value = control.value;
-    if (value && typeof value === 'string') {
-      const split = value.split('.');
-      if (split.length > 1 && split[1].length >= 2) {
-        return null;
-      }
-    }
-    return { customEmail: true };
+  
+  // Aplica el pipe pesos al ingresar un numero en el input inputOtroMonto
+  onInputOtroMontoPipe(value: any): void {
+    const transformedValue = this.pesosPipe.transform(value);
+    this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
   }
 
-  //
+  // Elimina el monto ingresado en inputOtroMonto al cambiar al radio a inputMontoPagoTotal
+  radioResetMontoOtroPago(event: any): void {
+    const montoPagoControl = this.pagoVisaForm.get('montoPago');
+    if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
+      this.pagoVisaForm.controls['inputOtroMonto'].reset();
+      this.pagoVisaForm.controls['inputOtroMonto'].setErrors(null);
+      this.pagoVisaForm.controls['inputOtroMonto'].setValue(true);
+    } else {
+      this.pagoVisaForm.controls['inputOtroMonto'].setErrors(null);
+    }
+  }
+
+  
+  
+
+  /* ngOnInit(): void {
+    this.pagoVisaForm.controls['radio'].valueChanges.subscribe((value) => {
+      if (value === 'checkMontoPagoTotal') {
+        const transformedValue = this.pesosPipe.transform(this.cupoUtilizadoVisa);
+        this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue);
+      } else {
+        this.pagoVisaForm.controls['inputMontoPagoTotal'].reset();
+        this.pagoVisaForm.controls['inputOtroMonto'].reset();
+      }
+    });
+    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
+    });
+  }
+  getMontosUsuario(): void {
+    this.montosUsuarioService.getDatosUsuario().subscribe(data => {
+      this.datosUsuarioActual = data;
+    });
+  }
+
+
   validarMonto(): void {
     let montoPagoTotal = Number(this.pagoVisaForm.controls['inputMontoPagoTotal'].value);
-    let seleccion = this.pagoVisaForm.controls['productoParaPago'].value; // Asegúrate de reemplazar 'tuSelect' con el nombre real de tu control de formulario para el select
+    let seleccion = this.pagoVisaForm.controls['productoParaPago'].value;
   
     let esMontoValido;
     if (seleccion === '1') {
@@ -174,7 +164,28 @@ export class VisaPagoComponent implements OnInit {
       console.log('El monto es inválido.');
     }
   }
+  */
+
+  // Permite ingresar solo caracteres numéricos en el input
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
   
+  // Valida input Email
+  customEmailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (value && typeof value === 'string') {
+      const split = value.split('.');
+      if (split.length > 1 && split[1].length >= 2) {
+        return null;
+      }
+    }
+    return { customEmail: true };
+  }
 
   onSubmit(): void {
     this.submitted = true;
