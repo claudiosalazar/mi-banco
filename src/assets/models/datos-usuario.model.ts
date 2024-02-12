@@ -1,6 +1,7 @@
 export interface DatosUsuarioActual {
   saldoFinalCtaCte: any;
   saldoFinalLineaCre: any;
+  saldoFinalVisa: any;
   montosUsuario: any;
   // Datos de usuario
   datosUsuario: {

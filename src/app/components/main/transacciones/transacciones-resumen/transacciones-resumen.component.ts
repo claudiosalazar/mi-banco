@@ -8,9 +8,9 @@ import { DatosUsuarioActual } from '../../../../../assets/models/datos-usuario.m
   templateUrl: './transacciones-resumen.component.html'
 })
 export class TransaccionesResumenComponent implements OnInit {
-  saldoCtaCte: number | undefined;
-  saldoLineaCre: number | undefined;
-  saldoVisa: number | undefined;
+  saldoCtaCte: any;
+  saldoLineaCre: any;
+  saldoVisa: any;
   datosUsuarioActual: DatosUsuarioActual | undefined;
 
   constructor(

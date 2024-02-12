@@ -77,8 +77,8 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
       this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
-      this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      this.cupoUtilizadoLineaCre = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
+      // this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
+      // this.cupoUtilizadoLineaCre = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
       this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
     });
   }
