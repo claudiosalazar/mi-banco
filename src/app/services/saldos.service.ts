@@ -31,25 +31,18 @@ export class SaldosService {
     return of (saldoFinalVisa);
   }
 
-  /* 
-  calcularDiferenciaCtaCte(datosCtaCte: DatosUsuarioActual): number {
-    let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
-    let saldoFinalCtaCte = this.calcularDiferenciaCtaCte(datosCtaCte);
-    let cupoUtilizadoCtaCte = saldoInicialCtaCte - saldoFinalCtaCte;
-    return cupoUtilizadoCtaCte;
-  }
-  
-  calcularDiferenciaLineaCre(datosLineaCre: DatosUsuarioActual): number {
-    let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
-    let saldoFinalLineaCre = this.calcularSaldoLineaCre(datosLineaCre);
-    let cupoUtilizadoLineaCre = saldoInicialLineaCre - saldoFinalLineaCre;
-    return cupoUtilizadoLineaCre;
+  calculaSaldoRestanteVisa(datosVisa: DatosUsuarioActual): Observable<number> {
+    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
+    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
+    return of (saldoRestanteVisa);
   }
 
-  calcularDiferenciaVisa(datosVisa: DatosUsuarioActual): number {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
-    let saldoFinalVisa = this.calcularSaldoVisa(datosVisa);
-    let cupoUtilizadoVisa = saldoInicialVisa - saldoFinalVisa;
-    return cupoUtilizadoVisa;
-  } */
+  calculaSaldoRestanteLineaCre(datosVisa: DatosUsuarioActual): Observable<number> {
+    let saldoInicialLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
+    let totalCargosLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let saldoRestanteLineaCre = saldoInicialLineaCre - totalCargosLineaCre;
+    return of (saldoRestanteLineaCre);
+  }
+
 }

@@ -22,6 +22,7 @@ export class VisaPagoComponent implements OnInit {
   contenedorPagoTotal = false;
   contenedorOtroPago = true;
   cupoValido: boolean | undefined;
+  saldoRestanteVisa: number | undefined;
   
   // Variables para datos de usuario
   visaN: any;
@@ -52,7 +53,6 @@ export class VisaPagoComponent implements OnInit {
     });
 
     
-
     
 
     // Llama a validarMontos inicialmente
@@ -78,7 +78,12 @@ export class VisaPagoComponent implements OnInit {
         this.saldoFinalVisa = parseFloat(resultado);
         console.log('saldoFinalVisa:', this.saldoFinalVisa);
       });
-      // this.saldoFinalVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+
+      this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
+        this.saldoRestanteVisa = parseFloat(resultado);
+        console.log('saldoRestanteVisa:', this.saldoRestanteVisa);
+      });
+
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
       this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.saldoFinalVisa));
     });

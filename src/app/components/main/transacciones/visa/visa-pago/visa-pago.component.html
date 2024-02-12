@@ -17,7 +17,7 @@
                 </div>
                 <div>
                   <p class="mb-0"><small>Cupo Total: <strong>{{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaSaldo ?? 0 | pesos }}</strong></small></p>
-                  <p><small>Cupo Disponible: <strong>{{datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaSaldo ?? 0 | pesos}}</strong></small></p>
+                  <p><small>Cupo Disponible: <strong>{{ saldoRestanteVisa ?? 0 | pesos }}</strong></small></p>
                 </div>
               </div>
 
