@@ -24,6 +24,6 @@ export class PesosPipe implements PipeTransform {
     // Agrega el signo de '$' al inicio
     formattedValue = '$ ' + formattedValue;
     return formattedValue;
-}
+  }
 
 }

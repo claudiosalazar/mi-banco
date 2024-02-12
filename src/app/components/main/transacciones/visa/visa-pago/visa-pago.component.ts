@@ -29,6 +29,7 @@ export class VisaPagoComponent implements OnInit {
   visaSaldo: any | undefined;
   productoSeleccionado: any;
   elementosHabilitados = false;
+  inputOtroMonto: any;
 
   // Variables para saldos
   
@@ -41,23 +42,20 @@ export class VisaPagoComponent implements OnInit {
 
   // Inicialización de formulario
   ngOnInit(): void {
-    
     this.getDatosUsuario();
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
-      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, Validators.min(1), this.montoMayorACero]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
       radio: new FormControl(''),
     });
 
-    
-    
-
-    // Llama a validarMontos inicialmente
-    // this.validarMontos();
-    
+    this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
+    });
   }
   
 
@@ -122,12 +120,6 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['montoPago'].disable();
       this.pagoVisaForm.controls['inputOtroMonto'].disable();
     }
-  }
-  
-  // Aplica el pipe pesos al ingresar un numero en el input inputOtroMonto
-  onInputOtroMontoPipe(value: any): void {
-    const transformedValue = this.pesosPipe.transform(value);
-    this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
   }
 
   // Elimina el monto ingresado en inputOtroMonto al cambiar al radio a inputMontoPagoTotal

@@ -29,17 +29,6 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <!-- <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event); validarMonto()" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
-                      <option value="0">-</option>
-                      <option value="1">Cuenta Corriente N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN}}</option>
-                      <option value="2">Línea de Crédito N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN}}</option>
-                    </select>
-                    <label for="selectProducto" class="form-label">Producto</label>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoLineaCre ?? 0 | pesos }}</strong></small>
-                    <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
-                      Debes seleccionar un producto para pagar.
-                    </div> -->
                     <select class="form-select" formControlName="productoParaPago" id="selectProducto" (change)="onProductoSeleccionado($event)" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
                       <option value="0">-</option>
                       <option value="1">Cuenta Corriente N° {{datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN}}</option>
@@ -77,26 +66,24 @@
 
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'">
-                    <!-- <input type="text" class="form-control" [class.is-valid]="" [class.is-invalid]="" formControlName="inputMontoPagoTotal" id="pagoTotal" (change)="validarMonto()"> -->
-                    <input type="text" class="form-control" formControlName="inputMontoPagoTotal" id="pagoTotal" [class.is-invalid]="pagoVisaForm.controls['inputMontoPagoTotal'].invalid && pagoVisaForm.controls['inputMontoPagoTotal'].touched">
+                    <input type="text" class="form-control" formControlName="inputMontoPagoTotal" id="pagoTotal">
                     <label for="pagoTotal">Pago Total</label>
-                    <div class="valid-feedback" *ngIf="pagoVisaForm.controls['inputMontoPagoTotal'].valid">
+                    <div class="valid-feedback">
                       <span>El monto es correcto.</span>
                     </div>
-                    <div class="invalid-feedback" *ngIf="pagoVisaForm.controls['inputMontoPagoTotal'].hasError('montoInvalido')">
+                    <div class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
                     </div>
                   </div>
                   
                   <!-- Input otro monto -->
                   <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
-                    <!-- <input type="text" class="form-control" id="otroMonto" formControlName="inputOtroMonto" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputOtroMonto'].invalid && (pagoVisaForm.controls['inputOtroMonto'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputOtroMonto'].valid && pagoVisaForm.controls['inputOtroMonto'].dirty }" (keypress)="soloNumeros($event)"> -->
-                    <input type="text" class="form-control" id="otroMonto" formControlName="inputOtroMonto" (keypress)="soloNumeros($event)" [class.is-invalid]="pagoVisaForm.controls['inputOtroMonto'].invalid && pagoVisaForm.controls['inputOtroMonto'].touched">
-                    <label for="otroMonto">Ingrese un monto a pagar</label>
-                    <div class="valid-feedback" *ngIf="pagoVisaForm.controls['inputOtroMonto'].valid">
+                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" (keypress)="soloNumeros($event)" >
+                    <label for="inputOtroMonto">Ingrese un monto a pagar</label>
+                    <div class="valid-feedback">
                       <span>El monto es correcto.</span>
                     </div>
-                    <div class="invalid-feedback" *ngIf="pagoVisaForm.controls['inputOtroMonto'].hasError('montoInvalido')">
+                    <div class="invalid-feedback">
                       <span>El monto ingresado para el pago es superior al saldo.</span>
                     </div>
                   </div>
