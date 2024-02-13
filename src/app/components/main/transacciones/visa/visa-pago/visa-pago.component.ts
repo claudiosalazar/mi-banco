@@ -47,18 +47,18 @@ export class VisaPagoComponent implements OnInit {
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
-      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, Validators.min(1), this.montoMayorACero]),
+      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required, Validators.min(1)]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
       radio: new FormControl(''),
     });
 
+    // Aplica pipe pesos a inputOtroMonto
     this.pagoVisaForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
   }
   
-
   // LLamada a servicio para obtener datos de usuario
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
@@ -96,13 +96,13 @@ export class VisaPagoComponent implements OnInit {
   }
 
   // Validación de monto mayor a cero en input inputOtroMonto
-  montoMayorACero(control: AbstractControl) {
+  /* montoMayorACero(control: AbstractControl) {
     const monto = control.value;
     if (monto !== null && monto !== undefined && (monto <= 0 || monto.trim() === '$ 0')) {
       return { montoInvalido: true };
     }
     return null;
-  }
+  } */
 
   // Quita el estado disables a los radio e input de monto
   onProductoSeleccionado(event: Event): void {
@@ -162,66 +162,6 @@ export class VisaPagoComponent implements OnInit {
     this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
-  // Valida que el monto ingresado sea menor o igual al saldo de la cuenta corriente
-  /* validarMontos(): void {
-    // Crea una nueva función de validación para inputOtroMonto
-    this.pagoVisaForm.controls['inputOtroMonto'].setValidators([
-      Validators.required,
-      Validators.min(1),
-      (control: AbstractControl) => {
-        const value = Number(control.value);
-        if (this.saldoValueCtaCte !== undefined && this.saldoValueLineaCre !== undefined) {
-          return value > this.saldoValueCtaCte || value > this.saldoValueLineaCre ? { montoInvalido: true } : null;
-        }
-        return null;
-      }
-    ]);
-  
-    // Crea una nueva función de validación para inputMontoPagoTotal
-    this.pagoVisaForm.controls['inputMontoPagoTotal'].setValidators([
-      Validators.required,
-      Validators.min(1),
-      (control: AbstractControl) => {
-        const value = Number(control.value);
-        if (this.saldoValueCtaCte !== undefined && this.saldoValueLineaCre !== undefined) {
-          return value > this.saldoValueCtaCte || value > this.saldoValueLineaCre ? { montoInvalido: true } : null;
-        }
-        return null;
-      }
-    ]);
-
-    // Actualiza el valor y la validez de los controles
-    this.pagoVisaForm.controls['inputOtroMonto'].updateValueAndValidity();
-    this.pagoVisaForm.controls['inputMontoPagoTotal'].updateValueAndValidity();
-  }*/
-  /* validarMontos(): void {
-    const saldoValueCtaCte = Number(this.pagoVisaForm.controls['saldoCtaCte'].value);
-    const saldoValueLineaCre = Number(this.pagoVisaForm.controls['saldoLineaCre'].value);
-
-    console.log('saldoValueCtaCte:', saldoValueCtaCte);
-    console.log('saldoValueLineaCre:', saldoValueLineaCre);
-  
-    this.pagoVisaForm.controls['inputOtroMonto'].setValidators([
-      Validators.required, Validators.min(1),
-      (control: AbstractControl) => {
-        const value = Number(control.value);
-        console.log('inputOtroMonto value:', value);
-        return value > saldoValueCtaCte || value > saldoValueLineaCre ? { montoInvalido: true } : null;
-      }
-    ]);
-  
-    this.pagoVisaForm.controls['inputMontoPagoTotal'].setValidators([
-      Validators.required,
-      (control: AbstractControl) => {
-        const value = Number(control.value);
-        console.log('inputMontoPagoTotal value:', value);
-        return value > saldoValueCtaCte || value > saldoValueLineaCre ? { montoInvalido: true } : null;
-      }
-    ]);
-  
-    this.pagoVisaForm.controls['inputOtroMonto'].updateValueAndValidity();
-    this.pagoVisaForm.controls['inputMontoPagoTotal'].updateValueAndValidity();
-  } */
 
   onSubmit(): void {
     this.submitted = true;
