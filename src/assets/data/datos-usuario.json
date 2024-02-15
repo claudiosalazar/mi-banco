@@ -61,7 +61,7 @@
       },
       "lineaCredito": {
         "lineaCreN": "0987654",
-        "lineaCreSaldo": "3000000",
+        "lineaCreSaldo": "5000000",
         "lineaCreTrans":[
           { "fecha": "2023-01-01", "detalle": "Transferencia a Pepito", "cargo": 68000, "abono": 0, "saldo": "" },
           { "fecha": "2023-01-06", "detalle": "Pago Bazar de la esquina", "cargo": 500, "abono": 0, "saldo": "" },
