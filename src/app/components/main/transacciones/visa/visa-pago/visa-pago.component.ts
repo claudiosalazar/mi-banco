@@ -38,7 +38,9 @@ export class VisaPagoComponent implements OnInit {
   saldoRestanteLineaCre?: number;
 
   // Variables para saldos
-  inputOtroMontoVacio: boolean = false;
+  error1: boolean = false;
+  error2: boolean = false;
+  montoValido: boolean = false;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -183,59 +185,33 @@ export class VisaPagoComponent implements OnInit {
   
         // Validación 1
         if (!inputMontoValue || inputMontoValue.trim() === '') {
-          const error1 = 'Error: No se ingresó ningún valor';
-          console.log(error1);
+          this.error1 = true;
+          console.log('valor 0');
         } else {
+          this.error1 = false;
           // Convertir el valor del input a número
           inputMontoValue = inputMontoValue.replace(/\$|\.| /g, '');
           const numericInputMonto = Number(inputMontoValue);
   
           // Validación 2
           if (numericInputMonto > this.saldoFinalCtaCte && numericInputMonto > this.saldoFinalLineaCre) {
-            const error2 = 'Error: El monto ingresado es mayor que los saldos finales';
-            console.log(error2);
+            this.error2 = true;
+            console.log('valor superior');
+          } else {
+            this.error2 = false;
           }
   
           // Validación 3
           if (numericInputMonto <= this.saldoFinalCtaCte && numericInputMonto <= this.saldoFinalLineaCre) {
-            const montoValido = 'El monto ingresado es válido';
-            console.log(montoValido);
+            this.montoValido = true;
+            console.log('valido');
+          } else {
+            this.montoValido = false;
           }
         }
       }
     }
   }
-
-  /* validaMontoOtroMonto() {
-    const inputMontoControl = this.pagoVisaForm.get('inputOtroMonto');
-    if (inputMontoControl) {
-      setTimeout(() => {
-        let inputMontoValue = inputMontoControl.value;
-        inputMontoValue = inputMontoValue.replace(/\$|\.| /g, '');
-        const numericInputMonto = Number(inputMontoValue);
-        if (!isNaN(numericInputMonto)) {
-          console.log('Valor de inputMonto:', numericInputMonto); // Imprimir el valor de inputMonto
-          this.saldosService.validaMontos(numericInputMonto).subscribe(resultados => {
-            console.log('Resultados del servicio:', resultados); // Imprimir los resultados del servicio
-            if (resultados.montoSuperiorSaldoCtaCte && resultados.montoValidoCtaCte) {
-              this.montoSuperiorSaldoCtaCte = resultados.montoSuperiorSaldoCtaCte;
-              this.montoValidoCtaCte = resultados.montoValidoCtaCte;
-  
-              if (this.montoSuperiorSaldoCtaCte === 'error2') {
-                console.log('Error: El monto ingresado es mayor que el saldo restante en la cuenta corriente');
-              } else if (this.montoValidoCtaCte === 'valido') {
-                console.log('El monto es válido para la cuenta corriente');
-              }
-            } else {
-              console.log('Error: Los resultados del servicio son objetos vacíos');
-            }
-          });
-        } else {
-          console.log('Error: inputMontoValue no es un número');
-        }
-      });
-    }
-  }*/ 
 
 
   onSubmit(): void {
