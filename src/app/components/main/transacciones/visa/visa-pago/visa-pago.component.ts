@@ -66,6 +66,14 @@ export class VisaPagoComponent implements OnInit {
     });
 
     //
+    if (this.pagoVisaForm.get('productoParaPago')) {
+      this.pagoVisaForm.get('productoParaPago')?.valueChanges.subscribe(value => {
+        if (value === '1' || value === '2') {
+          this.resetErrores();
+          this.pagoVisaForm.get('inputOtroMonto')?.reset();
+        }
+      });
+    }
     
   }
   
@@ -104,15 +112,6 @@ export class VisaPagoComponent implements OnInit {
       return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
     };
   }
-
-  // Validación de monto mayor a cero en input inputOtroMonto
-  /* montoMayorACero(control: AbstractControl) {
-    const monto = control.value;
-    if (monto !== null && monto !== undefined && (monto <= 0 || monto.trim() === '$ 0')) {
-      return { montoInvalido: true };
-    }
-    return null;
-  } */
 
   // Quita el estado disables a los radio e input de monto
   onProductoSeleccionado(event: Event): void {
@@ -211,6 +210,12 @@ export class VisaPagoComponent implements OnInit {
         }
       }
     }
+  }
+
+  resetErrores() {
+    this.error1 = false;
+    this.error2 = false;
+    this.montoValido = false;
   }
 
 
