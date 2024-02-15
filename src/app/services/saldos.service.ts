@@ -7,6 +7,10 @@ import { Observable, of } from 'rxjs';
 })
 export class SaldosService {
 
+  saldoRestanteCtaCte!: number;
+  saldoRestanteLineaCre!: number;
+  saldoRestanteVisa!: number;
+
   calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): Observable<any> {
     let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
     let totalCargosCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
@@ -31,18 +35,28 @@ export class SaldosService {
     return of (saldoFinalVisa);
   }
 
-  calculaSaldoRestanteVisa(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
-    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
-    return of (saldoRestanteVisa);
+  // Saldo disponible para cuenta corriente
+  calculaSaldoRestanteCtaCte(datosCtaCte: DatosUsuarioActual): Observable<number> {
+    let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
+    let totalCargosCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let saldoRestanteCtaCte = saldoInicialCtaCte - totalCargosCtaCte;
+    return of (saldoRestanteCtaCte);
   }
-
+  
+  // Saldo disponible para linea de credito
   calculaSaldoRestanteLineaCre(datosVisa: DatosUsuarioActual): Observable<number> {
     let saldoInicialLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
     let totalCargosLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
     let saldoRestanteLineaCre = saldoInicialLineaCre - totalCargosLineaCre;
     return of (saldoRestanteLineaCre);
+  }
+
+  // Saldo disponible para visa
+  calculaSaldoRestanteVisa(datosVisa: DatosUsuarioActual): Observable<number> {
+    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
+    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
+    return of (saldoRestanteVisa);
   }
 
 }
