@@ -64,16 +64,6 @@ export class VisaPagoComponent implements OnInit {
       const transformedValue = this.pesosPipe.transform(value);
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
-
-    //
-    if (this.pagoVisaForm.get('productoParaPago')) {
-      this.pagoVisaForm.get('productoParaPago')?.valueChanges.subscribe(value => {
-        if (value === '1' || value === '2') {
-          this.resetErrores();
-          this.pagoVisaForm.get('inputOtroMonto')?.reset();
-        }
-      });
-    }
     
   }
   
@@ -212,10 +202,20 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  resetErrores() {
+  resetValidacionesInput() {
     this.error1 = false;
     this.error2 = false;
     this.montoValido = false;
+
+    // Limpia el valor ingresado en inputOtroMonto
+    if (this.pagoVisaForm.get('productoParaPago')) {
+      this.pagoVisaForm.get('productoParaPago')?.valueChanges.subscribe(value => {
+        if (value === '1' || value === '2') {
+          this.resetValidacionesInput();
+          this.pagoVisaForm.get('inputOtroMonto')?.reset();
+        }
+      });
+    }
   }
 
 
