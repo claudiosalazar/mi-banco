@@ -75,7 +75,7 @@
                     [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
                     <label for="inputMontoPagoTotal">Pago Total</label>
                     <div *ngIf="error3" class="invalid-feedback">
-                      <span>El monto ingresado para el pago es superior al saldo.</span>
+                      <span>El monto para el pago es superior al saldo.</span>
                     </div>
                     <div *ngIf="pagoTotalValido" class="valid-feedback">
                       <span>El monto es correcto.</span>
