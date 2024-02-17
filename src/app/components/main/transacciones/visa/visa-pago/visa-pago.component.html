@@ -29,7 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <select class="form-select" formControlName="productoParaPago" id="productoParaPago" (change)="onProductoSeleccionado($event);" 
+                    <select class="form-select" formControlName="productoParaPago" id="productoParaPago" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()" 
                     [ngClass]="{
                       'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 
                       'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
@@ -53,7 +53,7 @@
                     <!-- Pago total -->
                     <div class="form-check me-3">
                       <!-- <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoPagoTotalmontoPago" value="pagoTotal" (change)="radioResetInput($event); detectaCambioRadio(); resetValidacionesInputOtroMonto()"> -->
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal" (change)="radioResetInput($event); detectaCambioRadio(); resetValidacionesInputOtroMonto()">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal">
                       <label class="form-check-label" for="montoPago">
                         Pago Total
                       </label>
@@ -61,7 +61,7 @@
                     <!-- Otro monto -->
                     <div class="form-check">
                       <!-- <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoOtroMonto" value="otroMonto" (change)="detectaCambioRadio(); resetValidacionesInputPagoTotal()"> -->
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto" (change)="detectaCambioRadio(); resetValidacionesInputPagoTotal()">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto">
                       <label class="form-check-label" for="montoPago">
                         Otro Monto 
                       </label>
@@ -75,10 +75,10 @@
                     [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
                     <label for="inputMontoPagoTotal">Pago Total</label>
                     <div *ngIf="error3" class="invalid-feedback">
-                      <span>El monto es correcto.</span>
+                      <span>El monto ingresado para el pago es superior al saldo.</span>
                     </div>
                     <div *ngIf="pagoTotalValido" class="valid-feedback">
-                      <span>El monto para el pago es superior al saldo.</span>
+                      <span>El monto es correcto.</span>
                     </div>
                   </div>
                   
@@ -129,7 +129,7 @@
                 <div class="col-12">
                   <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary me-3">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" (click)="validaMontoOtroMonto()">Pagar</button>
+                    <button type="submit" class="btn btn-primary" (click)="validaMontoPagoTotal()">Pagar</button>
                     <!-- <button type="submit" class="btn btn-primary">Pagar</button> -->
                   </div>
                 </div>

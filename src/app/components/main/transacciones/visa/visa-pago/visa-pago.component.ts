@@ -4,7 +4,7 @@ import { DatosUsuarioService } from '../../../../../services/datos-usuario.servi
 import { SaldosService } from '../../../../../services/saldos.service';
 import { DatosUsuarioActual } from '../../../../../../assets/models/datos-usuario.model';
 import { PesosPipe } from '../../../../../pipes/pesos.pipe';
-import { filter, map, switchMap } from 'rxjs';
+// import { filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-visa-pago',
@@ -44,6 +44,8 @@ export class VisaPagoComponent implements OnInit {
   pagoTotalValido: boolean = false;
   montoValido: boolean = false;
 
+  private radioChanged = true;
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private saldosService: SaldosService,
@@ -55,7 +57,8 @@ export class VisaPagoComponent implements OnInit {
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
-      inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
+      // inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
+      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
     });
@@ -66,8 +69,6 @@ export class VisaPagoComponent implements OnInit {
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
 
-    //
-    this.detectaCambioRadio();
 
     // Resetea validaciones de inputOtroMonto al cambiar el valor de productoParaPago
     if (this.pagoVisaForm.get('productoParaPago')) {
@@ -79,26 +80,6 @@ export class VisaPagoComponent implements OnInit {
       });
     }
 
-    
-
-    const montoPagoControl = this.pagoVisaForm.get('montoPago');
-    const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
-    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
-
-    if (montoPagoControl) {
-      montoPagoControl.valueChanges.subscribe(value => {
-        if (value === 2 && inputOtroMontoControl ) {
-          // Aplicar las validaciones de 'validaMontoOtroMonto' al input 'inputOtroMonto'
-          this.validaMontoOtroMonto();
-          console.log('aplica validaciones otro monto');
-        } else if (value === 1 && inputMontoPagoTotalControl) {
-          // Aplicar las validaciones de 'validaMontoPagoTotal' al input 'inputMontoPagoTotal'
-          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
-          console.log('aplica validacion pago total');
-        }
-      });
-    }
-    
   }
   
   // LLamada a servicio para obtener datos de usuario
@@ -155,38 +136,8 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  detectaCambioRadio() {
-    const checkMontoOtroMontoControl = this.pagoVisaForm.get('checkMontoOtroMonto');
-    const checkMontoPagoTotalControl = this.pagoVisaForm.get('montoPago');
-    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
-  
-    if (checkMontoOtroMontoControl) {
-      checkMontoOtroMontoControl.valueChanges.subscribe(value => {
-        console.log('cambio a pago total', value);
-      });
-    }
-  
-    if (checkMontoPagoTotalControl) {
-      checkMontoPagoTotalControl.valueChanges.subscribe(value => {
-        console.log('cambio a otro monto', value);
-        if (value && inputMontoPagoTotalControl) {
-          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
-        }
-      });
-    }
-  
-    if (inputMontoPagoTotalControl) {
-      inputMontoPagoTotalControl.valueChanges.subscribe(value => {
-        console.log('inputMontoPagoTotal changed to: ', value);
-        if (inputMontoPagoTotalControl) {
-          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
-        }
-      });
-    }
-  }
-
   // Elimina el monto ingresado en inputOtroMonto al cambiar al radio a inputMontoPagoTotal
-  radioResetInput(event: any): void {
+  radioResetInput(_event: any): void {
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
       this.pagoVisaForm.controls['inputOtroMonto'].reset();
@@ -225,36 +176,87 @@ export class VisaPagoComponent implements OnInit {
     this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
-  validaMontoPagoTotal(inputMontoPagoTotalControl: AbstractControl) {
-    const checkMontoPagoTotalControl = this.pagoVisaForm.get('checkMontoPagoTotal');
+  detectaCambioRadio() {
+    const montoPagoControl = this.pagoVisaForm.get('montoPago');
+    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+  
+    if (montoPagoControl) {
+      montoPagoControl.valueChanges.subscribe(value => {
+        if (value && inputMontoPagoTotalControl) {
+          inputMontoPagoTotalControl.updateValueAndValidity();
+        }
+      });
+    }
+  }
+
+  validaMontoPagoTotal() {
     const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
     const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
+    const inputMontoControl2 = this.pagoVisaForm.get('inputMontoPagoTotal');
   
-    if (checkMontoPagoTotalControl && checkMontoPagoTotalControl.value && inputMontoPagoTotalControl) {
-      let inputMontoTotalControl = inputMontoPagoTotalControl.value;
+    if (productoParaPago === '1' || productoParaPago === '2') {
+      if (inputMontoControl2) {
+        let inputMontoValue2 = inputMontoControl2.value;
   
-      // Convertir el valor del input a número
-      inputMontoTotalControl = inputMontoTotalControl.replace(/\$|\.| /g, '');
-      const numericInputMontoTotalControl = Number(inputMontoTotalControl);
+        // Convertir el valor del input a número
+        inputMontoValue2 = inputMontoValue2.replace(/\$|\.| /g, '');
+        const numericInputMonto = Number(inputMontoValue2);
   
-      // Validación 1
-      if (productoParaPago === '1') {
-        if (numericInputMontoTotalControl > this.saldoFinalCtaCte && numericInputMontoTotalControl > this.saldoFinalLineaCre) {
-          this.error3 = true;
-          console.log('Error');
-        } else {
-          this.error3 = false;
-        }
-      } else if (productoParaPago === '2') {
-        if (numericInputMontoTotalControl <= this.saldoFinalCtaCte && numericInputMontoTotalControl <= this.saldoFinalLineaCre) {
+        // Validación 1
+        if (productoParaPago === '1' && numericInputMonto <= this.saldoFinalCtaCte) {
           this.pagoTotalValido = true;
           console.log('valido');
-        } else {
-          this.pagoTotalValido = false;
+        } 
+        // Validación 2
+        else if (productoParaPago === '2' && numericInputMonto <= this.saldoFinalLineaCre) {
+          this.pagoTotalValido = true;
+          console.log('valido');
+        } 
+        else {
+          this.error3 = true;
+          console.log('valor superior');
         }
       }
     }
   }
+
+  /* validaMontoPagoTotal(): ValidatorFn {
+    return (_control: AbstractControl): {[key: string]: any} | null => {
+      const montoPagoControl = this.pagoVisaForm.get('montoPago');
+      const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
+      const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
+      const inputMontoControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+  
+      if (montoPagoControl && montoPagoControl.value && inputMontoControl && inputMontoControl.value) {
+        let inputMontoTotalControl = inputMontoControl.value;
+  
+        // Convertir el valor del input a número
+        const numericInputMontoTotalControl = Number(inputMontoTotalControl);
+  
+        // Validación 1
+        if (productoParaPago === '1') {
+          if (numericInputMontoTotalControl > this.saldoFinalVisa && numericInputMontoTotalControl > this.saldoFinalCtaCte) {
+            console.log('Error: El monto es mayor al saldo final de la cuenta corriente.');
+            return { 'error3': true };
+          } else {
+            console.log('El monto es válido.');
+            return { 'pagoTotalValido': true };
+          }
+        } 
+        // Validación 2
+        else if (productoParaPago === '2') {
+          if (numericInputMontoTotalControl > this.saldoFinalVisa && numericInputMontoTotalControl > this.saldoFinalLineaCre) {
+            console.log('Error: El monto es mayor al saldo final de la línea de crédito.');
+            return { 'error3': true };
+          } else {
+            console.log('El monto es válido.');
+            return { 'pagoTotalValido': true };
+          }
+        }
+      }
+      return null;
+    };
+  } */
   
   validaMontoOtroMonto() {
     const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
@@ -299,7 +301,7 @@ export class VisaPagoComponent implements OnInit {
     this.error1 = false;
     this.error2 = false;
     this.montoValido = false;
-    console.log('reset a otro monto');
+    // console.log('reset a otro monto');
     // Limpia el valor ingresado en inputOtroMonto
     
   }
@@ -307,7 +309,7 @@ export class VisaPagoComponent implements OnInit {
   resetValidacionesInputPagoTotal() {
     this.error3 = false;
     this.pagoTotalValido = false;
-    console.log('reset a pago total');
+    // console.log('reset a pago total');
     // Limpia el valor ingresado en inputOtroMonto
     
   }
