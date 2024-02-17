@@ -30,6 +30,7 @@ import { AyudaComponent } from './components/main/ayuda/ayuda.component';
 import { LineaCreditoPagoComponent } from './components/main/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { LineaCreditoComprobanteComponent } from './components/main/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
 import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pago/visa-pago.component';
+import { VisaComprobanteComponent } from './components/main/transacciones/visa/visa-comprobante/visa-comprobante.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pag
     AyudaComponent,
     LineaCreditoPagoComponent,
     LineaCreditoComprobanteComponent,
-    VisaPagoComponent
+    VisaPagoComponent,
+    VisaComprobanteComponent
   ],
   imports: [
     BrowserModule,
