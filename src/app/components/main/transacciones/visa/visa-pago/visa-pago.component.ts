@@ -40,6 +40,8 @@ export class VisaPagoComponent implements OnInit {
   // Variables para saldos
   error1: boolean = false;
   error2: boolean = false;
+  error3: boolean = false;
+  pagoTotalValido: boolean = false;
   montoValido: boolean = false;
 
   constructor(
@@ -56,7 +58,6 @@ export class VisaPagoComponent implements OnInit {
       inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
-      radio: new FormControl(''),
     });
 
     // Aplica pipe pesos a inputOtroMonto
@@ -64,6 +65,39 @@ export class VisaPagoComponent implements OnInit {
       const transformedValue = this.pesosPipe.transform(value);
       this.pagoVisaForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
+
+    //
+    this.detectaCambioRadio();
+
+    // Resetea validaciones de inputOtroMonto al cambiar el valor de productoParaPago
+    if (this.pagoVisaForm.get('productoParaPago')) {
+      this.pagoVisaForm.get('productoParaPago')?.valueChanges.subscribe(value => {
+        if (value === '1' || value === '2') {
+          this.resetValidacionesInputOtroMonto();
+          this.pagoVisaForm.get('inputOtroMonto')?.reset();
+        }
+      });
+    }
+
+    
+
+    const montoPagoControl = this.pagoVisaForm.get('montoPago');
+    const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
+    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+
+    if (montoPagoControl) {
+      montoPagoControl.valueChanges.subscribe(value => {
+        if (value === 2 && inputOtroMontoControl ) {
+          // Aplicar las validaciones de 'validaMontoOtroMonto' al input 'inputOtroMonto'
+          this.validaMontoOtroMonto();
+          console.log('aplica validaciones otro monto');
+        } else if (value === 1 && inputMontoPagoTotalControl) {
+          // Aplicar las validaciones de 'validaMontoPagoTotal' al input 'inputMontoPagoTotal'
+          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
+          console.log('aplica validacion pago total');
+        }
+      });
+    }
     
   }
   
@@ -121,8 +155,38 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
+  detectaCambioRadio() {
+    const checkMontoOtroMontoControl = this.pagoVisaForm.get('checkMontoOtroMonto');
+    const checkMontoPagoTotalControl = this.pagoVisaForm.get('montoPago');
+    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+  
+    if (checkMontoOtroMontoControl) {
+      checkMontoOtroMontoControl.valueChanges.subscribe(value => {
+        console.log('cambio a pago total', value);
+      });
+    }
+  
+    if (checkMontoPagoTotalControl) {
+      checkMontoPagoTotalControl.valueChanges.subscribe(value => {
+        console.log('cambio a otro monto', value);
+        if (value && inputMontoPagoTotalControl) {
+          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
+        }
+      });
+    }
+  
+    if (inputMontoPagoTotalControl) {
+      inputMontoPagoTotalControl.valueChanges.subscribe(value => {
+        console.log('inputMontoPagoTotal changed to: ', value);
+        if (inputMontoPagoTotalControl) {
+          this.validaMontoPagoTotal(inputMontoPagoTotalControl);
+        }
+      });
+    }
+  }
+
   // Elimina el monto ingresado en inputOtroMonto al cambiar al radio a inputMontoPagoTotal
-  radioResetMontoOtroPago(event: any): void {
+  radioResetInput(event: any): void {
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
       this.pagoVisaForm.controls['inputOtroMonto'].reset();
@@ -161,7 +225,36 @@ export class VisaPagoComponent implements OnInit {
     this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
-
+  validaMontoPagoTotal(inputMontoPagoTotalControl: AbstractControl) {
+    const checkMontoPagoTotalControl = this.pagoVisaForm.get('checkMontoPagoTotal');
+    const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
+    const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
+  
+    if (checkMontoPagoTotalControl && checkMontoPagoTotalControl.value && inputMontoPagoTotalControl) {
+      let inputMontoTotalControl = inputMontoPagoTotalControl.value;
+  
+      // Convertir el valor del input a número
+      inputMontoTotalControl = inputMontoTotalControl.replace(/\$|\.| /g, '');
+      const numericInputMontoTotalControl = Number(inputMontoTotalControl);
+  
+      // Validación 1
+      if (productoParaPago === '1') {
+        if (numericInputMontoTotalControl > this.saldoFinalCtaCte && numericInputMontoTotalControl > this.saldoFinalLineaCre) {
+          this.error3 = true;
+          console.log('Error');
+        } else {
+          this.error3 = false;
+        }
+      } else if (productoParaPago === '2') {
+        if (numericInputMontoTotalControl <= this.saldoFinalCtaCte && numericInputMontoTotalControl <= this.saldoFinalLineaCre) {
+          this.pagoTotalValido = true;
+          console.log('valido');
+        } else {
+          this.pagoTotalValido = false;
+        }
+      }
+    }
+  }
   
   validaMontoOtroMonto() {
     const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
@@ -202,20 +295,21 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  resetValidacionesInput() {
+  resetValidacionesInputOtroMonto() {
     this.error1 = false;
     this.error2 = false;
     this.montoValido = false;
-
+    console.log('reset a otro monto');
     // Limpia el valor ingresado en inputOtroMonto
-    if (this.pagoVisaForm.get('productoParaPago')) {
-      this.pagoVisaForm.get('productoParaPago')?.valueChanges.subscribe(value => {
-        if (value === '1' || value === '2') {
-          this.resetValidacionesInput();
-          this.pagoVisaForm.get('inputOtroMonto')?.reset();
-        }
-      });
-    }
+    
+  }
+
+  resetValidacionesInputPagoTotal() {
+    this.error3 = false;
+    this.pagoTotalValido = false;
+    console.log('reset a pago total');
+    // Limpia el valor ingresado en inputOtroMonto
+    
   }
 
 
