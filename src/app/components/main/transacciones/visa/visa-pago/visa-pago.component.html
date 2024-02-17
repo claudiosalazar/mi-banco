@@ -86,7 +86,7 @@
                   <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
                     <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" 
                     [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido"
-                    (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto(); " (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
+                    (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
                     <label for="inputOtroMonto">Ingrese un monto a pagar</label>
                     <div *ngIf="error1" class="invalid-feedback">
                       <span>Debes ingresar un monto superior a 0.</span>
@@ -129,7 +129,7 @@
                 <div class="col-12">
                   <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary me-3">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" (click)="validaMontoPagoTotal()">Pagar</button>
+                    <button type="submit" class="btn btn-primary" (click)="pagar()">Pagar</button>
                     <!-- <button type="submit" class="btn btn-primary">Pagar</button> -->
                   </div>
                 </div>

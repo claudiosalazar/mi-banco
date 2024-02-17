@@ -58,7 +58,7 @@ export class VisaPagoComponent implements OnInit {
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
       // inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
-      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
     });
@@ -79,6 +79,7 @@ export class VisaPagoComponent implements OnInit {
         }
       });
     }
+    
 
   }
   
@@ -182,7 +183,7 @@ export class VisaPagoComponent implements OnInit {
   
     if (montoPagoControl) {
       montoPagoControl.valueChanges.subscribe(value => {
-        if (value && inputMontoPagoTotalControl) {
+        if (value === 'primerRadio' && inputMontoPagoTotalControl) {
           inputMontoPagoTotalControl.updateValueAndValidity();
         }
       });
@@ -312,6 +313,32 @@ export class VisaPagoComponent implements OnInit {
     // console.log('reset a pago total');
     // Limpia el valor ingresado en inputOtroMonto
     
+  }
+
+  pagar() {
+    const montoPagoControl = this.pagoVisaForm.get('montoPago');
+    const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+    const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
+  
+    if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl) {
+      if (montoPagoControl.value === 'pagoTotal') {
+        const errors = this.validaMontoPagoTotal();
+        if (errors !== null) {
+          // Maneja los errores aquí
+          console.log(errors);
+        } else {
+          // Procede con el pago aquí
+        }
+      } else if (montoPagoControl.value === 'otroMonto') {
+        this.validaMontoOtroMonto();
+        if (this.error1 || this.error2) {
+          // Maneja los errores aquí
+          console.log('Error: Invalid amount');
+        } else {
+          // Procede con el pago aquí
+        }
+      }
+    }
   }
 
 
