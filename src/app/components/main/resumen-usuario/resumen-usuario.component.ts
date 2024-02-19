@@ -8,9 +8,9 @@ import { DatosUsuarioActual } from '../../../../assets/models/datos-usuario.mode
   templateUrl: './resumen-usuario.component.html'
 })
 export class ResumenUsuarioComponent implements OnInit {
-  saldoCtaCte: any;
-  saldoLineaCre: any;
-  saldoVisa: any;
+  saldoCtaCte?: number;
+  saldoLineaCre?: number;
+  saldoVisa?: number;
   datosUsuarioActual: DatosUsuarioActual | undefined;
 
   constructor(
@@ -26,9 +26,9 @@ export class ResumenUsuarioComponent implements OnInit {
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
-      this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
-      this.saldoLineaCre = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+      this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual).subscribe(saldo => this.saldoCtaCte = saldo);
+      this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual).subscribe(saldo => this.saldoLineaCre = saldo);
+      this.saldosService.calcularSaldoVisa(this.datosUsuarioActual).subscribe(saldo => this.saldoVisa = saldo);
     });
   }
 
