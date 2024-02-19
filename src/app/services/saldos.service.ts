@@ -20,7 +20,7 @@ export class SaldosService {
   }
 
   calcularSaldoLineaCre(datosLineaCre: DatosUsuarioActual): Observable<number> {
-    let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
+    let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo;
     let totalCargosLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
     let totalAbonosLineaCre: number = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.abono, 0) as number;
     let saldoFinalLineaCre = saldoInicialLineaCre - totalCargosLineaCre + totalAbonosLineaCre;
@@ -28,7 +28,7 @@ export class SaldosService {
   }
 
   calcularSaldoVisa(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
+    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaCupo;
     let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
     let totalAbonosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.abono, 0) as number;
     let saldoFinalVisa = saldoInicialVisa - totalCargosVisa + totalAbonosVisa;
@@ -45,7 +45,7 @@ export class SaldosService {
   
   // Saldo disponible para linea de credito
   calculaSaldoRestanteLineaCre(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo;
+    let saldoInicialLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo;
     let totalCargosLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
     let saldoRestanteLineaCre = saldoInicialLineaCre - totalCargosLineaCre;
     return of (saldoRestanteLineaCre);
@@ -53,7 +53,7 @@ export class SaldosService {
 
   // Saldo disponible para visa
   calculaSaldoRestanteVisa(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaSaldo;
+    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaCupo;
     let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
     let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
     return of (saldoRestanteVisa);

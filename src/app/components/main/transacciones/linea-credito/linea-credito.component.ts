@@ -33,7 +33,7 @@ export class LineaCreditoComponent implements OnInit {
       this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans;
       // Inicialmente, los datos actuales son todos los datos
       this.datosActuales = this.datosOriginales;
-      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo);
+      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo);
       for (let trans of this.datosOriginales) {
         this.saldo = this.saldo - trans.cargo + trans.abono;
         trans.saldoFinal = this.saldo;

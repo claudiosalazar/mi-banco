@@ -11,7 +11,7 @@
             <div class="col-12 mb-5" *ngIf="datosUsuarioActual">
               <h3>Datos Pago</h3>
               <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizadoLineaCre ?? 0 | pesos}}</strong></p>
-              <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreSaldo | pesos }}</strong></p>
+              <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo | pesos }}</strong></p>
               <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
               <hr class="mb-4">
               <div class="form-floating">

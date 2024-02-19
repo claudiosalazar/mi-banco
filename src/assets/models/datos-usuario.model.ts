@@ -68,7 +68,7 @@ export interface DatosUsuarioActual {
       };
       lineaCredito: {
         lineaCreN: number;
-        lineaCreSaldo: number;
+        lineaCreCupo: number;
         lineaCreTrans:{
           saldoFinal: any;
           reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
@@ -83,7 +83,7 @@ export interface DatosUsuarioActual {
       };
       visa: {
         visaN: number;
-        visaSaldo: number;
+        visaCupo: number;
         visaTrans:{
           saldoFinal: any;
           reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;

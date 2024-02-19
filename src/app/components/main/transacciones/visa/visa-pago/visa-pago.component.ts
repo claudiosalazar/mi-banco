@@ -27,7 +27,7 @@ export class VisaPagoComponent implements OnInit {
   
   // Variables para datos de usuario
   visaN: any;
-  visaSaldo: any | undefined;
+  visaCupo: any | undefined;
   productoSeleccionado: any;
   elementosHabilitados = false;
   inputOtroMonto: any;

@@ -16,7 +16,7 @@
                   <p><small>Cupo Utilizado: <strong>{{saldoFinalVisa | pesos}}</strong></small></p>
                 </div>
                 <div>
-                  <p class="mb-0"><small>Cupo Total: <strong>{{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaSaldo ?? 0 | pesos }}</strong></small></p>
+                  <p class="mb-0"><small>Cupo Total: <strong>{{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaCupo ?? 0 | pesos }}</strong></small></p>
                   <p><small>Cupo Disponible: <strong>{{ saldoRestanteVisa ?? 0 | pesos }}</strong></small></p>
                 </div>
               </div>
@@ -154,5 +154,16 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- Modal pago -->
+<div class="modal fade" id="modalPagoVisa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Confirmar pago.
+      </div>
+    </div>
   </div>
 </div>
