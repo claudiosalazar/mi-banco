@@ -302,15 +302,14 @@ export class VisaPagoComponent implements OnInit {
       if (montoPagoControl.value === 'pagoTotal') {
         const errors = this.validaMontoPagoTotal();
         if (errors !== null) {
-          console.log(errors);
+          // console.log(errors);
         } else {
           // codigo para calculo de pago total
         }
       } else if (montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
         if (this.error1 || this.error2) {
-          // Maneja los errores aquí
-          console.log('Error: Invalid amount');
+          // console.log('Error: Invalid amount');
         } else {
           // codigo para calculo de otro pago
         }
@@ -318,15 +317,6 @@ export class VisaPagoComponent implements OnInit {
     }
   }
 
-  /*
-
-
-
-  Estos codigos son para guardar el pago en un archivo json, pero no se pueden probar ya que no se puede hacer peticiones a un archivo json local
-  se deben seguir probando
-
-
-  */
   
 
   /* pagoValido() {
