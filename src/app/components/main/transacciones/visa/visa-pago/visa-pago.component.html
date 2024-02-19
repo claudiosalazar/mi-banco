@@ -24,7 +24,7 @@
               <hr>
 
               <!-- Inicio formulario -->
-              <form [formGroup]="pagoVisaForm" (ngSubmit)="onSubmit()">
+              <form [formGroup]="pagoVisaForm">
                 <!-- Producto para pago -->
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
@@ -158,7 +158,7 @@
 </div>
 
 <!-- Modal pago -->
-<div class="modal fade" id="modalPagoVisa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalPagoVisa" tabindex="-1" aria-labelledby="modalPagoVisa" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">

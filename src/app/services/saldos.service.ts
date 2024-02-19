@@ -1,15 +1,37 @@
-import { DatosUsuarioActual } from './../../assets/models/datos-usuario.model';
+import { DatosUsuarioActual } from '../../assets/models/datos-usuario.model';
+// import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+// import { Observable, from, map, of, lastValueFrom } from 'rxjs';
 import { Observable, of } from 'rxjs';
+
+/* interface SaldoData {
+  saldoFinalVisa: number;
+} */
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaldosService {
 
+  mostrarComprobante: any;
+  saldoFinalVisa: any;
+  data: number;
+  // guardaPagoVisaJson: any;
+
+  constructor() {
+    this.data = 0;
+  }
+
+  getData(): number {
+    return this.data;
+  }
+
   saldoRestanteCtaCte!: number;
   saldoRestanteLineaCre!: number;
   saldoRestanteVisa!: number;
+
+  // private urlData = '../assets/data/datos-usuario.json';
 
   calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): Observable<any> {
     let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
@@ -58,5 +80,22 @@ export class SaldosService {
     let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
     return of (saldoRestanteVisa);
   }
+
+  // Guardar datos en archivo JSON
+
+
+  /* guardarPagoVisaJson(saldoFinalVisa: number): Observable<number> {
+    const params = new HttpParams().set('saldoFinalVisa', saldoFinalVisa.toString());
+    const request$ = this.http.get<{ saldo: number }>('../../assets/data/datos-usuario.json', { params });
+    return from(lastValueFrom(request$)).pipe(
+      map(response => {
+        if (response && typeof response.saldo === 'number') {
+          return response.saldo;
+        } else {
+          throw new Error('La respuesta de la API no es un número');
+        }
+      })
+    );
+  } */
 
 }
