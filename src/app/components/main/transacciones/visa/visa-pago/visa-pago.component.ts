@@ -107,21 +107,21 @@ export class VisaPagoComponent implements OnInit {
       this.datosUsuarioActual = data;
       this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual).subscribe((resultado: any) => {
         this.saldoFinalCtaCte = parseFloat(resultado);
-        console.log('saldoFinalCtaCte:', this.saldoFinalCtaCte);
+        //console.log('saldoFinalCtaCte:', this.saldoFinalCtaCte);
       });
       
       this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual).subscribe((resultado: any) => {
         this.saldoFinalLineaCre = parseFloat(resultado);
-        console.log('saldoFinalLineaCre:', this.saldoFinalLineaCre);
+        //console.log('saldoFinalLineaCre:', this.saldoFinalLineaCre);
       });
       this.saldosService.calcularSaldoVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
         this.saldoFinalVisa = parseFloat(resultado);
-        console.log('saldoFinalVisa:', this.saldoFinalVisa);
+        //console.log('saldoFinalVisa:', this.saldoFinalVisa);
       });
 
       this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
         this.saldoRestanteVisa = parseFloat(resultado);
-        console.log('saldoRestanteVisa:', this.saldoRestanteVisa);
+        //console.log('saldoRestanteVisa:', this.saldoRestanteVisa);
       });
 
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
@@ -295,8 +295,9 @@ export class VisaPagoComponent implements OnInit {
     
   }
 
-  validaFormulario() {
+  validaFormulario(): void {
     this.submitted = true;
+
     console.log(this.pagoVisaForm?.value);
 
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
@@ -307,14 +308,16 @@ export class VisaPagoComponent implements OnInit {
       if (montoPagoControl.value === 'pagoTotal') {
         this.validaMontoPagoTotal();
         if (this.error3) {
-          // console.log(errors);
         } else {
           // Se captura el dato ingreado en el input y se transforma en un dato number
-          let montoPagoTotal = this.pagoVisaForm.value.inputMontoPagoTotal;
-          montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
-          this.montoNumberTotal = Number(montoPagoTotal);
-          console.log('montoNumberTotal:', this.montoNumberTotal);
-          this.calculosMontos();
+          let montoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+          if (montoPagoTotalControl) {
+            let montoPagoTotal = montoPagoTotalControl.value;
+            montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
+            this.montoNumberTotal = Number(montoPagoTotal);
+            console.log('montoNumberTotal:', this.montoNumberTotal);
+            // this.calculosMontos();
+          }
         }
       } else if (montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
@@ -325,18 +328,13 @@ export class VisaPagoComponent implements OnInit {
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);
           console.log('montoNumberOtro:', this.montoNumberOtro);
-          this.calculosMontos();
+          // this.calculosMontos();
         }
       }
     }
-
-    
-    
   }
 
-
-
-  calculosMontos() {
+  /* calculosMontos() {
     // Calculo de montos restantes
     if (this.datosUsuarioActual !== undefined) {
       this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
@@ -355,7 +353,9 @@ export class VisaPagoComponent implements OnInit {
             next: response => console.log('Respuesta del servidor:', response),
             error: err => console.error('Error al enviar los datos:', err)
           });
-        } else if (this.saldoFinalVisa !== undefined && this.montoNumberOtro !== undefined) {
+        } else {
+          console.error('data es undefined');
+        } if (this.saldoFinalVisa !== undefined && this.montoNumberOtro !== undefined) {
           console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
           this.saldoFinalVisa -= this.montoNumberOtro;
           this.saldoFinalCtaCte -= this.montoNumberOtro;
@@ -386,7 +386,7 @@ export class VisaPagoComponent implements OnInit {
         return throwError(error);
       })
     );
-  }
+  } */
 
 
   /* guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
