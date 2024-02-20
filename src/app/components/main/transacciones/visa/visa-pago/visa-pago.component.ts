@@ -51,6 +51,9 @@ export class VisaPagoComponent implements OnInit {
   pagoTotalValido: boolean = false;
   montoValido: boolean = false;
   modalInstance: any;
+
+  montoNumberTotal: number | undefined;
+  montoNumberOtro: number | undefined;
   
 
   // private radioChanged = true;
@@ -93,6 +96,8 @@ export class VisaPagoComponent implements OnInit {
     if (this.modalPagoVisa) {
       this.modalInstance = new bootstrap.Modal(this.modalPagoVisa.nativeElement);
     }
+
+    
 
   }
   
@@ -300,68 +305,91 @@ export class VisaPagoComponent implements OnInit {
   
     if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl) {
       if (montoPagoControl.value === 'pagoTotal') {
-        const errors = this.validaMontoPagoTotal();
-        if (errors !== null) {
+        this.validaMontoPagoTotal();
+        if (this.error3) {
           // console.log(errors);
         } else {
-          // codigo para calculo de pago total
+          // Se captura el dato ingreado en el input y se transforma en un dato number
+          let montoPagoTotal = this.pagoVisaForm.value.inputMontoPagoTotal;
+          montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
+          this.montoNumberTotal = Number(montoPagoTotal);
+          console.log('montoNumberTotal:', this.montoNumberTotal);
+          this.calculosMontos();
         }
       } else if (montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
         if (this.error1 || this.error2) {
-          // console.log('Error: Invalid amount');
         } else {
-          // codigo para calculo de otro pago
+          // Se captura el dato ingreado en el input y se transforma en un dato number
+          let montoOtroMonto = this.pagoVisaForm.value.inputOtroMonto;
+          montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
+          this.montoNumberOtro = Number(montoOtroMonto);
+          console.log('montoNumberOtro:', this.montoNumberOtro);
+          this.calculosMontos();
         }
       }
     }
+
+    
+    
   }
 
-  
 
-  /* pagoValido() {
-      let monto = this.pagoVisaForm.value.inputMontoPagoTotal || this.pagoVisaForm.value.inputOtroMonto;
-      monto = monto.replace(/\$|\.| /g, '');
-      const montoNumber = Number(monto);
-  
-      if (isNaN(montoNumber)) {
-        console.error('monto no es un número');
-        return;
-      }
-  
-      // Muestra el modal
-      if (this.modalPagoVisa && this.modalPagoVisa.nativeElement) {
-        this.modalInstance.show();
-      }
-  
-      if (this.datosUsuarioActual !== undefined) {
-        this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
-          this.saldoFinalVisa = parseFloat(resultado);
-          console.log('saldoFinalVisa:', this.saldoFinalVisa);
-  
-          // Continúa con el resto del código de pagar aquí, dentro de la suscripción a calcularSaldoVisa
-          if (this.saldoFinalVisa !== undefined) {
-            console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
-            console.log('montoNumber:', montoNumber); // imprime montoNumber
-            this.saldoFinalVisa -= montoNumber;
-            this.saldoFinalCtaCte -= montoNumber;
-            this.saldoFinalLineaCre -= montoNumber;
-            console.log('saldoFinalVisa después de la suma:', this.saldoFinalVisa); // imprime saldoFinalVisa después de la suma
-            this.guardarPagoVisaJson(this.saldoFinalVisa).subscribe({
-              next: response => console.log('Respuesta del servidor:', response),
-              error: err => console.error('Error al enviar los datos:', err)
-            });
-          } else {
-            console.error('data es undefined');
-          }
-        });
-      } else {
-        console.error('saldosService es undefined');
-      }
+
+  calculosMontos() {
+    // Calculo de montos restantes
+    if (this.datosUsuarioActual !== undefined) {
+      this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
+        // Captura el dato de saldoFinalVisa y lo transforma en un dato number
+        this.saldoFinalVisa = parseFloat(resultado);
+        console.log('saldoFinalVisa:', this.saldoFinalVisa);
+
+        // Continúa con el resto del código de pagar aquí, dentro de la suscripción a calcularSaldoVisa
+        if (this.saldoFinalVisa !== undefined && this.montoNumberTotal !== undefined) {
+          console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
+          this.saldoFinalVisa -= this.montoNumberTotal;
+          this.saldoFinalCtaCte -= this.montoNumberTotal;
+          this.saldoFinalLineaCre -= this.montoNumberTotal;
+          console.log('saldoFinalVisa después de la suma:', this.saldoFinalVisa); // imprime saldoFinalVisa después de la suma
+          this.guardarPagoVisaJson(this.saldoFinalVisa).subscribe({
+            next: response => console.log('Respuesta del servidor:', response),
+            error: err => console.error('Error al enviar los datos:', err)
+          });
+        } else if (this.saldoFinalVisa !== undefined && this.montoNumberOtro !== undefined) {
+          console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
+          this.saldoFinalVisa -= this.montoNumberOtro;
+          this.saldoFinalCtaCte -= this.montoNumberOtro;
+          this.saldoFinalLineaCre -= this.montoNumberOtro;
+          console.log('saldoFinalVisa después de la suma:', this.saldoFinalVisa); // imprime saldoFinalVisa después de la suma
+          this.guardarPagoVisaJson(this.saldoFinalVisa).subscribe({
+            next: response => console.log('Respuesta del servidor:', response),
+            error: err => console.error('Error al enviar los datos:', err)
+          });
+        } else {
+          console.error('data es undefined');
+        }
+        
+      });
+    } else {
+      console.error('saldosService es undefined');
+    }
   }
 
 
   guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
+    const url = 'http://localhost:4200/assets/data/datos-usuario.json';
+    const params = new HttpParams().set('saldoFinalVisa', saldoFinalVisa.toString());
+  
+    return this.http.get(url, { params }).pipe(
+      catchError((error: any) => {
+        console.error('Error al enviar los datos:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+  /* guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
     const url = 'http://localhost:4200/assets/data/datos-usuario.json'; // Reemplaza con la URL de tu API
     const params = new HttpParams().set('saldoFinalVisa', saldoFinalVisa.toString());
   
