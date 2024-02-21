@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// Login
+import { LoginComponent } from './auth/components/login/login.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { MiBancoComponent } from './mi-banco.component';
-import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
-
-
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resumen-usuario.component';

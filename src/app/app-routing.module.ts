@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './auth/components/login/login.component';
 import { MainComponent } from './components/main/main.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './auth/class/auth.guard';
 import { AyudaComponent } from './components/main/ayuda/ayuda.component';
 import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resumen-usuario.component';
 import { TransaccionesComponent } from './components/main/transacciones/transacciones.component';
