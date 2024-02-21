@@ -41,8 +41,6 @@ export class VisaPagoComponent implements OnInit {
   montoEsCero: string | undefined;
   montoSuperiorSaldoCtaCte: string | undefined;
   montoValidoCtaCte: string | undefined;
-  saldoRestanteCtaCte?: number;
-  saldoRestanteLineaCre?: number;
 
   // Variables para saldos
   error1: boolean = false;
@@ -54,6 +52,7 @@ export class VisaPagoComponent implements OnInit {
 
   montoNumberTotal: number | undefined;
   montoNumberOtro: number | undefined;
+
   
 
   // private radioChanged = true;
@@ -316,7 +315,7 @@ export class VisaPagoComponent implements OnInit {
             montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
             this.montoNumberTotal = Number(montoPagoTotal);
             console.log('montoNumberTotal:', this.montoNumberTotal);
-            // this.calculosMontos();
+            this.calculosMontos();
           }
         }
       } else if (montoPagoControl.value === 'otroMonto') {
@@ -328,10 +327,14 @@ export class VisaPagoComponent implements OnInit {
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);
           console.log('montoNumberOtro:', this.montoNumberOtro);
-          // this.calculosMontos();
+          this.calculosMontos();
         }
       }
     }
+  }
+
+  calculosMontos() {
+
   }
 
   /* calculosMontos() {
@@ -342,7 +345,6 @@ export class VisaPagoComponent implements OnInit {
         this.saldoFinalVisa = parseFloat(resultado);
         console.log('saldoFinalVisa:', this.saldoFinalVisa);
 
-        // Continúa con el resto del código de pagar aquí, dentro de la suscripción a calcularSaldoVisa
         if (this.saldoFinalVisa !== undefined && this.montoNumberTotal !== undefined) {
           console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
           this.saldoFinalVisa -= this.montoNumberTotal;
@@ -373,7 +375,7 @@ export class VisaPagoComponent implements OnInit {
     } else {
       console.error('saldosService es undefined');
     }
-  }
+  } */
 
 
   guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
@@ -386,21 +388,7 @@ export class VisaPagoComponent implements OnInit {
         return throwError(error);
       })
     );
-  } */
-
-
-  /* guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
-    const url = 'http://localhost:4200/assets/data/datos-usuario.json'; // Reemplaza con la URL de tu API
-    const params = new HttpParams().set('saldoFinalVisa', saldoFinalVisa.toString());
-  
-    return this.http.get(url, { params }).pipe(
-      catchError((error: any) => {
-        console.error('Error al enviar los datos:', error);
-        return throwError(error);
-      })
-    );
-  } */
-  
+  }
 
 }
 
