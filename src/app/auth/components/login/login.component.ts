@@ -4,8 +4,7 @@ import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   user: User = { user: '', password: '' };

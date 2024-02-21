@@ -7,30 +7,30 @@ import { LoginComponent } from './auth/components/login/login.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MiBancoComponent } from './mi-banco.component';
-import { MainComponent } from './components/main/main.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { ResumenUsuarioComponent } from './components/main/resumen-usuario/resumen-usuario.component';
-import { TransaccionesComponent } from './components/main/transacciones/transacciones.component';
-import { ContactanosComponent } from './components/main/contactanos/contactanos.component';
+import { MainComponent } from './shared/components/main/main.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { ResumenUsuarioComponent } from './views/resumen-usuario/resumen-usuario.component';
+import { TransaccionesComponent } from './views/transacciones/transacciones.component';
+import { ContactanosComponent } from './views/contactanos/contactanos.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { DatosUsuarioService } from './services/datos-usuario.service';
-import { PesosPipe } from './pipes/pesos.pipe';
-import { DatosUsuarioComponent } from './components/main/datos-usuario/datos-usuario.component';
-import { CuentaCorrienteComponent } from './components/main/transacciones/cuenta-corriente/cuenta-corriente.component';
-import { LineaCreditoComponent } from './components/main/transacciones/linea-credito/linea-credito.component';
-import { VisaComponent } from './components/main/transacciones/visa/visa.component';
-import { TransaccionesResumenComponent } from './components/main/transacciones/transacciones-resumen/transacciones-resumen.component';
-import { SegurosComponent } from './components/main/seguros/seguros.component';
-import { SegurosResumenComponent } from './components/main/seguros/seguros-resumen/seguros-resumen.component';
-import { SegurosContratarComponent } from './components/main/seguros/seguros-contratar/seguros-contratar.component';
-import { AyudaComponent } from './components/main/ayuda/ayuda.component';
-import { LineaCreditoPagoComponent } from './components/main/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
-import { LineaCreditoComprobanteComponent } from './components/main/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
-import { VisaPagoComponent } from './components/main/transacciones/visa/visa-pago/visa-pago.component';
-import { VisaComprobanteComponent } from './components/main/transacciones/visa/visa-comprobante/visa-comprobante.component';
+import { DatosUsuarioService } from './core/services/datos-usuario.service';
+import { PesosPipe } from './shared/pipes/pesos.pipe';
+import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
+import { CuentaCorrienteComponent } from './views/transacciones/cuenta-corriente/cuenta-corriente.component';
+import { LineaCreditoComponent } from './views/transacciones/linea-credito/linea-credito.component';
+import { VisaComponent } from './views/transacciones/visa/visa.component';
+import { TransaccionesResumenComponent } from './views/transacciones/transacciones-resumen/transacciones-resumen.component';
+import { SegurosComponent } from './views/seguros/seguros.component';
+import { SegurosResumenComponent } from './views/seguros/seguros-resumen/seguros-resumen.component';
+import { SegurosContratarComponent } from './views/seguros/seguros-contratar/seguros-contratar.component';
+import { AyudaComponent } from './views/ayuda/ayuda.component';
+import { LineaCreditoPagoComponent } from './views/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
+import { LineaCreditoComprobanteComponent } from './views/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
+import { VisaPagoComponent } from './views/transacciones/visa/visa-pago/visa-pago.component';
+import { VisaComprobanteComponent } from './views/transacciones/visa/visa-comprobante/visa-comprobante.component';
 
 @NgModule({
   declarations: [
