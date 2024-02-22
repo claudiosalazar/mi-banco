@@ -25,7 +25,7 @@ export class VisaPagoComponent implements OnInit {
 
 
 
-  saldo: number | undefined;
+  // saldo: number | undefined;
   disponible: number | undefined;
   saldoCtaCte: any;
   saldoLineaCre: any;
@@ -105,9 +105,6 @@ export class VisaPagoComponent implements OnInit {
     if (this.modalPagoVisa) {
       this.modalInstance = new bootstrap.Modal(this.modalPagoVisa.nativeElement);
     }
-
-    // Lee el último saldo de Visa
-
   }
   
   // LLamada a servicio para obtener datos de usuario
@@ -150,7 +147,7 @@ export class VisaPagoComponent implements OnInit {
       });
 
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
-      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.saldo));
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.saldoVisa));
     });
   }
 
