@@ -13,10 +13,10 @@ export class VisaComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   pages: number[] = [];
-  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['visaTrans'][] = [];
+  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
 
   // Tus datos actuales que se mostrarán en la tabla
-  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['visaTrans'][] = [];
+  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
 
   // FormControl para el campo de búsqueda
   campoBusqueda = new FormControl('');
@@ -30,13 +30,13 @@ export class VisaComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
-      this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans;
+      this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones;
       // Inicialmente, los datos actuales son todos los datos
       this.datosActuales = this.datosOriginales;
-      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaCupo);
+      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.visa.cupo);
       for (let trans of this.datosOriginales) {
         this.saldo = this.saldo - trans.cargo + trans.abono;
-        trans.saldoFinal = this.saldo;
+        trans.saldo = this.saldo;
       }
       let ultimoAbono = this.datosOriginales
         .filter(trans => trans.abono > 0)
@@ -54,7 +54,7 @@ export class VisaComponent implements OnInit {
         }
       });
       this.datosActuales = this.datosOriginales;
-      this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans.reverse();
+      this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones.reverse();
       this.calculatePages();
       console.log(this.datosUsuarioActual);
     }, error => {
@@ -70,7 +70,7 @@ export class VisaComponent implements OnInit {
 
   sortTableFecha(): void {
     this.sortOrder = -this.sortOrder;
-    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) => {
       let dateA = new Date(a.fecha);
       let dateB = new Date(b.fecha);
       return dateA > dateB ? this.sortOrder : dateA < dateB ? -this.sortOrder : 0;
@@ -85,7 +85,7 @@ export class VisaComponent implements OnInit {
 
   sortTableDetalle(): void {
     this.sortOrderDetalle = -this.sortOrderDetalle;
-    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans.sort((a: { detalle: number; }, b: { detalle: number; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones.sort((a: { detalle: number; }, b: { detalle: number; }) => {
       return a.detalle > b.detalle ? this.sortOrderDetalle : a.detalle < b.detalle ? -this.sortOrderDetalle : 0;
     });
     if (this.currentSortColumn === 'detalle') {
@@ -106,7 +106,7 @@ export class VisaComponent implements OnInit {
   
     this.sortOrder = this.sortAscending ? 1 : -1;
   
-    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.visaTrans.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
   }
@@ -139,7 +139,7 @@ export class VisaComponent implements OnInit {
   }
 
   calculatePages() {
-    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaTrans.length || 0) / this.itemsPerPage);
+    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.transacciones.length || 0) / this.itemsPerPage);
     this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
   }
 }

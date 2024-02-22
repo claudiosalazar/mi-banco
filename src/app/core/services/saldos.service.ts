@@ -1,25 +1,31 @@
+
 import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
-// import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { Observable, from, map, of, lastValueFrom } from 'rxjs';
 import { Observable, of } from 'rxjs';
+// import { map } from 'rxjs/operators';
 
-/* interface SaldoData {
-  saldoFinalVisa: number;
-} */
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaldosService {
 
-  mostrarComprobante: any;
-  saldoFinalVisa: any;
+  private urlData = './assets/data/datos-usuario.json';
   data: number;
-  // guardaPagoVisaJson: any;
+  
+  saldoctaCte!: number;
+  disponibleCtaCte!: number;
 
-  constructor() {
+  saldoLineaCre!: number;
+  disponibleLineaCre!: number;
+
+  saldoVisa!: number;
+  disponibleVisa!: number;
+
+  constructor(
+    private http: HttpClient
+  ) {
     this.data = 0;
   }
 
@@ -27,58 +33,68 @@ export class SaldosService {
     return this.data;
   }
 
-  saldoRestanteCtaCte!: number;
-  saldoRestanteLineaCre!: number;
-  saldoRestanteVisa!: number;
+  /* saldoActualVisa(): Observable<number> {
+    return this.http.get<number>(this.urlData);
+  } */
 
-  // private urlData = '../assets/data/datos-usuario.json';
-
+  // Calculos para montos Cuenta Corriente
   calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): Observable<any> {
-    let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
-    let totalCargosCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let totalAbonosCtaCte: number = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.abono, 0) as number;
-    let saldoFinalCtaCte = saldoInicialCtaCte - totalCargosCtaCte + totalAbonosCtaCte;
-    return of (saldoFinalCtaCte);
+    let saldoInicial = datosCtaCte.datosUsuario.montosUsuario.ctaCte.cupo;
+    let cargo = datosCtaCte.datosUsuario.montosUsuario.ctaCte.transacciones.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let abono: number = datosCtaCte.datosUsuario.montosUsuario.ctaCte.transacciones.reduce((total, trans) => total + trans.abono, 0) as number;
+    let saldoCtaCte = saldoInicial - cargo + abono;
+    return of (saldoCtaCte);
   }
 
+  calcularDisponibleCtaCte(datosCtaCte: DatosUsuarioActual): Observable<number> {
+    let cupo = datosCtaCte.datosUsuario.montosUsuario.ctaCte.cupo;
+    return new Observable<number>(observer => {
+        this.calcularSaldoCtaCte(datosCtaCte).subscribe(saldoCtaCte => {
+            let disponibleCtaCte = cupo - saldoCtaCte;
+            observer.next(disponibleCtaCte);
+            observer.complete();
+        });
+    });
+  }
+
+  // Calculos para montos Linea de Credito
   calcularSaldoLineaCre(datosLineaCre: DatosUsuarioActual): Observable<number> {
-    let saldoInicialLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo;
-    let totalCargosLineaCre = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let totalAbonosLineaCre: number = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.abono, 0) as number;
-    let saldoFinalLineaCre = saldoInicialLineaCre - totalCargosLineaCre + totalAbonosLineaCre;
-    return of (saldoFinalLineaCre);
+    let saldoInicial = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.cupo;
+    let cargo = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.transacciones.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let abono: number = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.transacciones.reduce((total, trans) => total + trans.abono, 0) as number;
+    let saldoLineaCredito = saldoInicial - cargo + abono;
+    return of (saldoLineaCredito);
   }
 
+  calcularDisponibleLineaCre(datosLineaCre: DatosUsuarioActual): Observable<number> {
+    let cupo = datosLineaCre.datosUsuario.montosUsuario.lineaCredito.cupo;
+    return new Observable<number>(observer => {
+        this.calcularSaldoLineaCre(datosLineaCre).subscribe(saldoLineaCredito => {
+            let disponibleLineaCre = cupo - saldoLineaCredito;
+            observer.next(disponibleLineaCre);
+            observer.complete();
+        });
+    });
+  }
+
+  // Calculos para montos Visa
   calcularSaldoVisa(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaCupo;
-    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let totalAbonosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.abono, 0) as number;
-    let saldoFinalVisa = saldoInicialVisa - totalCargosVisa + totalAbonosVisa;
-    return of (saldoFinalVisa);
+    let saldoInicial = datosVisa.datosUsuario.montosUsuario.visa.cupo;
+    let cargo = datosVisa.datosUsuario.montosUsuario.visa.transacciones.reduce((total, trans) => total + trans.cargo, 0) as number;
+    let abono = datosVisa.datosUsuario.montosUsuario.visa.transacciones.reduce((total, trans) => total + trans.abono, 0) as number;
+    let saldoVisa = saldoInicial - cargo + abono;
+    return of (saldoVisa);
   }
 
-  // Saldo disponible para cuenta corriente
-  calculaSaldoRestanteCtaCte(datosCtaCte: DatosUsuarioActual): Observable<number> {
-    let saldoInicialCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteSaldo;
-    let totalCargosCtaCte = datosCtaCte.datosUsuario.montosUsuario.ctaCte.ctaCteTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let saldoRestanteCtaCte = saldoInicialCtaCte - totalCargosCtaCte;
-    return of (saldoRestanteCtaCte);
-  }
-  
-  // Saldo disponible para linea de credito
-  calculaSaldoRestanteLineaCre(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo;
-    let totalCargosLineaCre = datosVisa.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let saldoRestanteLineaCre = saldoInicialLineaCre - totalCargosLineaCre;
-    return of (saldoRestanteLineaCre);
-  }
-
-  // Saldo disponible para visa
-  calculaSaldoRestanteVisa(datosVisa: DatosUsuarioActual): Observable<number> {
-    let saldoInicialVisa = datosVisa.datosUsuario.montosUsuario.visa.visaCupo;
-    let totalCargosVisa = datosVisa.datosUsuario.montosUsuario.visa.visaTrans.reduce((total, trans) => total + trans.cargo, 0) as number;
-    let saldoRestanteVisa = saldoInicialVisa - totalCargosVisa;
-    return of (saldoRestanteVisa);
+  calcularDisponibleVisa(datosVisa: DatosUsuarioActual): Observable<number> {
+    let cupo = datosVisa.datosUsuario.montosUsuario.visa.cupo;
+    return new Observable<number>(observer => {
+        this.calcularSaldoVisa(datosVisa).subscribe(saldoVisa => {
+            let disponibleVisa = cupo - saldoVisa;
+            observer.next(disponibleVisa);
+            observer.complete();
+        });
+    });
   }
 
   // Guardar datos en archivo JSON

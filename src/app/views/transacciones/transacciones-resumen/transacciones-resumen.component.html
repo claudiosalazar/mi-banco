@@ -7,7 +7,7 @@
     <div class="col-md-4">
       <div class="h-100 p-5 text-bg-dark rounded-3">
         <h4>Cuenta Corriente</h4>
-        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteN }}</strong></p>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.productoNumero }}</strong></p>
         <p>Disponible: {{ saldoCtaCte ?? 0 | pesos }}</p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/cuenta-corriente">Ver movimientos</a>
       </div>
@@ -15,7 +15,7 @@
     <div class="col-md-4">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <h4>Línea de Crédito</h4>
-        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreN }}</strong></p>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.productoNumero }}</strong></p>
         <p>Disponible: {{ saldoLineaCre ?? 0 | pesos }}</p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/linea-credito">Ver movimientos</a>
       </div>
@@ -23,7 +23,7 @@
     <div class="col-md-4">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <h4>Visa</h4>
-        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.visaN }}</strong></p>
+        <p><strong>N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.productoNumero }}</strong></p>
         <p>Disponible: {{ saldoVisa ?? 0 | pesos }}</p>
         <button class="btn btn-info w-100" type="button" routerLink="/mibanco/transacciones/visa">Ver movimientos</button>
       </div>

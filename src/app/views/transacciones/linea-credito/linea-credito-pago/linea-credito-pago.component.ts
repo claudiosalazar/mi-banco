@@ -11,9 +11,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 })
 export class LineaCreditoPagoComponent implements OnInit {
 
-  saldoCtaCte: any;
-  saldoLineaCredito: number | undefined;
-  saldoVisa: any;
+  saldo: number | undefined;
   datosUsuarioActual: DatosUsuarioActual | undefined;
   productoSeleccionado: any;
   cupoUtilizadoLineaCre: any;
@@ -47,7 +45,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       otroMontoPago: [{value: '', disabled: true}, [
         Validators.required,
         Validators.min(1),
-        Validators.max((this.saldoCtaCte ?? 0) || (this.saldoVisa ?? 0)),
+        Validators.max((this.saldo ?? 0) || (this.saldo ?? 0)),
       ]],
       emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
     });
@@ -61,7 +59,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     });
   
     this.form.get('otroMontoPago')?.valueChanges.subscribe(value => {
-      if (value <= (this.saldoCtaCte ?? 0) && value <= (this.saldoVisa ?? 0)) {
+      if (value <= (this.saldo ?? 0) && value <= (this.saldo ?? 0)) {
         this.form.get('otroMontoPago')?.setErrors(null);
       }
     });
@@ -76,10 +74,10 @@ export class LineaCreditoPagoComponent implements OnInit {
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
-      this.saldoCtaCte = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
+      // this.saldo = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
       // this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
       // this.cupoUtilizadoLineaCre = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
-      this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+      // this.saldo = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
     });
   }
 

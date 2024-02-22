@@ -1,4 +1,10 @@
 export interface DatosUsuarioActual {
+  saldoFinalCtaCte: any;
+  saldoFinalLineaCre: any;
+  saldoFinalVisa: any;
+  saldoRestanteVisa: any;
+  saldoRestanteLineaCre: any;
+  montosUsuario: any;
   // Datos de usuario
   datosUsuario: {
     nombreUserCompleto: string;
@@ -8,6 +14,7 @@ export interface DatosUsuarioActual {
     fonoCelular: string;
     fonoParticular: string;
     direccion: string;
+   
 
     // Ofertas de productos
     ofertasProductos: {
@@ -15,52 +22,6 @@ export interface DatosUsuarioActual {
       seguroOferta: number,
       ofertaVisa: number
     },
-
-    // Montos de productos
-    montosUsuario: {
-      ctaCte: {
-        productoNumero: number;
-        cupo: number;
-        transacciones: {
-          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
-          map(arg0: (trans: any) => any): number[];
-          slice(): unknown;
-          fecha: number;
-          detalle: string;
-          cargo: number;
-          abono: number;
-          saldo: number;
-        }
-      };
-      lineaCredito: {
-        productoNumero: number;
-        cupo: number;
-        transacciones:{
-          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
-          map(arg0: (trans: any) => any): number[];
-          slice(): unknown;
-          fecha: number;
-          detalle: string;
-          cargo: number;
-          abono: number;
-          saldo: number;
-        }
-      };
-      visa: {
-        productoNumero: number;
-        cupo: number;
-        transacciones:{
-          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
-          map(arg0: (trans: any) => any): number[];
-          slice(): unknown;
-          fecha: number;
-          detalle: string;
-          cargo: number;
-          abono: number;
-          saldo: number;
-        }
-      }
-    }
 
     // Seguros
     seguros: {
@@ -85,6 +46,55 @@ export interface DatosUsuarioActual {
         fechaTermino: number;
         poliza: number;
         formaPago: string;
+      }
+    }
+
+    // Montos de productos
+    montosUsuario: {
+      ctaCte: {
+        ctaCteN: number;
+        ctaCteSaldo: number;
+        ctaCteTrans: {
+          saldoFinal: any;
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
+      };
+      lineaCredito: {
+        lineaCreN: number;
+        lineaCreCupo: number;
+        lineaCreTrans:{
+          saldoFinal: any;
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
+      };
+      visa: {
+        visaN: number;
+        visaCupo: number;
+        visaTrans:{
+          saldoFinal: any;
+          reduce(arg0: (total: any, trans: any) => any, arg1: number): unknown;
+          map(arg0: (trans: any) => any): number[];
+          slice(): unknown;
+          fecha: number;
+          detalle: string;
+          cargo: number;
+          abono: number;
+          saldo: number;
+        }
       }
     }
   }

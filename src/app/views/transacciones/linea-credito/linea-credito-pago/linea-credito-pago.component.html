@@ -11,22 +11,22 @@
             <div class="col-12 mb-5" *ngIf="datosUsuarioActual">
               <h3>Datos Pago</h3>
               <p class="mb-0">Cupo Utilizado: <strong>{{cupoUtilizadoLineaCre ?? 0 | pesos}}</strong></p>
-              <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo | pesos }}</strong></p>
-              <p class="mb-4">Cupo Disponible: <strong>{{saldoLineaCredito ?? 0 | pesos}}</strong></p>
+              <p class="mb-0">Cupo Total: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.cupo | pesos }}</strong></p>
+              <p class="mb-4">Cupo Disponible: <strong>{{datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones.saldo | pesos}}</strong></p>
               <hr class="mb-4">
               <div class="form-floating">
                 <select class="form-select" id="productoParaPago" (change)="onProductoSeleccionado($event)" formControlName="productoParaPago" [ngClass]="{'is-invalid': form.get('productoParaPago')?.invalid && form.get('productoParaPago')?.touched}">
                   <option value="0">-</option>
-                  <option value="1">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.ctaCteN }}</option>
-                  <option value="2">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.visaN }}</option>
+                  <option value="1">Cuenta Corriente N° {{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.productoNumero }}</option>
+                  <option value="2">Visa N° {{ datosUsuarioActual.datosUsuario.montosUsuario.visa.productoNumero }}</option>
                 </select>
                 <label for="productoParaPago">Seleccione producto para el pago</label>
                 <div *ngIf="form.get('productoParaPago')?.errors?.['nonZero'] && form.get('productoParaPago')?.touched" class="invalid-feedback d-block">
                   Debe seleccionar un producto para el pago.
                 </div>
               </div>
-              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoCtaCte ?? 0 | pesos }}</strong></small>
-              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoVisa ?? 0 | pesos }}</strong></small>
+                <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.ctaCte.transacciones.saldo | pesos }}</strong></small>
+              <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones.saldo | pesos }}</strong></small>
             </div>
     
             <div class="col-12 mb-5" id="montoApagar">

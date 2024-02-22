@@ -13,10 +13,10 @@ export class LineaCreditoComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   pages: number[] = [];
-  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['lineaCredito']['lineaCreTrans'][] = [];
+  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['lineaCredito']['transacciones'][] = [];
 
   // Tus datos actuales que se mostrarán en la tabla
-  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['lineaCredito']['lineaCreTrans'][] = [];
+  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['lineaCredito']['transacciones'][] = [];
 
   // FormControl para el campo de búsqueda
   campoBusqueda = new FormControl('');
@@ -30,13 +30,13 @@ export class LineaCreditoComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
-      this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans;
+      this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones;
       // Inicialmente, los datos actuales son todos los datos
       this.datosActuales = this.datosOriginales;
-      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreCupo);
+      this.saldo = parseFloat(this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.cupo);
       for (let trans of this.datosOriginales) {
         this.saldo = this.saldo - trans.cargo + trans.abono;
-        trans.saldoFinal = this.saldo;
+        trans.saldo = this.saldo;
       }
       let ultimoAbono = this.datosOriginales
         .filter(trans => trans.abono > 0)
@@ -54,7 +54,7 @@ export class LineaCreditoComponent implements OnInit {
         }
       });
       this.datosActuales = this.datosOriginales;
-      this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.reverse();
+      this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones.reverse();
       this.calculatePages();
       console.log(this.datosUsuarioActual);
     }, error => {
@@ -70,7 +70,7 @@ export class LineaCreditoComponent implements OnInit {
 
   sortTableFecha(): void {
     this.sortOrder = -this.sortOrder;
-    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) => {
       let dateA = new Date(a.fecha);
       let dateB = new Date(b.fecha);
       return dateA > dateB ? this.sortOrder : dateA < dateB ? -this.sortOrder : 0;
@@ -85,7 +85,7 @@ export class LineaCreditoComponent implements OnInit {
 
   sortTableDetalle(): void {
     this.sortOrderDetalle = -this.sortOrderDetalle;
-    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.sort((a: { detalle: number; }, b: { detalle: number; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones.sort((a: { detalle: number; }, b: { detalle: number; }) => {
       return a.detalle > b.detalle ? this.sortOrderDetalle : a.detalle < b.detalle ? -this.sortOrderDetalle : 0;
     });
     if (this.currentSortColumn === 'detalle') {
@@ -106,7 +106,7 @@ export class LineaCreditoComponent implements OnInit {
   
     this.sortOrder = this.sortAscending ? 1 : -1;
   
-    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.lineaCreTrans.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
+    this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
   }
@@ -139,7 +139,7 @@ export class LineaCreditoComponent implements OnInit {
   }
 
   calculatePages() {
-    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.lineaCreTrans.length || 0) / this.itemsPerPage);
+    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.transacciones.length || 0) / this.itemsPerPage);
     this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
   }
 }
