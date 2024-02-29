@@ -38,7 +38,7 @@ export class SaldosService {
   } */
 
   // Calculos para montos Cuenta Corriente
-  calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): Observable<any> {
+  /*calcularSaldoCtaCte(datosCtaCte: DatosUsuarioActual): Observable<any> {
     let saldoInicial = datosCtaCte.datosUsuario.montosUsuario.ctaCte.cupo;
     let cargo = datosCtaCte.datosUsuario.montosUsuario.ctaCte.transacciones.reduce((total, trans) => total + trans.cargo, 0) as number;
     let abono: number = datosCtaCte.datosUsuario.montosUsuario.ctaCte.transacciones.reduce((total, trans) => total + trans.abono, 0) as number;
@@ -95,7 +95,7 @@ export class SaldosService {
             observer.complete();
         });
     });
-  }
+  }*/
 
   // Guardar datos en archivo JSON
 

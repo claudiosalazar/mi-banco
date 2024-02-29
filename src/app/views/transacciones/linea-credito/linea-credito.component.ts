@@ -8,7 +8,7 @@ import { DatosUsuarioActual } from '../../../shared/models/datos-usuario.model';
   templateUrl: './linea-credito.component.html'
 })
 export class LineaCreditoComponent implements OnInit {
-  datosUsuarioActual: any;
+  /* datosUsuarioActual: any;
   saldo: any;
   currentPage = 1;
   itemsPerPage = 5;
@@ -26,8 +26,11 @@ export class LineaCreditoComponent implements OnInit {
   constructor(
     private datosUsuarioService: DatosUsuarioService
   ) { }
+  */
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  /* ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
       this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.lineaCredito.transacciones;
@@ -141,5 +144,5 @@ export class LineaCreditoComponent implements OnInit {
   calculatePages() {
     const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.lineaCredito?.transacciones.length || 0) / this.itemsPerPage);
     this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
-  }
+  } */
 }

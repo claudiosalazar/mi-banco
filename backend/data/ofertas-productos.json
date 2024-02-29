@@ -1,0 +1,19 @@
+{
+  "ofertas": [
+    {
+      "id": "0",
+      "productoOferta": "Credito de Consumo",
+      "montoPreAprobado": "10000000"
+    },
+    {
+      "id": "1",
+      "productoOferta": "Seguro Auto",
+      "montoPreAprobado": "0.12"
+    },
+    {
+      "id": "2",
+      "productoOferta": "Descuento Visa",
+      "montoPreAprobado": "0.50"
+    }
+  ]
+}

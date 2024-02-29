@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+// Datos usuario
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
+// Datos productos
+import { ProductosUsuarioService } from 'src/app/core/services/productos-usuario.service';
+import { ProductosUsuario } from '../../../../shared/models/productos-usuario.model';
+
 import { SaldosService } from '../../../../core/services/saldos.service';
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -32,6 +38,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private montosUsuarioService: DatosUsuarioService,
+    private productosUsuarioService: ProductosUsuarioService,
     private saldosService: SaldosService,
     private fb: FormBuilder
     

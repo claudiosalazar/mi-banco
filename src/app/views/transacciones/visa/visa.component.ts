@@ -13,10 +13,10 @@ export class VisaComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   pages: number[] = [];
-  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
+  // datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
 
   // Tus datos actuales que se mostrarán en la tabla
-  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
+  // datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['visa']['transacciones'][] = [];
 
   // FormControl para el campo de búsqueda
   campoBusqueda = new FormControl('');
@@ -27,7 +27,9 @@ export class VisaComponent implements OnInit {
     private datosUsuarioService: DatosUsuarioService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  /* ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
       this.datosOriginales = this.datosUsuarioActual.datosUsuario.montosUsuario.visa.transacciones;
@@ -141,5 +143,5 @@ export class VisaComponent implements OnInit {
   calculatePages() {
     const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.visa?.transacciones.length || 0) / this.itemsPerPage);
     this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
-  }
+  } */
 }

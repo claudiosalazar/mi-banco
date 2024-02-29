@@ -7,11 +7,13 @@ import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
   providedIn: 'root'
 })
 export class DatosUsuarioService {
-  private url = 'assets/data/datos-usuario.json';
+  private baseUrl = 'http://localhost:3000/backend/data/datos-usuario.json';
   constructor(private http: HttpClient) { }
 
   getDatosUsuario(): Observable<DatosUsuarioActual> {
-    return this.http.get<DatosUsuarioActual>(this.url);
+    const observable = this.http.get<DatosUsuarioActual>(this.baseUrl);
+    // observable.subscribe(datos => console.log('Datos usuario recibidos:', datos));
+    return observable;
   }
 
 }

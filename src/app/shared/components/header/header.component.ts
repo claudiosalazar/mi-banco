@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
-import { DatosUsuarioService } from 'src/app/core/services/datos-usuario.service';
+import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,10 @@ import { DatosUsuarioService } from 'src/app/core/services/datos-usuario.service
 })
 export class HeaderComponent implements OnInit {
 
-  nombreUserCompleto: string | undefined;
+  primerNombre: string | undefined;
+  segundoNombre: string | undefined;
+  apellidoPaterno: string | undefined;
+  apellidoMaterno: string | undefined;
 
   constructor(
     private authService: AuthService, 
@@ -21,7 +24,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
-      this.nombreUserCompleto = datos.datosUsuario.nombreUserCompleto;
+      this.primerNombre = datos.datosUsuario.primerNombre;
+      this.segundoNombre = datos.datosUsuario.segundoNombre;
+      this.apellidoPaterno = datos.datosUsuario.apellidoPaterno;
+      this.apellidoMaterno = datos.datosUsuario.apellidoMaterno;
     });
   }
 

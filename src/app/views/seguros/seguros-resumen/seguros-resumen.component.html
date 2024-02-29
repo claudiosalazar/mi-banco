@@ -18,28 +18,28 @@
             <div class="d-flex">
               <div>
                 <p class="mb-0">Plan</p>
-                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.plan }}</strong></p>
+                <p><strong>{{ segurosUsuario?.seguros?.[0]?.plan }}</strong></p>
                 <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.cuotaMensual }}</strong></p>
+                <p><strong>UF {{ segurosUsuario?.seguros?.[0]?.cuotaMensual }}</strong></p>
                 <p class="mb-0">Cuotas</p>
-                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.cuotas }}</strong></p>
+                <p><strong>{{ segurosUsuario?.seguros?.[0]?.cuotas }}</strong></p>
               </div>
             </div>
           </div>
           <div class="col">
             <p class="mb-0">Compañia</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.compania }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[0]?.compania }}</strong></p>
             <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.nSeguro }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[0]?.nSeguro }}</strong></p>
             <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.fechaTermino }}</strong></p>
+            <p class="mb-0">Inicio <strong>{{ segurosUsuario?.seguros?.[0]?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ segurosUsuario?.seguros?.[0]?.fechaTermino }}</strong></p>
           </div>
           <div class="col">
             <p class="mb-0">Póliza</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.poliza }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[0]?.poliza }}</strong></p>
             <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroHogar?.formaPago }} N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.productoNumero }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[0]?.nSeguro }}</strong></p>
           </div>
         </div>
       </div>
@@ -57,28 +57,28 @@
             <div class="d-flex">
               <div>
                 <p class="mb-0">Plan</p>
-                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.plan }}</strong></p>
+                <p><strong>{{ segurosUsuario?.seguros?.[1]?.plan }}</strong></p>
                 <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.cuotaMensual }}</strong></p>
+                <p><strong>UF {{ segurosUsuario?.seguros?.[1]?.cuotaMensual }}</strong></p>
                 <p class="mb-0">Cuotas</p>
-                <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.cuotas }}</strong></p>
+                <p><strong>{{ segurosUsuario?.seguros?.[1]?.cuotas }}</strong></p>
               </div>
             </div>
           </div>
           <div class="col">
             <p class="mb-0">Compañia</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.compania }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[1]?.compania }}</strong></p>
             <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.nSeguro }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[1]?.nSeguro }}</strong></p>
             <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.fechaTermino }}</strong></p>
+            <p class="mb-0">Inicio <strong>{{ segurosUsuario?.seguros?.[1]?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ segurosUsuario?.seguros?.[1]?.fechaTermino }}</strong></p>
           </div>
           <div class="col">
             <p class="mb-0">Póliza</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.poliza }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[1]?.poliza }}</strong></p>
             <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ datosUsuarioActual?.datosUsuario?.seguros?.seguroVida?.formaPago }} N° {{ datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.productoNumero }}</strong></p>
+            <p><strong>{{ segurosUsuario?.seguros?.[1]?.nSeguro }}</strong></p>
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@
       <div class="card p-5">
         <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
         <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
-        <p>Valor mensual: <strong>{{ datosUsuarioActual?.datosUsuario?.ofertasProductos?.seguroOferta ?? 0 | pesos }}</strong></p>
+        <p>Valor mensual: <strong>{{ ofertasProductos?.ofertas?.[1]?.montoPreAprobado }}</strong></p>
         <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
       </div>
     </div>

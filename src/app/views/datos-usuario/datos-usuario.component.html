@@ -7,7 +7,7 @@
       <p><strong>Nombre:</strong></p>
     </div>
     <div class="col-9 mb-4">
-      <p>{{ datosUsuarioActual?.datosUsuario?.nombreUserCompleto }}</p>
+      <p>{{ datosUsuarioActual?.datosUsuario?.primerNombre }} {{ datosUsuarioActual?.datosUsuario?.segundoNombre }} {{ datosUsuarioActual?.datosUsuario?.apellidoPaterno }} {{ datosUsuarioActual?.datosUsuario?.apellidoMaterno }}</p>
     </div>
     <div class="col-3 mb-4">
       <p><strong>RUT:</strong></p>
@@ -37,7 +37,7 @@
       <p><strong>Dirección:</strong></p>
     </div>
     <div class="col-9 mb-4">
-      <p>{{ datosUsuarioActual?.datosUsuario?.direccion }}</p>
+      <p>{{ datosUsuarioActual?.datosUsuario?.direccionCalle }}, {{ datosUsuarioActual?.datosUsuario?.direccionCiudad }}, {{ datosUsuarioActual?.datosUsuario?.direccionPais }}.</p>
     </div>
   </div>
 </div>

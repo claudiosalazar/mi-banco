@@ -1,0 +1,22 @@
+{
+  "productos": [
+    {
+      "id": "0",
+      "productoNombre": "Cuenta Corriente",
+      "productoNumero": "3456789",
+      "cupo": "100000"
+    },
+    {
+      "id": "1",
+      "productoNombre": "Linea de Crédito",
+      "productoNumero": "0987654",
+      "cupo": "5000000"
+    },
+    {
+      "id": "2",
+      "productoNombre": "Visa",
+      "productoNumero": "****-****-****-5555",
+        "cupo": "5000000"
+    }
+  ]
+}

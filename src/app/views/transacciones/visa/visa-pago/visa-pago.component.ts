@@ -1,11 +1,19 @@
-import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
 import { SaldosService } from '../../../../core/services/saldos.service';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+
+// Datos usuario
+import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
+import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
+// Productos usuario
+import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
+import { ProductosUsuario } from '../../../../shared/models/productos-usuario.model';
+// Datos ofertas
+import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
+import { OfertasProductos } from './../../../../shared/models/ofertas-productos.model';
 
 declare var bootstrap: any;
 
@@ -63,12 +71,14 @@ export class VisaPagoComponent implements OnInit {
   montoNumberTotal: number | undefined;
   montoNumberOtro: number | undefined;
 
-  
+  productosUsuario: ProductosUsuario | undefined;
 
   // private radioChanged = true;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
+    private productosUsuarioService: ProductosUsuarioService,
+    private ofertasProductosService: OfertasProductosService,
     private saldosService: SaldosService,
     private http: HttpClient,
   ) { }
@@ -112,7 +122,7 @@ export class VisaPagoComponent implements OnInit {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
 
-      
+      /*
       // Captura calculos de Cuenta Corriente
       this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual).subscribe((saldoCtaCte: any) => {
         this.saldoCtaCte = parseFloat(saldoCtaCte);
@@ -145,10 +155,22 @@ export class VisaPagoComponent implements OnInit {
         this.disponibleVisa = parseFloat(disponibleVisa);
         console.log('Disponible Visa:', this.disponibleVisa);
       });
+      */
 
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
       this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.saldoVisa));
     });
+  }
+
+  getProductosUsuario(): void {
+    /* this.productosUsuarioService.getProductosUsuario().subscribe(data => {
+      this.productosUsuario = data;
+      this.saldoCtaCte =  this.productosUsuario.productos[0].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
+      this.saldoLineaCre =  this.productosUsuario.productos[1].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
+      this.saldoVisa =  this.productosUsuario.productos[2].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
+      // this.saldoLineaCre = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
+      // this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+    }); */
   }
 
   // Valida que el en select se selecciono un producto para el pago

@@ -14,10 +14,10 @@ export class CuentaCorrienteComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
   pages: number[] = [];
-  datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
+  // datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
 
   // Tus datos actuales que se mostrarán en la tabla
-  datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
+  // datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
 
   // FormControl para el campo de búsqueda
   campoBusqueda = new FormControl('');
@@ -26,6 +26,10 @@ export class CuentaCorrienteComponent implements OnInit {
     private datosUsuarioService: DatosUsuarioService
   ) { }
 
+  ngOnInit(): void {
+  }
+  
+  /*
   ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.datosUsuarioActual = datos;
@@ -135,5 +139,6 @@ export class CuentaCorrienteComponent implements OnInit {
     const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans.length || 0) / this.itemsPerPage);
     this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
   }
+  */
 
 }
