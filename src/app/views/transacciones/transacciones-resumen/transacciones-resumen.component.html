@@ -6,32 +6,32 @@
     </div>
     <div class="col-md-4">
       <div class="h-100 p-5 text-bg-dark rounded-3">
-        <!-- <h4>{{ productosUsuario?.productos?.[0]?.producto }}</h4> -->
-        <p><strong>N° {{ productosUsuario?.productos?.[0]?.productoNumero }}</strong></p>
-        <p>Disponible: {{ saldoCtaCte | pesos }}</p>
+        <h4>Cuenta Corriente</h4>
+        <p><strong>N° {{ numeroCtaCte }}</strong></p>
+        <p>Disponible: {{ cupoCtaCte | pesos }}</p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/cuenta-corriente">Ver movimientos</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <!-- <h4>{{ productosUsuario?.productos?.[1]?.producto }}</h4> -->
-        <p><strong>N° {{ productosUsuario?.productos?.[1]?.productoNumero }}</strong></p>
-        <p>Disponible: {{ saldoLineaCre | pesos }}</p>
+        <h4>Línea de Crédito</h4>
+        <p><strong>N° {{ numeroLineaCredito }}</strong></p>
+        <p>Disponible: {{ cupoLineaCredito | pesos }}</p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/linea-credito">Ver movimientos</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-        <!-- <h4>{{ productosUsuario?.productos?.[2]?.producto }}</h4> -->
-        <p><strong>N° {{ productosUsuario?.productos?.[2]?.productoNumero }}</strong></p>
-        <p>Disponible: {{ saldoVisa | pesos }}</p>
+        <h4>Visa</h4>
+        <p><strong>N° {{ numeroVisa }}</strong></p>
+        <p>Disponible: {{ cupoVisa | pesos }}</p>
         <button class="btn btn-info w-100" type="button" routerLink="/mibanco/transacciones/visa">Ver movimientos</button>
       </div>
     </div>
     <div class="col-12">
       <div class="card p-5 mt-4">
         <h3>{{ datosUsuarioActual?.datosUsuario?.primerNombre }}, tienes un crédito pre-aprobado de </h3>
-        <!-- <h1 class="mb-4">{{ ofertasProductos?.ofertas?.[0]?.| pesos }}</h1> -->
+        <h1 class="mb-4">{{ montoPreAprobadoCreditoConsumo | pesos }}</h1>
         <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
       </div>
     </div>

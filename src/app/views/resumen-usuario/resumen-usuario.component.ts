@@ -1,26 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 // Datos usuario
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
 import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 // Productos usuario
 import { ProductosUsuarioService } from '../../core/services/productos-usuario.service';
-import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 // Datos ofertas
 import { OfertasProductosService } from '../../core/services/ofertas-productos.service';
-import { OfertasProductos } from './../../shared/models/ofertas-productos.model';
-
-//import { SaldosService } from '../../core/services/saldos.service';
 
 @Component({
   selector: 'app-resumen-usuario',
   templateUrl: './resumen-usuario.component.html'
 })
 export class ResumenUsuarioComponent implements OnInit {
-  // saldoCtaCte: any;
-  // saldoLineaCre: any;
-  // saldoVisa: any;
 
   datosUsuarioActual: DatosUsuarioActual | undefined;
 
