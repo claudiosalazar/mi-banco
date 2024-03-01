@@ -1,19 +1,33 @@
+interface Producto {
+   id: string;
+   transacciones: any[];
+}
 import { Component, OnInit } from '@angular/core';
-import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
 import { FormControl } from '@angular/forms'
-import { DatosUsuarioActual } from '../../../shared/models/datos-usuario.model';
+import { ProductosUsuarioService } from 'src/app/core/services/productos-usuario.service';
+import { ProductosUsuario } from 'src/app/shared/models/productos-usuario.model';
 
 @Component({
   selector: 'app-cuenta-corriente',
   templateUrl: './cuenta-corriente.component.html'
 })
 export class CuentaCorrienteComponent implements OnInit {
-  datosUsuarioActual: any;
-  // saldoCtaCte: any;
-  saldo: any;
-  currentPage = 1;
+  
+  transacciones: any[] | undefined;
   itemsPerPage = 5;
-  pages: number[] = [];
+  currentPage = 1;
+  paginatedData: any[] | undefined;
+  totalPages: any;
+
+
+
+
+  //datosUsuarioActual: any;
+  // saldoCtaCte: any;
+  // saldo: any;
+  // 
+  
+  // 
   // datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
 
   // Tus datos actuales que se mostrarán en la tabla
@@ -23,11 +37,62 @@ export class CuentaCorrienteComponent implements OnInit {
   campoBusqueda = new FormControl('');
 
   constructor(
-    private datosUsuarioService: DatosUsuarioService
+    private productosUsuarioService: ProductosUsuarioService
   ) { }
 
+  
+
   ngOnInit(): void {
+    const id = '0'; // Reemplaza '0' con el ID que deseas obtener
+    this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
+    const productos = productosUsuario.productos;
+      const producto = productos.find(producto => producto.id === id);
+      if (producto) {
+        // Imprime los datos en la tabla, solo los primeros 5
+        this.transacciones = producto.transacciones;
+        this.transacciones.sort((a, b) => {
+          const dateA = new Date(a.fecha);
+          const dateB = new Date(b.fecha);
+          return dateB.getTime() - dateA.getTime();
+        });
+        this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+        this.paginacionDatos();
+      } else {
+        console.error('ID no encontrado');
+      }
+    }, error => {
+      console.error('Error al obtener los datos del producto:', error);
+    });
   }
+
+  paginacionDatos(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedData = this.transacciones ? this.transacciones.slice(start, end) : [];
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginacionDatos();
+    }
+  }
+  
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginacionDatos();
+    }
+  }
+  
+  setPage(page: number): void {
+    this.currentPage = page;
+    this.paginacionDatos();
+  }
+  
+  
+
+  
   
   /*
   ngOnInit(): void {
@@ -119,6 +184,11 @@ export class CuentaCorrienteComponent implements OnInit {
     return this.datosActuales.slice(start, end);
   }
 
+  calculatePages() {
+    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans.length || 0) / this.itemsPerPage);
+    this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
+  }
+
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -126,18 +196,13 @@ export class CuentaCorrienteComponent implements OnInit {
   }
   
   nextPage() {
-    if (this.currentPage < this.pages.length) {
+    if (this.currentPage < this.paginas.length) {
       this.currentPage++;
     }
   }
   
   setPage(i: number) {
     this.currentPage = i + 1;
-  }
-
-  calculatePages() {
-    const totalPages = Math.ceil((this.datosUsuarioActual?.datosUsuario?.montosUsuario?.ctaCte?.ctaCteTrans.length || 0) / this.itemsPerPage);
-    this.pages = Array(totalPages).fill(0).map((x,i)=>i+1);
   }
   */
 

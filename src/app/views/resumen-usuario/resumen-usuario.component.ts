@@ -33,8 +33,7 @@ export class ResumenUsuarioComponent implements OnInit {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
-    private ofertasProductosService: OfertasProductosService,
-    // private saldosService: SaldosService,
+    private ofertasProductosService: OfertasProductosService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +50,7 @@ export class ResumenUsuarioComponent implements OnInit {
 
   getProductosUsuario(id: string): void {
     this.productosUsuarioService.getProductosUsuario(id).subscribe(data => {
-      this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
+      this.productosUsuario = data ? { productos: Array.isArray(data) ? data : [data] } : { productos: [] };
       this.cupoCtaCte = this.productosUsuario.productos[0].cupo;
       this.cupoLineaCredito = this.productosUsuario.productos[1].cupo;
       this.cupoVisa = this.productosUsuario.productos[2].cupo;

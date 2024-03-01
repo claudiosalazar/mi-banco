@@ -14,6 +14,48 @@
           </div>
         </div>
 
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Detalle</th>
+              <th>cargo</th>
+              <th>abono</th>
+              <th>saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaccion of paginatedData">
+              <td>{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
+              <td>{{ transaccion.detalle }}</td>
+              <td>{{ transaccion.cargo | pesos }}</td>
+              <td>{{ transaccion.abono | pesos }}</td>
+              <td>{{ transaccion.saldo | pesos }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="d-flex justify-content-center mt-3">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
+                <span class="material-symbols-outlined">
+                  chevron_left
+                </span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
+              <a class="page-link" href="javascript:void(0);" (click)="setPage(i + 1)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0);" (click)="nextPage()">
+                <span class="material-symbols-outlined">
+                  chevron_right
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
         <!-- <table class="table">
           <thead>
             <tr>
@@ -67,8 +109,9 @@
               <td>{{ trans.saldo | pesos }}</td>
             </tr>
           </tbody>
-        </table>
-        <nav class="d-flex justify-content-center mt-3" *ngIf="datosActuales.length > 5">
+        </table> -->
+        
+        <!-- <nav class="d-flex justify-content-center mt-3" *ngIf="datosActuales.length > 5">
           <ul class="pagination">
             <li class="page-item" [class.disabled]="currentPage === 1">
               <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
@@ -77,10 +120,10 @@
                 </span>
               </a>
             </li>
-            <li class="page-item" *ngFor="let page of pages; let i = index" [class.active]="currentPage === i + 1">
+            <li class="page-item" *ngFor="let page of paginas; let i = index" [class.active]="currentPage === i + 1">
               <a class="page-link" href="javascript:void(0);" (click)="setPage(i)">{{ i + 1 }}</a>
             </li>
-            <li class="page-item" [class.disabled]="currentPage === pages.length">
+            <li class="page-item" [class.disabled]="currentPage === paginas.length">
               <a class="page-link" href="javascript:void(0);" (click)="nextPage()">
                 <span class="material-symbols-outlined">
                   chevron_right

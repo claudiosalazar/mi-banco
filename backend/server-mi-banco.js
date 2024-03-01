@@ -9,7 +9,10 @@ const port = 3000;
 app.use(cors({ origin: 'http://localhost:4200' }));
 
 // Habilita el middleware bodyParser.json()
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
+
+// Sirve los archivos estáticos en la carpeta backend/data
+app.use('/backend/data', express.static(path.join(__dirname, 'backend/data')));
 
 app.post('/data', (req, res) => {
   const datos = req.body;
@@ -42,19 +45,19 @@ app.get('/backend/data/datos-usuario.json', (_req, res) => {
 
 // Datos productos
 app.get('/backend/data/productos-usuario.json', (req, res) => {
-  const id = req.query.id;
+  const id = Number(req.query.id);
   const filePath = path.join(__dirname, 'data', 'productos-usuario.json');
   const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   if (id) {
     if (fileData.productosUsuario) {
-      const producto = fileData.productosUsuario.find(producto => producto.id === id);
+      const producto = fileData.productosUsuario.find(producto => Number(producto.id) === id);
       if (producto) {
         res.send(producto);
       } else {
         res.status(404).send('ID no encontrado');
       }
     } else {
-      res.status(404).send('No se encontraron ofertas');
+      res.status(404).send('No se encontraron los datos del producto');
     }
   } else {
     res.send(fileData);
