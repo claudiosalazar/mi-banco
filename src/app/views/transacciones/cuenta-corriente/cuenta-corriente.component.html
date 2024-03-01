@@ -17,11 +17,46 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Fecha</th>
-              <th>Detalle</th>
-              <th>cargo</th>
-              <th>abono</th>
-              <th>saldo</th>
+              <th (click)="ordenarDatos('fecha')">
+                <div class="d-flex">
+                  Fecha
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th (click)="ordenarDatos('detalle')">
+                <div class="d-flex">
+                  Detalle
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th (click)="ordenarDatos('cargo')">
+                <div class="d-flex">
+                  Cargo
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th (click)="ordenarDatos('abono')">
+                <div class="d-flex">
+                  Abono
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th (click)="ordenarDatos('saldo')">
+                <div class="d-flex">
+                  Saldo
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>

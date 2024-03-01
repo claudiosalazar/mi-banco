@@ -19,6 +19,14 @@ export class CuentaCorrienteComponent implements OnInit {
   paginatedData: any[] | undefined;
   totalPages: any;
 
+  // Variables para ordenar datos de tabla
+  sortOrder = 1;
+  sortedColumn = '';
+  sortAscending: boolean = true;
+
+  // Variable para animar icono en th
+  rotatedState: boolean = true;
+
 
 
 
@@ -65,6 +73,29 @@ export class CuentaCorrienteComponent implements OnInit {
     });
   }
 
+  // Ordena los datos de la tabla
+  ordenarDatos(column: string): void {
+    if (this.sortedColumn === column) {
+      this.sortOrder = this.sortOrder === 1 ? -1 : 1;
+      this.sortAscending = !this.sortAscending;
+    } else {
+      this.sortedColumn = column;
+      this.sortAscending = true;
+    }
+  
+    this.sortOrder = this.sortAscending ? 1 : -1;
+  
+    this.transacciones?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
+      return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
+    });
+    this.paginacionDatos();
+  }
+
+  animaIcono(column: string): boolean {
+    return this.sortedColumn === column && this.sortAscending;
+  }
+
+  // Functions para paginados
   paginacionDatos(): void {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
@@ -91,7 +122,6 @@ export class CuentaCorrienteComponent implements OnInit {
   }
   
   
-
   
   
   /*
