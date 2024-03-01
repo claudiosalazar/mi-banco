@@ -2,6 +2,7 @@ interface Producto {
    id: string;
    transacciones: any[];
 }
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms'
 import { ProductosUsuarioService } from 'src/app/core/services/productos-usuario.service';
@@ -13,39 +14,26 @@ import { ProductosUsuario } from 'src/app/shared/models/productos-usuario.model'
 })
 export class CuentaCorrienteComponent implements OnInit {
   
+  
   transacciones: any[] | undefined;
   itemsPerPage = 5;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;
 
+  // Variables para buscador
+  campoBusqueda = new FormControl('');
+  productos: any[] = [];
+  originalData: any[] = [];
+
   // Variables para ordenar datos de tabla
   sortOrder = 1;
   sortedColumn = '';
   sortAscending: boolean = true;
 
-  // Variable para animar icono en th
-  rotatedState: boolean = true;
-
-
-
-
-  //datosUsuarioActual: any;
-  // saldoCtaCte: any;
-  // saldo: any;
-  // 
-  
-  // 
-  // datosOriginales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
-
-  // Tus datos actuales que se mostrarán en la tabla
-  // datosActuales: DatosUsuarioActual['datosUsuario']['montosUsuario']['ctaCte']['transacciones'][] = [];
-
-  // FormControl para el campo de búsqueda
-  campoBusqueda = new FormControl('');
-
   constructor(
-    private productosUsuarioService: ProductosUsuarioService
+    private productosUsuarioService: ProductosUsuarioService,
+    private http: HttpClient
   ) { }
 
   
@@ -53,11 +41,13 @@ export class CuentaCorrienteComponent implements OnInit {
   ngOnInit(): void {
     const id = '0'; // Reemplaza '0' con el ID que deseas obtener
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
-    const productos = productosUsuario.productos;
+      const productos = productosUsuario.productos;
       const producto = productos.find(producto => producto.id === id);
       if (producto) {
         // Imprime los datos en la tabla, solo los primeros 5
         this.transacciones = producto.transacciones;
+        this.productos = [...this.transacciones];
+        this.originalData = [...this.transacciones];
         this.transacciones.sort((a, b) => {
           const dateA = new Date(a.fecha);
           const dateB = new Date(b.fecha);
@@ -65,6 +55,18 @@ export class CuentaCorrienteComponent implements OnInit {
         });
         this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
         this.paginacionDatos();
+        this.campoBusqueda.valueChanges.subscribe(valorBusqueda => {
+          if (valorBusqueda) {
+            this.transacciones = this.originalData.filter(transaccion =>
+              Object.values(transaccion).some(val =>
+              val?.toString().toLowerCase().includes(valorBusqueda.toLowerCase())
+              )
+            );
+          } else {
+            this.transacciones = [...this.originalData];
+          }
+          this.paginacionDatos();
+        });
       } else {
         console.error('ID no encontrado');
       }
@@ -91,15 +93,14 @@ export class CuentaCorrienteComponent implements OnInit {
     this.paginacionDatos();
   }
 
-  animaIcono(column: string): boolean {
-    return this.sortedColumn === column && this.sortAscending;
-  }
-
   // Functions para paginados
   paginacionDatos(): void {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
+    /* const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.paginatedData = this.transacciones ? this.transacciones.slice(start, end) : [];
+    this.paginatedData = this.transacciones ? this.transacciones.slice(start, end) : []; */
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = this.currentPage * this.itemsPerPage;
+    this.paginatedData = this.transacciones ? this.transacciones.slice(startIndex, endIndex) : [];
   }
 
   prevPage(): void {

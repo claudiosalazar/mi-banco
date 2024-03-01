@@ -3,14 +3,10 @@
     th {
       cursor: pointer;
       position: relative;
-
-      .material-symbols-outlined {
+      &.material-symbols-outlined {
         display: inline-block;
-      }
+      }     
 
-      &.rotated .material-symbols-outlined {
-        @include rotated;
-      }
     }
   }
 }
