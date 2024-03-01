@@ -3,10 +3,20 @@
     th {
       cursor: pointer;
       position: relative;
+
       &.material-symbols-outlined {
         display: inline-block;
-      }     
+      }
 
+      span {
+        &.rotated-in {
+          @include rotated-in;
+        }
+
+        &.rotated-out {
+          @include rotated-out;
+        }
+      }
     }
   }
 }

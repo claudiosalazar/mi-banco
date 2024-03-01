@@ -1,7 +1,12 @@
 // Animacion para icono th de tablas
-@mixin rotated {
+@mixin rotated-in {
   transition: transform 0.3s ease-in-out;
   transform: rotate(180deg);
+}
+
+@mixin rotated-out {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(0deg);
 }
 
 // Input error

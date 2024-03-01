@@ -31,6 +31,12 @@ export class CuentaCorrienteComponent implements OnInit {
   sortedColumn = '';
   sortAscending: boolean = true;
 
+  // Variable para animacion de icono en th
+  public isRotatedIn: boolean = false;
+
+
+  public columnaSeleccionada: string = '';
+
   constructor(
     private productosUsuarioService: ProductosUsuarioService,
     private http: HttpClient
@@ -75,8 +81,13 @@ export class CuentaCorrienteComponent implements OnInit {
     });
   }
 
+  public onHeaderClick(): void {
+    this.isRotatedIn = !this.isRotatedIn;
+  }
+
   // Ordena los datos de la tabla
   ordenarDatos(column: string): void {
+    this.columnaSeleccionada = column;
     if (this.sortedColumn === column) {
       this.sortOrder = this.sortOrder === 1 ? -1 : 1;
       this.sortAscending = !this.sortAscending;
