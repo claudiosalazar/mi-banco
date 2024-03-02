@@ -54,6 +54,24 @@ export class CuentaCorrienteComponent implements OnInit {
         this.transacciones = producto.transacciones;
         this.productos = [...this.transacciones];
         this.originalData = [...this.transacciones];
+
+        // Asigna el valor de 'cupo' al saldo del ID 0 de las transacciones
+if (this.transacciones.length > 0) {
+  this.transacciones[0].saldo = parseFloat(producto.cupo) - parseFloat(this.transacciones[0].cargo);
+}
+
+// Realiza el cálculo para los demás IDs
+for (let i = 1; i < this.transacciones.length; i++) {
+  if (parseFloat(this.transacciones[i].cargo) > 0) {
+    this.transacciones[i].saldo = parseFloat(this.transacciones[i - 1].saldo) - parseFloat(this.transacciones[i].cargo);
+  }
+  if (parseFloat(this.transacciones[i].abono) > 0) {
+    this.transacciones[i].saldo = parseFloat(this.transacciones[i - 1].saldo) + parseFloat(this.transacciones[i].abono);
+  }
+}
+
+
+
         this.transacciones.sort((a, b) => {
           const dateA = new Date(a.fecha);
           const dateB = new Date(b.fecha);
