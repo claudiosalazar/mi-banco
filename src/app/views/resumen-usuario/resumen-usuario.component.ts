@@ -22,7 +22,7 @@ export class ResumenUsuarioComponent implements OnInit {
   montoPreAprobadoDescuentoVisa: any;
 
   // Variables para productos
-  productosUsuario: { productos: any[] } = { productos: [''] };
+  productosUsuario: { productos: any[] } = { productos: [] };
   cupoCtaCte: any | undefined;
   cupoLineaCredito: any | undefined;
   cupoVisa: any | undefined;
@@ -38,7 +38,7 @@ export class ResumenUsuarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDatosUsuario();
-    this.getProductosUsuario('');
+    this.getProductosUsuarioResumen('');
     this.getOfertasProductos('')
   }
   
@@ -48,15 +48,15 @@ export class ResumenUsuarioComponent implements OnInit {
     });
   }
 
-  getProductosUsuario(id: string): void {
-    this.productosUsuarioService.getProductosUsuario(id).subscribe(data => {
-      this.productosUsuario = data ? { productos: Array.isArray(data) ? data : [data] } : { productos: [] };
-      this.cupoCtaCte = this.productosUsuario.productos[0].cupo;
-      this.cupoLineaCredito = this.productosUsuario.productos[1].cupo;
-      this.cupoVisa = this.productosUsuario.productos[2].cupo;
-      this.numeroCtaCte = this.productosUsuario.productos[0].productoNumero;
-      this.numeroLineaCredito = this.productosUsuario.productos[1].productoNumero;
-      this.numeroVisa = this.productosUsuario.productos[2].productoNumero;
+  getProductosUsuarioResumen(id: string): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(data => {
+      this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
+      this.cupoCtaCte = this.productosUsuario.productos[0]?.cupo;
+      this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
+      this.cupoLineaCredito = this.productosUsuario.productos[1]?.cupo;
+      this.numeroLineaCredito = this.productosUsuario.productos[1]?.productoNumero;
+      this.cupoVisa = this.productosUsuario.productos[2]?.cupo;
+      this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
     });
   }
 

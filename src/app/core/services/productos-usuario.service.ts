@@ -10,6 +10,12 @@ export class ProductosUsuarioService {
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
   constructor(private http: HttpClient) { }
 
+  getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
+    const url = `${this.baseUrl}?id=${id}`;
+    console.log('URL de la solicitud:', url);
+    return this.http.get<ProductosUsuario>(url);
+  }
+
   // Llama a todos los datos de productos
   getProductosUsuario(id: string): Observable<ProductosUsuario['productos'][0]> {
     const url = `${this.baseUrl}?id=${id}`;
