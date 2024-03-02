@@ -51,11 +51,11 @@ export class ResumenUsuarioComponent implements OnInit {
   getProductosUsuarioResumen(id: string): void {
     this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(data => {
       this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
-      this.cupoCtaCte = this.productosUsuario.productos[0]?.cupo;
+      this.cupoCtaCte = this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo;
       this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
-      this.cupoLineaCredito = this.productosUsuario.productos[1]?.cupo;
+      this.cupoLineaCredito = this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo;
       this.numeroLineaCredito = this.productosUsuario.productos[1]?.productoNumero;
-      this.cupoVisa = this.productosUsuario.productos[2]?.cupo;
+      this.cupoVisa = this.productosUsuario.productos[2]?.transacciones[this.productosUsuario.productos[2]?.transacciones.length - 1]?.saldo;
       this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
     });
   }

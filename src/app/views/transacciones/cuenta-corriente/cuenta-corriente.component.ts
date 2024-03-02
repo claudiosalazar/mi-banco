@@ -16,6 +16,8 @@ export class CuentaCorrienteComponent implements OnInit {
   
   
   transacciones: any[] | undefined;
+  
+  
   itemsPerPage = 5;
   currentPage = 1;
   paginatedData: any[] | undefined;
@@ -49,29 +51,17 @@ export class CuentaCorrienteComponent implements OnInit {
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
       const productos = productosUsuario.productos;
       const producto = productos.find(producto => producto.id === id);
+      
       if (producto) {
         // Imprime los datos en la tabla, solo los primeros 5
         this.transacciones = producto.transacciones;
         this.productos = [...this.transacciones];
         this.originalData = [...this.transacciones];
+        
+        // Captura el saldo del producto
+        this.productosUsuarioService.calcularSaldo(producto);
 
-        // Asigna el valor de 'cupo' al saldo del ID 0 de las transacciones
-if (this.transacciones.length > 0) {
-  this.transacciones[0].saldo = parseFloat(producto.cupo) - parseFloat(this.transacciones[0].cargo);
-}
-
-// Realiza el cálculo para los demás IDs
-for (let i = 1; i < this.transacciones.length; i++) {
-  if (parseFloat(this.transacciones[i].cargo) > 0) {
-    this.transacciones[i].saldo = parseFloat(this.transacciones[i - 1].saldo) - parseFloat(this.transacciones[i].cargo);
-  }
-  if (parseFloat(this.transacciones[i].abono) > 0) {
-    this.transacciones[i].saldo = parseFloat(this.transacciones[i - 1].saldo) + parseFloat(this.transacciones[i].abono);
-  }
-}
-
-
-
+        // Ordena la tabla por fecha
         this.transacciones.sort((a, b) => {
           const dateA = new Date(a.fecha);
           const dateB = new Date(b.fecha);

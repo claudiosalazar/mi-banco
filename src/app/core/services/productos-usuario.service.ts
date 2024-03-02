@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 
 @Injectable({
@@ -8,7 +8,9 @@ import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 })
 export class ProductosUsuarioService {
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.calcularYSalvarSaldo();
+   }
 
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
     const url = `${this.baseUrl}?id=${id}`;
@@ -51,6 +53,44 @@ export class ProductosUsuarioService {
       }, error => {
         observer.error(error);
         observer.complete();
+      });
+    });
+  }
+
+  calcularSaldo(producto: ProductosUsuario['productos'][0]): ProductosUsuario['productos'][0] {
+    // Asigna el valor de 'cupo' al saldo del ID 0 de las transacciones
+    if (producto.transacciones.length > 0) {
+      producto.transacciones[0].saldo = (parseFloat(producto.cupo) - parseFloat(producto.transacciones[0].cargo)).toString();
+    }
+  
+    // Realiza el cálculo para los demás IDs
+    for (let i = 1; i < producto.transacciones.length; i++) {
+      if (parseFloat(producto.transacciones[i].cargo) > 0) {
+        producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) - parseFloat(producto.transacciones[i].cargo)).toString();
+      }
+      if (parseFloat(producto.transacciones[i].abono) > 0) {
+        producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) + parseFloat(producto.transacciones[i].abono)).toString();
+      }
+    }
+  
+    // Muestra el último cálculo guardado en 'saldo'
+    if (producto.transacciones && producto.transacciones.length > 0) {
+      console.log('Último cálculo guardado en saldo:', producto.transacciones[producto.transacciones.length - 1].saldo);
+    }
+  
+    return producto;
+  }
+  
+  calcularYSalvarSaldo(): void {
+    this.getProductosUsuarioTable().subscribe(productosUsuario => {
+      productosUsuario.productos = productosUsuario.productos.map(producto => this.calcularSaldo(producto));
+  
+      // Guarda los datos actualizados en el archivo productos-usuario.json
+      this.http.put(this.baseUrl, productosUsuario).subscribe((res: any) => {
+        // Los datos actualizados están en 'res'
+        const datosActualizados = res;
+      }, error => {
+        // Manejo de errores
       });
     });
   }

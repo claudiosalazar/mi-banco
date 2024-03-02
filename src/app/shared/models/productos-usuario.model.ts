@@ -1,5 +1,5 @@
 interface Producto {
-  id: string;
+  id: any;
   productoNombre: string;
   productoNumero: string;
   cupo: string;
@@ -12,7 +12,7 @@ interface Producto {
       saldo: string;
     }
   
-  ][];
+  ];
 }
 
 export interface ProductosUsuario {

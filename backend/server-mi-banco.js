@@ -8,6 +8,8 @@ const port = 3000;
 
 app.use(cors({ origin: 'http://localhost:4200' }));
 
+app.use(express.json());
+
 // Habilita el middleware bodyParser.json()
 app.use(bodyParser.json());
 
@@ -91,6 +93,43 @@ app.get('/backend', (_req, res) => {
   const fileData = fs.readFileSync(filePath);
   res.send(JSON.parse(fileData));
 });
+
+// Actualiza los datos de productos
+app.put('/backend/data/productos-usuario.json', (req, res) => {
+  const filePath = path.join(__dirname, 'data', 'productos-usuario.json');
+  
+  // Lee los datos actuales del archivo
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error al leer los datos:', err);
+      res.status(500).send('Error al leer los datos');
+      return;
+    }
+
+    const productosUsuario = JSON.parse(data);
+
+    // Actualiza los productos con los datos recibidos
+    req.body.productos.forEach(productoActualizado => {
+      const producto = productosUsuario.productos.find(producto => producto.id === productoActualizado.id);
+      if (producto) {
+        // Actualiza el producto
+        Object.assign(producto, productoActualizado);
+      }
+    });
+
+    // Guarda los datos actualizados en el archivo
+    fs.writeFile(filePath, JSON.stringify(productosUsuario, null, 2), (err) => {
+      if (err) {
+        console.error('Error al guardar los datos:', err);
+        res.status(500).send('Error al guardar los datos');
+      } else {
+        console.log('Datos de usuario guardados con éxito');
+        res.status(200).send('Datos de usuario guardados con éxito');
+      }
+    });
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`El servidor está corriendo en http://localhost:${port}`);
