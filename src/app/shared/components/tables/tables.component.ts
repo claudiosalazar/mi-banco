@@ -1,14 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
+import { DatosFiltradosService } from '../../../core/services/productos-usuario.service';
 import { ProductosUsuario } from '../../models/productos-usuario.model';
 
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html'
 })
-export class TablesComponent implements OnInit{
+export class TablesComponent implements OnInit {
 
-  @Input() id: string | undefined;
+  @Input() set id(id: string) {
+    this._id = id;
+    this.productosUsuarioService.actualizarIdActual(id);
+  };
+
+  get id(): string {
+    return this._id;
+  }
+  private _id: any;
+  
 
   // Captura datos de nodo desde cualquier ID
   transacciones: any[] | undefined;
@@ -31,6 +41,7 @@ export class TablesComponent implements OnInit{
   
   constructor(
     private productosUsuarioService: ProductosUsuarioService,
+    private datosFiltradosService: DatosFiltradosService,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +51,15 @@ export class TablesComponent implements OnInit{
   
   // Captura la informacion para tabla en base al ID
   loadData(id: string | undefined): void {
+    this.datosFiltradosService.datosFiltrados$.subscribe(datosFiltrados => {
+      // Actualizar la tabla con los datos filtrados
+      this.transacciones = datosFiltrados;
+      this.productos = [...this.transacciones];
+      this.originalData = [...this.transacciones];
+      this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+      this.paginacionDatos();
+    });
+
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
       const productos = productosUsuario.productos;
       const producto = productos.find(producto => producto.id === id);

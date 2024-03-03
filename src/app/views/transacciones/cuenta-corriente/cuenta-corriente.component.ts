@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms'
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-cuenta-corriente',
@@ -24,6 +24,15 @@ export class CuentaCorrienteComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  handleDatosFiltrados(datosFiltrados: any[]) {
+    // Haz algo con los datos filtrados
+    this.transacciones = datosFiltrados;
+    this.productos = [...this.transacciones];
+    this.originalData = [...this.transacciones];
+    this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+    // Aquí puedes agregar más lógica para manejar los datos filtrados si es necesario
   }
 
 }

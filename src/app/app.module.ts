@@ -1,25 +1,31 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Login
 import { LoginComponent } from './auth/components/login/login.component';
 
-import { AppRoutingModule } from './app-routing.module';
-import { MiBancoComponent } from './mi-banco.component';
-import { MainComponent } from './shared/components/main/main.component';
+// Pipe
+import { PesosPipe } from './shared/pipes/pesos.pipe';
+
+// Services
+import { DatosUsuarioService } from './core/services/datos-usuario.service';
+import { DatosFiltradosService } from './core/services/productos-usuario.service';
+
+// Componentes compartidos
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { TablesComponent } from './shared/components/tables/tables.component';
+import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
+
+// Componentes
+import { MiBancoComponent } from './mi-banco.component';
+import { MainComponent } from './shared/components/main/main.component';
 import { ResumenUsuarioComponent } from './views/resumen-usuario/resumen-usuario.component';
 import { TransaccionesComponent } from './views/transacciones/transacciones.component';
 import { ContactanosComponent } from './views/contactanos/contactanos.component';
-
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { AppInterceptor } from './core/interceptors/mi-banco.interceptor';
-
-import { DatosUsuarioService } from './core/services/datos-usuario.service';
-import { PesosPipe } from './shared/pipes/pesos.pipe';
 import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
 import { CuentaCorrienteComponent } from './views/transacciones/cuenta-corriente/cuenta-corriente.component';
 import { LineaCreditoComponent } from './views/transacciones/linea-credito/linea-credito.component';
@@ -33,7 +39,7 @@ import { SegurosContratarComponent } from './views/seguros/seguros-contratar/seg
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { LineaCreditoPagoComponent } from './views/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { LineaCreditoComprobanteComponent } from './views/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
-import { TablesComponent } from './shared/components/tables/tables.component';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +65,8 @@ import { TablesComponent } from './shared/components/tables/tables.component';
     LineaCreditoComprobanteComponent,
     VisaPagoComponent,
     VisaComprobanteComponent,
-    TablesComponent
+    TablesComponent,
+    BuscadorTablaComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +77,7 @@ import { TablesComponent } from './shared/components/tables/tables.component';
   ],
   providers: [
     DatosUsuarioService,
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+    DatosFiltradosService,
   ],
   bootstrap: [MiBancoComponent]
 })

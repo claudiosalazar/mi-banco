@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 
 @Injectable({
@@ -8,9 +8,12 @@ import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 })
 export class ProductosUsuarioService {
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
+  
   constructor(private http: HttpClient) {
     this.calcularYSalvarSaldo();
    }
+
+  fecha: any;
 
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
     const url = `${this.baseUrl}?id=${id}`;
@@ -95,4 +98,50 @@ export class ProductosUsuarioService {
     });
   }
 
+  // Codigo para buscador
+  private idActual = new BehaviorSubject<string>('');
+
+  getIdActual() {
+    return this.idActual.asObservable();
+  }
+
+  buscarDatos(valorBusqueda: any, id: any) {
+    return new Observable(observer => {
+      this.getProductosUsuarioResumen(id).subscribe(datos => {
+        const producto = datos.productos.find(producto => producto.id === id);
+        if (producto) {
+          const datosFiltrados = producto.transacciones.filter(transaccion => {
+            // Cambia 'propiedad1', 'propiedad2', etc., por las propiedades correctas
+            return transaccion.fecha.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                   transaccion.detalle.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                   transaccion.cargo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                   transaccion.abono.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                   transaccion.saldo.toLowerCase().includes(valorBusqueda.toLowerCase());
+          });
+  
+          observer.next(datosFiltrados);
+          observer.complete();
+        } else {
+          observer.next([]);
+          observer.complete();
+        }
+      }, error => {
+        observer.error(error);
+      });
+    });
+  }
+
+  actualizarIdActual(nuevoId: string) {
+    this.idActual.next(nuevoId);
+  }
+
+}
+
+export class DatosFiltradosService {
+  private datosFiltradosSource = new Subject<any[]>();
+  datosFiltrados$ = this.datosFiltradosSource.asObservable();
+
+  actualizarDatosFiltrados(datosFiltrados: any[]) {
+    this.datosFiltradosSource.next(datosFiltrados);
+  }
 }
