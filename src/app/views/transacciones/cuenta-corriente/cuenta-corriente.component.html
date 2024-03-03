@@ -13,83 +13,8 @@
             </div>
           </div>
         </div>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th (click)="ordenarDatos('fecha'); onHeaderClick()">
-                <div class="d-flex">
-                  Fecha
-                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
-                    expand_more
-                  </span>
-                </div>
-              </th>
-              <th (click)="ordenarDatos('detalle'); onHeaderClick()">
-                <div class="d-flex">
-                  Detalle
-                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'detalle'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'detalle'">
-                    expand_more
-                  </span>
-                </div>
-              </th>
-              <th (click)="ordenarDatos('cargo'); onHeaderClick()">
-                <div class="d-flex">
-                  Cargo
-                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'">
-                    expand_more
-                  </span>
-                </div>
-              </th>
-              <th (click)="ordenarDatos('abono'); onHeaderClick()">
-                <div class="d-flex">
-                  Abono
-                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'abono'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'abono'">
-                    expand_more
-                  </span>
-                </div>
-              </th>
-              <th (click)="ordenarDatos('saldo'); onHeaderClick()">
-                <div class="d-flex">
-                  Saldo
-                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'saldo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'saldo'">
-                    expand_more
-                  </span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let transaccion of paginatedData">
-              <td>{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
-              <td>{{ transaccion.detalle }}</td>
-              <td>{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</td>
-              <td>{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</td>
-              <td>{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <nav class="d-flex justify-content-center mt-3">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
-                <span class="material-symbols-outlined">
-                  chevron_left
-                </span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index">
-              <a class="page-link" href="javascript:void(0);" (click)="seleccionarPagina(i + 1)">{{ i + 1 }}</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);" (click)="nextPage()">
-                <span class="material-symbols-outlined">
-                  chevron_right
-                </span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <!-- Importacion de componente tables -->
+        <app-tables [id]="cuentaCorrienteId"></app-tables>
       </div>
     </div>
   </div>

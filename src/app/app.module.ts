@@ -33,6 +33,7 @@ import { SegurosContratarComponent } from './views/seguros/seguros-contratar/seg
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { LineaCreditoPagoComponent } from './views/transacciones/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { LineaCreditoComprobanteComponent } from './views/transacciones/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
+import { TablesComponent } from './shared/components/tables/tables.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { LineaCreditoComprobanteComponent } from './views/transacciones/linea-cr
     LineaCreditoPagoComponent,
     LineaCreditoComprobanteComponent,
     VisaPagoComponent,
-    VisaComprobanteComponent
+    VisaComprobanteComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,

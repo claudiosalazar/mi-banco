@@ -1,49 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms'
-import { ProductosUsuarioService } from 'src/app/core/services/productos-usuario.service';
-import { ProductosUsuario } from 'src/app/shared/models/productos-usuario.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
+import { ProductosUsuario } from '../../models/productos-usuario.model';
 
 @Component({
-  selector: 'app-visa',
-  templateUrl: './visa.component.html'
+  selector: 'app-tables',
+  templateUrl: './tables.component.html'
 })
-export class VisaComponent implements OnInit {
-   
+export class TablesComponent implements OnInit{
+
+  @Input() id: string | undefined;
+
   // Captura datos de nodo desde cualquier ID
-   transacciones: any[] | undefined;
+  transacciones: any[] | undefined;
+  productos: any[] = [];
+  originalData: any[] = [];
+  itemsPerPage = 5;
+  currentPage = 1;
+  paginatedData: any[] | undefined;
+  totalPages: any;
+
+  // Variables para ordenar datos de tabla
+  sortOrder = 1;
+  sortedColumn = '';
+  sortAscending: boolean = true;
+
+  // Variable para animacion de icono en th
+  public isRotatedIn: boolean = false;
+
+  public columnaSeleccionada: string = '';
   
-   itemsPerPage = 5;
-   currentPage = 1;
-   paginatedData: any[] | undefined;
-   totalPages: any;
- 
-   // Variables para buscador
-   campoBusqueda = new FormControl('');
-   productos: any[] = [];
-   originalData: any[] = [];
- 
-   // Variables para ordenar datos de tabla
-   sortOrder = 1;
-   sortedColumn = '';
-   sortAscending: boolean = true;
+  constructor(
+    private productosUsuarioService: ProductosUsuarioService,
+  ) { }
 
-   // Variables para productos
-    productosUsuario: { productos: any[] } = { productos: [] };
-    fechaUltimoAbono: any;
-    ultimoAbono: any;
- 
-   // Variable para animacion de icono en th
-   public isRotatedIn: boolean = false;
- 
- 
-   public columnaSeleccionada: string = '';
- 
-   constructor(
-     private productosUsuarioService: ProductosUsuarioService,
-   ) { }
-
-   ngOnInit(): void {
-    const id = '2'; // Reemplaza '0' con el ID que deseas obtener
+  ngOnInit(): void {
+    // Camputa el ID definido en el componente padre
+    this.loadData(this.id);
+  }
+  
+  // Captura la informacion para tabla en base al ID
+  loadData(id: string | undefined): void {
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
       const productos = productosUsuario.productos;
       const producto = productos.find(producto => producto.id === id);
@@ -56,7 +52,7 @@ export class VisaComponent implements OnInit {
         
         // Captura el saldo del producto
         this.productosUsuarioService.calcularSaldo(producto);
-
+  
         // Ordena la tabla por fecha
         this.transacciones.sort((a, b) => {
           const dateA = new Date(a.fecha);
@@ -65,34 +61,13 @@ export class VisaComponent implements OnInit {
         });
         this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
         this.paginacionDatos();
-        this.campoBusqueda.valueChanges.subscribe(valorBusqueda => {
-          if (valorBusqueda) {
-            this.transacciones = this.originalData.filter(transaccion =>
-              Object.values(transaccion).some(val =>
-              val?.toString().toLowerCase().includes(valorBusqueda.toLowerCase())
-              )
-            );
-          } else {
-            this.transacciones = [...this.originalData];
-          }
-          this.paginacionDatos();
-        });
-      } else {
-        console.error('ID no encontrado');
       }
     }, error => {
       console.error('Error al obtener los datos del producto:', error);
     });
   }
 
-  getProductosUsuarioResumen(id: string): void {
-    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(data => {
-      this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
-      this.fechaUltimoAbono = this.productosUsuario.productos[3]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.fecha;
-      this.ultimoAbono = this.productosUsuario.productos[3]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.abono;
-    });
-  }
-
+  // Anima icono de TH
   public onHeaderClick(): void {
     this.isRotatedIn = !this.isRotatedIn;
   }
