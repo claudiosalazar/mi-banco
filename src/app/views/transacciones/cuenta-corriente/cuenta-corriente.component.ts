@@ -20,6 +20,7 @@ export class CuentaCorrienteComponent implements OnInit {
 
   // Variables para buscador
   campoBusqueda = new FormControl('');
+  mostrarPaginador: boolean|undefined;
 
   constructor() { }
 

@@ -9,10 +9,12 @@ import { ProductosUsuario } from '../../models/productos-usuario.model';
 })
 export class TablesComponent implements OnInit {
 
+  @Input() mostrarPaginador: boolean | undefined;
+
   @Input() set id(id: string) {
-    this._id = id;
-    this.productosUsuarioService.actualizarIdActual(id);
-  };
+  this._id = id;
+  this.productosUsuarioService.actualizarIdActual(id);
+};
 
   get id(): string {
     return this._id;
@@ -57,6 +59,7 @@ export class TablesComponent implements OnInit {
       this.productos = [...this.transacciones];
       this.originalData = [...this.transacciones];
       this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+      this.mostrarPaginador = this.transacciones.length > 5;
       this.paginacionDatos();
     });
 
@@ -80,6 +83,7 @@ export class TablesComponent implements OnInit {
           return dateB.getTime() - dateA.getTime();
         });
         this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+        this.mostrarPaginador = this.transacciones.length > 5;
         this.paginacionDatos();
       }
     }, error => {

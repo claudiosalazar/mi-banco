@@ -10,7 +10,7 @@
           </div>
         </div>
         <!-- Importacion de componente tables -->
-        <app-tables [id]="transaccionesCuentaCorriente" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+        <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
       </div>
     </div>
   </div>
