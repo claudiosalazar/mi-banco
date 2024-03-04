@@ -140,8 +140,11 @@ export class ProductosUsuarioService {
 export class DatosFiltradosService {
   private datosFiltradosSource = new Subject<any[]>();
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
+  paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
+  paginationData$ = this.paginationData.asObservable();
 
   actualizarDatosFiltrados(datosFiltrados: any[]) {
     this.datosFiltradosSource.next(datosFiltrados);
+    this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
 }

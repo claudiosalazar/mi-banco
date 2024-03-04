@@ -42,7 +42,7 @@ export class BuscadorTablaComponent implements OnInit {
   updateTable(datosFiltrados: any[]) {
     this.paginatedData = datosFiltrados;
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados); // Enviar los datos filtrados
-    if (datosFiltrados.length > 0) {
+    if (datosFiltrados) {
       console.log('Datos con coincidencias:', datosFiltrados);
     } else {
       console.log('No se encontraron coincidencias');

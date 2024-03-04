@@ -63,6 +63,11 @@ export class TablesComponent implements OnInit {
       this.paginacionDatos();
     });
 
+    this.datosFiltradosService.paginationData$.subscribe(paginationData => {
+      this.itemsPerPage = paginationData.itemsPerPage;
+      this.currentPage = paginationData.currentPage;
+    });
+
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
       const productos = productosUsuario.productos;
       const producto = productos.find(producto => producto.id === id);

@@ -85,6 +85,14 @@
           "cargo": "10000",
           "abono": "0",
           "saldo": "60000"
+        },
+        {
+          "id": "10",
+          "fecha": "2024-01-02",
+          "detalle": "Pago botilleria",
+          "cargo": "5000",
+          "abono": "0",
+          "saldo": "55000"
         }
       ]
     },
