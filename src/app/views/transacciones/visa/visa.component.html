@@ -19,16 +19,11 @@
         <div class="card p-4 mt-4">
           <div class="row">
             <div class="col-6">
-              <div class="mb-5 d-flex align-items-center">
-                <p class="mb-0 me-3">Buscar transacción</p>
-                <form class="d-flex ml-5" role="search">
-                  <input class="form-control me-2" type="search" [formControl]="campoBusqueda" aria-label="Search">
-                </form>
-              </div>
+              <app-buscador-tabla></app-buscador-tabla>
             </div>
           </div>
           <!-- Importacion de componente tables -->
-        <app-tables [id]="transaccionesVisa"></app-tables>
+        <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
         </div>
       </div>
     </div>
