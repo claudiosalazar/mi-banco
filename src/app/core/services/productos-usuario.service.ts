@@ -108,22 +108,26 @@ export class ProductosUsuarioService {
   buscarDatos(valorBusqueda: any, id: any) {
     return new Observable(observer => {
       this.getProductosUsuarioResumen(id).subscribe(datos => {
-        const producto = datos.productos.find(producto => producto.id === id);
-        if (producto) {
-          const datosFiltrados = producto.transacciones.filter(transaccion => {
-            // Cambia 'propiedad1', 'propiedad2', etc., por las propiedades correctas
-            return transaccion.fecha.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-                   transaccion.detalle.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-                   transaccion.cargo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-                   transaccion.abono.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-                   transaccion.saldo.toLowerCase().includes(valorBusqueda.toLowerCase());
-          });
+        if (datos && datos.productos) {
+          const producto = datos.productos.find(producto => producto.id === id);
+          if (producto) {
+            const datosFiltrados = producto.transacciones.filter(transaccion => {
+              // Cambia 'propiedad1', 'propiedad2', etc., por las propiedades correctas
+              return transaccion.fecha.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                     transaccion.detalle.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                     transaccion.cargo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                     transaccion.abono.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+                     transaccion.saldo.toLowerCase().includes(valorBusqueda.toLowerCase());
+            });
   
-          observer.next(datosFiltrados);
-          observer.complete();
+            observer.next(datosFiltrados);
+            observer.complete();
+          } else {
+            observer.next([]);
+            observer.complete();
+          }
         } else {
-          observer.next([]);
-          observer.complete();
+          observer.error('No se encontraron productos');
         }
       }, error => {
         observer.error(error);

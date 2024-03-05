@@ -27,6 +27,7 @@ export class LineaCreditoComponent implements OnInit {
 
   // Variables para buscador
   campoBusqueda = new FormControl('');
+  mostrarPaginador: boolean | undefined;
 
   constructor(
     private productosUsuarioService: ProductosUsuarioService
@@ -40,7 +41,7 @@ export class LineaCreditoComponent implements OnInit {
     this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(data => {
       this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
       
-      const transacciones = this.productosUsuario.productos[1]?.transacciones;
+      const transacciones = this.productosUsuario.productos[2]?.transacciones;
       let ultimaTransaccionConAbono;
   
       if (transacciones) {
@@ -57,5 +58,12 @@ export class LineaCreditoComponent implements OnInit {
         this.ultimoMontoAbono = ultimaTransaccionConAbono.abono;
       }
     });
+  }
+
+  handleDatosFiltrados(datosFiltrados: any[]) {
+    this.transacciones = datosFiltrados;
+    this.productos = [...this.transacciones];
+    this.originalData = [...this.transacciones];
+    this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
   }
 }

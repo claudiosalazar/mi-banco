@@ -51,15 +51,11 @@ app.get('/backend/data/productos-usuario.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'productos-usuario.json');
   const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
   if (id) {
-    if (fileData.productosUsuario) {
-      const producto = fileData.productosUsuario.find(producto => Number(producto.id) === id);
-      if (producto) {
-        res.send(producto);
-      } else {
-        res.status(404).send('ID no encontrado');
-      }
+    const producto = fileData.productos.find(producto => Number(producto.id) === id);
+    if (producto) {
+      res.send({ productos: [producto] }); 
     } else {
-      res.status(404).send('No se encontraron los datos del producto');
+      res.status(404).send('ID no encontrado');
     }
   } else {
     res.send(fileData);

@@ -26,7 +26,7 @@ export class VisaComponent implements OnInit {
 
   // Variables para buscador
   campoBusqueda = new FormControl('');
-  mostrarPaginador: boolean|undefined;
+  mostrarPaginador: boolean | undefined;
 
   constructor(
     private productosUsuarioService: ProductosUsuarioService
@@ -60,11 +60,9 @@ export class VisaComponent implements OnInit {
   }
 
   handleDatosFiltrados(datosFiltrados: any[]) {
-    // Haz algo con los datos filtrados
     this.transacciones = datosFiltrados;
     this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
-    // Aquí puedes agregar más lógica para manejar los datos filtrados si es necesario
   }
 }
