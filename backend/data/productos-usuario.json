@@ -5,6 +5,7 @@
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
       "cupo": "100000",
+      "cupoDisponible": "45000",
       "transacciones": [
         {
           "id": "0",
@@ -101,6 +102,7 @@
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
       "cupo": "5000000",
+      "cupoDisponible": "346500",
       "transacciones": [
         {
           "id": "0",
@@ -189,6 +191,7 @@
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
       "cupo": "5000000",
+      "cupoDisponible": "2316000",
       "transacciones": [
         {
           "id": "0",

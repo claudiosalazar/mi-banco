@@ -3,6 +3,7 @@ interface Producto {
   productoNombre: string;
   productoNumero: string;
   cupo: string;
+  cupoDisponible: string;
   transacciones: [
     {
       fecha: string;

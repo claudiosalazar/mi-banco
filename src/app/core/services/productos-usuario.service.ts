@@ -9,11 +9,13 @@ import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 export class ProductosUsuarioService {
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
   
+  
   constructor(private http: HttpClient) {
-    this.calcularYSalvarSaldo();
+    this.guardaResultadosCalculos();
    }
 
   fecha: any;
+  cupoDisponibleVisa: Number | undefined;
 
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
     const url = `${this.baseUrl}?id=${id}`;
@@ -60,13 +62,11 @@ export class ProductosUsuarioService {
     });
   }
 
-  calcularSaldo(producto: ProductosUsuario['productos'][0]): ProductosUsuario['productos'][0] {
-    // Asigna el valor de 'cupo' al saldo del ID 0 de las transacciones
+  // Calcula el saldo de un producto
+  calculosMontos(producto: ProductosUsuario['productos'][0]): ProductosUsuario['productos'][0] {
     if (producto.transacciones.length > 0) {
       producto.transacciones[0].saldo = (parseFloat(producto.cupo) - parseFloat(producto.transacciones[0].cargo)).toString();
     }
-  
-    // Realiza el cálculo para los demás IDs
     for (let i = 1; i < producto.transacciones.length; i++) {
       if (parseFloat(producto.transacciones[i].cargo) > 0) {
         producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) - parseFloat(producto.transacciones[i].cargo)).toString();
@@ -75,28 +75,34 @@ export class ProductosUsuarioService {
         producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) + parseFloat(producto.transacciones[i].abono)).toString();
       }
     }
-  
-    // Muestra el último cálculo guardado en 'saldo'
     if (producto.transacciones && producto.transacciones.length > 0) {
       console.log('Último cálculo guardado en saldo:', producto.transacciones[producto.transacciones.length - 1].saldo);
     }
   
+    // Calcula el cupo disponible restando el saldo del cupo
+    const cupoDisponible = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
+  
+    // Agrega el cupo disponible al producto
+    producto.cupoDisponible = cupoDisponible.toString();
+  
+    // Imprime el cupo disponible en la consola
+    console.log('Cupo disponible:', producto.cupoDisponible);
+  
     return producto;
   }
+
   
-  calcularYSalvarSaldo(): void {
+  guardaResultadosCalculos(): void {
     this.getProductosUsuarioTable().subscribe(productosUsuario => {
-      productosUsuario.productos = productosUsuario.productos.map(producto => this.calcularSaldo(producto));
-  
+      productosUsuario.productos = productosUsuario.productos.map(producto => this.calculosMontos(producto));
       // Guarda los datos actualizados en el archivo productos-usuario.json
       this.http.put(this.baseUrl, productosUsuario).subscribe((res: any) => {
         // Los datos actualizados están en 'res'
         const datosActualizados = res;
-      }, error => {
-        // Manejo de errores
       });
     });
   }
+  
 
   // Codigo para buscador
   private idActual = new BehaviorSubject<string>('');
@@ -151,4 +157,18 @@ export class DatosFiltradosService {
     this.datosFiltradosSource.next(datosFiltrados);
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
+}
+
+export class GuardaPagoProductosService {
+  private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
+/*
+  const url = `${this.baseUrl}`;
+  const params = new HttpParams().set('cupolVisa', cupolVisa.toString());
+
+  return this.http.get(url, { params }).pipe(
+    catchError((error: any) => {
+      console.error('Error al enviar los datos:', error);
+      return throwError(error);
+    })
+  );*/
 }
