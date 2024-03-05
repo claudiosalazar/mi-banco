@@ -13,7 +13,7 @@ import { ProductosUsuarioService } from '../../../../core/services/productos-usu
 import { ProductosUsuario } from '../../../../shared/models/productos-usuario.model';
 // Datos ofertas
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
-import { OfertasProductos } from './../../../../shared/models/ofertas-productos.model';
+import { OfertasProductos } from '../../../../shared/models/ofertas-productos.model';
 
 declare var bootstrap: any;
 
