@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subject, catchError, map, throwError } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosUsuarioService {
+
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
   
-  
-  constructor(private http: HttpClient) {
-    this.guardaResultadosCalculos();
-   }
+  constructor(private http: HttpClient) { }
 
   fecha: any;
   cupoDisponibleVisa: Number | undefined;
@@ -20,27 +18,36 @@ export class ProductosUsuarioService {
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
     const url = `${this.baseUrl}?id=${id}`;
     console.log('URL de la solicitud:', url);
-    return this.http.get<ProductosUsuario>(url);
+    return this.http.get<ProductosUsuario>(url).pipe(
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(error);
+      })
+    );
   }
 
   // Llama a todos los datos de productos
-  getProductosUsuario(id: string): Observable<ProductosUsuario['productos'][0]> {
-    const url = `${this.baseUrl}?id=${id}`;
+  getProductosUsuario(id: number): Observable<ProductosUsuario['productos'][0]> {
+    const url = `${this.baseUrl}`;
     console.log('URL de la solicitud:', url);
-    return new Observable(observer => {
-      this.http.get<ProductosUsuario>(url).subscribe(data => {
-        const producto = data.productos.find(producto => producto.id === id);
-        if (producto) {
-          observer.next(producto);
+    return this.http.get<ProductosUsuario>(url).pipe(
+      map(data => {
+        if (data && data.productos) {
+          const producto = data.productos.find(producto => producto.id === id);
+          if (producto) {
+            return producto;
+          } else {
+            throw new Error('ID no encontrado');
+          }
         } else {
-          observer.error('ID no encontrado');
+          throw new Error('No se encontraron productos');
         }
-        observer.complete();
-      }, error => {
-        observer.error(error);
-        observer.complete();
-      });
-    });
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error:', error);
+        return throwError('Error al analizar la respuesta del servidor como JSON');
+      })
+    );
   }
 
   // llama los datos para ser usados en una tabla
@@ -48,7 +55,12 @@ export class ProductosUsuarioService {
     const url = `${this.baseUrl}`;
     console.log('URL de la solicitud:', url);
     return new Observable(observer => {
-      this.http.get<ProductosUsuario>(url).subscribe(data => {
+      this.http.get<ProductosUsuario>(url).pipe(
+        catchError(error => {
+          console.error('Error:', error);
+          return throwError(error);
+        })
+      ).subscribe(data => {
         if (data) {
           observer.next(data);
         } else {
@@ -157,18 +169,4 @@ export class DatosFiltradosService {
     this.datosFiltradosSource.next(datosFiltrados);
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
-}
-
-export class GuardaPagoProductosService {
-  private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-/*
-  const url = `${this.baseUrl}`;
-  const params = new HttpParams().set('cupolVisa', cupolVisa.toString());
-
-  return this.http.get(url, { params }).pipe(
-    catchError((error: any) => {
-      console.error('Error al enviar los datos:', error);
-      return throwError(error);
-    })
-  );*/
 }

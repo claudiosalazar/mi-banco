@@ -1,19 +1,18 @@
+
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
-import { SaldosService } from '../../../../core/services/saldos.service';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 // Datos usuario
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 // Productos usuario
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
-import { ProductosUsuario } from '../../../../shared/models/productos-usuario.model';
+import { GuardaPagoProductosService } from '../../../../core/services/guardar-pagos.service';
 // Datos ofertas
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
-import { OfertasProductos } from '../../../../shared/models/ofertas-productos.model';
+import { DatePipe } from '@angular/common';
 
 declare var bootstrap: any;
 
@@ -24,34 +23,16 @@ declare var bootstrap: any;
 export class VisaPagoComponent implements OnInit {
 
   @ViewChild('modalPagoVisa') modalPagoVisa: ElementRef | undefined;
-  
-  // private urlData = '../../../../../../assets/data/datos-usuario.json';
 
   private pesosPipe = new PesosPipe();
 
   pagoVisaForm: FormGroup = new FormGroup({});
-
-
-
-  // saldo: number | undefined;
-  disponible: number | undefined;
-  saldoCtaCte: any;
-  saldoLineaCre: any;
-  saldoVisa: any;
-  disponibleVisa: any;
-  disponibleCtaCte: any;
-  disponibleLineaCre: any;
-
+  
   datosUsuarioActual: DatosUsuarioActual | undefined;
   submitted = false;
   contenedorPagoTotal = false;
   contenedorOtroPago = true;
   cupoValido: boolean | undefined;
-  // saldoRestanteVisa: number | undefined;
-  
-  // Variables para datos de usuario
-  //visaN: any;
-  //visaSaldo: any | undefined;
   productoSeleccionado: any;
   elementosHabilitados = false;
   inputOtroMonto: any;
@@ -71,25 +52,32 @@ export class VisaPagoComponent implements OnInit {
   montoNumberTotal: number | undefined;
   montoNumberOtro: number | undefined;
 
-  productosUsuario: ProductosUsuario | undefined;
-
-  // private radioChanged = true;
+  productosUsuario: { productos: any[] } = { productos: [] };
+  cupoVisa: any;
+  cupoCtaCte: any;
+  numeroCtaCte: any;
+  cupoLineaCredito: any;
+  numeroLineaCredito: any;
+  numeroVisa: any;
+  cupoInicialVisa: any;
+  cupoDisponibleVisa: any;
+  montoPagado: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
+    private guardaPagoProductosService: GuardaPagoProductosService,
     private ofertasProductosService: OfertasProductosService,
-    private saldosService: SaldosService,
     private http: HttpClient,
   ) { }
 
   // Inicialización de formulario
   ngOnInit(): void {
     this.getDatosUsuario();
+    this.getProductosUsuarioResumen('');
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
-      montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),  
-      // inputMontoPagoTotal: new FormControl({value: this.saldoFinalCtaCte, disabled: true}, [Validators.required]),
+      montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
@@ -121,56 +109,25 @@ export class VisaPagoComponent implements OnInit {
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
-
-      /*
-      // Captura calculos de Cuenta Corriente
-      this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual).subscribe((saldoCtaCte: any) => {
-        this.saldoCtaCte = parseFloat(saldoCtaCte);
-        console.log('Saldo Cta Cte:', this.saldoCtaCte);
-      });
-
-      this.saldosService.calcularDisponibleCtaCte(this.datosUsuarioActual).subscribe((disponibleCtaCte: any) => {
-        this.disponibleCtaCte = parseFloat(disponibleCtaCte);
-        console.log('Disponible Cta Cte:', this.disponibleCtaCte);
-      });
-
-      // Captura calculos de Linea de Credito
-      this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual).subscribe((saldoLineaCre: any) => {
-        this.saldoLineaCre = parseFloat(saldoLineaCre);
-        console.log('Saldo Linea Credito:', this.saldoLineaCre);
-      });
-
-      this.saldosService.calcularDisponibleLineaCre(this.datosUsuarioActual).subscribe((disponibleLineaCre: any) => {
-        this.disponibleLineaCre = parseFloat(disponibleLineaCre);
-        console.log('Disponible Linea Credito:', this.disponibleLineaCre);
-      });
-      
-      // Captura calculos de Visa
-      this.saldosService.calcularSaldoVisa(this.datosUsuarioActual).subscribe((saldoVisa: any) => {
-        this.saldoVisa = parseFloat(saldoVisa);
-        console.log('Saldo Visa:', this.saldoVisa);
-      });
-
-      this.saldosService.calcularDisponibleVisa(this.datosUsuarioActual).subscribe((disponibleVisa: any) => {
-        this.disponibleVisa = parseFloat(disponibleVisa);
-        console.log('Disponible Visa:', this.disponibleVisa);
-      });
-      */
-
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
-      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.saldoVisa));
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.cupoVisa));
     });
   }
 
-  getProductosUsuario(): void {
-    /* this.productosUsuarioService.getProductosUsuario().subscribe(data => {
-      this.productosUsuario = data;
-      this.saldoCtaCte =  this.productosUsuario.productos[0].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
-      this.saldoLineaCre =  this.productosUsuario.productos[1].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
-      this.saldoVisa =  this.productosUsuario.productos[2].transacciones.reduce((acc, transaccion) => acc + transaccion, 0);
-      // this.saldoLineaCre = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      // this.saldoVisa = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
-    }); */
+  getProductosUsuarioResumen(id: string): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
+        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
+        this.numeroCtaCte = parseFloat(this.productosUsuario.productos[0]?.productoNumero);
+        this.cupoLineaCredito = parseFloat(this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo);
+        this.numeroLineaCredito = parseFloat(this.productosUsuario.productos[1]?.productoNumero);
+        this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
+        this.cupoInicialVisa = parseFloat(this.productosUsuario.productos[2]?.cupo);
+        this.cupoVisa = parseFloat(this.productosUsuario.productos[2]?.transacciones[this.productosUsuario.productos[2]?.transacciones.length - 1]?.saldo);
+        this.cupoDisponibleVisa = parseFloat(this.productosUsuario.productos[2]?.cupoDisponible);
+      }
+    );
   }
 
   // Valida que el en select se selecciono un producto para el pago
@@ -266,13 +223,12 @@ export class VisaPagoComponent implements OnInit {
         const numericInputMonto = Number(inputMontoValue2);
   
         // Validación 1
-        // if (productoParaPago === '1' && numericInputMonto <= this.saldo) {
-        if (productoParaPago === '1' && numericInputMonto <= this.saldoCtaCte) {
+        if (productoParaPago === '1' && numericInputMonto <= this.cupoCtaCte) {
           this.pagoTotalValido = true;
           console.log('valido');
         } 
         // Validación 2
-        else if (productoParaPago === '2' && numericInputMonto <= this.saldoLineaCre) {
+        else if (productoParaPago === '2' && numericInputMonto <= this.cupoLineaCredito) {
           this.pagoTotalValido = true;
           console.log('valido');
         } 
@@ -304,7 +260,7 @@ export class VisaPagoComponent implements OnInit {
           const numericInputMonto = Number(inputMontoValue);
   
           // Validación 2
-          if (numericInputMonto > this.saldoCtaCte && numericInputMonto > this.saldoLineaCre) {
+          if (numericInputMonto > this.cupoCtaCte && numericInputMonto > this.cupoLineaCredito) {
             this.error2 = true;
             console.log('valor superior');
           } else {
@@ -312,7 +268,7 @@ export class VisaPagoComponent implements OnInit {
           }
   
           // Validación 3
-          if (numericInputMonto <= this.saldoCtaCte && numericInputMonto <= this.saldoLineaCre) {
+          if (numericInputMonto <= this.cupoCtaCte && numericInputMonto <= this.cupoLineaCredito) {
             this.montoValido = true;
             console.log('valido');
           } else {
@@ -324,20 +280,16 @@ export class VisaPagoComponent implements OnInit {
   }
 
   resetValidacionesInputOtroMonto() {
+    // Limpia el valor ingresado en inputOtroMonto
     this.error1 = false;
     this.error2 = false;
     this.montoValido = false;
-    // console.log('reset a otro monto');
-    // Limpia el valor ingresado en inputOtroMonto
-    
   }
 
   resetValidacionesInputPagoTotal() {
+    // Limpia el valor ingresado en inputOtroMonto
     this.error3 = false;
     this.pagoTotalValido = false;
-    // console.log('reset a pago total');
-    // Limpia el valor ingresado en inputOtroMonto
-    
   }
 
   validaFormulario(): void {
@@ -361,7 +313,6 @@ export class VisaPagoComponent implements OnInit {
             montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
             this.montoNumberTotal = Number(montoPagoTotal);
             console.log('montoNumberTotal:', this.montoNumberTotal);
-            this.calculosMontos();
           }
         }
       } else if (montoPagoControl.value === 'otroMonto') {
@@ -373,68 +324,118 @@ export class VisaPagoComponent implements OnInit {
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);
           console.log('montoNumberOtro:', this.montoNumberOtro);
-          this.calculosMontos();
         }
       }
     }
-  }
 
-  calculosMontos() {
-
-  }
-
-  /* calculosMontos() {
-    // Calculo de montos restantes
-    if (this.datosUsuarioActual !== undefined) {
-      this.saldosService.calculaSaldoRestanteVisa(this.datosUsuarioActual).subscribe((resultado: any) => {
-        // Captura el dato de saldoFinalVisa y lo transforma en un dato number
-        this.saldoFinalVisa = parseFloat(resultado);
-        console.log('saldoFinalVisa:', this.saldoFinalVisa);
-
-        if (this.saldoFinalVisa !== undefined && this.montoNumberTotal !== undefined) {
-          console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
-          this.saldoFinalVisa -= this.montoNumberTotal;
-          this.saldoFinalCtaCte -= this.montoNumberTotal;
-          this.saldoFinalLineaCre -= this.montoNumberTotal;
-          console.log('saldoFinalVisa después de la suma:', this.saldoFinalVisa); // imprime saldoFinalVisa después de la suma
-          this.guardarPagoVisaJson(this.saldoFinalVisa).subscribe({
-            next: response => console.log('Respuesta del servidor:', response),
-            error: err => console.error('Error al enviar los datos:', err)
-          });
-        } else {
-          console.error('data es undefined');
-        } if (this.saldoFinalVisa !== undefined && this.montoNumberOtro !== undefined) {
-          console.log('saldoFinalVisa antes de la resta:', this.saldoFinalVisa); // imprime saldoFinalVisa antes de la suma
-          this.saldoFinalVisa -= this.montoNumberOtro;
-          this.saldoFinalCtaCte -= this.montoNumberOtro;
-          this.saldoFinalLineaCre -= this.montoNumberOtro;
-          console.log('saldoFinalVisa después de la suma:', this.saldoFinalVisa); // imprime saldoFinalVisa después de la suma
-          this.guardarPagoVisaJson(this.saldoFinalVisa).subscribe({
-            next: response => console.log('Respuesta del servidor:', response),
-            error: err => console.error('Error al enviar los datos:', err)
-          });
-        } else {
-          console.error('data es undefined');
-        }
-        
+    // Si no hay errores, muestra el modal
+    if (!this.error1 && !this.error2 && !this.error3) {
+      let modal = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {
+        backdrop: 'static',
+        keyboard: false
       });
-    } else {
-      console.error('saldosService es undefined');
+      modal.show();
+      // this.calculoPagoFormulario();
+      this.datosPagoVisa();
+
+      setTimeout(() => {
+        modal.hide();
+      }, 1500);
     }
-  } */
+  }
 
-
-  /* guardarPagoVisaJson(saldoFinalVisa: number): Observable<any> {
-    const url = this.urlData;
-    const params = new HttpParams().set('saldoFinalVisa', saldoFinalVisa.toString());
+  calculoPagoFormulario(): any {
+    const montoPagado: any = this.montoNumberTotal || this.montoNumberOtro;
+    let productoParaPagoValue = this.pagoVisaForm.get('productoParaPago')?.value;
   
-    return this.http.get(url, { params }).pipe(
-      catchError((error: any) => {
-        console.error('Error al enviar los datos:', error);
-        return throwError(error);
-      })
-    );
-  } */
+    if (productoParaPagoValue === '1') {
+      this.cupoCtaCte -= montoPagado;
+      this.cupoVisa -= montoPagado;
+      this.cupoDisponibleVisa += montoPagado;
+    } else if (productoParaPagoValue === '2') {
+      this.cupoLineaCredito -= montoPagado;
+      this.cupoVisa -= montoPagado;
+      this.cupoDisponibleVisa += montoPagado;
+    }
+
+    // Convertir 'montoPagado' a un string
+    const montoPagadoString = montoPagado.toString();
+  
+    return {
+      montoPagado: montoPagadoString,
+      cupoVisa: this.cupoVisa,
+      cupoDisponibleVisa: this.cupoDisponibleVisa,
+      cupoCtaCte: this.cupoCtaCte,
+      cupoLineaCredito: this.cupoLineaCredito
+    };
+  }
+
+  datosPagoVisa(): void {
+
+    // Llama al metodo calculo y obtiene los valores
+    const result = this.calculoPagoFormulario();
+
+    // Obtener la fecha
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+
+    let montoPagado = result.montoPagado;
+    console.log('montoPagadoString:', montoPagado);
+    let cupoVisa = result.cupoVisa;
+    let cupoDisponibleVisa = result.cupoDisponibleVisa;
+
+    // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
+    this.http.get('http://localhost:3000/backend/data/productos-usuario.json').subscribe((res: any) => {
+  
+      // Los datos del archivo están en 'res'
+      const datosArchivo = res;
+      const producto = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '2');
+
+      if (producto) {
+          // Convertir 'montoPagado', 'cupoVisa' y 'cupoDisponibleVisa' a strings
+          //const montoPagadoString = montoPagado.toString();
+          
+          const cupoVisaString = cupoVisa.toString();
+          const cupoDisponibleVisaString = cupoDisponibleVisa.toString();
+
+          // Si el producto existe, agregar las variables y la nueva transacción
+          producto.cupo = cupoVisaString;
+          producto.cupoDisponible = cupoDisponibleVisaString;
+
+          // Obtener el último ID en el array de transacciones
+          const ultimoIdTransaccion = Math.max(...producto.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+          // Generar un nuevo ID que sea el siguiente al último ID existente
+          const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+          // Crear una nueva transacción con el nuevo ID y el monto pagado
+          producto.transacciones.push({
+            id: nuevoIdTransaccion.toString(),
+            fecha: fechaFormateada, // Usar la fecha formateada
+            detalle: 'Abono a Visa',
+            cargo: '',
+            abono: montoPagado,
+            saldo: '' // Reemplaza con el valor real
+          });
+
+          // Convertir los datos a un string
+          const datosString = JSON.stringify(datosArchivo);
+
+          /*
+          // Enviar los datos
+          this.http.post('ruta/a/servidor', datosString).subscribe((res: any) => {
+            console.log('Los datos se enviaron correctamente:', res);
+          }, (error: HttpErrorResponse) => {
+            console.log('Hubo un error al enviar los datos:', error);
+          });
+          */
+
+          // Imprimir la estructura de datos enviadas en la consola
+          console.log('Estructura de datos enviadas:', datosArchivo);
+      }
+    });
+  }
 
 }
 

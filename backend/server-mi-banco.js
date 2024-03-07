@@ -105,23 +105,29 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
     const productosUsuario = JSON.parse(data);
 
     // Actualiza los productos con los datos recibidos
-    req.body.productos.forEach(productoActualizado => {
-      const producto = productosUsuario.productos.find(producto => producto.id === productoActualizado.id);
-      if (producto) {
-        // Actualiza el producto
-        Object.assign(producto, productoActualizado);
-      }
-    });
+    if (Array.isArray(req.body.productos)) {
+      // Actualiza los productos con los datos recibidos
+      req.body.productos.forEach(productoActualizado => {
+        const producto = productosUsuario.productos.find(producto => producto.id === productoActualizado.id);
+        if (producto) {
+          // Actualiza el producto
+          Object.assign(producto, productoActualizado);
+        }
+      });
+    } else {
+      console.error('Error: req.body.productos debe ser un array');
+      res.status(400).send('Error: req.body.productos debe ser un array');
+      return;
+    }
 
     // Guarda los datos actualizados en el archivo
     fs.writeFile(filePath, JSON.stringify(productosUsuario, null, 2), (err) => {
       if (err) {
         console.error('Error al guardar los datos:', err);
-        res.status(500).send('Error al guardar los datos');
-      } else {
-        console.log('Datos de usuario guardados con éxito');
-        res.status(200).send('Datos de usuario guardados con éxito');
+        return;
       }
+      console.log('Datos de usuario guardados con éxito');
+      res.status(200).send('Datos de usuario guardados con éxito');
     });
   });
 });

@@ -12,12 +12,12 @@
               <!-- Datos del productos -->
               <div class="col-12 d-flex justify-content-between">
                 <div>
-                  <p class="mb-0"><small>Visa N°: <strong>{{productosUsuario?.productos?.[3]?.productoNumero}}</strong></small></p>
-                  <p><small>Cupo Utilizado: <strong>{{ saldoVisa | pesos }}</strong></small></p>
+                  <p class="mb-0"><small>Visa N°: <strong>{{ numeroVisa }}</strong></small></p>
+                  <p><small>Cupo Utilizado: <strong>{{ cupoVisa | pesos }}</strong></small></p>
                 </div>
                 <div>
-                  <p class="mb-0"><small>Cupo Total: <strong>{{ productosUsuario?.productos?.[3]?.cupo | pesos }}</strong></small></p>
-                  <p><small>Cupo Disponible: <strong>{{ disponibleVisa | pesos }}</strong></small></p>
+                  <p class="mb-0"><small>Cupo Total: <strong>{{ cupoInicialVisa | pesos }}</strong></small></p>
+                  <p><small>Cupo Disponible: <strong>{{ cupoDisponibleVisa | pesos }}</strong></small></p>
                 </div>
               </div>
 
@@ -34,12 +34,12 @@
                       'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 
                       'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
                       <option value="0">-</option>
-                      <option value="1">Cuenta Corriente N° {{productosUsuario?.productos?.[0]?.productoNumero}}</option>
-                      <option value="2">Línea de Crédito N° {{productosUsuario?.productos?.[1]?.productoNumero}}</option>
+                      <option value="1">Cuenta Corriente N° {{ numeroCtaCte }}</option>
+                      <option value="2">Línea de Crédito N° {{ numeroLineaCredito }}</option>
                     </select>
                     <label for="productoParaPago" class="form-label">Producto</label>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoCtaCte | pesos }}</strong></small>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoLineaCre | pesos }}</strong></small>
+                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
+                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoLineaCredito | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
                       Debes seleccionar un producto para pagar.
                     </div>
