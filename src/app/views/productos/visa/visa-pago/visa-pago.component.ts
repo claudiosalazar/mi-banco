@@ -381,7 +381,9 @@ export class VisaPagoComponent implements OnInit {
     const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
 
     let montoPagado = result.montoPagado;
-    console.log('montoPagadoString:', montoPagado);
+    let cupoCtaCte = result.cupoCtaCte;
+    // let cupoDisponibleCtaCte = result.cupoDisponibleVisa;
+    let cupoLineaCredito = result.cupoLineaCredito;
     let cupoVisa = result.cupoVisa;
     let cupoDisponibleVisa = result.cupoDisponibleVisa;
 
@@ -390,27 +392,88 @@ export class VisaPagoComponent implements OnInit {
   
       // Los datos del archivo están en 'res'
       const datosArchivo = res;
-      const producto = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '2');
+      const productoCtaCte = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '0');
+      const productoLineaCredito = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '1');
+      const productoVisa = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '2');
 
-      if (producto) {
+      // Datos Cuenta Corriente
+      if (productoCtaCte) {
+        // Convertir 'montoPagado', 'cupoVisa' y 'cupoDisponibleVisa' a strings
+        const cupoCtaCteString = cupoCtaCte.toString();
+        // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
+
+        // Si el producto existe, agregar las variables y la nueva transacción
+        productoVisa.cupo = cupoCtaCteString;
+        // productoVisa.cupoDisponible = cupoDisponibleCtaCteString;
+
+        // Obtener el último ID en el array de transacciones
+        const ultimoIdTransaccion = Math.max(...productoCtaCte.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+        // Generar un nuevo ID que sea el siguiente al último ID existente
+        const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+        // Crear una nueva transacción con el nuevo ID y el monto pagado
+        productoVisa.transacciones.push({
+          id: nuevoIdTransaccion.toString(),
+          fecha: fechaFormateada, // Usar la fecha formateada
+          detalle: 'Pago a Visa',
+          cargo: montoPagado,
+          abono: '',
+          saldo: '' // Reemplaza con el valor real
+        });
+
+        // Convertir los datos a un string
+        const datosString = JSON.stringify(datosArchivo);
+      }
+
+      // Datos Linea de credito
+      if (productoLineaCredito) {
+        // Convertir 'montoPagado', 'cupoVisa' y 'cupoDisponibleVisa' a strings
+        const cupoLineaCreditoString = cupoLineaCredito.toString();
+        // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
+
+        // Si el producto existe, agregar las variables y la nueva transacción
+        productoLineaCredito.cupo = cupoLineaCreditoString;
+        // productoVisa.cupoDisponible = cupoDisponibleCtaCteString;
+
+        // Obtener el último ID en el array de transacciones
+        const ultimoIdTransaccion = Math.max(...productoLineaCredito.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+        // Generar un nuevo ID que sea el siguiente al último ID existente
+        const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+        // Crear una nueva transacción con el nuevo ID y el monto pagado
+        productoLineaCredito.transacciones.push({
+          id: nuevoIdTransaccion.toString(),
+          fecha: fechaFormateada, // Usar la fecha formateada
+          detalle: 'Pago a Visa',
+          cargo: montoPagado,
+          abono: '',
+          saldo: '' // Reemplaza con el valor real
+        });
+
+        // Convertir los datos a un string
+        const datosString = JSON.stringify(datosArchivo);
+      }
+
+      // Datos Visa
+      if (productoVisa) {
           // Convertir 'montoPagado', 'cupoVisa' y 'cupoDisponibleVisa' a strings
-          //const montoPagadoString = montoPagado.toString();
-          
           const cupoVisaString = cupoVisa.toString();
           const cupoDisponibleVisaString = cupoDisponibleVisa.toString();
 
           // Si el producto existe, agregar las variables y la nueva transacción
-          producto.cupo = cupoVisaString;
-          producto.cupoDisponible = cupoDisponibleVisaString;
+          productoVisa.cupo = cupoVisaString;
+          productoVisa.cupoDisponible = cupoDisponibleVisaString;
 
           // Obtener el último ID en el array de transacciones
-          const ultimoIdTransaccion = Math.max(...producto.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+          const ultimoIdTransaccion = Math.max(...productoVisa.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
 
           // Generar un nuevo ID que sea el siguiente al último ID existente
           const nuevoIdTransaccion = ultimoIdTransaccion + 1;
 
           // Crear una nueva transacción con el nuevo ID y el monto pagado
-          producto.transacciones.push({
+          productoVisa.transacciones.push({
             id: nuevoIdTransaccion.toString(),
             fecha: fechaFormateada, // Usar la fecha formateada
             detalle: 'Abono a Visa',
