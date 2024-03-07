@@ -63,6 +63,10 @@ export class VisaPagoComponent implements OnInit {
   cupoDisponibleVisa: any;
   montoPagado: any;
 
+  // Variables para ofertas
+  ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
+  montoPreAprobadoSeguroAuto: any
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
@@ -74,6 +78,7 @@ export class VisaPagoComponent implements OnInit {
   // Inicialización de formulario
   ngOnInit(): void {
     this.getDatosUsuario();
+    this.getOfertasProductos('')
     this.getProductosUsuarioResumen('');
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
@@ -128,6 +133,13 @@ export class VisaPagoComponent implements OnInit {
         this.cupoDisponibleVisa = parseFloat(this.productosUsuario.productos[2]?.cupoDisponible);
       }
     );
+  }
+
+  getOfertasProductos(id: string): void {
+    this.ofertasProductosService.getOfertasProductos(id).subscribe(data => {
+      this.ofertasProductos = data.ofertas ? { ofertas: data.ofertas } : { ofertas: [] };
+      this.montoPreAprobadoSeguroAuto = this.ofertasProductos.ofertas[1].montoPreAprobado;
+    });
   }
 
   // Valida que el en select se selecciono un producto para el pago
