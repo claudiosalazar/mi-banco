@@ -13,7 +13,7 @@ import { GuardaPagoProductosService } from '../../../../core/services/guardar-pa
 // Datos ofertas
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 import { DatePipe } from '@angular/common';
-import { Observable, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -351,7 +351,8 @@ export class VisaPagoComponent implements OnInit {
       modal.show();
 
       this.datosPagoVisa().subscribe((datosPago: any) => {
-        console.log('Datos capturados:', datosPago);
+        // console.log('Datos capturados:', datosPago);
+        this.guardaPagoProductosService.getDatosPagoVisa(datosPago);
       });
 
       setTimeout(() => {
@@ -405,8 +406,7 @@ export class VisaPagoComponent implements OnInit {
     let cupoDisponibleVisa = result.cupoDisponibleVisa;
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
-    return this.http.get('http://localhost:3000/backend/data/productos-usuario.json').pipe(
-      map((res: any) => {
+    return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
         // Los datos del archivo están en 'res'
       const datosPago = res;
       const productoCtaCte = datosPago.productos.find((producto: { id: string; }) => producto.id === '0');

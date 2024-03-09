@@ -19,8 +19,8 @@ export class GuardaPagoProductosService {
     private http: HttpClient,
   ) { }
 
-  getDatosPagoVisa(): void {
-    
+  getDatosPagoVisa(datosPago: any): void {
+    console.log('Datos recibidos:', datosPago);
   }
 
   /* getDatosPagoVisa(datosPagoString: Observable<any>): Observable<ProductosUsuario>  {
