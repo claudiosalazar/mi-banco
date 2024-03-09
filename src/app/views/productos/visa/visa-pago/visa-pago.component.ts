@@ -13,6 +13,7 @@ import { GuardaPagoProductosService } from '../../../../core/services/guardar-pa
 // Datos ofertas
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 import { DatePipe } from '@angular/common';
+import { Observable, map } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -66,6 +67,7 @@ export class VisaPagoComponent implements OnInit {
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
   montoPreAprobadoSeguroAuto: any
+  datosPago: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -304,7 +306,7 @@ export class VisaPagoComponent implements OnInit {
     this.pagoTotalValido = false;
   }
 
-  validaFormulario(): void {
+  validaFormulario(): any {
     this.submitted = true;
 
     console.log(this.pagoVisaForm?.value);
@@ -347,8 +349,10 @@ export class VisaPagoComponent implements OnInit {
         keyboard: false
       });
       modal.show();
-      // this.calculoPagoFormulario();
-      this.datosPagoVisa();
+
+      this.datosPagoVisa().subscribe((datosPago: any) => {
+        console.log('Datos capturados:', datosPago);
+      });
 
       setTimeout(() => {
         modal.hide();
@@ -383,7 +387,7 @@ export class VisaPagoComponent implements OnInit {
     };
   }
 
-  datosPagoVisa(): void {
+  datosPagoVisa(): Observable<any> {
 
     // Llama al metodo calculo y obtiene los valores
     const result = this.calculoPagoFormulario();
@@ -401,13 +405,13 @@ export class VisaPagoComponent implements OnInit {
     let cupoDisponibleVisa = result.cupoDisponibleVisa;
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
-    this.http.get('http://localhost:3000/backend/data/productos-usuario.json').subscribe((res: any) => {
-  
-      // Los datos del archivo están en 'res'
-      const datosArchivo = res;
-      const productoCtaCte = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '0');
-      const productoLineaCredito = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '1');
-      const productoVisa = datosArchivo.productos.find((producto: { id: string; }) => producto.id === '2');
+    return this.http.get('http://localhost:3000/backend/data/productos-usuario.json').pipe(
+      map((res: any) => {
+        // Los datos del archivo están en 'res'
+      const datosPago = res;
+      const productoCtaCte = datosPago.productos.find((producto: { id: string; }) => producto.id === '0');
+      const productoLineaCredito = datosPago.productos.find((producto: { id: string; }) => producto.id === '1');
+      const productoVisa = datosPago.productos.find((producto: { id: string; }) => producto.id === '2');
 
 
       if (result.productoParaPagoValue === '1') {
@@ -493,9 +497,11 @@ export class VisaPagoComponent implements OnInit {
         });
       }
       // Imprimir la estructura de datos enviadas en la consola
-      console.log('Estructura de datos enviadas:', datosArchivo);
-      
-    });
+      // console.log('Estructura de datos enviadas:', datosPago);
+      // console.log('Datos que se van a enviar:', JSON.stringify(datosPago));
+      return JSON.stringify(datosPago);
+      })
+    );
     /*
     // Enviar los datos
     this.http.post('ruta/a/servidor', datosString).subscribe((res: any) => {

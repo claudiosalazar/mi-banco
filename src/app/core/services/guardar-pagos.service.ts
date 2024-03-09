@@ -19,6 +19,10 @@ export class GuardaPagoProductosService {
     private http: HttpClient,
   ) { }
 
+  getDatosPagoVisa(): void {
+    
+  }
+
   /* getDatosPagoVisa(datosPagoString: Observable<any>): Observable<ProductosUsuario>  {
     datosPagoString.subscribe(productosUsuario => {
       const datosPago = JSON.parse(productosUsuario);
