@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, map, of, throwError } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 
 @Injectable({
@@ -9,11 +9,33 @@ import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 export class ProductosUsuarioService {
 
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-  
-  constructor(private http: HttpClient) { }
-
+  productos: any;
+  saldo: string | undefined;
   fecha: any;
   cupoDisponibleVisa: Number | undefined;
+  
+  constructor(
+    private http: HttpClient
+  ) {
+    this.http.get(this.baseUrl).subscribe((data: any) => {
+      if (data && data.productos) {
+        if (Array.isArray(data.productos)) {
+          data.productos.forEach((producto: any) => {
+            if (producto && producto.transacciones) {
+              const nuevoDatos = this.calculosMontos(producto);
+              this.guardaResultadosCalculos(nuevoDatos).subscribe();
+            } else {
+              console.error('Transacciones no definidas en el producto:', producto);
+            }
+          });
+        } else {
+          console.error('data.productos no es un array');
+        }
+      } else {
+        console.error('data o data.productos es undefined');
+      }
+    });
+  }
 
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
     const url = `${this.baseUrl}?id=${id}`;
@@ -92,27 +114,56 @@ export class ProductosUsuarioService {
     }
   
     // Calcula el cupo disponible restando el saldo del cupo
-    const cupoDisponible = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
+    const saldoCalculado = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
+    const cupoDisponibleCalculado = parseFloat(producto.cupo) - saldoCalculado;
   
     // Agrega el cupo disponible al producto
-    producto.cupoDisponible = cupoDisponible.toString();
+    producto.transacciones[producto.transacciones.length - 1].saldo = saldoCalculado.toString();
+    producto.cupoDisponible = cupoDisponibleCalculado.toString();
   
     // Imprime el cupo disponible en la consola
-    console.log('Cupo disponible:', producto.cupoDisponible);
+    console.log('Cupo disponible:', cupoDisponibleCalculado);
+    console.log('Nuevos saldos', saldoCalculado);
   
-    return producto;
+    // Crea un nuevo objeto con la misma estructura que productos-usuario.json
+    const nuevoDatos: ProductosUsuario['productos'][0] = {
+      id: producto.id,
+      productoNombre: producto.productoNombre,
+      productoNumero: producto.productoNumero,
+      cupo: producto.cupo,
+      cupoDisponible: cupoDisponibleCalculado.toString(),
+      transacciones: [{
+        fecha: producto.transacciones[producto.transacciones.length - 1].fecha,
+        detalle: producto.transacciones[producto.transacciones.length - 1].detalle,
+        cargo: producto.transacciones[producto.transacciones.length - 1].cargo,
+        abono: producto.transacciones[producto.transacciones.length - 1].abono,
+        saldo: saldoCalculado.toString()
+      }]
+    };
+
+    console.log('Nuevos datos', nuevoDatos); 
+    return nuevoDatos;
   }
 
   
-  guardaResultadosCalculos(): void {
-    this.getProductosUsuarioTable().subscribe(productosUsuario => {
-      productosUsuario.productos = productosUsuario.productos.map(producto => this.calculosMontos(producto));
-      // Guarda los datos actualizados en el archivo productos-usuario.json
-      this.http.put(this.baseUrl, productosUsuario).subscribe((res: any) => {
+  guardaResultadosCalculos(nuevoDatos: ProductosUsuario['productos'][0]): Observable<any> {
+    console.log('guardaResultadosCalculos se ha activado');
+    
+    // Guarda los datos actualizados en el archivo productos-usuario.json
+    return this.http.put(this.baseUrl, nuevoDatos, {responseType: 'text'}).pipe(
+      map((res: any) => {
         // Los datos actualizados están en 'res'
         const datosActualizados = res;
-      });
-    });
+    
+        // Imprime un mensaje en la consola para verificar que los datos se guardaron
+        console.log('Los datos se guardaron correctamente en el servidor. Datos:', datosActualizados);
+        return nuevoDatos;
+      }),
+      catchError(error => {
+        console.error('Hubo un error al guardar los datos en el servidor:', error);
+        return throwError(error);
+      })
+    );
   }
   
 

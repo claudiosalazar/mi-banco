@@ -93,6 +93,7 @@ app.get('/backend', (_req, res) => {
 // Actualiza los datos de productos
 app.put('/backend/data/productos-usuario.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'productos-usuario.json');
+  const nuevosDatos = req.body;
   
   // Lee los datos actuales del archivo
   fs.readFile(filePath, 'utf8', (err, data) => {
@@ -103,10 +104,10 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
     }
 
     const productosUsuario = JSON.parse(data);
+    Object.assign(productosUsuario, nuevosDatos);
 
     // Actualiza los productos con los datos recibidos
-    if (Array.isArray(req.body.productos)) {
-      // Actualiza los productos con los datos recibidos
+    if (req.body.productos && Array.isArray(req.body.productos)) {
       req.body.productos.forEach(productoActualizado => {
         const producto = productosUsuario.productos.find(producto => producto.id === productoActualizado.id);
         if (producto) {
@@ -115,19 +116,19 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
         }
       });
     } else {
-      console.error('Error: req.body.productos debe ser un array');
-      res.status(400).send('Error: req.body.productos debe ser un array');
-      return;
+      console.error('req.body.productos es undefined o no es un array');
     }
 
     // Guarda los datos actualizados en el archivo
-    fs.writeFile(filePath, JSON.stringify(productosUsuario, null, 2), (err) => {
+    fs.writeFile(filePath, JSON.stringify(productosUsuario, nuevosDatos, null, 2), 'utf8', (err) => {
       if (err) {
         console.error('Error al guardar los datos:', err);
+        res.status(500).send('Error al guardar los datos');
         return;
+      } else {
+        console.log('El server guardo los datos en el json');
+        res.status(200).send('El server guardo los datos en el json');
       }
-      console.log('Datos de usuario guardados con éxito');
-      res.status(200).send('Datos de usuario guardados con éxito');
     });
   });
 });

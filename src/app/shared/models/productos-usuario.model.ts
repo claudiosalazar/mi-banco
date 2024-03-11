@@ -18,6 +18,6 @@ interface Producto {
 
 export interface ProductosUsuario {
   find(arg0: (producto: any) => boolean): unknown;
-  id: string;
+  id: any;
   productos: Producto[];
 }
