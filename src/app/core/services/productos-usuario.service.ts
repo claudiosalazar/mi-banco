@@ -9,7 +9,7 @@ import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 export class ProductosUsuarioService {
 
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-  productos: any;
+  productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;
   fecha: any;
   cupoDisponibleVisa: Number | undefined;
@@ -18,19 +18,18 @@ export class ProductosUsuarioService {
     private http: HttpClient
   ) {
     this.http.get(this.baseUrl).subscribe((data: any) => {
-      if (data && data.productos) {
-        if (Array.isArray(data.productos)) {
-          data.productos.forEach((producto: any) => {
-            if (producto && producto.transacciones) {
-              const nuevoDatos = this.calculosMontos(producto);
-              this.guardaResultadosCalculos(nuevoDatos).subscribe();
-            } else {
-              console.error('Transacciones no definidas en el producto:', producto);
-            }
-          });
-        } else {
-          console.error('data.productos no es un array');
-        }
+      console.log('Respuesta del servidor:', data);
+      if (data && Array.isArray(data.productos)) {
+        this.productos = data.productos;
+        data.productos.forEach((producto: any) => {
+          console.log('ID del producto:', producto.id);
+          if (producto && producto.transacciones) {
+            const nuevosDatos = this.calculosMontos(producto);
+            this.guardaResultadosCalculos(nuevosDatos).subscribe();
+          } else {
+            console.error('Transacciones no definidas en el producto:', producto);
+          }
+        });
       } else {
         console.error('data o data.productos es undefined');
       }
@@ -97,67 +96,79 @@ export class ProductosUsuarioService {
   }
 
   // Calcula el saldo de un producto
-  calculosMontos(producto: ProductosUsuario['productos'][0]): ProductosUsuario['productos'][0] {
-    if (producto.transacciones.length > 0) {
-      producto.transacciones[0].saldo = (parseFloat(producto.cupo) - parseFloat(producto.transacciones[0].cargo)).toString();
-    }
-    for (let i = 1; i < producto.transacciones.length; i++) {
-      if (parseFloat(producto.transacciones[i].cargo) > 0) {
-        producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) - parseFloat(producto.transacciones[i].cargo)).toString();
-      }
-      if (parseFloat(producto.transacciones[i].abono) > 0) {
-        producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) + parseFloat(producto.transacciones[i].abono)).toString();
-      }
-    }
-    if (producto.transacciones && producto.transacciones.length > 0) {
-      console.log('Último cálculo guardado en saldo:', producto.transacciones[producto.transacciones.length - 1].saldo);
-    }
-  
-    // Calcula el cupo disponible restando el saldo del cupo
-    const saldoCalculado = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
-    const cupoDisponibleCalculado = parseFloat(producto.cupo) - saldoCalculado;
-  
-    // Agrega el cupo disponible al producto
-    producto.transacciones[producto.transacciones.length - 1].saldo = saldoCalculado.toString();
-    producto.cupoDisponible = cupoDisponibleCalculado.toString();
-  
-    // Imprime el cupo disponible en la consola
-    console.log('Cupo disponible:', cupoDisponibleCalculado);
-    console.log('Nuevos saldos', saldoCalculado);
-  
-    // Crea un nuevo objeto con la misma estructura que productos-usuario.json
-    const nuevoDatos: ProductosUsuario['productos'][0] = {
-      id: producto.id,
-      productoNombre: producto.productoNombre,
-      productoNumero: producto.productoNumero,
-      cupo: producto.cupo,
-      cupoDisponible: cupoDisponibleCalculado.toString(),
-      transacciones: [{
-        fecha: producto.transacciones[producto.transacciones.length - 1].fecha,
-        detalle: producto.transacciones[producto.transacciones.length - 1].detalle,
-        cargo: producto.transacciones[producto.transacciones.length - 1].cargo,
-        abono: producto.transacciones[producto.transacciones.length - 1].abono,
-        saldo: saldoCalculado.toString()
-      }]
-    };
+  calculosMontos(producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
 
-    console.log('Nuevos datos', nuevoDatos); 
-    return nuevoDatos;
+    // Crear una variable para almacenar los nuevos datos
+    let nuevosDatos: ProductosUsuario['productos'] = [];
+
+    // Comprobar si this.productos está definido y es un array
+    if (this.productos && Array.isArray(this.productos)) {
+      this.productos.forEach((producto: {
+        cupoDisponible: string; transacciones: any[]; cupo: string; id: any; productoNombre: any; productoNumero: any; }) => {
+          // Realiza los cálculos para cada producto
+          if (producto.transacciones.length > 0) {
+            producto.transacciones[0].saldo = (parseFloat(producto.cupo) - parseFloat(producto.transacciones[0].cargo)).toString();
+          }
+          for (let i = 1; i < producto.transacciones.length; i++) {
+            if (parseFloat(producto.transacciones[i].cargo) > 0) {
+              producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) - parseFloat(producto.transacciones[i].cargo)).toString();
+            }
+            if (parseFloat(producto.transacciones[i].abono) > 0) {
+              producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) + parseFloat(producto.transacciones[i].abono)).toString();
+            }
+          }
+          if (producto.transacciones && producto.transacciones.length > 0) {
+            console.log('Último cálculo guardado en saldo:', producto.transacciones[producto.transacciones.length - 1].saldo);
+          }
+        
+          // Calcula el cupo disponible restando el saldo del cupo
+          const saldoCalculado = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
+          const cupoDisponibleCalculado = parseFloat(producto.cupo) - saldoCalculado;
+
+          // Agrega el cupo disponible al producto
+          producto.transacciones[producto.transacciones.length - 1].saldo = saldoCalculado.toString();
+          producto.cupoDisponible = cupoDisponibleCalculado.toString();
+      
+          // Crea un nuevo objeto con la misma estructura que productos-usuario.json
+          const nuevoDatosProducto: ProductosUsuario['productos'][0] = {
+            id: producto.id,
+            productoNombre: producto.productoNombre,
+            productoNumero: producto.productoNumero,
+            cupo: producto.cupo,
+            cupoDisponible: cupoDisponibleCalculado.toString(),
+            transacciones: producto.transacciones && Array.isArray(producto.transacciones) ? producto.transacciones.map(transaccion => ({
+              id: transaccion.id,
+              fecha: transaccion.fecha,
+              detalle: transaccion.detalle,
+              cargo: transaccion.cargo,
+              abono: transaccion.abono,
+              saldo: saldoCalculado.toString()
+            })) : []
+          };
+          
+          // Agrega el nuevo producto a nuevosDatos
+        nuevosDatos.push(nuevoDatosProducto);
+      });
+    } else {
+      console.error('this.productos no está definido o no es un array');
+    }
+    return nuevosDatos;
+
   }
 
   
-  guardaResultadosCalculos(nuevoDatos: ProductosUsuario['productos'][0]): Observable<any> {
+  guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
     console.log('guardaResultadosCalculos se ha activado');
     
     // Guarda los datos actualizados en el archivo productos-usuario.json
-    return this.http.put(this.baseUrl, nuevoDatos, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl, { productos: nuevosDatos }, {responseType: 'text'}).pipe(
       map((res: any) => {
         // Los datos actualizados están en 'res'
         const datosActualizados = res;
     
         // Imprime un mensaje en la consola para verificar que los datos se guardaron
         console.log('Los datos se guardaron correctamente en el servidor. Datos:', datosActualizados);
-        return nuevoDatos;
+        return nuevosDatos;
       }),
       catchError(error => {
         console.error('Hubo un error al guardar los datos en el servidor:', error);

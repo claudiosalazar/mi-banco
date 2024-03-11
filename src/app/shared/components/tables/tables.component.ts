@@ -79,7 +79,7 @@ export class TablesComponent implements OnInit {
         this.originalData = [...this.transacciones];
         
         // Captura el saldo del producto
-        this.productosUsuarioService.calculosMontos(producto);
+        this.productosUsuarioService.calculosMontos(productos);
   
         // Ordena la tabla por fecha
         this.transacciones.sort((a, b) => {

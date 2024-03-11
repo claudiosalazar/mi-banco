@@ -120,7 +120,9 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
     }
 
     // Guarda los datos actualizados en el archivo
-    fs.writeFile(filePath, JSON.stringify(productosUsuario, nuevosDatos, null, 2), 'utf8', (err) => {
+    const datosCombinados = {...productosUsuario, ...nuevosDatos};
+
+    fs.writeFile(filePath, JSON.stringify(datosCombinados, null, 2), 'utf8', (err) => {
       if (err) {
         console.error('Error al guardar los datos:', err);
         res.status(500).send('Error al guardar los datos');
