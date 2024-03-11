@@ -185,15 +185,6 @@ export class ProductosUsuarioService {
     return this.productosActualizados.asObservable();
   }
 
-  // Crea un método para actualizar los datos
-  actualizaDatos(nuevosDatos: ProductosUsuario['productos']): void {
-    this.guardaResultadosCalculos(nuevosDatos).subscribe(datosActualizados => {
-      // Actualiza los datos en el BehaviorSubject
-      this.productosActualizados.next(datosActualizados);
-    });
-  }
-  
-
   // Codigo para buscador
   private idActual = new BehaviorSubject<string>('');
 
