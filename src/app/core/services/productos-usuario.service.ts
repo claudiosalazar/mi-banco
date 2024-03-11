@@ -176,6 +176,22 @@ export class ProductosUsuarioService {
       })
     );
   }
+
+  // Crea un BehaviorSubject que mantendrá los datos actualizados
+  private productosActualizados = new BehaviorSubject<ProductosUsuario['productos']>([]);
+
+  // Crea un método para obtener los datos actualizados
+  getProductosActualizados(): Observable<ProductosUsuario['productos']> {
+    return this.productosActualizados.asObservable();
+  }
+
+  // Crea un método para actualizar los datos
+  actualizaDatos(nuevosDatos: ProductosUsuario['productos']): void {
+    this.guardaResultadosCalculos(nuevosDatos).subscribe(datosActualizados => {
+      // Actualiza los datos en el BehaviorSubject
+      this.productosActualizados.next(datosActualizados);
+    });
+  }
   
 
   // Codigo para buscador
