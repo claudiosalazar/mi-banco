@@ -159,10 +159,18 @@
 
 <!-- Modal pago -->
 <div class="modal fade" id="modalPagoVisa" tabindex="-1" aria-labelledby="modalPagoVisa" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body">
-        Confirmar pago.
+      <div class="modal-body p-5">
+        <div *ngIf="pagoCorrecto" id="pagoCorrecto" class="text-center">
+          <h1 class="mb-2">Se esta confirmando el pago.</h1>
+          <p>Espera un momento por favor.</p>
+        </div>
+        <div *ngIf="errorServer" id="errorServer" class="text-center">
+          <h1 class="mb-2">Hubo un error al realizar el pago.</h1>
+          <p class="mb-2">Intento mas tarde.</p>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>

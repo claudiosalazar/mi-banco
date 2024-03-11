@@ -69,6 +69,10 @@ export class VisaPagoComponent implements OnInit {
   montoPreAprobadoSeguroAuto: any
   datosPago: any;
 
+  // Variables para modal
+  pagoCorrecto: boolean = true;
+  errorServer: boolean = false;
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
@@ -349,15 +353,19 @@ export class VisaPagoComponent implements OnInit {
         keyboard: false
       });
       modal.show();
-
+    
       this.datosPagoVisa().subscribe((datosPago: any) => {
-        // console.log('Datos capturados:', datosPago);
         this.guardaPagoProductosService.getDatosPagoVisa(datosPago);
-      });
-
-      setTimeout(() => {
+        this.pagoCorrecto = true;
+        setTimeout(() => {
+          modal.hide();
+        }, 1500);
+      }, error => {
+        console.error('Error al enviar los datos al servidor:', error);
+        this.pagoCorrecto = false;
+        this.errorServer = true;
         modal.hide();
-      }, 1500);
+      });
     }
   }
 
