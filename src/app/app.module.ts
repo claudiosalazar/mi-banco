@@ -13,7 +13,6 @@ import { PesosPipe } from './shared/pipes/pesos.pipe';
 // Services
 import { DatosUsuarioService } from './core/services/datos-usuario.service';
 import { DatosFiltradosService } from './core/services/productos-usuario.service';
-import { GuardaPagoProductosService } from './core/services/guardar-pagos.service';
 
 // Componentes compartidos
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -78,8 +77,7 @@ import { LineaCreditoComprobanteComponent } from './views/productos/linea-credit
   ],
   providers: [
     DatosUsuarioService,
-    DatosFiltradosService,
-    GuardaPagoProductosService
+    DatosFiltradosService
   ],
   bootstrap: [MiBancoComponent]
 })

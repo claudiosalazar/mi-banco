@@ -185,6 +185,19 @@ export class ProductosUsuarioService {
     return this.productosActualizados.asObservable();
   }
 
+
+  // Captura datos de pago visa
+  getDatosPagoVisa(datosPago: string): void {
+    console.log('Los datos de pago de Visa se han capturado:', datosPago);
+    // Aquí puedes agregar el código para procesar los datos de pago
+  }
+
+
+
+
+
+
+
   // Codigo para buscador
   private idActual = new BehaviorSubject<string>('');
 

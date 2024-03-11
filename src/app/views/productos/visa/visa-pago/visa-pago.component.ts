@@ -9,7 +9,6 @@ import { DatosUsuarioService } from '../../../../core/services/datos-usuario.ser
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 // Productos usuario
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
-import { GuardaPagoProductosService } from '../../../../core/services/guardar-pagos.service';
 // Datos ofertas
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 import { DatePipe } from '@angular/common';
@@ -76,7 +75,6 @@ export class VisaPagoComponent implements OnInit {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
-    private guardaPagoProductosService: GuardaPagoProductosService,
     private ofertasProductosService: OfertasProductosService,
     private http: HttpClient,
   ) { }
@@ -355,7 +353,7 @@ export class VisaPagoComponent implements OnInit {
       modal.show();
     
       this.datosPagoVisa().subscribe((datosPago: any) => {
-        this.guardaPagoProductosService.getDatosPagoVisa(datosPago);
+        this.productosUsuarioService.getDatosPagoVisa(datosPago);
         this.pagoCorrecto = true;
         setTimeout(() => {
           modal.hide();
