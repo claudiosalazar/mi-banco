@@ -311,8 +311,6 @@ export class VisaPagoComponent implements OnInit {
   validaFormulario(): any {
     this.submitted = true;
 
-    console.log(this.pagoVisaForm?.value);
-
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
     const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');

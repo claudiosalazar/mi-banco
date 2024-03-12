@@ -98,6 +98,12 @@ export class ProductosUsuarioService {
   // Calcula el saldo de un producto
   calculosMontos(producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
 
+    this.nuevosDatosDePago.subscribe(datosPago => {
+      if (datosPago) {
+        console.log('Datos de pago recibidos:', datosPago);
+      }
+    });
+
     // Crear una variable para almacenar los nuevos datos
     let nuevosDatos: ProductosUsuario['productos'] = [];
 
@@ -185,11 +191,22 @@ export class ProductosUsuarioService {
     return this.productosActualizados.asObservable();
   }
 
+  nuevosDatosDePago = new BehaviorSubject<string | null>(null);
 
   // Captura datos de pago visa
-  getDatosPagoVisa(datosPago: string): void {
-    console.log('Los datos de pago de Visa se han capturado:', datosPago);
-    // Aquí puedes agregar el código para procesar los datos de pago
+  getDatosPagoVisa(datosPago: string): Observable<any> {
+    // Verifica si datosPago tiene datos
+    if (datosPago) {
+      console.log('Los datos de pago de Visa se han capturado:', datosPago);
+      // Guarda los datos de pago en LocalStorage
+      localStorage.setItem('datosPago', datosPago);
+      console.log('Los datos de pago se han guardado en LocalStorage');
+      // Guarda los datos en nuevosDatosDePago
+      this.nuevosDatosDePago.next(datosPago);
+    }
+  
+    // Devuelve los datos de pago como un Observable
+    return this.nuevosDatosDePago.asObservable();
   }
 
 
