@@ -52,7 +52,7 @@ export class VisaPagoComponent implements OnInit {
   montoNumberTotal: number | undefined;
   montoNumberOtro: number | undefined;
 
-  productosUsuario: { producto: any[] } = { producto: [] };
+  productosUsuario: { productos: any[] } = { productos: [] };
   cupoVisa: any;
   cupoCtaCte: any;
   numeroCtaCte: any;
@@ -126,15 +126,15 @@ export class VisaPagoComponent implements OnInit {
   getProductosUsuarioResumen(id: string): void {
     this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(
       data => {
-        this.productosUsuario = data.productos ? { producto: data.productos } : { producto: [] };
-        this.cupoCtaCte = parseFloat(this.productosUsuario.producto[0]?.transacciones[this.productosUsuario.producto[0]?.transacciones.length - 1]?.saldo);
-        this.numeroCtaCte = parseFloat(this.productosUsuario.producto[0]?.productoNumero);
-        this.cupoLineaCredito = parseFloat(this.productosUsuario.producto[1]?.transacciones[this.productosUsuario.producto[1]?.transacciones.length - 1]?.saldo);
-        this.numeroLineaCredito = parseFloat(this.productosUsuario.producto[1]?.productoNumero);
-        this.numeroVisa = this.productosUsuario.producto[2]?.productoNumero;
-        this.cupoInicialVisa = parseFloat(this.productosUsuario.producto[2]?.cupo);
-        this.cupoVisa = parseFloat(this.productosUsuario.producto[2]?.transacciones[this.productosUsuario.producto[2]?.transacciones.length - 1]?.saldo);
-        this.cupoDisponibleVisa = parseFloat(this.productosUsuario.producto[2]?.cupoDisponible);
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
+        this.numeroCtaCte = parseFloat(this.productosUsuario.productos[0]?.productoNumero);
+        this.cupoLineaCredito = parseFloat(this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo);
+        this.numeroLineaCredito = parseFloat(this.productosUsuario.productos[1]?.productoNumero);
+        this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
+        this.cupoInicialVisa = parseFloat(this.productosUsuario.productos[2]?.cupo);
+        this.cupoVisa = parseFloat(this.productosUsuario.productos[2]?.transacciones[this.productosUsuario.productos[2]?.transacciones.length - 1]?.saldo);
+        this.cupoDisponibleVisa = parseFloat(this.productosUsuario.productos[2]?.cupoDisponible);
       }
     );
   }
@@ -411,11 +411,11 @@ export class VisaPagoComponent implements OnInit {
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
     return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
-        // Los datos del archivo están en 'res'
+      // Los datos del archivo están en 'res'
       const datosPago = res;
-      const productoCtaCte = datosPago.productos.find((producto: { id: string; }) => producto.id === '0');
-      const productoLineaCredito = datosPago.productos.find((producto: { id: string; }) => producto.id === '1');
-      const productoVisa = datosPago.productos.find((producto: { id: string; }) => producto.id === '2');
+      const productoCtaCte = datosPago.productos.find((productos: { id: string; }) => productos.id === '0');
+      const productoLineaCredito = datosPago.productos.find((productos: { id: string; }) => productos.id === '1');
+      const productoVisa = datosPago.productos.find((productos: { id: string; }) => productos.id === '2');
 
 
       if (result.productoParaPagoValue === '1') {

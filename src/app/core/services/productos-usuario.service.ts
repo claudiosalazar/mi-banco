@@ -19,7 +19,7 @@ export class ProductosUsuarioService {
   ) {
     this.http.get(this.baseUrl).subscribe((data: any) => {
       if (data && data.productos) {
-        if (Array.isArray(data.productos)) {
+        if (data && Array.isArray(data.productos)) {
           data.productos.forEach((producto: any) => {
             if (producto && producto.transacciones) {
               const nuevoDatos = this.calculosMontos(producto);
@@ -97,7 +97,7 @@ export class ProductosUsuarioService {
   }
 
   // Calcula el saldo de un producto
-  calculosMontos(producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
+  calculosMontos(_producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
 
     // Crear una variable para almacenar los nuevos datos
     let nuevosDatos: ProductosUsuario['productos'] = [];
@@ -162,7 +162,7 @@ export class ProductosUsuarioService {
     console.log('guardaResultadosCalculos se ha activado');
     
     // Guarda los datos actualizados en el archivo productos-usuario.json
-    return this.http.put(this.baseUrl, { producto: nuevosDatos }, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl, {  }, {responseType: 'text'}).pipe(
       map((res: any) => {
         // Los datos actualizados están en 'res'
         const datosActualizados = res;
