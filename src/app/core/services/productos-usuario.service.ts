@@ -196,17 +196,19 @@ export class ProductosUsuarioService {
         console.log('datosPago:', datosPagoCalculos);
     
         datosPagoCalculos.productos.forEach((producto: {
-          cupoDisponible: string; transacciones: any[]; cupo: string; id: any; productoNombre: any; productoNumero: any; }) => {
+          cupoDisponible: any; transacciones: any[]; cupo: string; id: any; productoNombre: any; productoNumero: any; }) => {
           
           if (producto.transacciones.length > 1) {
             const ultimaTransaccion = producto.transacciones[producto.transacciones.length - 1];
             const penultimaTransaccion = producto.transacciones[producto.transacciones.length - 2];
       
             if (!ultimaTransaccion.saldo) {
-              if (penultimaTransaccion.cargo) {
-                ultimaTransaccion.saldo = (parseFloat(penultimaTransaccion.saldo) - parseFloat(penultimaTransaccion.cargo)).toString();
-              } else if (penultimaTransaccion.abono) {
-                ultimaTransaccion.saldo = (parseFloat(penultimaTransaccion.saldo) + parseFloat(penultimaTransaccion.abono)).toString();
+              if (penultimaTransaccion.cargo && !isNaN(parseFloat(ultimaTransaccion.cargo))) {
+                ultimaTransaccion.saldo = (parseFloat(penultimaTransaccion.saldo) - parseFloat(ultimaTransaccion.cargo)).toString();
+              } else if (ultimaTransaccion.abono && !isNaN(parseFloat(ultimaTransaccion.abono))) {
+                ultimaTransaccion.saldo = (parseFloat(penultimaTransaccion.saldo) - parseFloat(ultimaTransaccion.abono)).toString();
+              } else {
+                console.error('penultimaTransaccion.cargo o penultimaTransaccion.abono no son números');
               }
               console.log(`Nuevo saldo de transacción: ${ultimaTransaccion.saldo} para el producto con id ${producto.id}`);
             }
@@ -226,11 +228,9 @@ export class ProductosUsuarioService {
 
 
   guardaResultadosCalculosPago(datosPagoActualizados: any): any {
-    //console.log('datos para guardar en server',datosPago);
+    // console.log('datos para guardar en server',datosPagoActualizados);
     this.http.put(this.baseUrl, datosPagoActualizados, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
-    }, error => {
-      console.error('Hubo un error al guardar los datos:', error);
     });
   }
 
