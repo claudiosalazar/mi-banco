@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, map, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 
 @Injectable({
@@ -18,18 +18,19 @@ export class ProductosUsuarioService {
     private http: HttpClient
   ) {
     this.http.get(this.baseUrl).subscribe((data: any) => {
-      console.log('Respuesta del servidor:', data);
-      if (data && Array.isArray(data.productos)) {
-        this.productos = data.productos;
-        data.productos.forEach((producto: any) => {
-          console.log('ID del producto:', producto.id);
-          if (producto && producto.transacciones) {
-            const nuevosDatos = this.calculosMontos(producto);
-            this.guardaResultadosCalculos(nuevosDatos).subscribe();
-          } else {
-            console.error('Transacciones no definidas en el producto:', producto);
-          }
-        });
+      if (data && data.productos) {
+        if (Array.isArray(data.productos)) {
+          data.productos.forEach((producto: any) => {
+            if (producto && producto.transacciones) {
+              const nuevoDatos = this.calculosMontos(producto);
+              this.guardaResultadosCalculos(nuevoDatos).subscribe();
+            } else {
+              console.error('Transacciones no definidas en el producto:', producto);
+            }
+          });
+        } else {
+          console.error('data.productos no es un array');
+        }
       } else {
         console.error('data o data.productos es undefined');
       }
@@ -98,12 +99,6 @@ export class ProductosUsuarioService {
   // Calcula el saldo de un producto
   calculosMontos(producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
 
-    this.nuevosDatosDePago.subscribe(datosPago => {
-      if (datosPago) {
-        console.log('Datos de pago recibidos:', datosPago);
-      }
-    });
-
     // Crear una variable para almacenar los nuevos datos
     let nuevosDatos: ProductosUsuario['productos'] = [];
 
@@ -167,14 +162,14 @@ export class ProductosUsuarioService {
     console.log('guardaResultadosCalculos se ha activado');
     
     // Guarda los datos actualizados en el archivo productos-usuario.json
-    return this.http.put(this.baseUrl, { productos: nuevosDatos }, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl, { producto: nuevosDatos }, {responseType: 'text'}).pipe(
       map((res: any) => {
         // Los datos actualizados están en 'res'
         const datosActualizados = res;
     
         // Imprime un mensaje en la consola para verificar que los datos se guardaron
         console.log('Los datos se guardaron correctamente en el servidor. Datos:', datosActualizados);
-        return nuevosDatos;
+        return of(nuevosDatos);
       }),
       catchError(error => {
         console.error('Hubo un error al guardar los datos en el servidor:', error);
@@ -191,22 +186,19 @@ export class ProductosUsuarioService {
     return this.productosActualizados.asObservable();
   }
 
-  nuevosDatosDePago = new BehaviorSubject<string | null>(null);
+  nuevosDatosPago = new BehaviorSubject<string | null>(null);
 
   // Captura datos de pago visa
   getDatosPagoVisa(datosPago: string): Observable<any> {
     // Verifica si datosPago tiene datos
     if (datosPago) {
-      console.log('Los datos de pago de Visa se han capturado:', datosPago);
-      // Guarda los datos de pago en LocalStorage
-      localStorage.setItem('datosPago', datosPago);
-      console.log('Los datos de pago se han guardado en LocalStorage');
-      // Guarda los datos en nuevosDatosDePago
-      this.nuevosDatosDePago.next(datosPago);
+      // Parsea los datos de pago en formato JSON y los guarda en una variable
+      const datosPagoJson = JSON.parse(datosPago);
+      console.log('Datos capturados y transformados:', datosPagoJson);
     }
   
     // Devuelve los datos de pago como un Observable
-    return this.nuevosDatosDePago.asObservable();
+    return this.nuevosDatosPago.asObservable();
   }
 
 
