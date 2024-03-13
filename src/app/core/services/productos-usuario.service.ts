@@ -218,7 +218,7 @@ export class ProductosUsuarioService {
             producto.cupoDisponible = cupoDisponibleCalculado.toString();
         
             // Crea un nuevo objeto con la misma estructura que productos-usuario.json
-            const nuevoDatosProducto: ProductosUsuario['productos'][0] = {
+            const nuevoDatosPago: ProductosUsuario['productos'][0] = {
               id: producto.id,
               productoNombre: producto.productoNombre,
               productoNumero: producto.productoNumero,
@@ -235,19 +235,25 @@ export class ProductosUsuarioService {
             };
             
             // Agrega el nuevo producto a nuevosDatos
-            datosPago.push(nuevoDatosProducto);
+            datosPago.push(nuevoDatosPago);
         });
       } else {
         console.error('this.productos no está definido o no es un array');
       }
       console.log('Nuevos datos de pago:', datosPago);
-      return datosPago;
+      this.guardaResultadosCalculosPago(datosPago);
   
     });
   }
 
-  guardaResultadosCalculosPago(): void {
-    
+
+  guardaResultadosCalculosPago(datosPago: any): any {
+    console.log('datos para guardar en server',datosPago);
+    this.http.put(this.baseUrl, datosPago).subscribe(response => {
+      console.log('Datos guardados con éxito:', response);
+    }, error => {
+      console.error('Hubo un error al guardar los datos:', error);
+    });
   }
 
   
