@@ -501,7 +501,7 @@ export class VisaPagoComponent implements OnInit {
         });
       }
       // Imprimir la estructura de datos enviadas en la consola
-      console.log('Datos que se van a enviar:', JSON.stringify(datosPago));
+      // console.log('Datos que se van a enviar:', JSON.stringify(datosPago));
       return JSON.stringify(datosPago);
       })
     );

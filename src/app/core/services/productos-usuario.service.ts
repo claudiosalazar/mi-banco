@@ -13,6 +13,10 @@ export class ProductosUsuarioService {
   saldo: string | undefined;
   fecha: any;
   cupoDisponibleVisa: Number | undefined;
+  nuevosDatos: any;
+  nuevosDatosPago: any;
+  datos: any;
+  datosPago: any;
   
   constructor(
     private http: HttpClient
@@ -158,9 +162,10 @@ export class ProductosUsuarioService {
   }
 
   
+
+
+  
   guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
-    console.log('guardaResultadosCalculos se ha activado');
-    
     // Guarda los datos actualizados en el archivo productos-usuario.json
     return this.http.put(this.baseUrl, {  }, {responseType: 'text'}).pipe(
       map((res: any) => {
@@ -178,6 +183,108 @@ export class ProductosUsuarioService {
     );
   }
 
+
+  private datosPagoVisa = new BehaviorSubject<any>(null);
+
+  calculosMontosPago(_producto: ProductosUsuario['productos']): any {
+    this.datosPagoVisa.subscribe(datosPago => {
+      console.log('Datos capturados:', datosPago);
+
+      if (this.productos && Array.isArray(this.productos)) {
+        this.productos.forEach((producto: {
+          cupoDisponible: string; transacciones: any[]; cupo: string; id: any; productoNombre: any; productoNumero: any; }) => {
+            // Realiza los cálculos para cada producto
+            if (producto.transacciones.length > 0) {
+              producto.transacciones[0].saldo = (parseFloat(producto.cupo) - parseFloat(producto.transacciones[0].cargo)).toString();
+            }
+            for (let i = 1; i < producto.transacciones.length; i++) {
+              if (parseFloat(producto.transacciones[i].cargo) > 0) {
+                producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) - parseFloat(producto.transacciones[i].cargo)).toString();
+              }
+              if (parseFloat(producto.transacciones[i].abono) > 0) {
+                producto.transacciones[i].saldo = (parseFloat(producto.transacciones[i - 1].saldo) + parseFloat(producto.transacciones[i].abono)).toString();
+              }
+            }
+            if (producto.transacciones && producto.transacciones.length > 0) {
+              console.log('Último cálculo guardado en saldo:', producto.transacciones[producto.transacciones.length - 1].saldo);
+            }
+          
+            // Calcula el cupo disponible restando el saldo del cupo
+            const saldoCalculado = parseFloat(producto.cupo) - parseFloat(producto.transacciones[producto.transacciones.length - 1].saldo);
+            const cupoDisponibleCalculado = parseFloat(producto.cupo) - saldoCalculado;
+  
+            // Agrega el cupo disponible al producto
+            producto.transacciones[producto.transacciones.length - 1].saldo = saldoCalculado.toString();
+            producto.cupoDisponible = cupoDisponibleCalculado.toString();
+        
+            // Crea un nuevo objeto con la misma estructura que productos-usuario.json
+            const nuevoDatosProducto: ProductosUsuario['productos'][0] = {
+              id: producto.id,
+              productoNombre: producto.productoNombre,
+              productoNumero: producto.productoNumero,
+              cupo: producto.cupo,
+              cupoDisponible: cupoDisponibleCalculado.toString(),
+              transacciones: producto.transacciones && Array.isArray(producto.transacciones) ? producto.transacciones.map(transaccion => ({
+                id: transaccion.id,
+                fecha: transaccion.fecha,
+                detalle: transaccion.detalle,
+                cargo: transaccion.cargo,
+                abono: transaccion.abono,
+                saldo: saldoCalculado.toString()
+              })) : []
+            };
+            
+            // Agrega el nuevo producto a nuevosDatos
+            datosPago.push(nuevoDatosProducto);
+        });
+      } else {
+        console.error('this.productos no está definido o no es un array');
+      }
+      console.log('Nuevos datos de pago:', datosPago);
+      return datosPago;
+  
+    });
+  }
+
+  guardaResultadosCalculosPago(): void {
+    
+  }
+
+  
+
+  // Captura datos de pago visa
+  getDatosPagoVisa(datosPago: any): Observable<any> {
+    // Verifica si datosPago tiene datos
+    if (datosPago) {
+      // Parsea los datos de pago en formato JSON y los guarda en una variable
+      const datosPagoJson = JSON.parse(datosPago);
+      console.log('Datos capturados y transformados:', datosPagoJson);
+  
+      // Emite los datos JSON parseados
+      console.log('Emitiendo nuevos datos:', datosPagoJson);
+      this.datosPagoVisa.next(datosPagoJson);
+
+      // Llama a calculosMontosPago después de emitir los datos
+      this.calculosMontosPago(datosPagoJson);
+    }
+    return this.datosPagoVisa;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Crea un BehaviorSubject que mantendrá los datos actualizados
   private productosActualizados = new BehaviorSubject<ProductosUsuario['productos']>([]);
 
@@ -186,20 +293,9 @@ export class ProductosUsuarioService {
     return this.productosActualizados.asObservable();
   }
 
-  nuevosDatosPago = new BehaviorSubject<string | null>(null);
+  // nuevosDatosPago = new BehaviorSubject<string | null>(null);
 
-  // Captura datos de pago visa
-  getDatosPagoVisa(datosPago: string): Observable<any> {
-    // Verifica si datosPago tiene datos
-    if (datosPago) {
-      // Parsea los datos de pago en formato JSON y los guarda en una variable
-      const datosPagoJson = JSON.parse(datosPago);
-      console.log('Datos capturados y transformados:', datosPagoJson);
-    }
   
-    // Devuelve los datos de pago como un Observable
-    return this.nuevosDatosPago.asObservable();
-  }
 
 
 
