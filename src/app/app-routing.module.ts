@@ -36,7 +36,7 @@ const routes: Routes = [
           { path: 'comprobante-pago', component: LineaCreditoComprobanteComponent },
           { path: 'visa', component: VisaComponent },
           { path: 'visa/pago', component: VisaPagoComponent },
-          { path: 'visa/comprobante-pago', component: VisaComprobanteComponent },
+          { path: 'visa/comprobante', component: VisaComprobanteComponent },
         ]
       },
       { 

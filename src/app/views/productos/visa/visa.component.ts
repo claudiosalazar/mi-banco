@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms'
 // Productos usuario
 import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
 import { Subscription } from 'rxjs';
+import { UrlBrowserService } from '../../../core/services/url-browser.service';
 @Component({
   selector: 'app-visa',
   templateUrl: './visa.component.html'
@@ -37,7 +38,8 @@ export class VisaComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private productosUsuarioService: ProductosUsuarioService
+    private productosUsuarioService: ProductosUsuarioService,
+    private urlBrowserService: UrlBrowserService
   ) { }
 
   ngOnInit(): void {
@@ -86,8 +88,29 @@ export class VisaComponent implements OnInit {
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
   }
 
-  btnPagar(): void {
+  mostrarInicioVisa(): void {
+    this.movimientosVisa = true;
+    this.formularioPagoVisa = false;
+    this.comprobantePagoVisa = false;
+
+    this.urlBrowserService.navegarAInicioVisa();
+  }
+
+  mostrarPagoVisa(): void {
     this.movimientosVisa = false;
     this.formularioPagoVisa = true;
+    this.comprobantePagoVisa = false;
+
+    this.urlBrowserService.navegarAPagoVisa();
   }
+
+  mostrarComprobanteVisa(): void {
+    this.movimientosVisa = false;
+    this.formularioPagoVisa = false;
+    this.comprobantePagoVisa = true;
+
+    this.urlBrowserService.navegarAComprobanteVisa();
+  }
+
+
 }

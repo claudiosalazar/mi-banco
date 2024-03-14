@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 // Datos usuario
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
