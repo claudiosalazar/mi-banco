@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, throwError } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
+import { UrlBrowserService } from './url-browser.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class ProductosUsuarioService {
   datosPagoCalculos: any;
   
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private urlBrowserService: UrlBrowserService
   ) {
     this.http.get(this.baseUrl).subscribe((data: any) => {
       if (data && data.productos) {
@@ -163,23 +165,14 @@ export class ProductosUsuarioService {
 
   }
 
-  
-
-
-  
+  // Guarda los datos actualizados en el servidor
   guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
-    // Guarda los datos actualizados en el archivo productos-usuario.json
     return this.http.put(this.baseUrl, {  }, {responseType: 'text'}).pipe(
       map((res: any) => {
-        // Los datos actualizados están en 'res'
         const datosActualizados = res;
-    
-        // Imprime un mensaje en la consola para verificar que los datos se guardaron
-        //console.log('Los datos se guardaron correctamente en el servidor. Datos:', datosActualizados);
         return of(nuevosDatos);
       }),
       catchError(error => {
-        //console.error('Hubo un error al guardar los datos en el servidor:', error);
         return throwError(error);
       })
     );
@@ -232,13 +225,13 @@ export class ProductosUsuarioService {
     // console.log('datos para guardar en server',datosPagoActualizados);
     this.http.put(this.baseUrl, datosPagoActualizados, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
-
-      this.datosGuardados.next();
+      setTimeout(() => {
+        this.urlBrowserService.navegarAComprobanteVisa();
+      }, 1500);
     });
   }
 
   
-
   // Captura datos de pago visa
   getDatosPagoVisa(datosPago: any): Observable<any> {
     // Verifica si datosPago tiene datos
@@ -257,21 +250,6 @@ export class ProductosUsuarioService {
     return this.datosPagoVisa;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Crea un BehaviorSubject que mantendrá los datos actualizados
   private productosActualizados = new BehaviorSubject<ProductosUsuario['productos']>([]);
 
@@ -279,16 +257,6 @@ export class ProductosUsuarioService {
   getProductosActualizados(): Observable<ProductosUsuario['productos']> {
     return this.productosActualizados.asObservable();
   }
-
-  // nuevosDatosPago = new BehaviorSubject<string | null>(null);
-
-  
-
-
-
-
-
-
 
   // Codigo para buscador
   private idActual = new BehaviorSubject<string>('');
