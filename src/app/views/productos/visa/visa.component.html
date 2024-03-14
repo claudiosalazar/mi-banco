@@ -1,31 +1,44 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div class="mt-5">
-        <h1>Movimientos Visa</h1>
-        <div class="card p-4 mt-4">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex align-items-center">
-              <p class="mb-1">
-                Último pago realizado el <strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>, por un valor de  <strong>{{ ultimoMontoAbono | pesos }}</strong>.
-              </p>
-            </div>
-            <div class="d-flex align-items-center">
-              <h6 class="mb-0">Pagar Visa</h6>
-              <a class="btn btn-info ms-3" routerLink="/mibanco/transacciones/visa/pago">Pagar</a>
-            </div>
-          </div>
-        </div>
-        <div class="card p-4 mt-4">
-          <div class="row">
-            <div class="col-6">
-              <app-buscador-tabla></app-buscador-tabla>
+<!-- Muestra resumen de transacciones de visa -->
+<ng-container *ngIf="movimientosVisa">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="mt-5">
+          <h1>Movimientos Visa</h1>
+          <div class="card p-4 mt-4">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <p class="mb-1">
+                  Último pago realizado el <strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>, por un valor de  <strong>{{ ultimoMontoAbono | pesos }}</strong>.
+                </p>
+              </div>
+              <div class="d-flex align-items-center">
+                <h6 class="mb-0">Pagar Visa</h6>
+                <a class="btn btn-info ms-3" (click)="btnPagar()">Pagar</a>
+              </div>
             </div>
           </div>
-          <!-- Importacion de componente tables -->
-          <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+          <div class="card p-4 mt-4">
+            <div class="row">
+              <div class="col-6">
+                <app-buscador-tabla></app-buscador-tabla>
+              </div>
+            </div>
+            <!-- Importacion de componente tables -->
+            <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<!-- Muestra formulario pago -->
+<ng-container *ngIf="formularioPagoVisa">
+  <app-visa-pago></app-visa-pago>
+</ng-container>
+
+<!-- Muestra comprobante de pago -->
+<ng-container *ngIf="comprobantePagoVisa">
+  <app-visa-comprobante></app-visa-comprobante>
+</ng-container>

@@ -226,11 +226,14 @@ export class ProductosUsuarioService {
   
   }
 
+  datosGuardados = new Subject<void>();
 
   guardaResultadosCalculosPago(datosPagoActualizados: any): any {
     // console.log('datos para guardar en server',datosPagoActualizados);
     this.http.put(this.baseUrl, datosPagoActualizados, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
+
+      this.datosGuardados.next();
     });
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms'
 // Productos usuario
 import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-visa',
   templateUrl: './visa.component.html'
@@ -28,12 +29,29 @@ export class VisaComponent implements OnInit {
   campoBusqueda = new FormControl('');
   mostrarPaginador: boolean | undefined;
 
+  // Componentes a mostrar
+  movimientosVisa = true;
+  formularioPagoVisa = false;
+  comprobantePagoVisa = false;
+
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private productosUsuarioService: ProductosUsuarioService
   ) { }
 
   ngOnInit(): void {
     this.getProductosUsuarioResumen('');
+    this.subscription = this.productosUsuarioService.datosGuardados.subscribe(() => {
+      this.movimientosVisa = false;
+      this.formularioPagoVisa = false;
+      this.comprobantePagoVisa = true;
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Asegúrate de desuscribirte para evitar fugas de memoria
+    this.subscription.unsubscribe();
   }
 
   getProductosUsuarioResumen(id: string): void {
@@ -64,5 +82,10 @@ export class VisaComponent implements OnInit {
     this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+  }
+
+  btnPagar(): void {
+    this.movimientosVisa = false;
+    this.formularioPagoVisa = true;
   }
 }
