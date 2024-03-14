@@ -43,9 +43,11 @@ export class VisaComponent implements OnInit {
   ngOnInit(): void {
     this.getProductosUsuarioResumen('');
     this.subscription = this.productosUsuarioService.datosGuardados.subscribe(() => {
-      this.movimientosVisa = false;
-      this.formularioPagoVisa = false;
-      this.comprobantePagoVisa = true;
+      setTimeout(() => {
+        this.movimientosVisa = false;
+        this.formularioPagoVisa = false;
+        this.comprobantePagoVisa = true;
+      }, 1500);
     });
   }
 
