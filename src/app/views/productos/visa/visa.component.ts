@@ -104,13 +104,4 @@ export class VisaComponent implements OnInit {
     this.urlBrowserService.navegarAPagoVisa();
   }
 
-  mostrarComprobanteVisa(): void {
-    this.movimientosVisa = false;
-    this.formularioPagoVisa = false;
-    this.comprobantePagoVisa = true;
-
-    this.urlBrowserService.navegarAComprobanteVisa();
-  }
-
-
 }
