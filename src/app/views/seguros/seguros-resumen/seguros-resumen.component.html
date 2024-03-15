@@ -1,12 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <div class="my-5">
+      <div class="my-3 my-md-5">
         <h1>Mis Seguros</h1>
       </div>
     </div>
     <div class="col-md-12">
-      <div class="card p-4 mb-4">
+      <!-- Seguro hogar -->
+      <div class="card mb-3 mb-md-4 p-4 p-md-5">
         <div class="row">
           <div class="col-12 d-flex align-items-center mb-4">
             <div class="pe-4">
@@ -44,8 +45,10 @@
         </div>
       </div>
     </div>
+
+    <!-- Seguro vida -->
     <div class="col-md-12">
-      <div class="card p-4 mb-4">
+      <div class="card mb-3 mb-md-4 p-4 p-md-5">
         <div class="row">
           <div class="col-12 d-flex align-items-center mb-4">
             <div class="pe-4">
@@ -83,12 +86,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Banner -->
     <div class="col-12">
-      <div class="card p-5">
+      <div class="card p-4 p-md-5">
         <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
         <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
         <p>Valor mensual: <strong>{{ ofertasProductos?.ofertas?.[1]?.montoPreAprobado }}</strong></p>
-        <button class="btn btn-outline-secondary" type="button">Contratar Seguro</button>
+        <button class="btn btn-outline-secondary" type="button" routerLink="/mibanco/seguros/contratar-seguro">Contratar Seguro</button>
       </div>
     </div>
   </div>

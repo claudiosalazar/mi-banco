@@ -1,23 +1,23 @@
 <div class="container">
   <div class="row">
-    <div class="col-7 mt-5">
+    <div class="col-12 col-lg-7 mt-3 mt-md-5">
       <div class="row">
         <div class="col-12">
-          <h1 class="mb-5">Pago Visa</h1>
+          <h1 class="mb-3 mb-md-5">Pago Visa</h1>
           <div class="card p-4">
 
             <h5>Datos de pago</h5>
             <div class="row">
 
               <!-- Datos del productos -->
-              <div class="col-12 d-flex justify-content-between">
-                <div>
-                  <p class="mb-0"><small>Visa N°: <strong>{{ numeroVisa }}</strong></small></p>
-                  <p><small>Cupo Utilizado: <strong>{{ cupoVisa | pesos }}</strong></small></p>
+              <div class="col-12">
+                <div class="row">
+                  <p class="mb-0 col-12 col-md-6 pt-3 pt-md-3"><small>Visa N°: <strong>{{ numeroVisa }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong>{{ cupoVisa | pesos }}</strong></small></p>
                 </div>
-                <div>
-                  <p class="mb-0"><small>Cupo Total: <strong>{{ cupoInicialVisa | pesos }}</strong></small></p>
-                  <p><small>Cupo Disponible: <strong>{{ cupoDisponibleVisa | pesos }}</strong></small></p>
+                <div class="row">
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong>{{ cupoInicialVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong>{{ cupoDisponibleVisa | pesos }}</strong></small></p>
                 </div>
               </div>
 
@@ -29,10 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <select class="form-select" formControlName="productoParaPago" id="productoParaPago" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()" 
-                    [ngClass]="{
-                      'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 
-                      'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
+                    <select class="form-select" formControlName="productoParaPago" id="productoParaPago" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()" [ngClass]="{'is-invalid': submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoVisaForm.get('productoParaPago')?.valid}">
                       <option value="0">-</option>
                       <option value="1">Cuenta Corriente N° {{ numeroCtaCte }}</option>
                       <option value="2">Línea de Crédito N° {{ numeroLineaCredito }}</option>
@@ -126,11 +123,10 @@
                 </div>
 
                 <!-- Botones -->
-                <div class="col-12">
-                  <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary me-3">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" (click)="validaFormulario()">Pagar</button>
-                    <!-- <button type="submit" class="btn btn-primary">Pagar</button> -->
+                <div class="col-12 px-3">
+                  <div class="row d-flex justify-content-md-end flex-column-reverse flex-md-row">
+                    <button type="button" class="btn btn-secondary col-12 col-md-3 me-md-3">Cancelar</button>
+                    <button type="submit" class="btn btn-primary col-12 col-md-3 mb-3 mb-md-0" (click)="validaFormulario()">Pagar</button>
                   </div>
                 </div>
 
@@ -145,7 +141,7 @@
       </div>
     </div>
 
-    <div class="col-5">
+    <div class="col-5 d-none d-lg-block">
       <div class="h-75 p-5 bg-body-tertiary border rounded-3 mt-5 ms-4">
         <h4 class="d-flex justify-content-between">Seguro Accidentes</h4>
         <p>Contrata Seguro Auto, oferta exclusiva para el presente mes.</p>

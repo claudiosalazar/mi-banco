@@ -3,31 +3,10 @@
     <div class="col-12 col-sm-6 order-2 order-sm-1 d-flex justify-content-center align-items-center fondo-login"></div>
 
     <div class="col-12 col-sm-6 order-1 order-sm-2 d-flex position-relative justify-content-center align-items-center formulario-login">
-      <div class="px-5 w-100">
-        <div class="logo-login mb-5"></div>
-        <h1 class="display-4 mb-5">Bienvenido a Mi Banco</h1>
+      <div class="px-5">
+        <div class="logo-login mb-3 mb-md-5"></div>
+        <h1 class="display-5 mb-3 mb-md-5">Bienvenido a Mi Banco</h1>
         <p class="lead">Ingrese a sus datos.</p>
-
-        <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-signin">      
-          <div class="form-floating mb-4">
-            <input class="form-control" id="user" type="text" formControlName="user" [class.is-invalid]="loginForm.controls.user.invalid && loginForm.controls.user.touched">
-            <label for="user">Usuario</label>
-              <div *ngIf="loginForm.controls.user.errors?.['required']" class="invalid-feedback">El campo Usuario es requerido.</div>
-            <div *ngIf="loginForm.controls.user.errors?.['incorrect']" class="invalid-feedback">El Usuario ingresado no coincide con nuestros registros.</div>
-          </div>
-          <div class="form-floating mb-4">
-            <input class="form-control" id="password" formControlName="password" type="password" [class.is-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched">
-            <label for="password">Clave</label>
-            <div *ngIf="loginForm.controls.password.errors?.['required']" class="invalid-feedback">El campo Clave es requerido.</div>
-            <div *ngIf="loginForm.controls.password.errors?.['incorrect']" class="invalid-feedback">La Clave ingresada no coincide con nuestros registros.</div>
-          </div>
-      
-          <button class="w-100 btn btn-lg" type="submit">Entrar</button>
-          <p class="mt-5 mb-3 text-center">Mi Banco © 2024</p>
-        </form> -->
-
-
-
 
         <form (submit)="login()" class="form-signin">
           <div class="form-floating mb-4">
@@ -41,7 +20,6 @@
           <button class="w-100 btn btn-lg" type="submit">Entrar</button>
           <p class="mt-5 mb-3 text-center">Mi Banco © 2024</p>
         </form>
-
 
       </div>
     </div>

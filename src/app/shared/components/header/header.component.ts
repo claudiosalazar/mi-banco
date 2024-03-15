@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
@@ -8,6 +8,8 @@ import { DatosUsuarioService } from '../../../core/services/datos-usuario.servic
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
+
+  @ViewChild('navbarNavDropdown') navbarNavDropdown: ElementRef | undefined;
 
   primerNombre: string | undefined;
   segundoNombre: string | undefined;
@@ -42,4 +44,17 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  ngAfterViewInit() {
+    this.navbarNavDropdown?.nativeElement.addEventListener('hidden.bs.dropdown', () => {
+      this.navbarNavDropdown?.nativeElement.classList.remove('show');
+    });
+  }
+  
+  onLinkClick() {
+    if (this.navbarNavDropdown?.nativeElement.classList.contains('show')) {
+      this.navbarNavDropdown.nativeElement.classList.remove('show');
+    }
+  }
+
 }

@@ -1,21 +1,96 @@
 .table {
-  thead {
-    th {
-      cursor: pointer;
+  width: 100%;
+  //display: block;
+  @media (max-width: $md) {
+    font-size: 90%;
+    &.thead, tbody, th, td, tr {
+      display: block;
+    }
+  }
+
+  td {
+    /* Behave  like a "row" */
+    border-bottom: 1px solid #eee;
+    @media (max-width: $md)  {
+      border: none;
       position: relative;
-
-      &.material-symbols-outlined {
-        display: inline-block;
+      padding-left: 50%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      &:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 0;
+        left: 6px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        height: 30px;
+        display: flex;
+        align-items: center;
       }
+    }
+  }
 
-      span {
-        &.rotated-in {
-          @include rotated-in;
+  
+  
+  thead {
+    tr {
+      @media (max-width: $md) {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      th {
+        cursor: pointer;
+        position: relative;
+  
+        &.material-symbols-outlined {
+          display: inline-block;
         }
+  
+        span {
+          &.rotated-in {
+            @include rotated-in;
+          }
+  
+          &.rotated-out {
+            @include rotated-out;
+          }
+          @media (max-width: $md) {
+            display: none;
+          }
+        }
+        
+      }
+    }
+  }
 
-        &.rotated-out {
-          @include rotated-out;
-        }
+  tbody {
+    tr {
+      padding: 15px;
+      &:nth-child(even) {
+        background-color: #f2f2f2; // Cambia esto al color que quieras
+      }
+    }
+    @media (max-width: $md) {
+      td:nth-of-type(1):before {
+        content: "Fecha";
+      }
+      td:nth-of-type(2):before {
+        content: "Detalle";
+      }
+      td:nth-of-type(3):before {
+        content: "Cargo";
+      }
+      td:nth-of-type(4):before {
+        content: "Abono";
+      }
+      td:nth-of-type(5):before {
+        content: "Saldo";
       }
     }
   }

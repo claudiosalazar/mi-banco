@@ -1,16 +1,19 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 mt-5">
-      <h1>Movimientos Cuenta Corriente</h1>
-      <div class="card p-4 mt-4">
-        <div class="row">
-          <div class="col-6">
-            <!-- Importacion de buscador de tados en tabla -->
-            <app-buscador-tabla></app-buscador-tabla>
+    <div class="col-12">
+      <div class="mt-3 mt-md-5">
+        <h1>Movimientos Cuenta Corriente</h1>
+        <div class="card mt-4">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <app-buscador-tabla></app-buscador-tabla>
+            </div>
+          </div>
+          <!-- Importacion de componente tables -->
+          <div class="p-0 p-md-4">
+            <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
           </div>
         </div>
-        <!-- Importacion de componente tables -->
-        <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
       </div>
     </div>
   </div>

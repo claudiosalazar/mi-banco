@@ -1,8 +1,8 @@
 <div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th (click)="ordenarDatos('fecha'); onHeaderClick()">
+  <table class="table " role="table">
+    <thead role="columnheader"ead role="rowgroup">
+      <tr role="row">
+        <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">
           <div class="d-flex">
             Fecha
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
@@ -10,7 +10,7 @@
             </span>
           </div>
         </th>
-        <th (click)="ordenarDatos('detalle'); onHeaderClick()">
+        <th role="columnheader" (click)="ordenarDatos('detalle'); onHeaderClick()">
           <div class="d-flex">
             Detalle
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'detalle'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'detalle'">
@@ -18,7 +18,7 @@
             </span>
           </div>
         </th>
-        <th (click)="ordenarDatos('cargo'); onHeaderClick()">
+        <th role="columnheader" (click)="ordenarDatos('cargo'); onHeaderClick()">
           <div class="d-flex">
             Cargo
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'">
@@ -26,7 +26,7 @@
             </span>
           </div>
         </th>
-        <th (click)="ordenarDatos('abono'); onHeaderClick()">
+        <th role="columnheader" (click)="ordenarDatos('abono'); onHeaderClick()">
           <div class="d-flex">
             Abono
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'abono'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'abono'">
@@ -34,7 +34,7 @@
             </span>
           </div>
         </th>
-        <th (click)="ordenarDatos('saldo'); onHeaderClick()">
+        <th role="columnheader" (click)="ordenarDatos('saldo'); onHeaderClick()">
           <div class="d-flex">
             Saldo
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'saldo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'saldo'">
@@ -44,13 +44,13 @@
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let transaccion of paginatedData">
-        <td>{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
-        <td>{{ transaccion.detalle }}</td>
-        <td>{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</td>
-        <td>{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</td>
-        <td>{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</td>
+    <tbody role="rowgroup">
+      <tr *ngFor="let transaccion of paginatedData" role="row">
+        <td role="cell">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
+        <td role="cell">{{ transaccion.detalle }}</td>
+        <td role="cell">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</td>
+        <td role="cell">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</td>
+        <td role="cell">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</td>
       </tr>
     </tbody>
   </table>

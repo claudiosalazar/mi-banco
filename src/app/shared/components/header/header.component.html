@@ -7,10 +7,10 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco">Inicio</a>
+            <a class="nav-link" routerLink="/mibanco" (click)="onLinkClick()">Inicio</a>
           </li>
           <li class="nav-item menu-transacciones">
             <a class="nav-link d-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,10 +20,10 @@
               </span>
             </a>
             <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/resumen">Resumen Transacciones</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/cuenta-corriente">Cuenta Corriente</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/linea-credito">Línea de Crédito</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/visa">Visa</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/resumen" (click)="onLinkClick()">Resumen Transacciones</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/cuenta-corriente" (click)="onLinkClick()">Cuenta Corriente</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/linea-credito" (click)="onLinkClick()">Línea de Crédito</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/visa" (click)="onLinkClick()">Visa</a></li>
             </ul>
           </li>
           <li class="nav-item menu-transacciones">
@@ -34,12 +34,12 @@
               </span>
             </a>
             <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/resumen">Resumen Seguros</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/contratar-seguro">Contratar Seguro</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/resumen" (click)="onLinkClick()">Resumen Seguros</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/contratar-seguro" (click)="onLinkClick()">Contratar Seguro</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco/contactanos">Contactanos</a>
+            <a class="nav-link" routerLink="/mibanco/contactanos" (click)="onLinkClick()">Contactanos</a>
           </li>
         </ul>
         <div class="d-flex align-items-center">
@@ -51,10 +51,10 @@
               </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/mis-datos">Mis datos</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/ayuda/emergencias-bancarias">Emergencias</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/mis-datos" (click)="onLinkClick()">Mis datos</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="onLinkClick()">Emergencias</a></li>
               <li>
-                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#modalLogOut">
+                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="onLinkClick()">
                   <span class="material-symbols-outlined">
                     close
                   </span>

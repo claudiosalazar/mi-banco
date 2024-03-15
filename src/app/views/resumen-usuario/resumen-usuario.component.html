@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 p-0">
-      <div id="carouselExampleFade" class="carousel slide carousel-fade mb-5">
+      <div id="carouselExampleFade" class="carousel slide carousel-fade mb-3 mb-md-5">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="../../../assets/images/banner-carousel-1.jpg" class="d-block w-100" alt="...">
@@ -27,7 +27,7 @@
 <div class="container" *ngIf="datosUsuarioActual && productosUsuario && ofertasProductos ">
   <div class="row">
     <div class="col-12">
-      <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+      <div class="p-4 p-md-5 mb-4 bg-body-tertiary rounded-3">
         <div class="container-fluid">
           <h3>Hola {{ datosUsuarioActual.datosUsuario.primerNombre }} {{ datosUsuarioActual.datosUsuario.apellidoPaterno }}, tienes un crédito pre-aprobado de </h3>
           <h1 class="mb-4">{{ montoPreAprobadoCreditoConsumo | pesos }}</h1>
@@ -36,15 +36,15 @@
       </div>
       
       <div class="row align-items-md-stretch">
-        <div class="col-md-4">
-          <div class="h-100 p-5 text-bg-dark rounded-3">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="h-100 p-4 p-md-5 text-bg-dark rounded-3">
             <h4>Cuenta Corriente</h4>
             <p><strong>N° {{ numeroCtaCte }}</strong></p>
             <p>Disponible: {{ cupoCtaCte | pesos }}</p>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3">
             <h4 class="d-flex justify-content-between">
               <span>Línea de Crédito</span>
               <span><button class="btn btn-outline-secondary" type="button">Pagar</button></span>
@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3">
             <h4 class="d-flex justify-content-between">
               <span>Visa</span>
               <span><button class="btn btn-outline-secondary" type="button" routerLink="/mibanco/transacciones/visa/pago">Pagar</button></span>
@@ -63,8 +63,8 @@
             <p>Disponible: {{ cupoVisa | pesos }}</p>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
+        <div class="col-md-6 mb-3 mb-md-0s">
+          <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3 mt-4">
             <h4 class="d-flex justify-content-between mt-3">Seguro Auto</h4>
             <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
             <p>Valor mensual: <strong>UF {{ montoPreAprobadoSeguroAuto }}</strong></p>
@@ -72,7 +72,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="h-100 p-5 bg-body-tertiary border rounded-3 mt-4">
+          <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3 mt-4">
             <h4 class="d-flex justify-content-between">Paga con Visa este mes y
             </h4>
             <p>Obten un descuento en restaurantes de:</p>

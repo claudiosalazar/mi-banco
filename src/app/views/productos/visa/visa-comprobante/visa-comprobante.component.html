@@ -4,14 +4,16 @@
         <div class="mt-5">
           <div class="card text-center p-5">
             <h1 class="mb-5">Tu pago se realizo con exito</h1>
-            <h4 class="mb-4">
-              Se abono un monto de  <strong>{{ abono | pesos }}</strong> en tu tarjeta de credito Visa<br> numero <strong>{{ numeroVisa }}</strong>.
-            </h4>
-            <h5>Enviamos el comprobante de pago a tu email {{ datosUsuarioActual?.datosUsuario?.email }}</h5>
+            <p class="mb-4">
+              Se abono un monto de  <strong>{{ abono | pesos }}</strong> en tu tarjeta de credito Visa <strong>{{ numeroVisa }}</strong>.
+            </p>
+            <p>Enviamos el comprobante de pago a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
             <br>
-            <div class="row">
-              <div class="col-6 mx-auto d-flex">
-                <a class="btn btn-info m-auto d-flex align-items-center p-2">
+
+            <!-- Botones -->
+            <div class="col-12 px-3">
+              <div class="row d-flex justify-content-md-center flex-md-row">
+                <a class="btn btn-primary col-12 col-md me-md-3 mb-3 mb-md-0">
                   <span class="material-symbols-outlined">
                     picture_as_pdf
                   </span>
@@ -19,7 +21,7 @@
                     Descargo comprobante
                   </span>
                 </a>
-                <a class="btn btn-info m-auto d-flex align-items-center p-2" routerLink="/mibanco/">
+                <a class="btn btn-secondary col-12 col-md" routerLink="/mibanco/">
                   <span class="material-symbols-outlined">
                     chevron_left
                   </span>
