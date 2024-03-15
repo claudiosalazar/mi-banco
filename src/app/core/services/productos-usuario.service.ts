@@ -27,21 +27,15 @@ export class ProductosUsuarioService {
     private urlBrowserService: UrlBrowserService
   ) {
     this.http.get(this.baseUrl).subscribe((data: any) => {
-      if (data && data.productos) {
+      if (data && data.producto) {
         if (data && Array.isArray(data.productos)) {
           data.productos.forEach((producto: any) => {
             if (producto && producto.transacciones) {
               const nuevoDatos = this.calculosMontos(producto);
               this.guardaResultadosCalculos(nuevoDatos).subscribe();
-            } else {
-              console.error('Transacciones no definidas en el producto:', producto);
             }
           });
-        } else {
-          console.error('data.productos no es un array');
         }
-      } else {
-        console.error('data o data.productos es undefined');
       }
     });
   }
@@ -168,12 +162,13 @@ export class ProductosUsuarioService {
 
   // Guarda los datos actualizados en el servidor
   guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
-    return this.http.put(this.baseUrl, {  }, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl, nuevosDatos, {responseType: 'text'}).pipe(
       map((res: any) => {
         const datosActualizados = res;
         return of(nuevosDatos);
       }),
       catchError(error => {
+        console.error('Error del server:', error);
         return throwError(error);
       })
     );
@@ -183,7 +178,7 @@ export class ProductosUsuarioService {
   private datosPagoVisa = new BehaviorSubject<any>(null);
   private datosPagoLineaCredito = new BehaviorSubject<any>(null);
 
-  calculosMontosPago(_datosUsados: ProductosUsuario['productos']): any {
+  calculosMontosPago(_producto: ProductosUsuario['productos']): any {
     combineLatest([
       this.datosPagoVisa.asObservable(),
       this.datosPagoLineaCredito.asObservable()
