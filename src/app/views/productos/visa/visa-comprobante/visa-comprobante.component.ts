@@ -7,14 +7,11 @@ import { DatosUsuarioService } from '../../../../core/services/datos-usuario.ser
 // Models
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 
-
-
 @Component({
   selector: 'app-visa-comprobante',
   templateUrl: './visa-comprobante.component.html'
 })
 export class VisaComprobanteComponent implements OnInit{
-
 
   datosUsuarioActual: DatosUsuarioActual | undefined;
   email: string | undefined;

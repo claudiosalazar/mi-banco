@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms'
+import { Subscription } from 'rxjs';
+
 // Productos usuario
 import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
-import { Subscription } from 'rxjs';
 import { UrlBrowserService } from '../../../core/services/url-browser.service';
 @Component({
   selector: 'app-visa',
@@ -53,8 +54,8 @@ export class VisaComponent implements OnInit {
     });
   }
 
+  // Evitar fugas de memoria
   ngOnDestroy(): void {
-    // Asegúrate de desuscribirte para evitar fugas de memoria
     this.subscription.unsubscribe();
   }
 

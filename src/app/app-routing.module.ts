@@ -33,7 +33,7 @@ const routes: Routes = [
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
-          { path: 'comprobante-pago', component: LineaCreditoComprobanteComponent },
+          { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },
           { path: 'visa', component: VisaComponent },
           { path: 'visa/pago', component: VisaPagoComponent },
           { path: 'visa/comprobante', component: VisaComprobanteComponent },

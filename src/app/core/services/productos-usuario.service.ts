@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, map, of, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, combineLatest, map, of, switchMap, throwError } from 'rxjs';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 import { UrlBrowserService } from './url-browser.service';
 
@@ -10,6 +10,7 @@ import { UrlBrowserService } from './url-browser.service';
 export class ProductosUsuarioService {
 
   private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
+  private datosUsados: any;
   productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;
   fecha: any;
@@ -180,10 +181,19 @@ export class ProductosUsuarioService {
 
 
   private datosPagoVisa = new BehaviorSubject<any>(null);
+  private datosPagoLineaCredito = new BehaviorSubject<any>(null);
 
-  calculosMontosPago(_datosPagoVisa: ProductosUsuario['productos']): any {
-    this.datosPagoVisa.subscribe(datosPago => {
-      const datosPagoCalculos = datosPago;
+  calculosMontosPago(_datosUsados: ProductosUsuario['productos']): any {
+    combineLatest([
+      this.datosPagoVisa.asObservable(),
+      this.datosPagoLineaCredito.asObservable()
+    ]).subscribe(([datosPagoVisa, datosPagoLineaCredito]) => {
+      let datosPagoCalculos = datosPagoVisa || datosPagoLineaCredito;
+      if (datosPagoVisa) {
+        this.datosUsados = 'Visa';
+      } else if (datosPagoLineaCredito) {
+        this.datosUsados = 'LineaCredito';
+      }
       if (Array.isArray(datosPagoCalculos.productos)) {
         
         console.log('datosPago:', datosPagoCalculos);
@@ -208,7 +218,7 @@ export class ProductosUsuarioService {
           }
         });
         console.log('datosPagoCalculos actualizado:', datosPagoCalculos);
-
+  
         // Guarda los datos actualizados en datosPago y los envía a otra función
         this.datosPagoActualizados = datosPagoCalculos;
         this.guardaResultadosCalculosPago(datosPagoCalculos);
@@ -216,17 +226,21 @@ export class ProductosUsuarioService {
         console.error('datosPago.productos no es un array');
       }
     });
-  
   }
 
   datosGuardados = new Subject<void>();
 
   guardaResultadosCalculosPago(datosPagoActualizados: any): any {
-    // console.log('datos para guardar en server',datosPagoActualizados);
+    console.log('datos para guardar en server',datosPagoActualizados);
     this.http.put(this.baseUrl, datosPagoActualizados, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
+      console.log('Datos usados:', this.datosUsados); 
       setTimeout(() => {
-        this.urlBrowserService.navegarAComprobanteVisa();
+        if (this.datosUsados === 'Visa') {
+          this.urlBrowserService.navegarAComprobanteVisa();
+        } else if (this.datosUsados === 'LineaCredito') {
+          this.urlBrowserService.navegarAComprobanteLineaCredito();
+        }
       }, 1500);
     });
   }
@@ -236,18 +250,22 @@ export class ProductosUsuarioService {
   getDatosPagoVisa(datosPago: any): Observable<any> {
     // Verifica si datosPago tiene datos
     if (datosPago) {
-      // Parsea los datos de pago en formato JSON y los guarda en una variable
       const datosPagoJson = JSON.parse(datosPago);
-      //console.log('Datos capturados y transformados:', datosPagoJson);
-  
-      // Emite los datos JSON parseados
-      //console.log('Emitiendo nuevos datos:', datosPagoJson);
       this.datosPagoVisa.next(datosPagoJson);
-
-      // Llama a calculosMontosPago después de emitir los datos
       this.calculosMontosPago(datosPagoJson);
     }
     return this.datosPagoVisa;
+  }
+
+  // Captura datos de pago linea de credito
+  getDatosPagoLineaCredito(datosPago: any): Observable<any> {
+    // Verifica si datosPago tiene datos
+    if (datosPago) {
+      const datosPagoJson = JSON.parse(datosPago);
+      this.datosPagoLineaCredito.next(datosPagoJson);
+      this.calculosMontosPago(datosPagoJson);
+    }
+    return this.datosPagoLineaCredito;
   }
 
   // Crea un BehaviorSubject que mantendrá los datos actualizados

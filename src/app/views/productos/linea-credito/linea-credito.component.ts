@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms'
+import { Subscription } from 'rxjs';
+
 // Productos usuario
 import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
+import { UrlBrowserService } from '../../../core/services/url-browser.service';
 
 @Component({
   selector: 'app-linea-credito',
@@ -29,12 +32,32 @@ export class LineaCreditoComponent implements OnInit {
   campoBusqueda = new FormControl('');
   mostrarPaginador: boolean | undefined;
 
+  // Componentes a mostrar
+  movimientosLineaDeCredito = true;
+  formularioPagoLineaDeCredito = false;
+  comprobantePagoLineaDeCredito = false;
+
+  private subscription: Subscription = new Subscription();
+
   constructor(
-    private productosUsuarioService: ProductosUsuarioService
+    private productosUsuarioService: ProductosUsuarioService,
+    private urlBrowserService: UrlBrowserService
   ) { }
 
   ngOnInit(): void {
     this.getProductosUsuarioResumen('');
+    this.subscription = this.productosUsuarioService.datosGuardados.subscribe(() => {
+      setTimeout(() => {
+        this.movimientosLineaDeCredito = false;
+        this.formularioPagoLineaDeCredito = false;
+        this.comprobantePagoLineaDeCredito = true;
+      }, 1500);
+    });
+  }
+
+  // Evitar fugas de memoria
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getProductosUsuarioResumen(id: string): void {
@@ -65,5 +88,21 @@ export class LineaCreditoComponent implements OnInit {
     this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+  }
+
+  mostrarInicioLineaDeCredito(): void {
+    this.movimientosLineaDeCredito = true;
+    this.formularioPagoLineaDeCredito = false;
+    this.comprobantePagoLineaDeCredito = false;
+
+    this.urlBrowserService.navegarAInicioLineaDeCredito();
+  }
+
+  mostrarPagoLineaDeCredito(): void {
+    this.movimientosLineaDeCredito = false;
+    this.formularioPagoLineaDeCredito = true;
+    this.comprobantePagoLineaDeCredito = false;
+
+    this.urlBrowserService.navegarAPagoLineaDeCredito();
   }
 }

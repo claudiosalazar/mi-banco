@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-// Datos usuario
+
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
+import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { Observable, from, map } from 'rxjs';
+
+// Service
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
-// Datos productos
-import { ProductosUsuarioService } from 'src/app/core/services/productos-usuario.service';
-import { ProductosUsuario } from '../../../../shared/models/productos-usuario.model';
+import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
+import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 
-import { SaldosService } from '../../../../core/services/saldos.service';
+// Model
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
-
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-linea-credito-pago',
@@ -17,149 +22,489 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 })
 export class LineaCreditoPagoComponent implements OnInit {
 
-  saldo: number | undefined;
-  datosUsuarioActual: DatosUsuarioActual | undefined;
-  productoSeleccionado: any;
-  cupoUtilizadoLineaCre: any;
-  montoApagarOption = 'otroMontoPago';
-  otroMontoPago: any;
-  emailModificado = false;
-  mostrarPagoTotalCheck: boolean = false;
-  mostrarOtroMontoCheck: boolean = true;
+  @ViewChild('modalPagoLineaCredito') modalPagoLineaCredito: ElementRef | undefined;
 
-  form: FormGroup = this.fb.group({
-    monto: ['otroMontoCheck'],
-    productoParaPago: ['', Validators.required],
-    otroMontoPago: ['', [Validators.required, Validators.min(1), ]],
-    emailComprobante: ['', [Validators.required, Validators.email]]
-  });
+  private pesosPipe = new PesosPipe();
+
+  pagoLineaCreditoForm: FormGroup = new FormGroup({});
+  
+  datosUsuarioActual: DatosUsuarioActual | undefined;
+  submitted = false;
+  contenedorPagoTotal = false;
+  contenedorOtroPago = true;
+  cupoValido: boolean | undefined;
+  productoSeleccionado: any;
+  elementosHabilitados = false;
+  inputOtroMonto: any;
+  inputMontoPagoTotal: any;
+  montoEsCero: string | undefined;
+  montoSuperiorSaldoCtaCte: string | undefined;
+  montoValidoCtaCte: string | undefined;
+
+  // Variables para saldos
+  error1: boolean = false;
+  error2: boolean = false;
+  error3: boolean = false;
+  pagoTotalValido: boolean = false;
+  montoValido: boolean = false;
+  modalInstance: any;
+
+  montoNumberTotal: number | undefined;
+  montoNumberOtro: number | undefined;
+
+  productosUsuario: { productos: any[] } = { productos: [] };
+  cupoVisa: any;
+  cupoCtaCte: any;
+  numeroCtaCte: any;
+  cupoLineaCredito: any;
+  numeroLineaCredito: any;
+  numeroVisa: any;
+  cupoInicialLineaCredito: any;
+  cupoDisponibleLineaCredito: any;
+  montoPagado: any;
+
+  // Variables para ofertas
+  ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
+  montoPreAprobadoSeguroAuto: any
+  datosPago: any;
+
+  // Variables para modal
+  pagoCorrecto: boolean = true;
+  errorServer: boolean = false;
 
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
-    private montosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
-    private saldosService: SaldosService,
-    private fb: FormBuilder
+    private ofertasProductosService: OfertasProductosService,
+    private http: HttpClient,
     
   ) { }
 
+  // Inicialización de formulario
   ngOnInit(): void {
     this.getDatosUsuario();
-    this.form = this.fb.group({
-      monto: ['otroMontoCheck'],
-      productoParaPago: [0, Validators.required, this.nonZeroValidator],
-      otroMontoPago: [{value: '', disabled: true}, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max((this.saldo ?? 0) || (this.saldo ?? 0)),
-      ]],
-      emailComprobante: [this.datosUsuarioActual?.datosUsuario?.email || null, [Validators.email]],
+    this.getOfertasProductos('')
+    this.getProductosUsuarioResumen('');
+    this.pagoLineaCreditoForm = new FormGroup({
+      productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
+      montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
+      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
+      inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
+      inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
     });
-  
-    this.form.get('productoParaPago')?.valueChanges.subscribe(value => {
-      if (value == '1' || value == '2') {
-        this.form.get('otroMontoPago')?.enable();
-      } else {
-        this.form.get('otroMontoPago')?.disable();
-      }
+
+    // Aplica pipe pesos a inputOtroMonto
+    this.pagoLineaCreditoForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].setValue(transformedValue, {emitEvent: false});
     });
-  
-    this.form.get('otroMontoPago')?.valueChanges.subscribe(value => {
-      if (value <= (this.saldo ?? 0) && value <= (this.saldo ?? 0)) {
-        this.form.get('otroMontoPago')?.setErrors(null);
-      }
-    });
+
+
+    // Resetea validaciones de inputOtroMonto al cambiar el valor de productoParaPago
+    if (this.pagoLineaCreditoForm.get('productoParaPago')) {
+      this.pagoLineaCreditoForm.get('productoParaPago')?.valueChanges.subscribe(value => {
+        if (value === '1' || value === '2') {
+          this.resetValidacionesInputOtroMonto();
+          this.pagoLineaCreditoForm.get('inputOtroMonto')?.reset();
+        }
+      });
+    }
+
+    if (this.modalPagoLineaCredito) {
+      this.modalInstance = new bootstrap.Modal(this.modalPagoLineaCredito.nativeElement);
+    }
   }
 
-  nonZeroValidator(control: AbstractControl): Promise<ValidationErrors | null> {
-    return new Promise(resolve => {
-      resolve(control.value === 0 ? { nonZero: true } : null);
-    });
-  }
-
+  // LLamada a servicio para obtener datos de usuario
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
-      // this.saldo = this.saldosService.calcularSaldoCtaCte(this.datosUsuarioActual);
-      // this.saldoLineaCredito = this.saldosService.calcularSaldoLineaCre(this.datosUsuarioActual);
-      // this.cupoUtilizadoLineaCre = this.saldosService.calcularDiferenciaLineaCre(this.datosUsuarioActual);
-      // this.saldo = this.saldosService.calcularSaldoVisa(this.datosUsuarioActual);
+      this.pagoLineaCreditoForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
+      this.pagoLineaCreditoForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.cupoLineaCredito));
     });
   }
 
-  getMontosUsuario(): void {
-    this.montosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.datosUsuarioActual = data;
+  getProductosUsuarioResumen(id: string): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
+        this.numeroCtaCte = parseFloat(this.productosUsuario.productos[0]?.productoNumero);
+        this.cupoLineaCredito = parseFloat(this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo);
+        this.numeroLineaCredito = parseFloat(this.productosUsuario.productos[1]?.productoNumero);
+        this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
+        this.cupoInicialLineaCredito = parseFloat(this.productosUsuario.productos[1]?.cupo);
+        this.cupoVisa = parseFloat(this.productosUsuario.productos[2]?.transacciones[this.productosUsuario.productos[2]?.transacciones.length - 1]?.saldo);
+        this.cupoDisponibleLineaCredito = parseFloat(this.productosUsuario.productos[1]?.cupoDisponible);
+      }
+    );
+  }
+
+  getOfertasProductos(id: string): void {
+    this.ofertasProductosService.getOfertasProductos(id).subscribe(data => {
+      this.ofertasProductos = data.ofertas ? { ofertas: data.ofertas } : { ofertas: [] };
+      this.montoPreAprobadoSeguroAuto = this.ofertasProductos.ofertas[1].montoPreAprobado;
     });
   }
 
+  // Valida que el en select se selecciono un producto para el pago
+  validaProductoParaPago(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const isInvalid = control.value === '0';
+      return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
+    };
+  }
+
+  // Quita el estado disables a los radio e input de monto
   onProductoSeleccionado(event: Event): void {
     const target = event.target as HTMLSelectElement;
     if (target) {
       this.productoSeleccionado = target.value;
     }
-  }
-
-  onMontoApagarOptionChange(option: string): void {
-    this.montoApagarOption = option;
-  }
-
-  onOtroMontoPagoChange(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (!target.value) {
-      return;
-    }
+    this.elementosHabilitados = this.productoSeleccionado === '1' || this.productoSeleccionado === '2';
   
-    const numericValue = parseFloat(target.value.replace(/\D/g, ''));
-    const formattedValue = isNaN(numericValue) ? '' : numericValue.toLocaleString('es-CL', { minimumFractionDigits: 0 });
-    const otroMontoPagoControl = this.form.get('otroMontoPago');
-    if (otroMontoPagoControl) {
-      otroMontoPagoControl.setValue(formattedValue, { emitEvent: false });
-    }
-  }
-
-  onEmailChange(): void {
-    this.emailModificado = true;
-    if (this.form.get('emailComprobante')?.value === '') {
-      this.form.get('emailComprobante')?.setValidators([Validators.required, Validators.email]);
+    // Habilitar o deshabilitar los FormControl dependiendo del valor seleccionado
+    if (this.elementosHabilitados) {
+      this.pagoLineaCreditoForm.controls['montoPago'].enable();
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].enable();
     } else {
-      this.form.get('emailComprobante')?.setValidators([Validators.email]);
+      this.pagoLineaCreditoForm.controls['montoPago'].disable();
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].disable();
     }
-    this.form.get('emailComprobante')?.updateValueAndValidity();
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
+  // Elimina el monto ingresado en inputOtroMonto al cambiar al radio a inputMontoPagoTotal
+  radioResetInput(_event: any): void {
+    const montoPagoControl = this.pagoLineaCreditoForm.get('montoPago');
+    if (montoPagoControl && montoPagoControl.value === 'pagoTotal') {
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].reset();
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].setErrors(null);
     } else {
-      this.form.get('otroMontoPago')?.markAsTouched();
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].setErrors(null);
     }
   }
 
-  onCancelarClick(): void {
-    // Logica para select
-    const controlSelect = this.form.get('productoParaPago');
-    if (controlSelect) {
-      controlSelect.setValue(0);
+  // Permite ingresar solo caracteres numéricos en el input
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
     }
-    this.productoSeleccionado = '0';
-
-    // Logica para monto
-    const controlMonto = this.form.get('monto');
-
-    if (controlMonto && controlMonto.value === 'pagoTotalCheck') {
-      controlMonto.setValue('otroMontoCheck'); // Esto cambiará la selección del radio 'pagoTotalCheck' al radio 'otroMontoCheck'
-    }
-
-    if (this.montoApagarOption === 'pagoTotal') {
-      this.montoApagarOption = 'otroMontoPago'; // Cambia la opción a 'otroMontoPago'
-    }
-
-    const controlOtroMontoPago = this.form.get('otroMontoPago');
-
-    if (controlOtroMontoPago) {
-      controlOtroMontoPago.setValue(''); // Esto limpiará el input 'otroMontoPago'
-    }
+    return true;
   }
   
+  // Valida que el mail tengo un punto y al menos dos caracteres después del punto
+  formatoEmail(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (value && typeof value === 'string') {
+      const split = value.split('.');
+      if (split.length > 1 && split[1].length >= 2) {
+        return null;
+      }
+    }
+    return { customEmail: true };
+  }
+
+  // Valida que el email este escrito correctamente
+  emailValido(inputEmail: string) {
+    this.pagoLineaCreditoForm.controls[inputEmail].markAsPristine();
+    this.pagoLineaCreditoForm.controls[inputEmail].markAsUntouched();
+    this.pagoLineaCreditoForm.controls[inputEmail].setValidators([Validators.required, this.formatoEmail]);
+    this.pagoLineaCreditoForm.controls[inputEmail].updateValueAndValidity();
+  }
+
+  detectaCambioRadio() {
+    const montoPagoControl = this.pagoLineaCreditoForm.get('montoPago');
+    const inputMontoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
+  
+    if (montoPagoControl) {
+      montoPagoControl.valueChanges.subscribe(value => {
+        if (value === 'primerRadio' && inputMontoPagoTotalControl) {
+          inputMontoPagoTotalControl.updateValueAndValidity();
+        }
+      });
+    }
+  }
+
+  validaMontoPagoTotal() {
+    const productoParaPagoControl = this.pagoLineaCreditoForm.get('productoParaPago');
+    const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
+    const inputMontoControl2 = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
+  
+    if (productoParaPago === '1' || productoParaPago === '2') {
+      if (inputMontoControl2) {
+        let inputMontoValue2 = inputMontoControl2.value;
+  
+        // Convertir el valor del input a número
+        inputMontoValue2 = inputMontoValue2.replace(/\$|\.| /g, '');
+        const numericInputMonto = Number(inputMontoValue2);
+  
+        // Validación 1
+        if (productoParaPago === '1' && numericInputMonto <= this.cupoCtaCte) {
+          this.pagoTotalValido = true;
+          console.log('valido');
+        } 
+        // Validación 2
+        else if (productoParaPago === '2' && numericInputMonto <= this.cupoVisa) {
+          this.pagoTotalValido = true;
+          console.log('valido');
+        } 
+        else {
+          this.error3 = true;
+          console.log('valor superior');
+        }
+      }
+    }
+  }
+  
+  validaMontoOtroMonto() {
+    const productoParaPagoControl = this.pagoLineaCreditoForm.get('productoParaPago');
+    const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
+    const inputMontoControl = this.pagoLineaCreditoForm.get('inputOtroMonto');
+  
+    if (productoParaPago === '1' || productoParaPago === '2') {
+      if (inputMontoControl) {
+        let inputMontoValue = inputMontoControl.value;
+  
+        // Validación 1
+        if (!inputMontoValue || inputMontoValue.trim() === '') {
+          this.error1 = true;
+          console.log('valor 0');
+        } else {
+          this.error1 = false;
+          // Convertir el valor del input a número
+          inputMontoValue = inputMontoValue.replace(/\$|\.| /g, '');
+          const numericInputMonto = Number(inputMontoValue);
+  
+          // Validación 2
+          if (numericInputMonto > this.cupoCtaCte && numericInputMonto > this.cupoVisa) {
+            this.error2 = true;
+            console.log('valor superior');
+          } else {
+            this.error2 = false;
+          }
+  
+          // Validación 3
+          if (numericInputMonto <= this.cupoCtaCte && numericInputMonto <= this.cupoVisa) {
+            this.montoValido = true;
+            console.log('valido');
+          } else {
+            this.montoValido = false;
+          }
+        }
+      }
+    }
+  }
+
+  resetValidacionesInputOtroMonto() {
+    // Limpia el valor ingresado en inputOtroMonto
+    this.error1 = false;
+    this.error2 = false;
+    this.montoValido = false;
+  }
+
+  resetValidacionesInputPagoTotal() {
+    // Limpia el valor ingresado en inputOtroMonto
+    this.error3 = false;
+    this.pagoTotalValido = false;
+  }
+
+  validaFormulario(): any {
+    this.submitted = true;
+
+    const montoPagoControl = this.pagoLineaCreditoForm.get('montoPago');
+    const inputMontoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
+    const inputOtroMontoControl = this.pagoLineaCreditoForm.get('inputOtroMonto');
+  
+    if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl) {
+      if (montoPagoControl.value === 'pagoTotal') {
+        this.validaMontoPagoTotal();
+        if (this.error3) {
+        } else {
+          // Se captura el dato ingreado en el input y se transforma en un dato number
+          let montoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
+          if (montoPagoTotalControl) {
+            let montoPagoTotal = montoPagoTotalControl.value;
+            montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
+            this.montoNumberTotal = Number(montoPagoTotal);
+            console.log('montoNumberTotal:', this.montoNumberTotal);
+          }
+        }
+      } else if (montoPagoControl.value === 'otroMonto') {
+        this.validaMontoOtroMonto();
+        if (this.error1 || this.error2) {
+        } else {
+          // Se captura el dato ingreado en el input y se transforma en un dato number
+          let montoOtroMonto = this.pagoLineaCreditoForm.value.inputOtroMonto;
+          montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
+          this.montoNumberOtro = Number(montoOtroMonto);
+          console.log('montoNumberOtro:', this.montoNumberOtro);
+        }
+      }
+    }
+
+    // Si no hay errores, muestra el modal
+    if (!this.error1 && !this.error2 && !this.error3) {
+      let modal = new bootstrap.Modal(document.getElementById('modalPagoLineaCredito'), {
+        backdrop: 'static',
+        keyboard: false
+      });
+      modal.show();
+    
+      this.datosPagoLineaCredito().subscribe((datosPago: any) => {
+        this.productosUsuarioService.getDatosPagoLineaCredito(datosPago);
+        this.pagoCorrecto = true;
+        setTimeout(() => {
+          modal.hide();
+        }, 1500);
+      }, error => {
+        console.error('Error al enviar los datos al servidor:', error);
+        this.pagoCorrecto = false;
+        this.errorServer = true;
+        modal.hide();
+      });
+    }
+  }
+
+  calculoPagoFormulario(): any {
+    const montoPagado: any = this.montoNumberTotal || this.montoNumberOtro;
+    let productoParaPagoValue = this.pagoLineaCreditoForm.get('productoParaPago')?.value;
+  
+    if (productoParaPagoValue === '1') {
+      this.cupoCtaCte -= montoPagado;
+      this.cupoDisponibleLineaCredito += montoPagado;
+    } else if (productoParaPagoValue === '2') {
+      this.cupoVisa -= montoPagado;
+      this.cupoDisponibleLineaCredito += montoPagado;
+    }
+
+    // Convertir 'montoPagado' a un string
+    const montoPagadoString = montoPagado.toString();
+  
+    return {
+      montoPagado: montoPagadoString,
+      cupoLineaCredito: this.cupoLineaCredito,
+      cupoDisponibleLineaCredito: this.cupoDisponibleLineaCredito,
+      cupoCtaCte: this.cupoCtaCte,
+      cupoVisa: this.cupoVisa,
+      productoParaPagoValue: productoParaPagoValue
+    };
+  }
+
+  datosPagoLineaCredito(): Observable<any> {
+
+    // Llama al metodo calculo y obtiene los valores
+    const result = this.calculoPagoFormulario();
+
+    // Obtener la fecha
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+
+    let montoPagado = result.montoPagado;
+    let cupoCtaCte = result.cupoCtaCte;
+    let cupoVisa = result.cupoVisa;
+    let cupoLineaCredito= result.cupoLineaCredito;
+    let cupoDisponibleLineaCredito = result.cupoDisponibleLineaCredito;
+
+    // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
+    return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
+      // Los datos del archivo están en 'res'
+      const datosPago = res;
+      const productoCtaCte = datosPago.productos.find((productos: { id: string; }) => productos.id === '0');
+      const productoLineaCredito = datosPago.productos.find((productos: { id: string; }) => productos.id === '1');
+      const productoVisa = datosPago.productos.find((productos: { id: string; }) => productos.id === '2');
+
+
+      if (result.productoParaPagoValue === '1') {
+        // Datos Cuenta Corriente
+        if (productoCtaCte) {
+          // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
+          const cupoCtaCteString = cupoCtaCte.toString();
+          // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
+
+          // Si el producto existe, agregar las variables y la nueva transacción
+          productoCtaCte.cupo = cupoCtaCteString;
+          // productoLineaCredito.cupoDisponible = cupoDisponibleCtaCteString;
+
+          // Obtener el último ID en el array de transacciones
+          const ultimoIdTransaccion = Math.max(...productoCtaCte.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+          // Generar un nuevo ID que sea el siguiente al último ID existente
+          const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+          // Crear una nueva transacción con el nuevo ID y el monto pagado
+          productoCtaCte.transacciones.push({
+            id: nuevoIdTransaccion.toString(),
+            fecha: fechaFormateada, // Usar la fecha formateada
+            detalle: 'Pago a LineaCredito',
+            cargo: montoPagado,
+            abono: '',
+            saldo: '' // Reemplaza con el valor real
+          });
+        }
+
+      } else if (result.productoParaPagoValue === '2') {
+        // Datos Linea de credito
+        if (productoVisa) {
+          // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
+          const cupoVisaString = cupoVisa.toString();
+          // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
+
+          // Si el producto existe, agregar las variables y la nueva transacción
+          productoVisa.cupo = cupoVisaString;
+          // productoLineaCredito.cupoDisponible = cupoDisponibleCtaCteString;
+
+          // Obtener el último ID en el array de transacciones
+          const ultimoIdTransaccion = Math.max(...productoVisa.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+          // Generar un nuevo ID que sea el siguiente al último ID existente
+          const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+          // Crear una nueva transacción con el nuevo ID y el monto pagado
+          productoVisa.transacciones.push({
+            id: nuevoIdTransaccion.toString(),
+            fecha: fechaFormateada, // Usar la fecha formateada
+            detalle: 'Pago a LineaCredito',
+            cargo: montoPagado,
+            abono: '',
+            saldo: '' // Reemplaza con el valor real
+          });
+        }
+        
+      }
+      if (productoLineaCredito && productoLineaCredito.id === '1') {
+        // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
+        const cupoLineaCreditoString = cupoLineaCredito.toString();
+        const cupoDisponibleLineaCreditoString = cupoDisponibleLineaCredito.toString();
+      
+        // Si el producto existe, agregar las variables y la nueva transacción
+        productoLineaCredito.cupo = cupoLineaCreditoString;
+        productoLineaCredito.cupoDisponible = cupoDisponibleLineaCreditoString;
+      
+        // Obtener el último ID en el array de transacciones
+        const ultimoIdTransaccion = Math.max(...productoLineaCredito.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+      
+        // Generar un nuevo ID que sea el siguiente al último ID existente
+        const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+      
+        // Crear una nueva transacción con el nuevo ID y el monto pagado
+        productoLineaCredito.transacciones.push({
+          id: nuevoIdTransaccion.toString(),
+          fecha: fechaFormateada, // Usar la fecha formateada
+          detalle: 'Abono a Línea de Crédito',
+          cargo: '',
+          abono: montoPagado,
+          saldo: '' // Reemplaza con el valor real
+        });
+      }
+      // Imprimir la estructura de datos enviadas en la consola
+      console.log('Datos que se van a enviar:', JSON.stringify(datosPago));
+      return JSON.stringify(datosPago);
+      })
+    );
+  }
+
 }
+

@@ -3,16 +3,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { HttpClient } from '@angular/common/http';
-
-// Datos usuario
-import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
-import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
-// Productos usuario
-import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
-// Datos ofertas
-import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 import { DatePipe } from '@angular/common';
 import { Observable, from, map } from 'rxjs';
+
+// Service
+import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
+import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
+import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
+
+// Model
+import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 
 declare var bootstrap: any;
 
@@ -371,11 +371,9 @@ export class VisaPagoComponent implements OnInit {
   
     if (productoParaPagoValue === '1') {
       this.cupoCtaCte -= montoPagado;
-      this.cupoVisa -= montoPagado;
       this.cupoDisponibleVisa += montoPagado;
     } else if (productoParaPagoValue === '2') {
       this.cupoLineaCredito -= montoPagado;
-      this.cupoVisa -= montoPagado;
       this.cupoDisponibleVisa += montoPagado;
     }
 
@@ -404,7 +402,6 @@ export class VisaPagoComponent implements OnInit {
 
     let montoPagado = result.montoPagado;
     let cupoCtaCte = result.cupoCtaCte;
-    // let cupoDisponibleCtaCte = result.cupoDisponibleVisa;
     let cupoLineaCredito = result.cupoLineaCredito;
     let cupoVisa = result.cupoVisa;
     let cupoDisponibleVisa = result.cupoDisponibleVisa;
