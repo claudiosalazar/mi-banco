@@ -1,7 +1,7 @@
 <div class="custom-select" [ngClass]="{'is-invalid': submitted && control?.errors?.['productoInvalido'], 'is-valid': submitted && control?.valid}" (click)="isOpen = !isOpen">
   <div class="selected-option">{{selectedOption}}</div>
   <div class="options" *ngIf="isOpen">
-    <!-- <div class="option" *ngFor="let option of options" (click)="selectedOption(option)">{{option.label}}</div> -->
     <div class="option" *ngFor="let option of options" (click)="selectOption(option)">{{option.label}}</div>
   </div>
+  <div class="label">{{labelSelect}}</div>
 </div>

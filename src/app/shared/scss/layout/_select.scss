@@ -2,16 +2,66 @@
   position: relative;
   width: 100%;
   color: #333;
-  background-color: #fff;
+  background-color: $blanco;
   border: 1px solid #ccc;
   padding: 10px;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  appearance: none;
+  background-color: $blanco;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-  &:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  .selected-option {
+    padding: 20px 10px 0 0;
+    cursor: pointer;
+  }
+
+  .label {
+    position: absolute;
+    top: 6px;
+    font-size: 0.8em;
+    color: $color-label-select;
+    z-index: 200;
+  }
+
+  .options {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 2px 0 0 2px;
+    background-color: $blanco;
+    width: calc(100% + 2px);
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    z-index: 100;
+    cursor: pointer;
+    box-shadow: $shadow-light;
+
+    .option {
+      padding: 18px 10px 18px 12px;
+      margin-left: -2px;
+      margin-top: -2px;
+      font-size: 1rem;
+      &:hover {
+        background-color: $gris-claro;
+      }
+      &:first-child {
+        padding-top: 26px;
+        border-top-right-radius: var(--bs-border-radius);
+        border-top-left-radius: var(--bs-border-radius);
+      }
+      &:last-child {
+        border-bottom-right-radius: var(--bs-border-radius);
+        border-bottom-left-radius: var(--bs-border-radius);
+      }
+    }
   }
 
   &.is-invalid {
@@ -23,25 +73,6 @@
   }
 }
 
-.selected-option {
-  padding: 10px;
-  cursor: pointer;
-}
 
-.options {
-  position: absolute;
-  width: 100%;
-  border: 1px solid #ccc;
-  background: #fff;
-  max-height: 200px;
-  overflow-y: auto;
-}
 
-.option {
-  padding: 10px;
-  cursor: pointer;
 
-  &:hover {
-    background: #f0f0f0;
-  }
-}

@@ -29,13 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <custom-select [control]="pagoLineaCreditoForm.get('productoParaPago')" [options]="myOptions" [submitted]="submitted" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
-                    <!-- <select class="form-select" formControlName="productoParaPago" id="productoParaPago" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()" [ngClass]="{'is-invalid': submitted && pagoLineaCreditoForm.get('productoParaPago')?.errors?.['productoInvalido'], 'is-valid': submitted && pagoLineaCreditoForm.get('productoParaPago')?.valid}">
-                      <option value="0">-</option>
-                      <option value="1">Cuenta Corriente N° {{ numeroCtaCte }}</option>
-                      <option value="2">Visa N° {{ numeroVisa }}</option>
-                    </select> -->
-                    <label for="productoParaPago" class="form-label">Producto</label>
+                    <custom-select [control]="pagoLineaCreditoForm.get('productoParaPago')" [options]="myOptions" [submitted]="submitted" [labelSelect]="'Productos'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoVisa | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoLineaCreditoForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">

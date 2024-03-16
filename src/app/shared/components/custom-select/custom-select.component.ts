@@ -10,6 +10,7 @@ export class CustomSelectComponent {
   @Input() options: any[] = [];
   @Input() submitted: boolean | undefined;
   @Output() change = new EventEmitter<any>();
+  @Input() labelSelect: string | undefined;
   selectedOption: any;
   isOpen: any;
 
