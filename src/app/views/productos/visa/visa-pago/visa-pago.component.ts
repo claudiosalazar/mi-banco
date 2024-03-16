@@ -55,13 +55,14 @@ export class VisaPagoComponent implements OnInit {
   productosUsuario: { productos: any[] } = { productos: [] };
   cupoVisa: any;
   cupoCtaCte: any;
-  numeroCtaCte: any;
+  numeroCtaCte: any = '';
   cupoLineaCredito: any;
-  numeroLineaCredito: any;
+  numeroLineaCredito: any = '';
   numeroVisa: any;
   cupoInicialVisa: any;
   cupoDisponibleVisa: any;
   montoPagado: any;
+  productoInvalido: any;
 
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
@@ -71,6 +72,13 @@ export class VisaPagoComponent implements OnInit {
   // Variables para modal
   pagoCorrecto: boolean = true;
   errorServer: boolean = false;
+
+  // Variable para custom select
+  myOptions = [
+    { value: '0', label: '-' },
+    { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
+    { value: '2', label: 'Línea de Crédito N° ' + this.numeroLineaCredito }
+  ];
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -84,6 +92,7 @@ export class VisaPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.getOfertasProductos('')
     this.getProductosUsuarioResumen('');
+    this.getDatosSelect('');
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
@@ -139,6 +148,22 @@ export class VisaPagoComponent implements OnInit {
     );
   }
 
+  getDatosSelect(id: string): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
+        this.numeroLineaCredito = this.productosUsuario.productos[1]?.productoNumero;
+  
+        this.myOptions = [
+          { value: '0', label: '-' },
+          { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
+          { value: '2', label: 'Línea de Crédito N° ' + this.numeroLineaCredito }
+        ];
+      }
+    );
+  }
+
   getOfertasProductos(id: string): void {
     this.ofertasProductosService.getOfertasProductos(id).subscribe(data => {
       this.ofertasProductos = data.ofertas ? { ofertas: data.ofertas } : { ofertas: [] };
@@ -155,11 +180,8 @@ export class VisaPagoComponent implements OnInit {
   }
 
   // Quita el estado disables a los radio e input de monto
-  onProductoSeleccionado(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    if (target) {
-      this.productoSeleccionado = target.value;
-    }
+  onProductoSeleccionado(value: any): void {
+    this.productoSeleccionado = value;
     this.elementosHabilitados = this.productoSeleccionado === '1' || this.productoSeleccionado === '2';
   
     // Habilitar o deshabilitar los FormControl dependiendo del valor seleccionado
@@ -314,26 +336,27 @@ export class VisaPagoComponent implements OnInit {
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
     const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
+    const productoParaPago = this.pagoVisaForm.get('productoParaPago');
   
-    if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl) {
-      if (montoPagoControl.value === 'pagoTotal') {
+    // Inicializa el error de producto inválido en false
+    this.productoInvalido = false;
+  
+    if (productoParaPago && productoParaPago.value === '0') {
+      // Si el producto seleccionado es '0', establece el error de producto inválido en true
+      this.productoInvalido = true;
+    } else if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl && productoParaPago) {
+      // Continúa con la validación del formulario si el producto seleccionado no es '0'
+      if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoTotal') {
         this.validaMontoPagoTotal();
-        if (this.error3) {
-        } else {
-          // Se captura el dato ingreado en el input y se transforma en un dato number
-          let montoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
-          if (montoPagoTotalControl) {
-            let montoPagoTotal = montoPagoTotalControl.value;
-            montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
-            this.montoNumberTotal = Number(montoPagoTotal);
-            console.log('montoNumberTotal:', this.montoNumberTotal);
-          }
+        if (!this.error3 && montoPagoControl.value) {
+          let montoPagoTotal = inputMontoPagoTotalControl.value;
+          montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
+          this.montoNumberTotal = Number(montoPagoTotal);
+          console.log('montoNumberTotal:', this.montoNumberTotal);
         }
-      } else if (montoPagoControl.value === 'otroMonto') {
+      } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
-        if (this.error1 || this.error2) {
-        } else {
-          // Se captura el dato ingreado en el input y se transforma en un dato number
+        if (!this.error1 && !this.error2 && this.pagoVisaForm.value.inputOtroMonto) {
           let montoOtroMonto = this.pagoVisaForm.value.inputOtroMonto;
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);

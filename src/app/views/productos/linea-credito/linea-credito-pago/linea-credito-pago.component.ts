@@ -86,7 +86,6 @@ export class LineaCreditoPagoComponent implements OnInit {
     private productosUsuarioService: ProductosUsuarioService,
     private ofertasProductosService: OfertasProductosService,
     private http: HttpClient,
-    
   ) { }
 
   // Inicialización de formulario
