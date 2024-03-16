@@ -62,6 +62,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   cupoInicialLineaCredito: any;
   cupoDisponibleLineaCredito: any;
   montoPagado: any;
+  productoInvalido: any;
 
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
@@ -333,30 +334,31 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   validaFormulario(): any {
     this.submitted = true;
-
+  
     const montoPagoControl = this.pagoLineaCreditoForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
     const inputOtroMontoControl = this.pagoLineaCreditoForm.get('inputOtroMonto');
+    const productoParaPago = this.pagoLineaCreditoForm.get('productoParaPago');
   
-    if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl) {
-      if (montoPagoControl.value === 'pagoTotal') {
+    // Inicializa el error de producto inválido en false
+    this.productoInvalido = false;
+  
+    if (productoParaPago && productoParaPago.value === '0') {
+      // Si el producto seleccionado es '0', establece el error de producto inválido en true
+      this.productoInvalido = true;
+    } else if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl && productoParaPago) {
+      // Continúa con la validación del formulario si el producto seleccionado no es '0'
+      if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoTotal') {
         this.validaMontoPagoTotal();
-        if (this.error3) {
-        } else {
-          // Se captura el dato ingreado en el input y se transforma en un dato number
-          let montoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
-          if (montoPagoTotalControl) {
-            let montoPagoTotal = montoPagoTotalControl.value;
-            montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
-            this.montoNumberTotal = Number(montoPagoTotal);
-            console.log('montoNumberTotal:', this.montoNumberTotal);
-          }
+        if (!this.error3 && montoPagoControl.value) {
+          let montoPagoTotal = inputMontoPagoTotalControl.value;
+          montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
+          this.montoNumberTotal = Number(montoPagoTotal);
+          console.log('montoNumberTotal:', this.montoNumberTotal);
         }
-      } else if (montoPagoControl.value === 'otroMonto') {
+      } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
-        if (this.error1 || this.error2) {
-        } else {
-          // Se captura el dato ingreado en el input y se transforma en un dato number
+        if (!this.error1 && !this.error2 && this.pagoLineaCreditoForm.value.inputOtroMonto) {
           let montoOtroMonto = this.pagoLineaCreditoForm.value.inputOtroMonto;
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);
@@ -364,15 +366,15 @@ export class LineaCreditoPagoComponent implements OnInit {
         }
       }
     }
-
+  
     // Si no hay errores, muestra el modal
-    if (!this.error1 && !this.error2 && !this.error3) {
+    if (!this.error1 && !this.error2 && !this.error3 && !this.productoInvalido) {
       let modal = new bootstrap.Modal(document.getElementById('modalPagoLineaCredito'), {
         backdrop: 'static',
         keyboard: false
       });
       modal.show();
-    
+  
       this.datosPagoLineaCredito().subscribe((datosPago: any) => {
         this.productosUsuarioService.getDatosPagoLineaCredito(datosPago);
         this.pagoCorrecto = true;
