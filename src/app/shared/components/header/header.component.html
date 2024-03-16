@@ -12,18 +12,21 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/mibanco" (click)="onLinkClick()">Inicio</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="onLinkClick()">Transferencias</a>
+          </li>
           <li class="nav-item menu-transacciones">
             <a class="nav-link d-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Transacciones
+              Productos
               <span class="material-symbols-outlined">
                 expand_more
               </span>
             </a>
             <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/resumen" (click)="onLinkClick()">Resumen Transacciones</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/cuenta-corriente" (click)="onLinkClick()">Cuenta Corriente</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/linea-credito" (click)="onLinkClick()">Línea de Crédito</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/transacciones/visa" (click)="onLinkClick()">Visa</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/resumen" (click)="onLinkClick()">Mis Productos</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/cuenta-corriente" (click)="onLinkClick()">Cuenta Corriente</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/linea-credito" (click)="onLinkClick()">Línea de Crédito</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/visa" (click)="onLinkClick()">Visa</a></li>
             </ul>
           </li>
           <li class="nav-item menu-transacciones">
@@ -34,8 +37,8 @@
               </span>
             </a>
             <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/resumen" (click)="onLinkClick()">Resumen Seguros</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/seguros/contratar-seguro" (click)="onLinkClick()">Contratar Seguro</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/seguros/seguros-contratados" (click)="onLinkClick()">Resumen Seguros</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/seguros/contratar-seguro" (click)="onLinkClick()">Contratar Seguro</a></li>
             </ul>
           </li>
           <li class="nav-item">

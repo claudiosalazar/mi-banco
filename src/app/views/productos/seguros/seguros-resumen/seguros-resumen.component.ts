@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 // Datos usuario
-import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
-import { DatosUsuarioActual } from '../../../shared/models/datos-usuario.model';
+import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
+import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
 // Datos seguros
-import { SegurosUsuarioService } from '../../../core/services/seguros-usuario.service';
-import { SegurosUsuario } from '../../../shared/models/seguros-usuario.model';
+import { SegurosUsuarioService } from '../../../../core/services/seguros-usuario.service';
+import { SegurosUsuario } from '../../../../shared/models/seguros-usuario.model';
 // Datos ofertas
-import { OfertasProductosService } from '../../../core/services/ofertas-productos.service';
-import { OfertasProductos } from './../../../shared/models/ofertas-productos.model';
+import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
+import { OfertasProductos } from '../../../../shared/models/ofertas-productos.model';
 
 @Component({
   selector: 'app-seguros-resumen',

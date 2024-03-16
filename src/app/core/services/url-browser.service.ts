@@ -8,26 +8,48 @@ export class UrlBrowserService {
 
   constructor(private router: Router) { }
 
+  // Cuenta corriente
+  navegarAInicioCtaCte(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente']);
+  }
+  navegarATransferenciasCtaCte(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'transferencias']);
+  }
+  navegarAComprobanteCtaCte(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'comprobante']);
+  }
+  
   // Visa
   navegarAInicioVisa(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'visa']);
+    this.router.navigate(['/mibanco', 'productos', 'visa']);
   }
   navegarAPagoVisa(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'visa', 'pago']);
+    this.router.navigate(['/mibanco', 'productos', 'visa', 'pago']);
   }
   navegarAComprobanteVisa(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'visa', 'comprobante']);
+    this.router.navigate(['/mibanco', 'productos', 'visa', 'comprobante']);
   }
 
   // Linea de crédito
   navegarAInicioLineaDeCredito(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'linea-credito']);
+    this.router.navigate(['/mibanco', 'productos', 'linea-credito']);
   }
   navegarAPagoLineaDeCredito(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'linea-credito', 'pago']);
+    this.router.navigate(['/mibanco', 'productos', 'linea-credito', 'pago']);
   }
   navegarAComprobanteLineaCredito(): void {
-    this.router.navigate(['/mibanco', 'transacciones', 'linea-credito', 'comprobante']);
+    this.router.navigate(['/mibanco', 'productos', 'linea-credito', 'comprobante']);
+  }
+
+  // Seguros
+  navegarAResumenSeguros(): void {
+    this.router.navigate(['/mibanco', 'productos', 'seguros', 'resumen']);
+  }
+  navegarAContratarSeguro(): void {
+    this.router.navigate(['/mibanco', 'productos', 'seguros', 'contratar-seguro']);
+  }
+  navegarAComprobanteSeguro(): void {
+    this.router.navigate(['/mibanco', 'productos', 'seguros', 'comprobante']);
   }
   
 }

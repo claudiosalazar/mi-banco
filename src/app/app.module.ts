@@ -27,18 +27,29 @@ import { ResumenUsuarioComponent } from './views/resumen-usuario/resumen-usuario
 import { ProductosComponent } from './views/productos/productos.component';
 import { ContactanosComponent } from './views/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
+
+// Cuenta corriente
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
+import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
+import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
+
+// Linea de credito
 import { LineaCreditoComponent } from './views/productos/linea-credito/linea-credito.component';
+import { LineaCreditoPagoComponent } from './views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
+import { LineaCreditoComprobanteComponent } from './views/productos/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
+
+// Visa
 import { VisaComponent } from './views/productos/visa/visa.component';
 import { VisaPagoComponent } from './views/productos/visa/visa-pago/visa-pago.component';
 import { VisaComprobanteComponent } from './views/productos/visa/visa-comprobante/visa-comprobante.component';
+
+// Otros componentes
 import { TransaccionesResumenComponent } from './views/productos/transacciones-resumen/transacciones-resumen.component';
-import { SegurosComponent } from './views/seguros/seguros.component';
-import { SegurosResumenComponent } from './views/seguros/seguros-resumen/seguros-resumen.component';
-import { SegurosContratarComponent } from './views/seguros/seguros-contratar/seguros-contratar.component';
+import { SegurosComponent } from './views/productos/seguros/seguros.component';
+import { SegurosResumenComponent } from './views/productos/seguros/seguros-resumen/seguros-resumen.component';
+import { SegurosContratarComponent } from './views/productos/seguros/seguros-contratar/seguros-contratar.component';
 import { AyudaComponent } from './views/ayuda/ayuda.component';
-import { LineaCreditoPagoComponent } from './views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
-import { LineaCreditoComprobanteComponent } from './views/productos/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
+import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
 
 
 @NgModule({
@@ -66,7 +77,10 @@ import { LineaCreditoComprobanteComponent } from './views/productos/linea-credit
     VisaPagoComponent,
     VisaComprobanteComponent,
     TablesComponent,
-    BuscadorTablaComponent
+    BuscadorTablaComponent,
+    TransferenciasComponent,
+    ComprobanteTransferenciaComponent,
+    SegurosComprobanteComponent
   ],
   imports: [
     BrowserModule,
