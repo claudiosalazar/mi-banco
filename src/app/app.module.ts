@@ -50,6 +50,7 @@ import { SegurosResumenComponent } from './views/productos/seguros/seguros-resum
 import { SegurosContratarComponent } from './views/productos/seguros/seguros-contratar/seguros-contratar.component';
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
+import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-c
     BuscadorTablaComponent,
     TransferenciasComponent,
     ComprobanteTransferenciaComponent,
-    SegurosComprobanteComponent
+    SegurosComprobanteComponent,
+    CustomSelectComponent
   ],
   imports: [
     BrowserModule,

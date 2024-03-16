@@ -55,10 +55,10 @@ export class LineaCreditoPagoComponent implements OnInit {
   productosUsuario: { productos: any[] } = { productos: [] };
   cupoVisa: any;
   cupoCtaCte: any;
-  numeroCtaCte: any;
+  numeroCtaCte: any = '';
   cupoLineaCredito: any;
   numeroLineaCredito: any;
-  numeroVisa: any;
+  numeroVisa: any = '';
   cupoInicialLineaCredito: any;
   cupoDisponibleLineaCredito: any;
   montoPagado: any;
@@ -71,6 +71,13 @@ export class LineaCreditoPagoComponent implements OnInit {
   // Variables para modal
   pagoCorrecto: boolean = true;
   errorServer: boolean = false;
+
+  // Variable para custom select
+  myOptions = [
+    { value: '0', label: '-' },
+    { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
+    { value: '2', label: 'Visa N° ' + this.numeroVisa }
+  ];
 
 
   constructor(
@@ -157,11 +164,8 @@ export class LineaCreditoPagoComponent implements OnInit {
   }
 
   // Quita el estado disables a los radio e input de monto
-  onProductoSeleccionado(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    if (target) {
-      this.productoSeleccionado = target.value;
-    }
+  onProductoSeleccionado(value: any): void {
+    this.productoSeleccionado = value;
     this.elementosHabilitados = this.productoSeleccionado === '1' || this.productoSeleccionado === '2';
   
     // Habilitar o deshabilitar los FormControl dependiendo del valor seleccionado
