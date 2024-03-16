@@ -51,6 +51,7 @@ import { SegurosContratarComponent } from './views/productos/seguros/seguros-con
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
+import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { CustomSelectComponent } from './shared/components/custom-select/custom-
     TransferenciasComponent,
     ComprobanteTransferenciaComponent,
     SegurosComprobanteComponent,
-    CustomSelectComponent
+    CustomSelectComponent,
+    CartolaHistoricaComponent
   ],
   imports: [
     BrowserModule,

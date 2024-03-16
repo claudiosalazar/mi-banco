@@ -22,6 +22,10 @@ export class CuentaCorrienteComponent implements OnInit {
   campoBusqueda = new FormControl('');
   mostrarPaginador: boolean | undefined;
 
+  // Transferencias
+  formularioTransferencia = true;
+  comprobanteTransferencia = false;
+
   constructor() { }
 
   ngOnInit(): void {

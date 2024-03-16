@@ -2,16 +2,46 @@
   <div class="row">
     <div class="col-12">
       <div class="mt-3 mt-md-5">
-        <h1>Movimientos Cuenta Corriente</h1>
-        <div class="card mt-4">
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <app-buscador-tabla></app-buscador-tabla>
+        <h1 class="mb-5">Cuenta Corriente</h1>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#movimientos">Movimientos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#transferencias">Realizar transferencia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#cartola">Cartola historica</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <!-- Movimientos -->
+          <div class="tab-pane container active" id="movimientos">
+            <div class="row">
+              <div class="col-12 col-md-6 mt-2">
+                <app-buscador-tabla></app-buscador-tabla>
+              </div>
+            </div>
+            <div class="p-0 p-md-4">
+              <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
             </div>
           </div>
-          <!-- Importacion de componente tables -->
-          <div class="p-0 p-md-4">
-            <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+          <!-- Transferencias -->
+          <div class="tab-pane container fade" id="transferencias">
+            <ng-container *ngIf="formularioTransferencia">
+              <app-transferencias></app-transferencias>
+            </ng-container>
+            <ng-container *ngIf="comprobanteTransferencia">
+              <app-comprobante-transferencia></app-comprobante-transferencia>
+            </ng-container>
+          </div>
+          <!-- Cartola -->
+          <div class="tab-pane container fade" id="cartola">
+            <div class="row">
+              <div class="col-12 mt-2">
+                <app-cartola-historica></app-cartola-historica>
+              </div>
+            </div>
           </div>
         </div>
       </div>
