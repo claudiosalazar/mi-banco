@@ -93,6 +93,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     this.getDatosUsuario();
     this.getOfertasProductos('')
     this.getProductosUsuarioResumen('');
+    this.getDatosSelect('');
     this.pagoLineaCreditoForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
@@ -144,6 +145,22 @@ export class LineaCreditoPagoComponent implements OnInit {
         this.cupoInicialLineaCredito = parseFloat(this.productosUsuario.productos[1]?.cupo);
         this.cupoVisa = parseFloat(this.productosUsuario.productos[2]?.transacciones[this.productosUsuario.productos[2]?.transacciones.length - 1]?.saldo);
         this.cupoDisponibleLineaCredito = parseFloat(this.productosUsuario.productos[1]?.cupoDisponible);
+      }
+    );
+  }
+
+  getDatosSelect(id: string): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
+        this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
+  
+        this.myOptions = [
+          { value: '0', label: '-' },
+          { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
+          { value: '2', label: 'Visa N° ' + this.numeroVisa }
+        ];
       }
     );
   }

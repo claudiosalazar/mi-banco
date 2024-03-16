@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, HostListener, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -14,12 +14,11 @@ export class CustomSelectComponent implements OnInit{
   selectedOption: any;
   isOpen: any;
 
+  constructor(private eRef: ElementRef) { }
+
   ngOnInit() {
-    // Asegúrate de que las opciones estén definidas antes de intentar encontrar una opción
     if (this.options) {
-      // Encuentra la opción con el valor '0'
       let option = this.options.find(option => option.value === '0');
-      // Si la opción con el valor '0' existe, selecciona esta opción
       if (option) {
         this.selectedOption = option.label;
         this.change.emit(option.value);
@@ -35,5 +34,12 @@ export class CustomSelectComponent implements OnInit{
 
   onSelectChange(option: any) {
     this.selectOption(option);
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: Event) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.isOpen = false;
+    }
   }
 }
