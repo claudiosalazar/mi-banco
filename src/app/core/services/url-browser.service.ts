@@ -8,6 +8,10 @@ export class UrlBrowserService {
 
   constructor(private router: Router) { }
 
+  pushState(state: any, title: string, url: string) {
+    window.history.pushState(state, title, url);
+  }
+
   // Cuenta corriente
   navegarAMovimientosCtaCte(): void {
     this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'movimientos']);

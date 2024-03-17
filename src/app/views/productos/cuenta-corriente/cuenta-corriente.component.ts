@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UrlBrowserService } from 'src/app/core/services/url-browser.service';
 
 @Component({
   selector: 'app-cuenta-corriente',
@@ -10,7 +11,8 @@ export class CuentaCorrienteComponent implements OnInit, AfterViewInit  {
   activeTab = '';
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private urlBrowserService: UrlBrowserService
   ) { }
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class CuentaCorrienteComponent implements OnInit, AfterViewInit  {
   setActiveTab(tabId: string) {
     this.activeTab = tabId;
     this.updateActiveTab();
+    this.urlBrowserService.pushState({}, '', `/mibanco/productos/cuenta-corriente/${tabId}`);
   }
 
   updateActiveTab() {
