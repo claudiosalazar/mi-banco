@@ -9,6 +9,7 @@ import { ProductosComponent } from './views/productos/productos.component';
 import { ContactanosComponent } from './views/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
+import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
 import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
 import { LineaCreditoComponent } from './views/productos/linea-credito/linea-credito.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
         children: [
           { path: 'resumen', component: TransaccionesResumenComponent },
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
+          { path: 'cuenta-corriente/movimientos', component: MovimientosComponent },
           { path: 'cuenta-corriente/transferencias', component: TransferenciasComponent },
           { path: 'cuenta-corriente/comprobante', component: ComprobanteTransferenciaComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
