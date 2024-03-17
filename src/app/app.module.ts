@@ -30,6 +30,7 @@ import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.compo
 
 // Cuenta corriente
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
+import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
 import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
 
@@ -84,7 +85,8 @@ import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/ca
     ComprobanteTransferenciaComponent,
     SegurosComprobanteComponent,
     CustomSelectComponent,
-    CartolaHistoricaComponent
+    CartolaHistoricaComponent,
+    MovimientosComponent
   ],
   imports: [
     BrowserModule,

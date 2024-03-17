@@ -15,33 +15,20 @@
           </li>
         </ul>
         <div class="tab-content">
+
           <!-- Movimientos -->
           <div class="tab-pane container active" id="movimientos">
-            <div class="row">
-              <div class="col-12 col-md-6 mt-2">
-                <app-buscador-tabla></app-buscador-tabla>
-              </div>
-            </div>
-            <div class="p-0 p-md-4">
-              <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
-            </div>
+            <app-movimientos></app-movimientos>
           </div>
+
           <!-- Transferencias -->
           <div class="tab-pane container fade" id="transferencias">
-            <ng-container *ngIf="formularioTransferencia">
-              <app-transferencias></app-transferencias>
-            </ng-container>
-            <ng-container *ngIf="comprobanteTransferencia">
-              <app-comprobante-transferencia></app-comprobante-transferencia>
-            </ng-container>
+            <app-transferencias></app-transferencias>
           </div>
+
           <!-- Cartola -->
           <div class="tab-pane container fade" id="cartola">
-            <div class="row">
-              <div class="col-12 mt-2">
-                <app-cartola-historica></app-cartola-historica>
-              </div>
-            </div>
+            <app-cartola-historica></app-cartola-historica>
           </div>
         </div>
       </div>
