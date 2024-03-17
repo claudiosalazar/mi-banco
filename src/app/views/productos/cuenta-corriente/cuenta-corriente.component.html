@@ -5,29 +5,29 @@
         <h1 class="mb-5">Cuenta Corriente</h1>
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#movimientos">Movimientos</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#movimientos" (click)="setActiveTab('movimientos')">Movimientos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#transferencias">Realizar Transferencia</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#transferencias" (click)="setActiveTab('transferencias')">Realizar Transferencia</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#cartola">Cartola historica</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#cartola" (click)="setActiveTab('cartola')">Cartola historica</a>
           </li>
         </ul>
         <div class="tab-content">
 
           <!-- Movimientos -->
-          <div class="tab-pane container active" id="movimientos">
+          <div class="tab-pane active" id="movimientos">
             <app-movimientos></app-movimientos>
           </div>
 
           <!-- Transferencias -->
-          <div class="tab-pane container fade" id="transferencias">
+          <div class="tab-pane" id="transferencias">
             <app-transferencias></app-transferencias>
           </div>
 
           <!-- Cartola -->
-          <div class="tab-pane container fade" id="cartola">
+          <div class="tab-pane" id="cartola">
             <app-cartola-historica></app-cartola-historica>
           </div>
         </div>
