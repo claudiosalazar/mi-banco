@@ -12,6 +12,7 @@ import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cue
 import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
 import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
+import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 import { LineaCreditoComponent } from './views/productos/linea-credito/linea-credito.component';
 import { LineaCreditoPagoComponent } from './views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { LineaCreditoComprobanteComponent } from './views/productos/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
           { path: 'cuenta-corriente/movimientos', component: MovimientosComponent },
           { path: 'cuenta-corriente/transferencias', component: TransferenciasComponent },
           { path: 'cuenta-corriente/comprobante', component: ComprobanteTransferenciaComponent },
+          { path: 'cuenta-corriente/cartola', component: CartolaHistoricaComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
           { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },

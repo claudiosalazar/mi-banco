@@ -9,14 +9,18 @@ export class UrlBrowserService {
   constructor(private router: Router) { }
 
   // Cuenta corriente
-  navegarAInicioCtaCte(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente']);
+  navegarAMovimientosCtaCte(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'movimientos']);
   }
   navegarATransferenciasCtaCte(): void {
     this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'transferencias']);
   }
   navegarAComprobanteCtaCte(): void {
     this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'comprobante']);
+  }
+
+  navegarACartolaCtaCte(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'cartola']);
   }
   
   // Visa
