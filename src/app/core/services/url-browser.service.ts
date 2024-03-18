@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
 @Injectable({
   providedIn: 'root'
 })
 export class UrlBrowserService {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+  ) { }
 
   pushState(state: any, title: string, url: string) {
     window.history.pushState(state, title, url);

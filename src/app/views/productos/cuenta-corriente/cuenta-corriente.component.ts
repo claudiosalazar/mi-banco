@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UrlBrowserService } from '../../../core/services/url-browser.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cuenta-corriente',
@@ -12,17 +12,17 @@ export class CuentaCorrienteComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private urlBrowserService: UrlBrowserService
+    private location: Location
   ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.activeTab = params['tab'] || 'ultimos-movimientos';
       this.updateActiveTab();
+      this.cambiarUrl(this.activeTab);
     });
   }
   
-
   updateActiveTab() {
     // Obtener todos los enlaces de las pestañas y eliminar la clase 'active'
     var tabLinks = document.querySelectorAll('.nav-link');
@@ -44,4 +44,23 @@ export class CuentaCorrienteComponent implements OnInit {
       activeTab.classList.add('active');
     }
   }
+
+  cambiarUrl(tab: string) {
+    let nuevaUrl = '';
+  
+    switch (tab) {
+      case 'movimientos':
+        nuevaUrl = '/mibanco/productos/cuenta-corriente/ultimos-movimientos';
+        break;
+      case 'transferencias':
+        nuevaUrl = '/mibanco/productos/cuenta-corriente/realizar-transferencia';
+        break;
+      case 'cartola':
+        nuevaUrl = '/mibanco/productos/cuenta-corriente/cartola-historica';
+        break;
+    }
+  
+    this.location.go(nuevaUrl);
+  }
+
 }
