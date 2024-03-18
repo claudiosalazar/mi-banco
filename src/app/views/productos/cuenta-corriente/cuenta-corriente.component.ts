@@ -1,35 +1,21 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UrlBrowserService } from 'src/app/core/services/url-browser.service';
 
 @Component({
   selector: 'app-cuenta-corriente',
   templateUrl: './cuenta-corriente.component.html'
 })
-export class CuentaCorrienteComponent implements OnInit, AfterViewInit  {
+export class CuentaCorrienteComponent implements OnInit {
 
   activeTab = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private urlBrowserService: UrlBrowserService
-  ) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.activeTab = params['tab'] || 'movimientos';
       this.updateActiveTab();
     });
-  }
-
-  ngAfterViewInit() {
-    this.updateActiveTab();
-  }
-
-  setActiveTab(tabId: string) {
-    this.activeTab = tabId;
-    this.updateActiveTab();
-    this.urlBrowserService.pushState({}, '', `/mibanco/productos/cuenta-corriente/${tabId}`);
   }
 
   updateActiveTab() {
@@ -48,10 +34,9 @@ export class CuentaCorrienteComponent implements OnInit, AfterViewInit  {
     tabs.forEach(tab => tab.classList.remove('active'));
 
     // Agregar la clase 'active' a la pestaña deseada
-    var tab = document.querySelector(`#${this.activeTab}`);
-    if (tab) {
-      tab.classList.add('active');
+    var activeTab = document.querySelector(`#${this.activeTab}`);
+    if (activeTab) {
+      activeTab.classList.add('active');
     }
   }
-
 }

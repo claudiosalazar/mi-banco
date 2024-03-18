@@ -5,29 +5,32 @@
         <h1 class="mb-5">Cuenta Corriente</h1>
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#movimientos" (click)="setActiveTab('movimientos')">Movimientos</a>
+            <a class="nav-link" [ngClass]="{'active': activeTab === 'movimientos'}" data-bs-toggle="tab" href="#movimientos" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
+            [queryParams]="{tab: 'movimientos'}">Movimientos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#transferencias" (click)="setActiveTab('transferencias')">Realizar Transferencia</a>
+            <a class="nav-link" [ngClass]="{'active': activeTab === 'transferencias'}" data-bs-toggle="tab" href="#transferencias" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
+            [queryParams]="{tab: 'transferencias'}">Transferencias</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#cartola" (click)="setActiveTab('cartola')">Cartola historica</a>
+            <a class="nav-link" [ngClass]="{'active': activeTab === 'cartola'}" data-bs-toggle="tab" href="#cartola" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
+            [queryParams]="{tab: 'cartola'}">Cartola</a>
           </li>
         </ul>
         <div class="tab-content">
 
           <!-- Movimientos -->
-          <div class="tab-pane active" id="movimientos">
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 'movimientos'}" id="movimientos">
             <app-movimientos></app-movimientos>
           </div>
 
           <!-- Transferencias -->
-          <div class="tab-pane" id="transferencias">
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 'transferencias'}" id="transferencias">
             <app-transferencias></app-transferencias>
           </div>
 
           <!-- Cartola -->
-          <div class="tab-pane" id="cartola">
+          <div class="tab-pane" [ngClass]="{'active': activeTab === 'cartola'}" id="cartola">
             <app-cartola-historica></app-cartola-historica>
           </div>
         </div>
