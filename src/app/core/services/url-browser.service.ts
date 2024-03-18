@@ -11,21 +11,7 @@ export class UrlBrowserService {
   pushState(state: any, title: string, url: string) {
     window.history.pushState(state, title, url);
   }
-
-  // Cuenta corriente
-  navegarAMovimientosCtaCte(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'movimientos']);
-  }
-  navegarATransferenciasCtaCte(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'transferencias']);
-  }
-  navegarAComprobanteCtaCte(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'comprobante']);
-  }
-
-  navegarACartolaCtaCte(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'cartola']);
-  }
+  
   
   // Visa
   navegarAInicioVisa(): void {

@@ -35,10 +35,10 @@ const routes: Routes = [
         children: [
           { path: 'resumen', component: TransaccionesResumenComponent },
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
-          { path: 'cuenta-corriente/movimientos', component: MovimientosComponent },
-          { path: 'cuenta-corriente/transferencias', component: TransferenciasComponent },
+          { path: 'cuenta-corriente/ultimos-movimientos', component: MovimientosComponent },
+          { path: 'cuenta-corriente/realizar-transferencia', component: TransferenciasComponent },
           { path: 'cuenta-corriente/comprobante', component: ComprobanteTransferenciaComponent },
-          { path: 'cuenta-corriente/cartola', component: CartolaHistoricaComponent },
+          { path: 'cuenta-corriente/cartola-historica', component: CartolaHistoricaComponent },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
           { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },
