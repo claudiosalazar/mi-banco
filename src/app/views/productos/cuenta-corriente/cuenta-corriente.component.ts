@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 export class CuentaCorrienteComponent implements OnInit {
 
   activeTab = '';
+  previousTab = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -17,9 +18,9 @@ export class CuentaCorrienteComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.activeTab = params['tab'] || 'ultimos-movimientos';
+      this.previousTab = this.activeTab;
+      this.activeTab = params['tab'] || 'movimientos';
       this.updateActiveTab();
-      this.cambiarUrl(this.activeTab);
     });
   }
   
@@ -44,23 +45,4 @@ export class CuentaCorrienteComponent implements OnInit {
       activeTab.classList.add('active');
     }
   }
-
-  cambiarUrl(tab: string) {
-    let nuevaUrl = '';
-  
-    switch (tab) {
-      case 'movimientos':
-        nuevaUrl = '/mibanco/productos/cuenta-corriente/ultimos-movimientos';
-        break;
-      case 'transferencias':
-        nuevaUrl = '/mibanco/productos/cuenta-corriente/realizar-transferencia';
-        break;
-      case 'cartola':
-        nuevaUrl = '/mibanco/productos/cuenta-corriente/cartola-historica';
-        break;
-    }
-  
-    this.location.go(nuevaUrl);
-  }
-
 }

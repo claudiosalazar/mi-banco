@@ -1,7 +1,25 @@
-.tab-pane {
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-bottom-left-radius: 0.375rem;
-  border-bottom-right-radius: 0.375rem;
+// Tabs para cuenta corriente
+.tabs-cta-cte {
+  .nav-tabs {
+    // border-bottom: 1px solid #ddd;
+    border-bottom: none;
+  }
+  .tab-pane {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  
+    &#movimientos {
+      border-top-right-radius: 0.375rem;
+    }
+  
+    &#transferencias, &#cartola {
+      border-top-left-radius: 0.375rem;
+      border-top-right-radius: 0.375rem;
+    }
+  
+  }
 }
