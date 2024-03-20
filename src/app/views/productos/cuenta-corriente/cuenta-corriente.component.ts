@@ -53,11 +53,20 @@ export class CuentaCorrienteComponent implements OnInit {
       data => {
         this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
         this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
-        this.ultimoCargo = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.cargo);
-        this.ultimoAbono = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono) === 0 ? "0" : this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono;
+        // this.ultimoCargo = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.cargo);
         this.numeroCtaCte = parseFloat(this.productosUsuario.productos[0]?.productoNumero);
         this.cupoLineaCredito = parseFloat(this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo);
         this.numeroLineaCredito = parseFloat(this.productosUsuario.productos[1]?.productoNumero);
+        this.ultimoAbono = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono) === 0 ? "0" : this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono;
+        if (this.productosUsuario.productos[0]?.transacciones) {
+          for (let i = this.productosUsuario.productos[0].transacciones.length - 1; i >= 0; i--) {
+            let cargo = parseFloat(this.productosUsuario.productos[0].transacciones[i].cargo);
+            if (cargo > 0) {
+              this.ultimoCargo = cargo;
+              break;
+            }
+          }
+        }
       }
     );
   }

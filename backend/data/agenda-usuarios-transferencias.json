@@ -1,0 +1,49 @@
+{
+  "agenda": [
+    {
+      "id": "0",
+      "apodo": "Pedrito 1",
+      "nombre": "Pedro Palominos",
+      "rut": "000000000",
+      "banco": "BCI",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "4567890987"
+    },
+    {
+      "id": "1",
+      "apodo": "Victor",
+      "nombre": "Victor Rojas",
+      "rut": "111111111",
+      "banco": "Banco Estado",
+      "tipoCuenta": "Cuenta Vista",
+      "numeroCuenta": "11111111"
+    },
+    {
+      "id": "2",
+      "apodo": "Coni",
+      "nombre": "Constanza Morales",
+      "rut": "222222222",
+      "banco": "Banco Chile",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "98767898"
+    },
+    {
+      "id": "3",
+      "apodo": "Compadre",
+      "nombre": "Eduardo Flores",
+      "rut": "333333333",
+      "banco": "Mi Banco",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "39857944"
+    },
+    {
+      "id": "4",
+      "apodo": "Mamá",
+      "nombre": "Josefina Soto",
+      "rut": "444444444",
+      "banco": "Santander",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "990887665"
+    }
+  ]
+}
