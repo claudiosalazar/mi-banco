@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "44900",
+      "cupo": "1044900",
       "cupoDisponible": "55000",
       "transacciones": [
         {
@@ -94,6 +94,14 @@
           "cargo": "100",
           "abono": "0",
           "saldo": "44900"
+        },
+        {
+          "id": "11",
+          "fecha": "2024-03-20",
+          "detalle": "Transferencia recibida de Mister Satan",
+          "cargo": "0",
+          "abono": "1000000",
+          "saldo": "1044900"
         }
       ]
     },

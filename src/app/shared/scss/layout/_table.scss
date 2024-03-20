@@ -15,7 +15,7 @@
       border: none;
       position: relative;
       padding-left: 50%;
-      height: 30px;
+      min-height: 30px;
       display: flex;
       align-items: center;
       background-color: transparent;
@@ -28,7 +28,7 @@
         width: 45%;
         white-space: nowrap;
         font-weight: bold;
-        height: 30px;
+        min-height: 30px;
         display: flex;
         align-items: center;
       }
