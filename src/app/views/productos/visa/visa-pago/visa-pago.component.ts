@@ -461,8 +461,8 @@ export class VisaPagoComponent implements OnInit {
             fecha: fechaFormateada, // Usar la fecha formateada
             detalle: 'Pago a Visa',
             cargo: montoPagado,
-            abono: '',
-            saldo: '' // Reemplaza con el valor real
+            abono: '0',
+            saldo: ''
           });
         }
 
@@ -489,7 +489,7 @@ export class VisaPagoComponent implements OnInit {
             fecha: fechaFormateada, // Usar la fecha formateada
             detalle: 'Pago a Visa',
             cargo: montoPagado,
-            abono: '',
+            abono: '0',
             saldo: '' // Reemplaza con el valor real
           });
         }
@@ -515,7 +515,7 @@ export class VisaPagoComponent implements OnInit {
           id: nuevoIdTransaccion.toString(),
           fecha: fechaFormateada, // Usar la fecha formateada
           detalle: 'Abono a Visa',
-          cargo: '',
+          cargo: '0',
           abono: montoPagado,
           saldo: '' // Reemplaza con el valor real
         });

@@ -144,8 +144,8 @@ export class ProductosUsuarioService {
               id: transaccion.id,
               fecha: transaccion.fecha,
               detalle: transaccion.detalle,
-              cargo: transaccion.cargo,
-              abono: transaccion.abono,
+              cargo: transaccion.cargo === 0 ? "0" : transaccion.cargo,
+              abono: transaccion.abono === 0 ? "0" : transaccion.abono,
               saldo: saldoCalculado.toString()
             })) : []
           };

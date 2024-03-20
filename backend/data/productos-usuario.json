@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "43000",
+      "cupo": "44900",
       "cupoDisponible": "55000",
       "transacciones": [
         {
@@ -89,19 +89,11 @@
         },
         {
           "id": "10",
-          "fecha": "2024-03-16",
-          "detalle": "Pago a LineaCredito",
-          "cargo": "1000",
-          "abono": "",
-          "saldo": "44000"
-        },
-        {
-          "id": "11",
-          "fecha": "2024-03-16",
+          "fecha": "2024-03-20",
           "detalle": "Pago a Visa",
-          "cargo": "1000",
-          "abono": "",
-          "saldo": "43000"
+          "cargo": "100",
+          "abono": "0",
+          "saldo": "44900"
         }
       ]
     },
@@ -109,8 +101,8 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "346500",
-      "cupoDisponible": "4655500",
+      "cupo": "345500",
+      "cupoDisponible": "4655600",
       "transacciones": [
         {
           "id": "0",
@@ -191,14 +183,6 @@
           "cargo": "200000",
           "abono": "0",
           "saldo": "346500"
-        },
-        {
-          "id": "10",
-          "fecha": "2024-03-16",
-          "detalle": "Abono a Línea de Crédito",
-          "cargo": "",
-          "abono": "1000",
-          "saldo": "345500"
         }
       ]
     },
@@ -207,7 +191,7 @@
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
       "cupo": "2316000",
-      "cupoDisponible": "2692600",
+      "cupoDisponible": "2692800",
       "transacciones": [
         {
           "id": "0",
@@ -291,11 +275,11 @@
         },
         {
           "id": "10",
-          "fecha": "2024-03-16",
+          "fecha": "2024-03-20",
           "detalle": "Abono a Visa",
-          "cargo": "",
-          "abono": "1000",
-          "saldo": "2315000"
+          "cargo": "0",
+          "abono": "100",
+          "saldo": "2316000"
         }
       ]
     }

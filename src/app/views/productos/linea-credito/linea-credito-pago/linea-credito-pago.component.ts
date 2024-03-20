@@ -462,7 +462,7 @@ export class LineaCreditoPagoComponent implements OnInit {
             fecha: fechaFormateada, // Usar la fecha formateada
             detalle: 'Pago a LineaCredito',
             cargo: montoPagado,
-            abono: '',
+            abono: '0',
             saldo: '' // Reemplaza con el valor real
           });
         }
@@ -490,7 +490,7 @@ export class LineaCreditoPagoComponent implements OnInit {
             fecha: fechaFormateada, // Usar la fecha formateada
             detalle: 'Pago a LineaCredito',
             cargo: montoPagado,
-            abono: '',
+            abono: '0',
             saldo: '' // Reemplaza con el valor real
           });
         }
@@ -516,7 +516,7 @@ export class LineaCreditoPagoComponent implements OnInit {
           id: nuevoIdTransaccion.toString(),
           fecha: fechaFormateada, // Usar la fecha formateada
           detalle: 'Abono a Línea de Crédito',
-          cargo: '',
+          cargo: '0',
           abono: montoPagado,
           saldo: '' // Reemplaza con el valor real
         });

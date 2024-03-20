@@ -42,8 +42,8 @@ export class CuentaCorrienteComponent implements OnInit {
     this.getOfertasProductos('');
     this.fechaYhoraActual = this.datePipe.transform(new Date(), 'short');
     this.route.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
       this.currentUrl = event.urlAfterRedirects;
     });
   }
@@ -53,8 +53,8 @@ export class CuentaCorrienteComponent implements OnInit {
       data => {
         this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
         this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
-        this.ultimoCargo = this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.cargo;
-        this.ultimoAbono = this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono;
+        this.ultimoCargo = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.cargo);
+        this.ultimoAbono = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono) === 0 ? "0" : this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.abono;
         this.numeroCtaCte = parseFloat(this.productosUsuario.productos[0]?.productoNumero);
         this.cupoLineaCredito = parseFloat(this.productosUsuario.productos[1]?.transacciones[this.productosUsuario.productos[1]?.transacciones.length - 1]?.saldo);
         this.numeroLineaCredito = parseFloat(this.productosUsuario.productos[1]?.productoNumero);
