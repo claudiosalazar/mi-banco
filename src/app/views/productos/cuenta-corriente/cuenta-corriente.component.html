@@ -6,9 +6,52 @@
 
         <div class="row">
 
-          <div class="col-12">
+          <div class="col-12" *ngIf="!currentUrl.endsWith('cartola-historica')" >
             <div class="card mb-4 p-4">
-              Informo cta cte
+              <div class="row">
+                <div class="col-12 mb-4">
+                  Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong>
+                </div>
+                <div class="col-12 col-md-6">
+                  <small class="mb-0">Saldo disponible</small>
+                  <h4 class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></h4>
+                </div>
+                <div class="col-12 col-md-6">
+                  <small class="mb-0">Saldo disponible en Línea de Crédito <strong>Nº {{numeroLineaCredito}}</strong></small>
+                  <h4 class="mb-0"><strong>{{cupoLineaCredito | pesos}}</strong></h4>
+                </div>
+
+                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                  <div class="d-flex flex-row justify-content-between">
+                    <small class="mb-0">Saldo contable</small>
+                    <small class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></small>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <small class="mb-0">Retenciones a 24 Hrs</small>
+                    <small class="mb-0"><strong>$ 0</strong></small>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <small class="mb-0">Retenciones a 48 Hrs</small>
+                    <small class="mb-0"><strong>$ 0</strong></small>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                  <div class="d-flex flex-row justify-content-between">
+                    <small class="mb-0">Último cargo</small>
+                    <small class="mb-0"><strong>{{ultimoCargo | pesos}}</strong></small>
+                  </div>
+                  <div class="d-flex flex-row justify-content-between">
+                    <small class="mb-0">Último abono</small>
+                    <small class="mb-0"><strong>{{ultimoAbono | pesos}}</strong></small>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                  <div class="alert alert-primary mt-5 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
+                    <small>Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
+                    <button class="btn btn-primary btn-sm" type="button">Simular aquí</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
