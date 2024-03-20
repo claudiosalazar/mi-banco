@@ -2,45 +2,44 @@
   <div class="row">
     <div class="col-12">
       <div class="mt-3 mt-md-5">
-        <h1 class="mb-5">Cuenta Corriente</h1>
-        <div class="tabs-cta-cte">
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': activeTab === 'movimientos'}" data-bs-toggle="tab" href="#movimientos" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
-              [queryParams]="{tab: 'movimientos'}">Últimos movimientos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': activeTab === 'transferencias'}" data-bs-toggle="tab" href="#transferencias" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
-              [queryParams]="{tab: 'transferencias'}">Realizar Transferencia</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': activeTab === 'cartola'}" data-bs-toggle="tab" href="#cartola" [routerLink]="['/mibanco/productos/cuenta-corriente']" 
-              [queryParams]="{tab: 'cartola'}">Cartola Historica</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-  
-            <!-- Movimientos -->
-            <ng-container *ngIf="activeTab === 'movimientos'">
-              <div class="tab-pane active" id="movimientos">
-                <app-movimientos></app-movimientos>
-              </div>
-            </ng-container>
-          
-            <!-- Transferencias -->
-            <ng-container *ngIf="activeTab === 'transferencias'">
-              <div class="tab-pane active" id="transferencias">
-                <app-transferencias></app-transferencias>
-              </div>
-            </ng-container>
-          
-            <!-- Cartola -->
-            <ng-container *ngIf="activeTab === 'cartola'">
-              <div class="tab-pane active" id="cartola">
-                <app-cartola-historica></app-cartola-historica>
-              </div>
-            </ng-container>
+        <h1 class="mb-4">Cuenta Corriente</h1>
+
+        <div class="row">
+
+          <div class="col-12">
+            <div class="card mb-4 p-4">
+              Informo cta cte
+            </div>
           </div>
+
+          <div class="col-12">
+            <div class="tabs-cta-cte">
+
+              <ul class="nav nav-tabs" id="tabCtaCte" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('ultimos-movimientos')}" id="movimientos-tab" 
+                  data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" 
+                  routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Últimos Movimientos</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('realizar-transferencia')}" id="transferencias-tab" 
+                  data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" 
+                  routerLink="/mibanco/productos/cuenta-corriente/realizar-transferencia">Realizar Transferencia</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('cartola-historica')}" id="cartola-tab" 
+                  data-bs-toggle="tab" type="button" role="tab" aria-controls="cartola-tab-pane" aria-selected="false" 
+                  routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola historica</button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="tabContentCtaCte">
+                <router-outlet></router-outlet>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

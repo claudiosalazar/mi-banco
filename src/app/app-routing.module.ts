@@ -34,11 +34,15 @@ const routes: Routes = [
         path: 'productos', component: ProductosComponent, canActivate: [AuthGuard],
         children: [
           { path: 'resumen', component: TransaccionesResumenComponent },
-          { path: 'cuenta-corriente', component: CuentaCorrienteComponent },
-          { path: 'cuenta-corriente/ultimos-movimientos', component: MovimientosComponent },
-          { path: 'cuenta-corriente/realizar-transferencia', component: TransferenciasComponent },
-          { path: 'cuenta-corriente/comprobante', component: ComprobanteTransferenciaComponent },
-          { path: 'cuenta-corriente/cartola-historica', component: CartolaHistoricaComponent },
+          { path: 'cuenta-corriente', component: CuentaCorrienteComponent,
+            children: [
+              { path: '', pathMatch: 'full', redirectTo: 'ultimos-movimientos'},
+              { path: 'ultimos-movimientos', component: MovimientosComponent },
+              { path: 'realizar-transferencia', component: TransferenciasComponent },
+              { path: 'comprobante-transferencia', component: ComprobanteTransferenciaComponent },
+              { path: 'cartola-historica', component: CartolaHistoricaComponent },
+            ]
+          },
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
           { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },

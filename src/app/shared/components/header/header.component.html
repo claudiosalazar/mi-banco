@@ -13,7 +13,8 @@
             <a class="nav-link" routerLink="/mibanco" (click)="onLinkClick()">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'transferencias'}" (click)="onLinkClick()">Transferencias</a>
+            <!-- <a class="nav-link" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'transferencias'}" (click)="onLinkClick()">Transferencias</a> -->
+            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/realizar-transferencia" (click)="onLinkClick()">Transferencias</a>
           </li>
           <li class="nav-item menu-transacciones">
             <a class="nav-link d-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -24,7 +25,8 @@
             </a>
             <ul class="dropdown-menu p-0">
               <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/resumen" (click)="onLinkClick()">Mis Productos</a></li>
-              <li><a class="dropdown-item px-4 py-3" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'movimientos'}" (click)="onLinkClick()">Cuenta Corriente</a></li>
+              <!-- <li><a class="dropdown-item px-4 py-3" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'movimientos'}" (click)="onLinkClick()">Cuenta Corriente</a></li> -->
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="onLinkClick()">Cuenta Corriente</a></li>
               <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/linea-credito" (click)="onLinkClick()">Línea de Crédito</a></li>
               <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/visa" (click)="onLinkClick()">Visa</a></li>
             </ul>

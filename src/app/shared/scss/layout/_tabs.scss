@@ -12,11 +12,11 @@
     border-bottom-left-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
   
-    &#movimientos {
+    &.movimientos {
       border-top-right-radius: 0.375rem;
     }
   
-    &#transferencias, &#cartola {
+    &.transferencias, &.cartola {
       border-top-left-radius: 0.375rem;
       border-top-right-radius: 0.375rem;
     }

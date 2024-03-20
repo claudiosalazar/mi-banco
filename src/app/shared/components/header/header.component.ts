@@ -1,7 +1,8 @@
 import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -15,16 +16,23 @@ export class HeaderComponent implements OnInit {
   segundoNombre: string | undefined;
   apellidoPaterno: string | undefined;
   apellidoMaterno: string | undefined;
+  currentUrl: string | undefined;
 
   constructor(
     private authService: AuthService, 
     private router: Router,
     private datosUsuarioService: DatosUsuarioService,
-    private renderer: Renderer2, // Inyecta Renderer2
-    private el: ElementRef // Inyecta ElementRef
-  ) { }
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) { 
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentUrl = event.urlAfterRedirects;
+    });
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.primerNombre = datos.datosUsuario.primerNombre;
       this.segundoNombre = datos.datosUsuario.segundoNombre;
