@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -11,6 +13,8 @@ export class AgendaDestinatariosComponent implements OnInit {
 
   destinatarios: any;
   destinatarioSeleccionado: any;
+
+  private baseUrl = '';
   
 
   // Variables para paginador
@@ -29,8 +33,13 @@ export class AgendaDestinatariosComponent implements OnInit {
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
 
+  // Variable para mensajes de modal
+  usuarioEliminado = false;
+  errorServer = false;
+
   constructor(
-    private agendaService: AgendaDestinatariosService
+    private agendaService: AgendaDestinatariosService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -99,6 +108,29 @@ export class AgendaDestinatariosComponent implements OnInit {
     console.log('ID del destinatario seleccionado:', this.destinatarioSeleccionado.id);
     var myModal = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
     myModal.show();
+  }
+
+  // Elimina usuario del server
+  eliminarDestinatario(id: number): Observable<any> {
+    return this.http.delete(`http://localhost:3000/backend/data/agenda-usuarios-transferencias.json/${id}`).pipe(
+      switchMap((response) => {
+        if (response) {
+          console.log('El usuario fue eliminado correctamente');
+          this.usuarioEliminado = true;
+        }
+        return this.agendaService.getDestinatarios();
+      }),
+      tap(destinatarios => {
+        for (let i = 0; i < destinatarios.length; i++) {
+          destinatarios[i].id = i + 1;
+        }
+      }),
+      catchError(error => {
+        console.log('Hubo un error al eliminar el usuario', error);
+        this.errorServer = true;
+        return throwError(error);
+      })
+    );
   }
   
 
