@@ -1,8 +1,12 @@
 // Tabs para cuenta corriente
 .tabs-cta-cte {
   .nav-tabs {
-    // border-bottom: 1px solid #ddd;
     border-bottom: none;
+    .nav-link {
+      &.active {
+        font-weight: bold;
+      }
+    }
   }
   .tab-pane {
     border-right: 1px solid #ddd;

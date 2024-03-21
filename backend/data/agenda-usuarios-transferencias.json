@@ -44,6 +44,51 @@
       "banco": "Santander",
       "tipoCuenta": "Cuenta Corriente",
       "numeroCuenta": "990887665"
+    },
+    {
+      "id": "5",
+      "apodo": "Uber",
+      "nombre": "Rodrigo Aranguiz",
+      "rut": "000000000",
+      "banco": "BCI",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "4567890987"
+    },
+    {
+      "id": "6",
+      "apodo": "Victorino",
+      "nombre": "Victorino Arriagada",
+      "rut": "111111111",
+      "banco": "Banco Estado",
+      "tipoCuenta": "Cuenta Vista",
+      "numeroCuenta": "11111111"
+    },
+    {
+      "id": "7",
+      "apodo": "Cote",
+      "nombre": "Constanza Miranda",
+      "rut": "222222222",
+      "banco": "Banco Chile",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "98767898"
+    },
+    {
+      "id": "8",
+      "apodo": "Hermano",
+      "nombre": "Pedro Perez",
+      "rut": "333333333",
+      "banco": "Mi Banco",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "39857944"
+    },
+    {
+      "id": "9",
+      "apodo": "Papá",
+      "nombre": "Federico Perez",
+      "rut": "444444444",
+      "banco": "Santander",
+      "tipoCuenta": "Cuenta Corriente",
+      "numeroCuenta": "990887665"
     }
   ]
 }

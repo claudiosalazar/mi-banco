@@ -1,15 +1,13 @@
 .table {
   width: 100%;
-  //display: block;
+  font-size: small;
   @media (max-width: $md) {
-    font-size: 90%;
     &.thead, tbody, th, td, tr {
       display: block;
     }
   }
 
   td {
-    /* Behave  like a "row" */
     border-bottom: 1px solid #eee;
     @media (max-width: $md)  {
       border: none;
@@ -20,9 +18,7 @@
       align-items: center;
       background-color: transparent;
       &:before {
-        /* Now like a table header */
         position: absolute;
-        /* Top/left values mimic padding */
         top: 0;
         left: 6px;
         width: 45%;
@@ -35,8 +31,6 @@
     }
   }
 
-  
-  
   thead {
     tr {
       @media (max-width: $md) {
@@ -47,16 +41,13 @@
       th {
         cursor: pointer;
         position: relative;
-  
         &.material-symbols-outlined {
           display: inline-block;
         }
-  
         span {
           &.rotated-in {
             @include rotated-in;
           }
-  
           &.rotated-out {
             @include rotated-out;
           }
@@ -64,7 +55,6 @@
             display: none;
           }
         }
-        
       }
     }
   }

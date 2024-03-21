@@ -17,7 +17,7 @@ import { DatosFiltradosService } from './core/services/productos-usuario.service
 // Componentes compartidos
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { TablesComponent } from './shared/components/tables/tables.component';
+import { TablesProductosComponent } from './shared/components/tables/movimientos-productos/table-productos.component';
 import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
 
 // Componentes
@@ -84,7 +84,7 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
     LineaCreditoComprobanteComponent,
     VisaPagoComponent,
     VisaComprobanteComponent,
-    TablesComponent,
+    TablesProductosComponent,
     BuscadorTablaComponent,
     TransferenciasComponent,
     ComprobanteTransferenciaComponent,

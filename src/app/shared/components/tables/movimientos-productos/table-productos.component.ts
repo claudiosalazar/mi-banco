@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductosUsuarioService } from '../../../core/services/productos-usuario.service';
-import { DatosFiltradosService } from '../../../core/services/productos-usuario.service';
-import { ProductosUsuario } from '../../models/productos-usuario.model';
+import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
+import { DatosFiltradosService } from '../../../../core/services/productos-usuario.service';
+import { ProductosUsuario } from '../../../models/productos-usuario.model';
 
 @Component({
   selector: 'app-tables',
-  templateUrl: './tables.component.html'
+  templateUrl: './table-productos.component.html'
 })
-export class TablesComponent implements OnInit {
+export class TablesProductosComponent implements OnInit {
 
   @Input() mostrarPaginador: boolean | undefined;
 
