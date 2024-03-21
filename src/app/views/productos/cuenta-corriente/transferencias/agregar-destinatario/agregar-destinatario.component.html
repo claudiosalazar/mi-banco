@@ -1,3 +1,108 @@
-<div class="col-12 mt-4">
-  nuevo destinatario
+<div class="col-12 px-3">
+
+  <small class="mb-4 d-block">* Campos son obligatorios</small>
+
+  <form [formGroup]="crearDestinatarioForm">
+    <!-- Nombre -->
+    <div class="form-floating mb-4">
+      <!-- <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal" [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido"> -->
+      <input type="text" class="form-control" formControlName="nombreDestinatario">
+      <label for="nombreDestinatario">Nombre *</label>
+      <!-- <div *ngIf="error3" class="invalid-feedback"> -->
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <!-- <div *ngIf="pagoTotalValido" class="valid-feedback"> -->
+      <div class="valid-feedback">
+        <span>El nombre es valido</span>
+      </div>
+    </div>
+
+    <!-- Apodo -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="apodoDestinatario">
+      <label for="apodoDestinatario">Apodo</label>
+    </div>
+
+    <!-- rut -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="rutDestinatario">
+      <label for="rutDestinatario">Rut *</label>
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <div class="valid-feedback">
+        <span>El apodo es valido</span>
+      </div>
+    </div>
+
+    <!-- banco -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="bancoDestinatario">
+      <label for="bancoDestinatario">Banco *</label>
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <div class="valid-feedback">
+        <span>El apodo es valido</span>
+      </div>
+    </div>
+
+    <!-- Tipo cuenta -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="tipoCuentaDestinatario">
+      <label for="tipoCuentaDestinatario">Tipo de cuenta *</label>
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <div class="valid-feedback">
+        <span>El apodo es valido</span>
+      </div>
+    </div>
+
+    <!-- Numero cuenta -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="numeroCuentaDestinatario">
+      <label for="numeroCuentaDestinatario">Número de cuenta *</label>
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <div class="valid-feedback">
+        <span>El apodo es valido</span>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="emailDestinatario">
+      <label for="emailDestinatario">Email *</label>
+      <div class="invalid-feedback">
+        <span>El campo no puede quedar vacio.</span>
+      </div>
+      <div class="valid-feedback">
+        <span>El apodo es valido</span>
+      </div>
+    </div>
+
+    <!-- Celular -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="celularDestinatario">
+      <label for="celularDestinatario">Celular</label>
+    </div>
+
+    <!-- Telefono -->
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" formControlName="telefonoDestinatario">
+      <label for="telefonoDestinatario">Télefono fijo</label>
+    </div>
+
+    <hr>
+
+    <!-- Botones -->
+    <div class="d-flex flex-md-column mt-4">
+      <button type="submit" class="btn btn-primary mb-3">Guardar destinatario</button>
+      <button type="button" class="btn btn-secondary">Cancelar</button>
+    </div>
+
+  </form>
 </div>

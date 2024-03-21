@@ -6,7 +6,10 @@
     "rut": "000000000",
     "banco": "BCI",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "4567890987"
+    "numeroCuenta": "4567890987",
+    "email": "pedrop@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "1",
@@ -15,7 +18,10 @@
     "rut": "111111111",
     "banco": "Banco Estado",
     "tipoCuenta": "Cuenta Vista",
-    "numeroCuenta": "11111111"
+    "numeroCuenta": "11111111",
+    "email": "victorr@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "2",
@@ -24,7 +30,10 @@
     "rut": "222222222",
     "banco": "Banco Chile",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "98767898"
+    "numeroCuenta": "98767898",
+    "email": "constanzam@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "3",
@@ -33,7 +42,10 @@
     "rut": "333333333",
     "banco": "Mi Banco",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "39857944"
+    "numeroCuenta": "39857944",
+    "email": "eduardof@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "4",
@@ -42,7 +54,10 @@
     "rut": "444444444",
     "banco": "Santander",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "990887665"
+    "numeroCuenta": "990887665",
+    "email": "josefinas@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "5",
@@ -51,7 +66,10 @@
     "rut": "000000000",
     "banco": "BCI",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "4567890987"
+    "numeroCuenta": "4567890987",
+    "email": "rodrigoa@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "6",
@@ -60,7 +78,10 @@
     "rut": "111111111",
     "banco": "Banco Estado",
     "tipoCuenta": "Cuenta Vista",
-    "numeroCuenta": "11111111"
+    "numeroCuenta": "11111111",
+    "email": "victorinoa@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "7",
@@ -69,7 +90,10 @@
     "rut": "222222222",
     "banco": "Banco Chile",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "98767898"
+    "numeroCuenta": "98767898",
+    "email": "constanzam@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "8",
@@ -78,7 +102,10 @@
     "rut": "333333333",
     "banco": "Mi Banco",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "39857944"
+    "numeroCuenta": "39857944",
+    "email": "pedroperez@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   },
   {
     "id": "9",
@@ -87,6 +114,9 @@
     "rut": "444444444",
     "banco": "Santander",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "990887665"
+    "numeroCuenta": "990887665",
+    "email": "federicop@correo.cl",
+    "celular": "987654321",
+    "telefono": "227654321"
   }
 ]

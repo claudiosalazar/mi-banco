@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "1044900",
+      "cupo": "1044800",
       "cupoDisponible": "55000",
       "transacciones": [
         {
@@ -102,6 +102,14 @@
           "cargo": "0",
           "abono": "1000000",
           "saldo": "1044900"
+        },
+        {
+          "id": "12",
+          "fecha": "2024-03-21",
+          "detalle": "Pago a Visa",
+          "cargo": "100",
+          "abono": "0",
+          "saldo": "1044800"
         }
       ]
     },
@@ -199,7 +207,7 @@
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
       "cupo": "2316000",
-      "cupoDisponible": "2692800",
+      "cupoDisponible": "2692900",
       "transacciones": [
         {
           "id": "0",
@@ -284,6 +292,14 @@
         {
           "id": "10",
           "fecha": "2024-03-20",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "100",
+          "saldo": "2316000"
+        },
+        {
+          "id": "11",
+          "fecha": "2024-03-21",
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "100",

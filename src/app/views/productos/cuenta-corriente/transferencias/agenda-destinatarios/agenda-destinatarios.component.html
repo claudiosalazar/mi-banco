@@ -1,4 +1,21 @@
 <div class="col-12 mt-4">
+
+  <div class="d-flex justify-content-md-between flex-column flex-md-row">
+    <div class="d-flex align-items-center mb-5">
+      <p class="mb-0 me-3">Buscar destinatario</p>
+      <form class="d-flex ml-5" role="search" >
+        <input class="form-control me-2 buscador" type="search" aria-label="Search">
+      </form>
+    </div>
+  
+    <div>
+      <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" aria-controls="staticBackdrop">
+        Agregar nuevo destinatario
+      </button>
+    </div>
+  </div>
+
+
   <div>
     <table class="table " role="table">
       <thead role="columnheader"ead role="rowgroup">
@@ -67,11 +84,14 @@
           <td role="cell">{{ destinatario.tipoCuenta }}</td>
           <td role="cell">{{ destinatario.numeroCuenta }}</td>
           <td role="cell" class="d-flex justify-content-between">
-            <a href="javascript:void(0)" >
+            <!-- Editar datos destinatario -->
+            <!-- <a href="javascript:void(0)" routerLink="/mibanco/productos/cuenta-corriente/transferencias/editar-destinatario"> -->
+            <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
               <span class="material-symbols-outlined">
                 edit
               </span>
             </a>
+            <!-- Eliminar destinatario -->
             <a href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
               <span class="material-symbols-outlined">
                 delete
@@ -152,5 +172,35 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Sidenav para crear nuevo destinatario -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="crearDestinatarioCanvas" aria-labelledby="staticBackdropLabel">
+  <div class="offcanvas-header d-flex align-items-center px-4">
+    <h5 class="offcanvas-title ps-2" id="staticBackdropLabel">Crear nuevo destinatario.</h5>
+    <a href="javascript:void(0);" data-bs-dismiss="offcanvas" aria-label="Close">
+      <span class="material-symbols-outlined">
+        close
+      </span>
+    </a>
+  </div>
+  <div class="offcanvas-body">
+    <app-agregar-destinatario></app-agregar-destinatario>
+  </div>
+</div>
+
+<!-- Sidenav para editar destinatario -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="editarDestinatarioCanvas" aria-labelledby="staticBackdropLabel">
+  <div class="offcanvas-header d-flex align-items-center px-4">
+    <h5 class="offcanvas-title ps-2" id="staticBackdropLabel">Editar datos de destinatario.</h5>
+    <a href="javascript:void(0);" data-bs-dismiss="offcanvas" aria-label="Close">
+      <span class="material-symbols-outlined">
+        close
+      </span>
+    </a>
+  </div>
+  <div class="offcanvas-body">
+    <app-editar-destinatario></app-editar-destinatario>
   </div>
 </div>
