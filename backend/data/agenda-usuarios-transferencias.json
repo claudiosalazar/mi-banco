@@ -2,8 +2,8 @@
   "agenda": [
     {
       "id": "0",
-      "apodo": "Pedrito 1",
       "nombre": "Pedro Palominos",
+      "apodo": "Pedrito 1",
       "rut": "000000000",
       "banco": "BCI",
       "tipoCuenta": "Cuenta Corriente",
@@ -11,8 +11,8 @@
     },
     {
       "id": "1",
-      "apodo": "Victor",
       "nombre": "Victor Rojas",
+      "apodo": "Victor",
       "rut": "111111111",
       "banco": "Banco Estado",
       "tipoCuenta": "Cuenta Vista",
@@ -20,8 +20,8 @@
     },
     {
       "id": "2",
-      "apodo": "Coni",
       "nombre": "Constanza Morales",
+      "apodo": "Coni",
       "rut": "222222222",
       "banco": "Banco Chile",
       "tipoCuenta": "Cuenta Corriente",
@@ -29,8 +29,8 @@
     },
     {
       "id": "3",
-      "apodo": "Compadre",
       "nombre": "Eduardo Flores",
+      "apodo": "Compadre",
       "rut": "333333333",
       "banco": "Mi Banco",
       "tipoCuenta": "Cuenta Corriente",
@@ -38,8 +38,8 @@
     },
     {
       "id": "4",
-      "apodo": "Mamá",
       "nombre": "Josefina Soto",
+      "apodo": "Mamá",
       "rut": "444444444",
       "banco": "Santander",
       "tipoCuenta": "Cuenta Corriente",
@@ -47,8 +47,8 @@
     },
     {
       "id": "5",
-      "apodo": "Uber",
       "nombre": "Rodrigo Aranguiz",
+      "apodo": "Uber",
       "rut": "000000000",
       "banco": "BCI",
       "tipoCuenta": "Cuenta Corriente",
@@ -56,8 +56,8 @@
     },
     {
       "id": "6",
-      "apodo": "Victorino",
       "nombre": "Victorino Arriagada",
+      "apodo": "Victorino",
       "rut": "111111111",
       "banco": "Banco Estado",
       "tipoCuenta": "Cuenta Vista",
@@ -65,8 +65,8 @@
     },
     {
       "id": "7",
-      "apodo": "Cote",
       "nombre": "Constanza Miranda",
+      "apodo": "Cote",
       "rut": "222222222",
       "banco": "Banco Chile",
       "tipoCuenta": "Cuenta Corriente",
@@ -74,8 +74,8 @@
     },
     {
       "id": "8",
-      "apodo": "Hermano",
       "nombre": "Pedro Perez",
+      "apodo": "Hermano",
       "rut": "333333333",
       "banco": "Mi Banco",
       "tipoCuenta": "Cuenta Corriente",
@@ -83,8 +83,8 @@
     },
     {
       "id": "9",
-      "apodo": "Papá",
       "nombre": "Federico Perez",
+      "apodo": "Papá",
       "rut": "444444444",
       "banco": "Santander",
       "tipoCuenta": "Cuenta Corriente",
