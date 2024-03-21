@@ -67,16 +67,16 @@
           <td role="cell">{{ destinatario.tipoCuenta }}</td>
           <td role="cell">{{ destinatario.numeroCuenta }}</td>
           <td role="cell" class="d-flex justify-content-between">
-            <div>
+            <a href="javascript:void(0)" >
               <span class="material-symbols-outlined">
                 edit
               </span>
-            </div>
-            <div (click)="abrirModalEliminar(destinatario)">
+            </a>
+            <a href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
               <span class="material-symbols-outlined">
                 delete
               </span>  
-            </div>
+            </a>
           </td>
         </tr>
       </tbody>
@@ -109,11 +109,18 @@
 <div class="modal fade" id="modalEliminarDestinatario" tabindex="-1" aria-labelledby="modalEliminarDestinatario" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body p-5">
-        <div class="text-center">
-          <h3 class="mb-2">Estas seguro de que quieres eliminar al destinatario NOMBRE con ID .</h3>
+      <div class="modal-body p-4">
+        <div class="d-flex align-items-center mb-2">
+          <span class="material-symbols-outlined d-block me-3">
+            warning
+          </span>
+          <span class="d-block">
+            Estas seguro de que quieres eliminar al destinatario <strong>{{ destinatarioSeleccionado?.nombre }}</strong>.
+          </span>
+        </div>
+        <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+          <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Eliminar</button>
         </div>
       </div>
     </div>
