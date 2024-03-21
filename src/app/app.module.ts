@@ -32,7 +32,12 @@ import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.compo
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
 import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
-import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
+import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/transferencias/comprobante-transferencia/comprobante-transferencia.component';
+import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
+import { AgendaDestinatariosComponent } from './views/productos/cuenta-corriente/transferencias/agenda-destinatarios/agenda-destinatarios.component';
+import { AgregarDestinatarioComponent } from './views/productos/cuenta-corriente/transferencias/agregar-destinatario/agregar-destinatario.component';
+import { EditarDestinatarioComponent } from './views/productos/cuenta-corriente/transferencias/editar-destinatario/editar-destinatario.component';
+import { UltimasTransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/ultimas-transferencias/ultimas-transferencias.component';
 
 // Linea de credito
 import { LineaCreditoComponent } from './views/productos/linea-credito/linea-credito.component';
@@ -52,7 +57,7 @@ import { SegurosContratarComponent } from './views/productos/seguros/seguros-con
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
-import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
+import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 
 
 @NgModule({
@@ -86,7 +91,12 @@ import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/ca
     SegurosComprobanteComponent,
     CustomSelectComponent,
     CartolaHistoricaComponent,
-    MovimientosComponent
+    MovimientosComponent,
+    AgendaDestinatariosComponent,
+    AgregarDestinatarioComponent,
+    EditarDestinatarioComponent,
+    UltimasTransferenciasComponent,
+    TransferenciaATercerosComponent
   ],
   imports: [
     BrowserModule,

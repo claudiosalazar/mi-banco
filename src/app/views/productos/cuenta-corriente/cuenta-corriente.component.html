@@ -6,7 +6,7 @@
 
         <div class="row">
 
-          <div class="col-12" *ngIf="!currentUrl.endsWith('cartola-historica')" >
+          <div class="col-12" *ngIf="!currentUrl.endsWith('cartola-historica')" id="datosCuentaCorriente">
             <div class="card mb-4 p-4">
               <div class="row">
                 <div class="col-12 mb-4">
@@ -21,7 +21,7 @@
                   <h4 class="mb-0"><strong>{{ cupoLineaCredito | pesos }}</strong></h4>
                 </div>
 
-                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.includes('transferencias')">
                   <div class="d-flex flex-row justify-content-between">
                     <small class="mb-0">Saldo contable</small>
                     <small class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></small>
@@ -35,7 +35,7 @@
                     <small class="mb-0"><strong>$ 0</strong></small>
                   </div>
                 </div>
-                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.includes('transferencias')">
                   <div class="d-flex flex-row justify-content-between">
                     <small class="mb-0">Último cargo</small>
                     <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small>
@@ -45,7 +45,7 @@
                     <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
                   </div>
                 </div>
-                <div class="col-12" *ngIf="!currentUrl.endsWith('realizar-transferencia')">
+                <div class="col-12" *ngIf="!currentUrl.includes('transferencias')">
                   <div class="alert alert-primary mt-5 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
                     <small>Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
                     <button class="btn btn-primary btn-sm" type="button">Simular aquí</button>
@@ -65,9 +65,9 @@
                   routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Últimos Movimientos</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('realizar-transferencia')}" id="transferencias-tab" 
+                  <button class="nav-link" [ngClass]="{'active': currentUrl.includes('transferencias')}" id="transferencias-tab" 
                   data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" 
-                  routerLink="/mibanco/productos/cuenta-corriente/realizar-transferencia">Realizar Transferencia</button>
+                  routerLink="/mibanco/productos/cuenta-corriente/transferencias">Realizar Transferencia</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('cartola-historica')}" id="cartola-tab" 

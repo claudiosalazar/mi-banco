@@ -22,6 +22,8 @@ export class CuentaCorrienteComponent implements OnInit {
   numeroLineaCredito: any;
   fechaYhoraActual: any;
 
+  activeTab: string = 'transferencias';
+
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
   montoPreAprobadoCreditoConsumo: any;

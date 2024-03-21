@@ -11,7 +11,12 @@ import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.compo
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
 import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/transferencias.component';
-import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/comprobante-transferencia/comprobante-transferencia.component';
+import { UltimasTransferenciasComponent } from './views/productos/cuenta-corriente/transferencias/ultimas-transferencias/ultimas-transferencias.component';
+import { AgendaDestinatariosComponent } from './views/productos/cuenta-corriente/transferencias/agenda-destinatarios/agenda-destinatarios.component';
+import { AgregarDestinatarioComponent } from './views/productos/cuenta-corriente/transferencias/agregar-destinatario/agregar-destinatario.component';
+import { EditarDestinatarioComponent } from './views/productos/cuenta-corriente/transferencias/editar-destinatario/editar-destinatario.component';
+import { ComprobanteTransferenciaComponent } from './views/productos/cuenta-corriente/transferencias/comprobante-transferencia/comprobante-transferencia.component';
+import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { CartolaHistoricaComponent } from './views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 import { LineaCreditoComponent } from './views/productos/linea-credito/linea-credito.component';
 import { LineaCreditoPagoComponent } from './views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
@@ -23,7 +28,6 @@ import { TransaccionesResumenComponent } from './views/productos/transacciones-r
 import { SegurosComponent } from './views/productos/seguros/seguros.component';
 import { SegurosResumenComponent } from './views/productos/seguros/seguros-resumen/seguros-resumen.component';
 import { SegurosContratarComponent } from './views/productos/seguros/seguros-contratar/seguros-contratar.component';
-
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -38,8 +42,17 @@ const routes: Routes = [
             children: [
               { path: '', pathMatch: 'full', redirectTo: 'ultimos-movimientos'},
               { path: 'ultimos-movimientos', component: MovimientosComponent },
-              { path: 'realizar-transferencia', component: TransferenciasComponent },
-              { path: 'comprobante-transferencia', component: ComprobanteTransferenciaComponent },
+              { path: 'transferencias', component: TransferenciasComponent,
+                children: [
+                  { path: '', pathMatch: 'full', redirectTo: 'transferencia-a-terceros'},
+                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent},
+                  { path: 'comprobante-transferencia', component: ComprobanteTransferenciaComponent},
+                  { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent},
+                  { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent},
+                  { path: 'agregar-destinatario', component: AgregarDestinatarioComponent},
+                  { path: 'editar-destinatario', component: EditarDestinatarioComponent},
+                ]
+              },
               { path: 'cartola-historica', component: CartolaHistoricaComponent },
             ]
           },
