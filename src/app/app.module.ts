@@ -9,6 +9,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 
 // Pipe
 import { PesosPipe } from './shared/pipes/pesos.pipe';
+import { RutPipe } from './shared/pipes/rut.pipe';
 
 // Services
 import { DatosUsuarioService } from './core/services/datos-usuario.service';
@@ -71,6 +72,7 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
     ProductosComponent,
     ContactanosComponent,
     PesosPipe,
+    RutPipe,
     DatosUsuarioComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,

@@ -62,7 +62,7 @@
         <tr *ngFor="let destinatario of paginatedData" role="row">
           <td role="cell">{{ destinatario.nombre }}</td>
           <td role="cell">{{ destinatario.apodo }}</td>
-          <td role="cell">{{ destinatario.rut }}</td>
+          <td role="cell">{{ destinatario.rut| rut }}</td>
           <td role="cell">{{ destinatario.banco }}</td>
           <td role="cell">{{ destinatario.tipoCuenta }}</td>
           <td role="cell">{{ destinatario.numeroCuenta }}</td>
