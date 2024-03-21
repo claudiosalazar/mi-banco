@@ -62,17 +62,17 @@
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('ultimos-movimientos')}" id="movimientos-tab" 
                   data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" 
-                  routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Últimos Movimientos</button>
+                  routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"><span class="d-none d-md-inline">Últimos</span> Movimientos</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" [ngClass]="{'active': currentUrl.includes('transferencias')}" id="transferencias-tab" 
                   data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" 
-                  routerLink="/mibanco/productos/cuenta-corriente/transferencias">Realizar Transferencia</button>
+                  routerLink="/mibanco/productos/cuenta-corriente/transferencias"><span class="d-none d-md-inline">Realizar</span> Transferencia</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" [ngClass]="{'active': currentUrl.endsWith('cartola-historica')}" id="cartola-tab" 
                   data-bs-toggle="tab" type="button" role="tab" aria-controls="cartola-tab-pane" aria-selected="false" 
-                  routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola historica</button>
+                  routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola <span class="d-none d-md-inline">historica</span></button>
                 </li>
               </ul>
 

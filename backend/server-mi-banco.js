@@ -53,8 +53,8 @@ app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
 });
 
 // Elimina destinatario de agenda
-app.delete('/backend/data/agenda-usuarios-transferencias.json/:id', (req, res) => {
-  const id = Number(req.params.id);
+app.delete('/backend/data/agenda-usuarios-transferencias/:id', (req, res) => {
+  const id = String(req.params.id);
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
   
   // Lee los datos actuales del archivo
@@ -67,26 +67,32 @@ app.delete('/backend/data/agenda-usuarios-transferencias.json/:id', (req, res) =
 
     const agenda = JSON.parse(data);
 
-    // Encuentra el índice del destinatario con el ID dado
-    const index = agenda.findIndex(destinatario => destinatario.id === id);
+    // Verifica si agenda es un array
+    if (Array.isArray(agenda)) {
+      // Encuentra el índice del destinatario con el ID dado
+      const index = agenda.findIndex(destinatario => destinatario.id === id);
 
-    if (index !== -1) {
-      // Elimina el destinatario del array
-      agenda.splice(index, 1);
+      if (index !== -1) {
+        // Elimina el destinatario del array
+        agenda.splice(index, 1);
 
-      // Guarda los datos actualizados en el archivo
-      fs.writeFile(filePath, JSON.stringify(agenda, null, 2), 'utf8', (err) => {
-        if (err) {
-          console.error('Error al guardar los datos:', err);
-          res.status(500).send('Error al guardar los datos');
-          return;
-        } else {
-          console.log('El destinatario fue eliminado correctamente');
-          res.status(200).send('El destinatario fue eliminado correctamente');
-        }
-      });
+        // Guarda los datos actualizados en el archivo
+        fs.writeFile(filePath, JSON.stringify(agenda, null, 2), 'utf8', (err) => {
+          if (err) {
+            console.error('Error al guardar los datos:', err);
+            res.status(500).send('Error al guardar los datos');
+            return;
+          } else {
+            console.log('El destinatario fue eliminado correctamente');
+            res.status(200).send('El destinatario fue eliminado correctamente');
+          }
+        });
+      } else {
+        res.status(404).send('ID no encontrado');
+      }
     } else {
-      res.status(404).send('ID no encontrado');
+      console.error('Error: los datos leídos del archivo no son un array');
+      res.status(500).send('Error al leer los datos');
     }
   });
 });

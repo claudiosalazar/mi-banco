@@ -1,94 +1,92 @@
-{
-  "agenda": [
-    {
-      "id": "0",
-      "nombre": "Pedro Palominos",
-      "apodo": "Pedrito 1",
-      "rut": "000000000",
-      "banco": "BCI",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "4567890987"
-    },
-    {
-      "id": "1",
-      "nombre": "Victor Rojas",
-      "apodo": "Victor",
-      "rut": "111111111",
-      "banco": "Banco Estado",
-      "tipoCuenta": "Cuenta Vista",
-      "numeroCuenta": "11111111"
-    },
-    {
-      "id": "2",
-      "nombre": "Constanza Morales",
-      "apodo": "Coni",
-      "rut": "222222222",
-      "banco": "Banco Chile",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "98767898"
-    },
-    {
-      "id": "3",
-      "nombre": "Eduardo Flores",
-      "apodo": "Compadre",
-      "rut": "333333333",
-      "banco": "Mi Banco",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "39857944"
-    },
-    {
-      "id": "4",
-      "nombre": "Josefina Soto",
-      "apodo": "Mamá",
-      "rut": "444444444",
-      "banco": "Santander",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "990887665"
-    },
-    {
-      "id": "5",
-      "nombre": "Rodrigo Aranguiz",
-      "apodo": "Uber",
-      "rut": "000000000",
-      "banco": "BCI",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "4567890987"
-    },
-    {
-      "id": "6",
-      "nombre": "Victorino Arriagada",
-      "apodo": "Victorino",
-      "rut": "111111111",
-      "banco": "Banco Estado",
-      "tipoCuenta": "Cuenta Vista",
-      "numeroCuenta": "11111111"
-    },
-    {
-      "id": "7",
-      "nombre": "Constanza Miranda",
-      "apodo": "Cote",
-      "rut": "222222222",
-      "banco": "Banco Chile",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "98767898"
-    },
-    {
-      "id": "8",
-      "nombre": "Pedro Perez",
-      "apodo": "Hermano",
-      "rut": "333333333",
-      "banco": "Mi Banco",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "39857944"
-    },
-    {
-      "id": "9",
-      "nombre": "Federico Perez",
-      "apodo": "Papá",
-      "rut": "444444444",
-      "banco": "Santander",
-      "tipoCuenta": "Cuenta Corriente",
-      "numeroCuenta": "990887665"
-    }
-  ]
-}
+[
+  {
+    "id": "0",
+    "nombre": "Pedro Palominos",
+    "apodo": "Pedrito 1",
+    "rut": "000000000",
+    "banco": "BCI",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "4567890987"
+  },
+  {
+    "id": "1",
+    "nombre": "Victor Rojas",
+    "apodo": "Victor",
+    "rut": "111111111",
+    "banco": "Banco Estado",
+    "tipoCuenta": "Cuenta Vista",
+    "numeroCuenta": "11111111"
+  },
+  {
+    "id": "2",
+    "nombre": "Constanza Morales",
+    "apodo": "Coni",
+    "rut": "222222222",
+    "banco": "Banco Chile",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "98767898"
+  },
+  {
+    "id": "3",
+    "nombre": "Eduardo Flores",
+    "apodo": "Compadre",
+    "rut": "333333333",
+    "banco": "Mi Banco",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "39857944"
+  },
+  {
+    "id": "4",
+    "nombre": "Josefina Soto",
+    "apodo": "Mamá",
+    "rut": "444444444",
+    "banco": "Santander",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "990887665"
+  },
+  {
+    "id": "5",
+    "nombre": "Rodrigo Aranguiz",
+    "apodo": "Uber",
+    "rut": "000000000",
+    "banco": "BCI",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "4567890987"
+  },
+  {
+    "id": "6",
+    "nombre": "Victorino Arriagada",
+    "apodo": "Victorino",
+    "rut": "111111111",
+    "banco": "Banco Estado",
+    "tipoCuenta": "Cuenta Vista",
+    "numeroCuenta": "11111111"
+  },
+  {
+    "id": "7",
+    "nombre": "Constanza Miranda",
+    "apodo": "Cote",
+    "rut": "222222222",
+    "banco": "Banco Chile",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "98767898"
+  },
+  {
+    "id": "8",
+    "nombre": "Pedro Perez",
+    "apodo": "Hermano",
+    "rut": "333333333",
+    "banco": "Mi Banco",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "39857944"
+  },
+  {
+    "id": "9",
+    "nombre": "Federico Perez",
+    "apodo": "Papá",
+    "rut": "444444444",
+    "banco": "Santander",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "990887665"
+  }
+]

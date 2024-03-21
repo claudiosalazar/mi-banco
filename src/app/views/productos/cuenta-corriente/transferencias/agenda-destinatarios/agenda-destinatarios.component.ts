@@ -11,10 +11,10 @@ declare var bootstrap: any;
 })
 export class AgendaDestinatariosComponent implements OnInit {
 
-  destinatarios: any;
-  destinatarioSeleccionado: any;
+  destinatarios: { [key: string]: any }[] | undefined;
+  destinatarioSeleccionado: { id: any } | undefined;
 
-  private baseUrl = '';
+  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transferencias';
   
 
   // Variables para paginador
@@ -45,7 +45,7 @@ export class AgendaDestinatariosComponent implements OnInit {
   ngOnInit(): void {
     this.agendaService.getDestinatarios().subscribe(data => {
       this.destinatarios = data;
-      this.totalPages = this.destinatarios && this.destinatarios.agenda ? Math.ceil(this.destinatarios.agenda.length / this.itemsPerPage) : 0;
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.ordenarDatos('nombre');
       this.paginacionDatos();
     });
@@ -66,13 +66,10 @@ export class AgendaDestinatariosComponent implements OnInit {
       this.sortedColumn = column;
       this.sortAscending = true;
     }
-  
     this.sortOrder = this.sortAscending ? 1 : -1;
-  
-    this.destinatarios?.agenda.sort((a: { [x: string]: any; }, b: { [x: string]: any; }) => {
+    this.destinatarios?.sort((a: { [x: string]: any; }, b: { [x: string]: any; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
-  
     this.paginacionDatos();
   }
 
@@ -80,7 +77,7 @@ export class AgendaDestinatariosComponent implements OnInit {
   paginacionDatos(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = this.currentPage * this.itemsPerPage;
-    this.paginatedData = this.destinatarios ? this.destinatarios.agenda.slice(startIndex, endIndex) : [];
+    this.paginatedData = this.destinatarios ? this.destinatarios.slice(startIndex, endIndex) : [];
   }
 
   prevPage(): void {
@@ -105,14 +102,14 @@ export class AgendaDestinatariosComponent implements OnInit {
   // Modal para eliminar destinatario
   abrirModalEliminar(destinatario: any): void {
     this.destinatarioSeleccionado = destinatario;
-    console.log('ID del destinatario seleccionado:', this.destinatarioSeleccionado.id);
+    console.log('ID del destinatario seleccionado:', this.destinatarioSeleccionado?.id);
     var myModal = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
     myModal.show();
   }
 
   // Elimina usuario del server
   eliminarDestinatario(id: number): Observable<any> {
-    return this.http.delete(`http://localhost:3000/backend/data/agenda-usuarios-transferencias.json/${id}`).pipe(
+    return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'}).pipe(
       switchMap((response) => {
         if (response) {
           console.log('El usuario fue eliminado correctamente');
@@ -121,9 +118,10 @@ export class AgendaDestinatariosComponent implements OnInit {
         return this.agendaService.getDestinatarios();
       }),
       tap(destinatarios => {
-        for (let i = 0; i < destinatarios.length; i++) {
-          destinatarios[i].id = i + 1;
-        }
+        this.destinatarios = destinatarios;
+        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+        this.ordenarDatos('nombre');
+        this.paginacionDatos();
       }),
       catchError(error => {
         console.log('Hubo un error al eliminar el usuario', error);
