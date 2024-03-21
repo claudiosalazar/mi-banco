@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-agenda-destinatarios',
   templateUrl: './agenda-destinatarios.component.html'
@@ -8,6 +10,7 @@ import { AgendaDestinatariosService } from '../../../../../core/services/agenda-
 export class AgendaDestinatariosComponent implements OnInit {
 
   destinatarios: any;
+  destinatarioSeleccionado: any;
   
 
   // Variables para paginador
@@ -88,6 +91,14 @@ export class AgendaDestinatariosComponent implements OnInit {
   seleccionarPagina(page: number): void {
     this.currentPage = page;
     this.paginacionDatos();
+  }
+
+  // Modal para eliminar destinatario
+  abrirModalEliminar(destinatario: any): void {
+    this.destinatarioSeleccionado = destinatario;
+    console.log('ID del destinatario seleccionado:', this.destinatarioSeleccionado.id);
+    var myModal = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
+    myModal.show();
   }
   
 

@@ -67,12 +67,16 @@
           <td role="cell">{{ destinatario.tipoCuenta }}</td>
           <td role="cell">{{ destinatario.numeroCuenta }}</td>
           <td role="cell" class="d-flex justify-content-between">
-            <span class="material-symbols-outlined">
-              edit
-            </span>
-            <span class="material-symbols-outlined">
-              delete
-            </span>  
+            <div>
+              <span class="material-symbols-outlined">
+                edit
+              </span>
+            </div>
+            <div (click)="abrirModalEliminar(destinatario)">
+              <span class="material-symbols-outlined">
+                delete
+              </span>  
+            </div>
           </td>
         </tr>
       </tbody>
@@ -98,5 +102,20 @@
         </li>
       </ul>
     </nav>
+  </div>
+</div>
+
+<!-- Modal eliminar destinatario -->
+<div class="modal fade" id="modalEliminarDestinatario" tabindex="-1" aria-labelledby="modalEliminarDestinatario" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <div class="text-center">
+          <h3 class="mb-2">Estas seguro de que quieres eliminar al destinatario NOMBRE con ID .</h3>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Eliminar</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
