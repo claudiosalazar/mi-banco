@@ -99,7 +99,6 @@
                 <div class="col-12 mb-4">
                   <h6>Enviar comprobante a:</h6>
                   <div class="form-floating mb-3">
-                    <!-- <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="resetAndValidate('inputEmail')"> -->
                     <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="emailValido('inputEmail')">
                     <label for="inputEmail">Email</label>
                     

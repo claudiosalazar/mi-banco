@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { ValidaEmailService } from 'src/app/core/services/validador-email.service';
 
 
 @Component({
@@ -29,8 +30,8 @@ export class AgregarDestinatarioComponent implements OnInit{
   inputErrorVacioNumeroCuenta: any;
   inputValidoNumeroCuenta: any;
   // Variables para email
-  inputErrorVacioEmail: any;
-  inputValidoEmail: any;
+  // inputErrorVacioEmail: any;
+  // inputValidoEmail: any;
 
   // Array lista de
   listaBancos = [
@@ -77,7 +78,9 @@ export class AgregarDestinatarioComponent implements OnInit{
   
   selectClass: any;
 
-  constructor( ) {}
+  constructor(
+    private validaEmailService: ValidaEmailService
+   ) {}
 
   ngOnInit(): void {
     this.crearDestinatarioForm = new FormGroup({
@@ -87,7 +90,7 @@ export class AgregarDestinatarioComponent implements OnInit{
       bancoDestinatario: new FormControl('0', [Validators.required, this.validaBanco()]),
       cuentaDestinatario: new FormControl('0', [Validators.required, this.validaCuenta()]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required, this.validaNumeroCuenta()]),
-      emailDestinatario: new FormControl('', [Validators.required, this.validaEmail()]),
+      emailDestinatario: new FormControl('', [Validators.required, this.validaEmailService.formatoEmail]),
       celularDestinatario: new FormControl(''),
       telefonoDestinatario: new FormControl(''),
     });
@@ -158,7 +161,7 @@ export class AgregarDestinatarioComponent implements OnInit{
   }
 
   // Valida que el email este escrito correctamente
-  validaEmail(): ValidatorFn {
+  /* validaEmail(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const emailDestinatario = control.value as string;
   
@@ -171,6 +174,12 @@ export class AgregarDestinatarioComponent implements OnInit{
         return null;
       }
     };
+  } */
+  emailValido(inputEmail: string) {
+    this.crearDestinatarioForm.controls[inputEmail].markAsPristine();
+    this.crearDestinatarioForm.controls[inputEmail].markAsUntouched();
+    this.crearDestinatarioForm.controls[inputEmail].setValidators([Validators.required, this.validaEmailService.formatoEmail]);
+    this.crearDestinatarioForm.controls[inputEmail].updateValueAndValidity();
   }
 
   // Permite ingresar solo caracteres numéricos en el input
@@ -244,8 +253,6 @@ export class AgregarDestinatarioComponent implements OnInit{
     this.cuentaInvalida = false;
     this.inputErrorVacioNumeroCuenta = false;
     this.inputValidoNumeroCuenta = false;
-    this.inputErrorVacioEmail = false;
-    this.inputValidoEmail = false;
   }
 
   guardarDestinatario() {
