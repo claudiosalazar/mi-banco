@@ -10,6 +10,7 @@ import { Observable, from, map } from 'rxjs';
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
+import { ValidaEmailService } from '../../../../core/services/validador-email.service';
 
 // Model
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
@@ -84,6 +85,7 @@ export class VisaPagoComponent implements OnInit {
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
     private ofertasProductosService: OfertasProductosService,
+    private validaEmailService: ValidaEmailService,
     private http: HttpClient,
   ) { }
 
@@ -98,7 +100,7 @@ export class VisaPagoComponent implements OnInit {
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
-      inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
+      inputEmail: new FormControl('', [Validators.required, this.validaEmailService.formatoEmail]),
     });
 
     // Aplica pipe pesos a inputOtroMonto
@@ -213,24 +215,12 @@ export class VisaPagoComponent implements OnInit {
     }
     return true;
   }
-  
-  // Valida que el mail tengo un punto y al menos dos caracteres después del punto
-  formatoEmail(control: AbstractControl): { [key: string]: boolean } | null {
-    const value = control.value;
-    if (value && typeof value === 'string') {
-      const split = value.split('.');
-      if (split.length > 1 && split[1].length >= 2) {
-        return null;
-      }
-    }
-    return { customEmail: true };
-  }
 
   // Valida que el email este escrito correctamente
   emailValido(inputEmail: string) {
     this.pagoVisaForm.controls[inputEmail].markAsPristine();
     this.pagoVisaForm.controls[inputEmail].markAsUntouched();
-    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.formatoEmail]);
+    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.validaEmailService.formatoEmail]);
     this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 
