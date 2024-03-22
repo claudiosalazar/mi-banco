@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './custom-select.component.html'
 })
 export class CustomSelectComponent implements OnInit {
+  @Input() errorKey: any;
   @Input() control: FormControl | any;
   @Input() options: any[] = [];
   @Input() submitted: boolean | undefined;

@@ -34,7 +34,7 @@
       <div class="form-floating mb-4">
         <input type="text" class="form-control" formControlName="rutDestinatario" [ngClass]="{'is-invalid': crearDestinatarioForm.get('rutDestinatario')?.touched && crearDestinatarioForm.get('rutDestinatario')?.invalid, 'is-valid': crearDestinatarioForm.get('rutDestinatario')?.touched && crearDestinatarioForm.get('rutDestinatario')?.valid}">
         <label for="rutDestinatario">Rut *</label>
-        <div class="invalid-feedback">
+        <div *ngIf="submitted && crearDestinatarioForm.get('rutDestinatario')?.errors?.['bancoInvalido']" class="invalid-feedback d-block">
           <span>El campo no puede quedar vacio.</span>
         </div>
         <div class="valid-feedback">
@@ -44,23 +44,17 @@
   
       <!-- banco -->
       <div class="form-floating mb-4">
-        <custom-select [options]="listaBancos" [control]="crearDestinatarioForm.get('listaBancosDestinatario')" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Banco *'" [ngClass]="{'is-invalid': crearDestinatarioForm.get('listaBancosDestinatario')?.touched && crearDestinatarioForm.get('listaBancosDestinatario')?.invalid, 'is-valid': crearDestinatarioForm.get('listaBancosDestinatario')?.touched && crearDestinatarioForm.get('listaBancosDestinatario')?.valid}"></custom-select>
-        <div class="invalid-feedback">
-          <span>El campo no puede quedar vacio.</span>
-        </div>
-        <div class="valid-feedback">
-          <span>El apodo es valido</span>
+        <custom-select [control]="crearDestinatarioForm.get('bancoDestinatario')" [options]="listaBancos" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Banco *'" [errorKey]="'bancoInvalido'"></custom-select>
+        <div *ngIf="submitted && crearDestinatarioForm.get('bancoDestinatario')?.errors?.['bancoInvalido']" class="invalid-feedback d-block">
+          Debes seleccionar un banco.
         </div>
       </div>
   
       <!-- Tipo cuenta -->
       <div class="form-floating mb-4">
-        <custom-select [options]="tiposCuenta" [control]="crearDestinatarioForm.get('tipoCuentaDestinatario')" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [ngClass]="{'is-invalid': crearDestinatarioForm.get('tipoCuentaDestinatario')?.touched && crearDestinatarioForm.get('tipoCuentaDestinatario')?.invalid, 'is-valid': crearDestinatarioForm.get('tipoCuentaDestinatario')?.touched && crearDestinatarioForm.get('tipoCuentaDestinatario')?.valid}"></custom-select>
-        <div class="invalid-feedback">
-          <span>El campo no puede quedar vacio.</span>
-        </div>
-        <div class="valid-feedback">
-          <span>El apodo es valido</span>
+        <custom-select [control]="crearDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [errorKey]="'cuentaInvalida'"></custom-select>
+        <div *ngIf="submitted && crearDestinatarioForm.get('cuentaDestinatario')?.errors?.['cuentaInvalida']" class="invalid-feedback d-block">
+          Debes seleccionar un tipo de cuenta.
         </div>
       </div>
       

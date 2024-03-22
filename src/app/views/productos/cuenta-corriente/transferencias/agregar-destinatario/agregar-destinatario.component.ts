@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-agregar-destinatario',
@@ -15,6 +15,9 @@ export class AgregarDestinatarioComponent implements OnInit{
   numeroCuentaDestinatario: any;
   emailDestinatario: any;
   submitted: boolean = false;
+  rutInvalido: any;
+  bancoInvalido: any;
+  cuentaInvalida: any;
 
   // Array lista de
   listaBancos = [
@@ -68,8 +71,8 @@ export class AgregarDestinatarioComponent implements OnInit{
       nombreDestinatario: new FormControl('', [Validators.required]),
       apodoDestinatario: new FormControl(''),
       rutDestinatario: new FormControl('', [Validators.required]),
-      bancoDestinatario: new FormControl('', [Validators.required]),
-      tipoCuentaDestinatario: new FormControl('', [Validators.required]),
+      bancoDestinatario: new FormControl('0', [Validators.required, this.validaBanco()]),
+      cuentaDestinatario: new FormControl('0', [Validators.required, this.validaCuenta()]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required]),
       emailDestinatario: new FormControl('', [Validators.required]),
       celularDestinatario: new FormControl(''),
@@ -77,14 +80,53 @@ export class AgregarDestinatarioComponent implements OnInit{
     });
   }
 
-  validaFormulario() {
-    Object.keys(this.crearDestinatarioForm.controls).forEach(field => {
-      const control = this.crearDestinatarioForm.get(field);
-      if (control) {
-      control.markAsTouched({ onlySelf: true });
-      }
-    });
+  validaBanco(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const isInvalid = control.value === '0';
+      return isInvalid ? { 'bancoInvalido': { value: control.value } } : null;
+    };
   }
+
+  validaCuenta(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const isInvalid = control.value === '0';
+      return isInvalid ? { 'cuentaInvalida': { value: control.value } } : null;
+    };
+  }
+
+  validaFormulario() {
+    this.submitted = true;
+
+    const bancoDestinatario = this.crearDestinatarioForm.get('bancoDestinatario');
+
+    this.bancoInvalido = false;
+
+    if (bancoDestinatario && bancoDestinatario.value === '0') {
+      // Si el producto seleccionado es '0', establece el error de producto inválido en true
+      this.bancoInvalido = true;
+      return;
+    }
+  }
+
+  /*validaFormulario() {
+    
+     this.submitted = true;
+
+    this.bancoInvalido = false;
+   
+
+    const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
+
+    // Inicializa el error de banco inválido en false
+    this.bancoInvalido = false;
+
+    if (bancoDestinatarioControl && bancoDestinatarioControl.value !== '' && bancoDestinatarioControl.value === '0') {
+      // Si el banco seleccionado es '0', establece el error de banco inválido en true
+      this.bancoInvalido = true;
+      return;
+    }
+
+  }*/
 
   resetFormulario() {
     this.crearDestinatarioForm.reset();

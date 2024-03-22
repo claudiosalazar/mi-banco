@@ -66,6 +66,7 @@
 
   &.is-invalid {
     border-color: #dc3545;
+    @include fade-animation;
   }
 
   &.is-valid {
