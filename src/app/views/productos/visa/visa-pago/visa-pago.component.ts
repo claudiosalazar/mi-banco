@@ -344,6 +344,7 @@ export class VisaPagoComponent implements OnInit {
     if (productoParaPago && productoParaPago.value === '0') {
       // Si el producto seleccionado es '0', establece el error de producto inválido en true
       this.productoInvalido = true;
+      return;
     } else if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl && productoParaPago) {
       // Continúa con la validación del formulario si el producto seleccionado no es '0'
       if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoTotal') {
@@ -366,7 +367,7 @@ export class VisaPagoComponent implements OnInit {
     }
 
     // Si no hay errores, muestra el modal
-    if (!this.error1 && !this.error2 && !this.error3) {
+    if (!this.error1 && !this.error2 && !this.error3 && !this.productoInvalido) {
       let modal = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {
         backdrop: 'static',
         keyboard: false

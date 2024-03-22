@@ -29,7 +29,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="myOptions" [submitted]="submitted" [labelSelect]="'Productos'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
+                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="myOptions" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Productos'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoLineaCredito | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
