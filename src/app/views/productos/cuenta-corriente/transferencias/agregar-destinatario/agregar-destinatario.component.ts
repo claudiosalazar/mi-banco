@@ -219,7 +219,33 @@ export class AgregarDestinatarioComponent implements OnInit{
   }
 
   resetFormulario() {
-    this.crearDestinatarioForm.reset();
+    this.crearDestinatarioForm.reset({
+      nombreDestinatario: '',
+      apodoDestinatario: '',
+      rutDestinatario: '',
+      bancoDestinatario: '0',
+      cuentaDestinatario: '0',
+      numeroCuentaDestinatario: '',
+      emailDestinatario: '',
+      celularDestinatario: '',
+      telefonoDestinatario: '',
+    });
+    this.crearDestinatarioForm.markAsPristine();
+    this.crearDestinatarioForm.markAsUntouched();
+    this.submitted = false;
+  
+    // Restablece las variables de validación
+    this.inputErrorVacioNombre = false;
+    this.inputErrorApellido = false;
+    this.inputValidoNombre = false;
+    this.inputErrorVacioRut = false;
+    this.inputValidoRut = false;
+    this.bancoInvalido = false;
+    this.cuentaInvalida = false;
+    this.inputErrorVacioNumeroCuenta = false;
+    this.inputValidoNumeroCuenta = false;
+    this.inputErrorVacioEmail = false;
+    this.inputValidoEmail = false;
   }
 
   guardarDestinatario() {
