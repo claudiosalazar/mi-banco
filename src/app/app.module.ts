@@ -109,7 +109,8 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
   ],
   providers: [
     DatosUsuarioService,
-    DatosFiltradosService
+    DatosFiltradosService,
+    RutPipe
   ],
   bootstrap: [MiBancoComponent]
 })

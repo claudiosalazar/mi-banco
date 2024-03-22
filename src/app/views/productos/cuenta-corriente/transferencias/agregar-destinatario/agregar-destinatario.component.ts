@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-agregar-destinatario',
   templateUrl: './agregar-destinatario.component.html'
@@ -15,9 +16,21 @@ export class AgregarDestinatarioComponent implements OnInit{
   numeroCuentaDestinatario: any;
   emailDestinatario: any;
   submitted: boolean = false;
-  rutInvalido: any;
   bancoInvalido: any;
   cuentaInvalida: any;
+  // Variable para nombre
+  inputErrorVacioNombre: any;
+  inputErrorApellido: any;
+  inputValidoNombre: any;
+  // Variables para rut
+  inputErrorVacioRut: any;
+  inputValidoRut: any;
+  // Variables para numero cuenta
+  inputErrorVacioNumeroCuenta: any;
+  inputValidoNumeroCuenta: any;
+  // Variables para email
+  inputErrorVacioEmail: any;
+  inputValidoEmail: any;
 
   // Array lista de
   listaBancos = [
@@ -64,20 +77,55 @@ export class AgregarDestinatarioComponent implements OnInit{
   
   selectClass: any;
 
-  constructor() {}
+  constructor( ) {}
 
   ngOnInit(): void {
     this.crearDestinatarioForm = new FormGroup({
-      nombreDestinatario: new FormControl('', [Validators.required]),
+      nombreDestinatario: new FormControl('', [Validators.required, this.validaNombre()]),
       apodoDestinatario: new FormControl(''),
-      rutDestinatario: new FormControl('', [Validators.required]),
+      rutDestinatario: new FormControl('', [Validators.required, this.validaRut()]),
       bancoDestinatario: new FormControl('0', [Validators.required, this.validaBanco()]),
       cuentaDestinatario: new FormControl('0', [Validators.required, this.validaCuenta()]),
-      numeroCuentaDestinatario: new FormControl('', [Validators.required]),
-      emailDestinatario: new FormControl('', [Validators.required]),
+      numeroCuentaDestinatario: new FormControl('', [Validators.required, this.validaNumeroCuenta()]),
+      emailDestinatario: new FormControl('', [Validators.required, this.validaEmail()]),
       celularDestinatario: new FormControl(''),
       telefonoDestinatario: new FormControl(''),
     });
+    
+  }
+
+  validaNombre(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const nombreDestinatario = control.value as string;
+  
+      // Si el input está vacío, establece inputErrorVacio en true
+      if (nombreDestinatario.trim() === '') {
+        return { 'inputErrorVacio': { value: control.value } };
+      }
+      // Si el input tiene solo una palabra, establece inputErrorApellido en true
+      else if (!nombreDestinatario.includes(' ')) {
+        return { 'inputErrorApellido': { value: control.value } };
+      }
+      // Si el input tiene 2 palabras, establece inputValido en true
+      else {
+        return null;
+      }
+    };
+  }
+
+  validaRut(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const rutDestinatario = control.value as string;
+  
+      // Si el input está vacío, establece inputErrorVacio en true
+      if (rutDestinatario.trim() === '') {
+        return { 'inputErrorVacioRut': { value: control.value } };
+      }
+      // Si el input tiene datos ingresados, es válido
+      else {
+        return null;
+      }
+    };
   }
 
   validaBanco(): ValidatorFn {
@@ -94,39 +142,81 @@ export class AgregarDestinatarioComponent implements OnInit{
     };
   }
 
+  validaNumeroCuenta(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const numeroCuentaDestinatario = control.value as string;
+  
+      // Si el input está vacío, establece inputErrorVacio en true
+      if (numeroCuentaDestinatario.trim() === '') {
+        return { 'inputErrorVacioNumeroCuenta': { value: control.value } };
+      }
+      // Si el input tiene datos ingresados, es válido
+      else {
+        return null;
+      }
+    };
+  }
+
+  // Valida que el email este escrito correctamente
+  validaEmail(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const emailDestinatario = control.value as string;
+  
+      // Si el input está vacío, establece inputErrorVacio en true
+      if (emailDestinatario.trim() === '') {
+        return { 'inputErrorVacioNumeroCuenta': { value: control.value } };
+      }
+      // Si el input tiene datos ingresados, es válido
+      else {
+        return null;
+      }
+    };
+  }
+
+  // Permite ingresar solo caracteres numéricos en el input
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+
   validaFormulario() {
     this.submitted = true;
 
-    const bancoDestinatario = this.crearDestinatarioForm.get('bancoDestinatario');
+    const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombreDestinatario');
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
+    const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
+    const numeroCuentaDestinatarioControl = this.crearDestinatarioForm.get('numeroCuentaDestinatario');
 
     this.bancoInvalido = false;
 
-    if (bancoDestinatario && bancoDestinatario.value === '0') {
+    
+    if (nombreDestinatarioControl) {
+      this.inputErrorVacioNombre = nombreDestinatarioControl.errors?.['inputErrorVacio'];
+      this.inputErrorApellido = nombreDestinatarioControl.errors?.['inputErrorApellido'];
+      this.inputValidoNombre = nombreDestinatarioControl.valid;
+    }
+
+    if (rutDestinatarioControl) {
+      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacio'];
+      this.inputValidoRut = rutDestinatarioControl.valid;
+    }
+
+    if (bancoDestinatarioControl && bancoDestinatarioControl.value === '0') {
       // Si el producto seleccionado es '0', establece el error de producto inválido en true
       this.bancoInvalido = true;
       return;
     }
-  }
 
-  /*validaFormulario() {
-    
-     this.submitted = true;
-
-    this.bancoInvalido = false;
-   
-
-    const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
-
-    // Inicializa el error de banco inválido en false
-    this.bancoInvalido = false;
-
-    if (bancoDestinatarioControl && bancoDestinatarioControl.value !== '' && bancoDestinatarioControl.value === '0') {
-      // Si el banco seleccionado es '0', establece el error de banco inválido en true
-      this.bancoInvalido = true;
-      return;
+    if (numeroCuentaDestinatarioControl) {
+      this.inputErrorVacioNumeroCuenta = numeroCuentaDestinatarioControl.errors?.['inputErrorVacioNumeroCuenta'];
+      this.inputValidoNumeroCuenta = numeroCuentaDestinatarioControl.valid;
     }
 
-  }*/
+  }
 
   resetFormulario() {
     this.crearDestinatarioForm.reset();

@@ -1,5 +1,17 @@
 
 
+label {
+  span {
+    &.obligatorio {
+      color: #ff1744;
+      font-size: 20px;
+      margin-top: 1px;
+      position: absolute;
+      margin-left: 5px;
+    }
+  }
+}
+
 .is-invalid {
   @include fade-animation;
 }

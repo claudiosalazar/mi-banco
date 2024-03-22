@@ -3,5 +3,8 @@
   <div class="options" *ngIf="isOpen">
     <div class="option" *ngFor="let option of options" (click)="selectOption(option)">{{option.label}}</div>
   </div>
-  <div class="label">{{labelSelect}}</div>
+  <div class="label">
+    {{ labelSelect ? labelSelect.replace('*', '') : '' }}
+    <span *ngIf="labelSelect?.includes('*')" class="obligatorio">*</span>
+  </div>
 </div>
