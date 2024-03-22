@@ -28,7 +28,6 @@
     top: 6px;
     font-size: 0.8em;
     color: $color-label-select;
-    z-index: 200;
   }
 
   .options {
@@ -40,9 +39,10 @@
     width: calc(100% + 2px);
     border: 1px solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
-    z-index: 100;
+    overflow: auto;
     cursor: pointer;
     box-shadow: $shadow-light;
+    max-height: 300px;
 
     .option {
       padding: 18px 10px 18px 12px;
@@ -78,7 +78,5 @@
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
   }
 }
-
-
 
 

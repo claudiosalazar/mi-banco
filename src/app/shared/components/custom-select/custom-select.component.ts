@@ -5,18 +5,53 @@ import { FormControl } from '@angular/forms';
   selector: 'custom-select',
   templateUrl: './custom-select.component.html'
 })
-export class CustomSelectComponent implements OnInit{
+export class CustomSelectComponent implements OnInit {
   @Input() control: FormControl | any;
   @Input() options: any[] = [];
   @Input() submitted: boolean | undefined;
   @Output() change = new EventEmitter<any>();
   @Input() labelSelect: string | undefined;
+  @Input() zIndex: number | undefined;
   selectedOption: any;
-  isOpen: any;
+  private _isOpen = false;
 
-  constructor(private eRef: ElementRef) { }
+  @Input()
+  set isOpen(value: boolean) {
+    this._isOpen = value;
+    if (value === true) {
+      console.log('isOpen ha cambiado a true');
+      setTimeout(() => {
+        const optionsList = this.el.nativeElement.querySelectorAll('.options');
+
+        if (optionsList) {
+          optionsList.forEach((options: { style: { zIndex: string; }; }, index: number) => {
+            options.style.zIndex = ((this.zIndex || 0) - index * 1000).toString();
+            console.log(`El valor de z-index para .options es ${(this.zIndex || 0) - index * 1000}`);
+          });
+        } else {
+          console.error('No se encontró el elemento .options');
+        }
+      });
+    }
+  }
+
+  get isOpen() {
+    return this._isOpen;
+  }
+
+  constructor(
+    private eRef: ElementRef,
+    private el: ElementRef
+  ) { }
 
   ngOnInit() {
+    // Aplica los estilos a .label
+    const label = this.el.nativeElement.querySelector('.label');
+
+    if (label) {
+      label.style.zIndex = ((this.zIndex || 0) + 100).toString();
+    }
+
     if (this.options) {
       let option = this.options.find(option => option.value === '0');
       if (option) {
@@ -28,7 +63,9 @@ export class CustomSelectComponent implements OnInit{
 
   selectOption(option: any) {
     this.selectedOption = option.label;
-    this.control.setValue(option.value);
+    if (this.control) {
+      this.control.setValue(option.value);
+    }
     this.change.emit(option.value);
   }
 
