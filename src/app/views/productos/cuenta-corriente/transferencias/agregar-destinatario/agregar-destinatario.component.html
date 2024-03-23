@@ -29,7 +29,7 @@
   
       <!-- Apodo -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="apodoDestinatario">
+        <input type="text" class="form-control" formControlName="apodoDestinatario" [class.is-valid]="inputApodoValido" (blur)="validaApodo();">
         <label for="apodoDestinatario">Apodo</label>
       </div>
   
@@ -94,14 +94,21 @@
   
       <!-- Celular -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="celularDestinatario" (keypress)="soloNumeros($event)">
+        <input type="text" class="form-control celular" formControlName="celularDestinatario" [class.is-invalid]="inputErrorCelularInvalido && crearDestinatarioForm.get('celularDestinatario')?.touched" [class.is-valid]="inputCelularValido && crearDestinatarioForm.get('celularDestinatario')?.touched && crearDestinatarioForm.get('celularDestinatario')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9">
         <label for="celularDestinatario">Celular</label>
+        <div class="prefijo-chile"></div>
+        <div *ngIf="inputErrorCelularInvalido && crearDestinatarioForm.get('celularDestinatario')?.touched" class="invalid-feedback">
+          <span>El número ingresado no es válido.</span>
+        </div>
       </div>
   
       <!-- Telefono -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="telefonoDestinatario" (keypress)="soloNumeros($event)">
-        <label for="telefonoDestinatario">Télefono fijo</label>
+        <input type="text" class="form-control" formControlName="telefonoDestinatario" [class.is-invalid]="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefonoDestinatario')?.touched" [class.is-valid]="inputTelefonoFijoValido && crearDestinatarioForm.get('telefonoDestinatario')?.touched && crearDestinatarioForm.get('telefonoDestinatario')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9">
+        <label for="telefonoDestinatario">Teléfono Fijo</label>
+        <div *ngIf="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefonoDestinatario')?.touched" class="invalid-feedback">
+          <span>El número ingresado no es válido.</span>
+        </div>
       </div>
   
       <hr>

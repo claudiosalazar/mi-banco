@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
 import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
+import { CelularPipe } from '../../../../../shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from '../../../../../shared/pipes/telefono-fijo.pipe';
 
 @Component({
   selector: 'app-agregar-destinatario',
@@ -65,6 +67,8 @@ export class AgregarDestinatarioComponent implements OnInit{
   inputErrorVacioNombre: any;
   inputErrorApellido: any;
   inputValidoNombre: any;
+  // Variables para apodo
+  inputApodoValido: any;
   // Variables para rut
   inputErrorVacioRut: any;
   inputValidoRut: any;
@@ -74,12 +78,20 @@ export class AgregarDestinatarioComponent implements OnInit{
   // Variables para email
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
+  // Variables para celular
+  inputErrorCelularInvalido: any;
+  inputCelularValido: any;
+  // Variables para telefono fijo
+  inputErrorTelefonoFijoInvalido: any;
+  inputTelefonoFijoValido: any;
   
   selectClass: any;
 
   constructor(
     private formatoEmailService: FormatoEmailService,
-    private rutPipe: RutPipe
+    private rutPipe: RutPipe,
+    private celularPipe: CelularPipe,
+    private telefonoFijoPipe: TelefonoFijoPipe
    ) {}
 
   ngOnInit(): void {
@@ -117,6 +129,21 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   }
 
+  validaApodo(): void {
+    const control = this.crearDestinatarioForm.get('apodoDestinatario');
+  
+    if (control) {
+      // Si el campo está vacío, no hacer nada
+      if (control.value === '') {
+        this.inputApodoValido = false;
+        return;
+      }
+  
+      const isValid = control.value.length > 0;
+      this.inputApodoValido = isValid;
+    }
+  }
+
   validaRut(): void {
     const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
     if (rutDestinatarioControl) {
@@ -136,21 +163,6 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   }
 
-  formatoRut(event: KeyboardEvent): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    const value = (event.target as HTMLInputElement).value;
-  
-    // Permitir solo números
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      // Si el carácter no es un número, permitir solo 'K' como último carácter
-      if (charCode === 75 || charCode === 107) { // 75 y 107 son los códigos de tecla para 'K' y 'k' respectivamente
-        return value.length === 8; // Permitir 'K' solo si ya hay 8 caracteres
-      }
-      return false;
-    }
-    return true;
-  }
-
   validaBanco(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const isInvalid = control.value === '0';
@@ -164,7 +176,6 @@ export class AgregarDestinatarioComponent implements OnInit{
       return isInvalid ? { 'cuentaInvalida': { value: control.value } } : null;
     };
   }
-
 
   validaNumeroCuenta(): void {
     const numeroCuentaDestinatarioControl = this.crearDestinatarioForm.get('numeroCuentaDestinatario');
@@ -199,7 +210,75 @@ export class AgregarDestinatarioComponent implements OnInit{
     this.inputValidoEmail = emailControl.valid;
   }
 
-  // Permite ingresar solo caracteres numéricos en el input
+  validaCelular(): void {
+    const celularDestinatarioControl = this.crearDestinatarioForm.get('celularDestinatario');
+    if (celularDestinatarioControl) {
+      let value = celularDestinatarioControl.value as string;
+  
+      // Si el campo está vacío, no hacer nada
+      if (value === '') {
+        return;
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorCelularInvalido = true;
+        this.inputCelularValido = false;
+      } else {
+        this.inputErrorCelularInvalido = false;
+        this.inputCelularValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.celularPipe.transform(value);
+        celularDestinatarioControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputCelularValido) {
+        celularDestinatarioControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        celularDestinatarioControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      celularDestinatarioControl.updateValueAndValidity();
+      celularDestinatarioControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+    }
+  }
+
+  validaTelefono(): void {
+    const telefonoDestinatarioControl = this.crearDestinatarioForm.get('telefonoDestinatario');
+    if (telefonoDestinatarioControl) {
+      let value = telefonoDestinatarioControl.value as string;
+  
+      // Si el campo está vacío, no hacer nada
+      if (value === '') {
+        return;
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorTelefonoFijoInvalido = true;
+        this.inputTelefonoFijoValido = false;
+      } else {
+        this.inputErrorTelefonoFijoInvalido = false;
+        this.inputTelefonoFijoValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.telefonoFijoPipe.transform(value);
+        telefonoDestinatarioControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputTelefonoFijoValido) {
+        telefonoDestinatarioControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        telefonoDestinatarioControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      telefonoDestinatarioControl.updateValueAndValidity();
+      telefonoDestinatarioControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+    }
+  }
+  
+
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -208,7 +287,20 @@ export class AgregarDestinatarioComponent implements OnInit{
     return true;
   }
 
+  formatoRut(event: KeyboardEvent): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    const value = (event.target as HTMLInputElement).value;
   
+    // Permitir solo números
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      // Si el carácter no es un número, permitir solo 'K' como último carácter
+      if (charCode === 75 || charCode === 107) { // 75 y 107 son los códigos de tecla para 'K' y 'k' respectivamente
+        return value.length === 8; // Permitir 'K' solo si ya hay 8 caracteres
+      }
+      return false;
+    }
+    return true;
+  }
 
   guardarDestinatario() {
     this.submitted = true;

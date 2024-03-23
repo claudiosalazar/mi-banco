@@ -10,6 +10,8 @@ import { LoginComponent } from './auth/components/login/login.component';
 // Pipe
 import { PesosPipe } from './shared/pipes/pesos.pipe';
 import { RutPipe } from './shared/pipes/rut.pipe';
+import { CelularPipe } from './shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
 
 // Services
 import { DatosUsuarioService } from './core/services/datos-usuario.service';
@@ -73,6 +75,7 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
     ContactanosComponent,
     PesosPipe,
     RutPipe,
+    CelularPipe,
     DatosUsuarioComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,
@@ -110,7 +113,9 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
   providers: [
     DatosUsuarioService,
     DatosFiltradosService,
-    RutPipe
+    RutPipe,
+    CelularPipe,
+    TelefonoFijoPipe
   ],
   bootstrap: [MiBancoComponent]
 })
