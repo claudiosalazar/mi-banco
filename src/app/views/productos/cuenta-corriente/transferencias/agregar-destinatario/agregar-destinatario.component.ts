@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ValidaEmailService } from '../../../../../core/services/validador-email.service';
+import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
 import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
 
 @Component({
@@ -8,7 +8,6 @@ import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
   templateUrl: './agregar-destinatario.component.html'
 })
 export class AgregarDestinatarioComponent implements OnInit{
-
   // Array bancos
   listaBancos = [
     { value: '0', label: '-' },
@@ -79,7 +78,7 @@ export class AgregarDestinatarioComponent implements OnInit{
   selectClass: any;
 
   constructor(
-    private validaEmailService: ValidaEmailService,
+    private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe
    ) {}
 
@@ -118,22 +117,6 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   }
 
-  /* validaRut(): void {
-    const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
-    if (rutDestinatarioControl) {
-      const rutDestinatario = rutDestinatarioControl.value as string;
-  
-      if (rutDestinatario.trim() === '') {
-        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
-      } else {
-        rutDestinatarioControl.setErrors(null);
-      }
-  
-      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
-      this.inputValidoRut = rutDestinatarioControl.valid;
-    }
-  } */
-
   validaRut(): void {
     const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
     if (rutDestinatarioControl) {
@@ -141,7 +124,7 @@ export class AgregarDestinatarioComponent implements OnInit{
   
       if (rutDestinatario.trim() === '') {
         rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
-      } else if (rutDestinatarioControl.errors?.['inputErrorFormatoRut']) {
+      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 9) {
         rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
       } else {
         rutDestinatarioControl.setErrors(null);
@@ -151,6 +134,21 @@ export class AgregarDestinatarioComponent implements OnInit{
       this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
       this.inputValidoRut = rutDestinatarioControl.valid;
     }
+  }
+
+  formatoRut(event: KeyboardEvent): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    const value = (event.target as HTMLInputElement).value;
+  
+    // Permitir solo números
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      // Si el carácter no es un número, permitir solo 'K' como último carácter
+      if (charCode === 75 || charCode === 107) { // 75 y 107 son los códigos de tecla para 'K' y 'k' respectivamente
+        return value.length === 8; // Permitir 'K' solo si ya hay 8 caracteres
+      }
+      return false;
+    }
+    return true;
   }
 
   validaBanco(): ValidatorFn {
@@ -187,7 +185,7 @@ export class AgregarDestinatarioComponent implements OnInit{
   validaEmail(emailDestinatario: string) {
     const emailControl = this.crearDestinatarioForm.controls[emailDestinatario];
     emailControl.markAsTouched();
-    emailControl.setValidators([Validators.required, Validators.email, this.validaEmailService.formatoEmail]);
+    emailControl.setValidators([Validators.required, Validators.email, this.formatoEmailService.formatoEmail]);
     emailControl.updateValueAndValidity();
   
     if (emailControl.value.trim() === '') {
@@ -210,20 +208,7 @@ export class AgregarDestinatarioComponent implements OnInit{
     return true;
   }
 
-  formatoRut(event: KeyboardEvent): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    const value = (event.target as HTMLInputElement).value;
   
-    // Permitir solo números
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      // Si el carácter no es un número, permitir solo 'K' como último carácter
-      if (charCode === 75 || charCode === 107) { // 75 y 107 son los códigos de tecla para 'K' y 'k' respectivamente
-        return value.length === 8; // Permitir 'K' solo si ya hay 8 caracteres
-      }
-      return false;
-    }
-    return true;
-  }
 
   guardarDestinatario() {
     this.submitted = true;

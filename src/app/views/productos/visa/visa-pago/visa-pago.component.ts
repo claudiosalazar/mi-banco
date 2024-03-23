@@ -10,7 +10,7 @@ import { Observable, from, map } from 'rxjs';
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
-import { ValidaEmailService } from '../../../../core/services/validador-email.service';
+import { FormatoEmailService } from '../../../../core/services/formato-email.service';
 
 // Model
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
@@ -85,7 +85,7 @@ export class VisaPagoComponent implements OnInit {
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
     private ofertasProductosService: OfertasProductosService,
-    private validaEmailService: ValidaEmailService,
+    private formatoEmailService: FormatoEmailService,
     private http: HttpClient,
   ) { }
 
@@ -100,7 +100,7 @@ export class VisaPagoComponent implements OnInit {
       montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
       inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
-      inputEmail: new FormControl('', [Validators.required, this.validaEmailService.formatoEmail]),
+      inputEmail: new FormControl('', [Validators.required, this.formatoEmailService.formatoEmail]),
     });
 
     // Aplica pipe pesos a inputOtroMonto
@@ -220,7 +220,7 @@ export class VisaPagoComponent implements OnInit {
   emailValido(inputEmail: string) {
     this.pagoVisaForm.controls[inputEmail].markAsPristine();
     this.pagoVisaForm.controls[inputEmail].markAsUntouched();
-    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.validaEmailService.formatoEmail]);
+    this.pagoVisaForm.controls[inputEmail].setValidators([Validators.required, this.formatoEmailService.formatoEmail]);
     this.pagoVisaForm.controls[inputEmail].updateValueAndValidity();
   }
 

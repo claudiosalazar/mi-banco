@@ -34,22 +34,8 @@
       </div>
   
       <!-- rut -->
-      <!-- <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="rutDestinatario" [class.is-invalid]="inputErrorVacioRut" [class.is-valid]="inputValidoRut" (blur)="validaRut();" (keypress)="formatoRut($event);" maxlength="9">
-        <label for="rutDestinatario">Rut <span class="obligatorio">*</span></label>
-        <div *ngIf="crearDestinatarioForm.get('rutDestinatario')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rutDestinatario')?.touched" class="invalid-feedback">
-          <span>El campo no puede quedar vacío.</span>
-        </div>
-        <div *ngIf="crearDestinatarioForm.get('rutDestinatario')?.valid && crearDestinatarioForm.get('rutDestinatario')?.touched" class="valid-feedback">
-          <span>El rut es válido.</span>
-        </div>
-      </div> -->
-
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="rutDestinatario" 
-               [class.is-invalid]="crearDestinatarioForm.get('rutDestinatario')?.invalid && crearDestinatarioForm.get('rutDestinatario')?.touched" 
-               [class.is-valid]="crearDestinatarioForm.get('rutDestinatario')?.valid && crearDestinatarioForm.get('rutDestinatario')?.touched" 
-               (blur)="validaRut();" (keypress)="formatoRut($event);">
+        <input type="text" class="form-control" formControlName="rutDestinatario" [class.is-invalid]="crearDestinatarioForm.get('rutDestinatario')?.invalid && crearDestinatarioForm.get('rutDestinatario')?.touched" [class.is-valid]="crearDestinatarioForm.get('rutDestinatario')?.valid && crearDestinatarioForm.get('rutDestinatario')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
         <label for="rutDestinatario">Rut <span class="obligatorio">*</span></label>
         <div *ngIf="crearDestinatarioForm.get('rutDestinatario')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rutDestinatario')?.touched" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>

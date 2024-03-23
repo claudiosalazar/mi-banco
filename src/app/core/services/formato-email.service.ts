@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValidaEmailService {
+export class FormatoEmailService {
 
   constructor() { }
 
