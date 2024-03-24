@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
+import { Offcanvas } from 'bootstrap';
 
 declare var bootstrap: any;
 
@@ -36,6 +37,8 @@ export class AgendaDestinatariosComponent implements OnInit {
   // Variable para mensajes de modal
   usuarioEliminado = false;
   errorServer = false;
+
+  offcanvasAbierto = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -130,6 +133,12 @@ export class AgendaDestinatariosComponent implements OnInit {
       })
     );
   }
-  
+  abrirOffcanvas() {
+    this.offcanvasAbierto = true;
+  }
+
+  cerrarOffcanvas() {
+    this.offcanvasAbierto = false;
+  }
 
 }

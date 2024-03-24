@@ -106,7 +106,6 @@ export class AgregarDestinatarioComponent implements OnInit{
       celularDestinatario: new FormControl(''),
       telefonoDestinatario: new FormControl(''),
     });
-    
   }
 
   validaNombre(): void {
