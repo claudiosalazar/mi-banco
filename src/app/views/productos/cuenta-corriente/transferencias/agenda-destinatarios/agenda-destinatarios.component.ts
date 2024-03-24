@@ -1,7 +1,9 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, switchMap, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Offcanvas } from 'bootstrap';
 
 declare var bootstrap: any;

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, combineLatest, map, of, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, of, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 import { UrlBrowserService } from './url-browser.service';
 

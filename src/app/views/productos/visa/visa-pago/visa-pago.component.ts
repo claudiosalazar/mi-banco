@@ -4,7 +4,8 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { Observable, from, map } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // Service
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
