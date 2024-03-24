@@ -10,7 +10,7 @@
   
     <div>
       <!-- <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" aria-controls="staticBackdrop"> -->
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="offcanvasAbierto = true">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -177,12 +177,12 @@
 </div>
 
 <!-- Sidenav para crear nuevo destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas" *ngIf="offcanvasAbierto" (hidden.bs.offcanvas)="offcanvasAbierto = false">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <app-agregar-destinatario></app-agregar-destinatario>
 </div>
 
 <!-- Sidenav para editar destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas" *ngIf="offcanvasAbierto" (hidden.bs.offcanvas)="offcanvasAbierto = false">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas">
   <app-editar-destinatario></app-editar-destinatario>
 </div>
 

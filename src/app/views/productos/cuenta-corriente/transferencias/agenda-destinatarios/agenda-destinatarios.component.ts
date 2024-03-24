@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -13,6 +13,8 @@ declare var bootstrap: any;
   templateUrl: './agenda-destinatarios.component.html'
 })
 export class AgendaDestinatariosComponent implements OnInit {
+
+  @ViewChild('miOffcanvas') miOffcanvas: ElementRef | undefined;
 
   destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
@@ -39,8 +41,6 @@ export class AgendaDestinatariosComponent implements OnInit {
   // Variable para mensajes de modal
   usuarioEliminado = false;
   errorServer = false;
-
-  offcanvasAbierto = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -134,13 +134,6 @@ export class AgendaDestinatariosComponent implements OnInit {
         return throwError(error);
       })
     );
-  }
-  abrirOffcanvas() {
-    this.offcanvasAbierto = true;
-  }
-
-  cerrarOffcanvas() {
-    this.offcanvasAbierto = false;
   }
 
 }
