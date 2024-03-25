@@ -35,7 +35,9 @@ export class AgendaDestinatariosService {
     return this.datosNuevoDestinatarioSource.asObservable();
   }
 
-  guardarDestinatario(): void {
+  guardarNuevoDestinatario(datos: any): void {
+    console.log('Datos recibidos en guardarNuevoDestinatario:', datos);
+    // Aquí puedes hacer lo que necesites con los datos
   }
 
 }

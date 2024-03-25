@@ -68,7 +68,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   ngAfterViewInit(_e: Event): void {
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       // Aquí puedes manejar los datos recibidos
-      console.log('Se recibieron los datos de datosNuevoDestinatario:', datos);
+      // console.log('Se recibieron los datos de datosNuevoDestinatario:', datos);
   
       // Cierra el offcanvas
       if (this.offcanvasRef) {
@@ -85,6 +85,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
       // Abre el modal
       this.abrirModalNuevoDestinatario();
+
+      // Envia los datos al servicio
+      this.agendaService.guardarNuevoDestinatario(datos);
     });
   }
 
