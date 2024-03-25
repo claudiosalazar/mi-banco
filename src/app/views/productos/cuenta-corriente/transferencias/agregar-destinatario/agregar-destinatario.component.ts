@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+
+// Services
+import { AgendaDestinatariosService } from 'src/app/core/services/agenda-destinatarios.service';
 import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
+
+// Pipe
 import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../../../../shared/pipes/telefono-fijo.pipe';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-agregar-destinatario',
   templateUrl: './agregar-destinatario.component.html'
 })
 export class AgregarDestinatarioComponent implements OnInit{
+
+  @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+
   // Array bancos
   listaBancos = [
     { value: '0', label: '-' },
@@ -84,15 +95,32 @@ export class AgregarDestinatarioComponent implements OnInit{
   // Variables para telefono fijo
   inputErrorTelefonoFijoInvalido: any;
   inputTelefonoFijoValido: any;
-  
-  selectClass: any;
+  // Variable para enviar datos al services
+  datosNuevoDestinatario: any;
+
+  offcanvas: any;
+  offcanvasInitialized = false;
 
   constructor(
+    private fb: FormBuilder,
+    private agendaService: AgendaDestinatariosService,
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe
-   ) {}
+   ) {
+    this.crearDestinatarioForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apodo: ['', Validators.required],
+      rut: ['', Validators.required],
+      banco: ['', Validators.required],
+      tipoCuenta: ['', Validators.required],
+      numeroCuenta: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      celular: ['', Validators.required],
+      telefono: ['', Validators.required]
+    });
+   }
 
   ngOnInit(): void {
     this.crearDestinatarioForm = new FormGroup({
@@ -106,6 +134,13 @@ export class AgregarDestinatarioComponent implements OnInit{
       celularDestinatario: new FormControl(''),
       telefonoDestinatario: new FormControl(''),
     });
+
+    const handleClick = (e: { preventDefault: () => void; }) => {
+      e.preventDefault();
+      const offcanvasElement = new bootstrap.Offcanvas(this.crearDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});
+      offcanvasElement.show();
+    };
+    this.offcanvasInitialized = true;
   }
 
   validaNombre(): void {
@@ -277,7 +312,7 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   }
   
-
+  // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -286,6 +321,7 @@ export class AgregarDestinatarioComponent implements OnInit{
     return true;
   }
 
+  // Solo permite numeros y letra K en el ultimo digito
   formatoRut(event: KeyboardEvent): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     const value = (event.target as HTMLInputElement).value;
@@ -301,30 +337,56 @@ export class AgregarDestinatarioComponent implements OnInit{
     return true;
   }
 
-  guardarDestinatario() {
+  validaFormulario(): Observable<any> {
     this.submitted = true;
+  
+    // ValidA custom-select banco
     const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
     this.bancoInvalido = false;
     if (bancoDestinatarioControl && bancoDestinatarioControl.value === '0') {
-      // Si el producto seleccionado es '0', establece el error de producto inválido en true
       this.bancoInvalido = true;
-      return;
+      return of(null);
     }
-
+  
+    // ValidA custom-select tipo de cuenta
     const cuentaDestinatarioControl = this.crearDestinatarioForm.get('cuentaDestinatario');
     this.cuentaInvalida = false;
     if (cuentaDestinatarioControl && cuentaDestinatarioControl.value === '0') {
-      // Si el producto seleccionado es '0', establece el error de producto inválido en true
       this.cuentaInvalida = true;
-      return;
+      return of(null);
     }
-
+  
+    // Verifica que el formulario sea válido
     if (this.crearDestinatarioForm.valid) {
-      console.log('Formulario válido, se puede enviar');
-      // Aquí puedes poner el código para enviar el formulario
-    } else {
-      console.log('Formulario inválido, por favor corrige los errores');
+      this.agendaService.getDestinatarios().subscribe(destinatarios => {
+        const maxId = Math.max(...destinatarios.map((d: { id: any; }) => Number(d.id)));
+        const newId = maxId + 1;
+        const formValues = this.crearDestinatarioForm.value;
+        this.datosNuevoDestinatario = JSON.stringify({
+          id: newId.toString(),
+          nombre: formValues.nombreDestinatario,
+          apodo: formValues.apodoDestinatario,
+          rut: formValues.rutDestinatario,
+          banco: this.listaBancos.find(b => b.value === formValues.bancoDestinatario)?.label ?? '',
+          tipoCuenta: this.tiposCuenta.find(t => t.value === formValues.cuentaDestinatario)?.label ?? '',
+          numeroCuenta: formValues.numeroCuentaDestinatario,
+          email: formValues.emailDestinatario,
+          celular: formValues.celularDestinatario.replace(/\s/g, ''),
+          telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
+        });
+  
+        // Envía los datos al servicio
+        this.agendaService.emitirDatosNuevoDestinatario(this.datosNuevoDestinatario);
+      });
     }
+    return of(null);
   }
+
+  /*toggleOffcanvas(): void {
+    if (this.crearDestinatarioCanvas?.nativeElement.classList.contains('show')) {
+      this.crearDestinatarioCanvas.nativeElement.classList.remove('show');
+      console.log('Offcanvas cerrado');
+    }
+  }*/
 
 }

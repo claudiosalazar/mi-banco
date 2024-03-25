@@ -9,13 +9,11 @@
     </div>
   
     <div>
-      <!-- <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" aria-controls="staticBackdrop"> -->
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas($event)">
         Agregar nuevo destinatario
       </button>
     </div>
   </div>
-
 
   <div>
     <table class="table " role="table">
@@ -126,6 +124,16 @@
   </div>
 </div>
 
+<!-- Sidenav para crear nuevo destinatario -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas" *ngIf="mostrarOffcanvas">
+  <app-agregar-destinatario></app-agregar-destinatario>
+</div>
+
+<!-- Sidenav para editar destinatario -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas">
+  <app-editar-destinatario></app-editar-destinatario>
+</div>
+
 <!-- Modal eliminar destinatario -->
 <div class="modal fade" id="modalEliminarDestinatario" tabindex="-1" aria-labelledby="modalEliminarDestinatario" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -176,13 +184,26 @@
   </div>
 </div>
 
-<!-- Sidenav para crear nuevo destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
-  <app-agregar-destinatario></app-agregar-destinatario>
+<!-- Modal nuevo destinatario -->
+<div class="modal fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <div *ngIf="envioDatosNuevoDestinatario" id="envioDatosNuevoDestinatario" class="text-center">
+          <h1 class="mb-2">Se estan guardando los nuevos datos del nuevo destinatario.</h1>
+          <p>Espera un momento por favor.</p>
+        </div>
+        <div *ngIf="datosGuardadosNuevoDestinatario" id="datosGuardadosNuevoDestinatario" class="text-center">
+          <h1 class="mb-2">Se estan guardando los nuevos datos del nuevo destinatario.</h1>
+          <p>Espera un momento por favor.</p>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+        <div *ngIf="errorServerNuevoDestinatario" id="errorServerNuevoDestinatario" class="text-center">
+          <h1 class="mb-2">Hubo un error al intentar guardar el nuevo destinatario.</h1>
+          <p class="mb-2">Intento mas tarde.</p>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- Sidenav para editar destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas">
-  <app-editar-destinatario></app-editar-destinatario>
-</div>
-

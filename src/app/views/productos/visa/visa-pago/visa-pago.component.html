@@ -60,7 +60,6 @@
                     </div>
                   </div>
 
-
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'">
                     <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal"
@@ -90,9 +89,6 @@
                       <span>El monto es correcto.</span>
                     </div>
                   </div>
-
-
-                  
                 </div>
 
                 <!-- Email para comprobante -->
@@ -101,7 +97,6 @@
                   <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="emailValido('inputEmail')">
                     <label for="inputEmail">Email</label>
-                    
                     <!-- Mensaje valido -->
                     <div *ngIf="pagoVisaForm.controls['inputEmail'].valid" class="valid-feedback">
                       El email es correcto.
@@ -125,13 +120,9 @@
                 </div>
 
               </form>
-              
-
             </div>
           </div>
         </div>
-
-    
       </div>
     </div>
 

@@ -20,17 +20,13 @@ export class CustomSelectComponent implements OnInit {
   set isOpen(value: boolean) {
     this._isOpen = value;
     if (value === true) {
-      console.log('isOpen ha cambiado a true');
       setTimeout(() => {
         const optionsList = this.el.nativeElement.querySelectorAll('.options');
-
         if (optionsList) {
           optionsList.forEach((options: { style: { zIndex: string; }; }, index: number) => {
             options.style.zIndex = ((this.zIndex || 0) - index * 1000).toString();
-            console.log(`El valor de z-index para .options es ${(this.zIndex || 0) - index * 1000}`);
           });
         } else {
-          console.error('No se encontró el elemento .options');
         }
       });
     }
@@ -46,7 +42,6 @@ export class CustomSelectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Aplica los estilos a .label
     const label = this.el.nativeElement.querySelector('.label');
 
     if (label) {

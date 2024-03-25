@@ -19,8 +19,6 @@ app.use('/backend/data', express.static(path.join(__dirname, 'backend/data')));
 app.post('/data', (req, res) => {
   const datos = req.body;
   // Escribe los datos en datos-usuario.json
-  // fs.writeFileSync('data/datos-usuario.json', JSON.stringify(datos, null, 2)); 
-
   const directoryPath = path.join(__dirname, 'data');
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
@@ -50,6 +48,37 @@ app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
   const fileData = fs.readFileSync(filePath);
   res.send(JSON.parse(fileData));
+});
+
+// Guarda un nuevo destinatario en la agenda
+app.put('/backend/data/agenda-usuario-transferencias.json', (req, res) => {
+  const nuevoDestinatario = req.body;
+  const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
+
+  // Leer el archivo existente
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo:', err);
+      res.status(500).send('Error leyendo el archivo');
+      return;
+    }
+
+    // Parsear el JSON y agregar el nuevo destinatario
+    const destinatarios = JSON.parse(data);
+    destinatarios.push(nuevoDestinatario);
+
+    // Escribir el nuevo JSON al archivo
+    fs.writeFile(filePath, JSON.stringify(destinatarios, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.error('Error escribiendo al archivo:', err);
+        res.status(500).send('Error escribiendo al archivo');
+        return;
+      }
+
+      console.log('Nuevo destinatario guardado con éxito');
+      res.send('Nuevo destinatario guardado con éxito');
+    });
+  });
 });
 
 // Elimina destinatario de agenda
