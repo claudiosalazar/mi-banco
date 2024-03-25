@@ -14,7 +14,7 @@
     <form [formGroup]="crearDestinatarioForm">
       <!-- Nombre -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="nombreDestinatario" [class.is-invalid]="inputErrorVacioNombre || inputErrorApellido" [class.is-valid]="inputValidoNombre" (blur)="validaNombre();">
+        <input type="text" class="form-control" formControlName="nombreDestinatario" [class.is-invalid]="crearDestinatarioForm.get('nombreDestinatario')?.invalid && crearDestinatarioForm.get('nombreDestinatario')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombreDestinatario')?.valid && crearDestinatarioForm.get('nombreDestinatario')?.touched" (blur)="validaNombre();">
         <label for="nombreDestinatario">Nombre y Apellido <span class="obligatorio">*</span></label>
         <div *ngIf="crearDestinatarioForm.get('nombreDestinatario')?.errors?.['inputErrorVacioNombre'] && crearDestinatarioForm.get('nombreDestinatario')?.touched" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
@@ -67,7 +67,7 @@
   
       <!-- Numero cuenta -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="numeroCuentaDestinatario" [class.is-invalid]="inputErrorVacioNumeroCuenta" [class.is-valid]="inputValidoNumeroCuenta" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
+        <input type="text" class="form-control" formControlName="numeroCuentaDestinatario" [class.is-invalid]="crearDestinatarioForm.get('numeroCuentaDestinatario')?.invalid && crearDestinatarioForm.get('numeroCuentaDestinatario')?.touched" [class.is-valid]="crearDestinatarioForm.get('numeroCuentaDestinatario')?.valid && crearDestinatarioForm.get('numeroCuentaDestinatario')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
         <label for="numeroCuentaDestinatario">Número de cuenta <span class="obligatorio">*</span></label>
         <div *ngIf="crearDestinatarioForm.get('numeroCuentaDestinatario')?.errors?.['inputErrorVacioNumeroCuenta'] && crearDestinatarioForm.get('numeroCuentaDestinatario')?.touched" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>

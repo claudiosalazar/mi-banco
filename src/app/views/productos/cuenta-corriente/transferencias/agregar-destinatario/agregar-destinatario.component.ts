@@ -225,6 +225,7 @@ export class AgregarDestinatarioComponent implements OnInit{
       this.inputErrorVacioNumeroCuenta = numeroCuentaDestinatarioControl.errors?.['inputErrorVacioNumeroCuenta'];
       this.inputValidoNumeroCuenta = numeroCuentaDestinatarioControl.valid;
     }
+    
   }
 
   validaEmail(emailDestinatario: string) {
@@ -339,6 +340,13 @@ export class AgregarDestinatarioComponent implements OnInit{
 
   validaFormulario(): Observable<any> {
     this.submitted = true;
+    
+    // Verifica que todos los campos del formulario estén llenos
+    if (!this.crearDestinatarioForm.valid) {
+      // Marca todos los campos del formulario como "touched" para mostrar las validaciones de error
+      this.crearDestinatarioForm.markAllAsTouched();
+      return of(null);
+    }
   
     // ValidA custom-select banco
     const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
