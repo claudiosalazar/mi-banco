@@ -118,5 +118,17 @@
     "email": "federicop@correo.cl",
     "celular": "987654321",
     "telefono": "227654321"
+  },
+  {
+    "id": "10",
+    "nombre": "Bruce Wayne",
+    "apodo": "Batman",
+    "rut": "98.765.432-1",
+    "banco": "JP Morgan Cahse Bank, N. A.",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "234234234",
+    "email": "batman@gmail.com",
+    "celular": "852159753",
+    "telefono": "852741963"
   }
 ]

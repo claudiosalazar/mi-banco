@@ -357,7 +357,7 @@ export class AgregarDestinatarioComponent implements OnInit{
     // Verifica que el formulario sea válido
     if (this.crearDestinatarioForm.valid) {
       this.agendaService.getDestinatarios().subscribe(destinatarios => {
-        const maxId = Math.max(...destinatarios.map((d: { id: any; }) => Number(d.id)));
+        const maxId = Math.max(...destinatarios.map((d: { id: any; }) => Number(d.id)).filter((id: number) => !isNaN(id)));
         const newId = maxId + 1;
         const formValues = this.crearDestinatarioForm.value;
         this.datosNuevoDestinatario = {
