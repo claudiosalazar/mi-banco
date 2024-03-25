@@ -109,17 +109,7 @@ export class AgregarDestinatarioComponent implements OnInit{
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe
    ) {
-    this.crearDestinatarioForm = this.fb.group({
-      nombre: ['', Validators.required],
-      apodo: ['', Validators.required],
-      rut: ['', Validators.required],
-      banco: ['', Validators.required],
-      tipoCuenta: ['', Validators.required],
-      numeroCuenta: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      celular: ['', Validators.required],
-      telefono: ['', Validators.required]
-    });
+    
    }
 
   ngOnInit(): void {
@@ -370,7 +360,7 @@ export class AgregarDestinatarioComponent implements OnInit{
         const maxId = Math.max(...destinatarios.map((d: { id: any; }) => Number(d.id)));
         const newId = maxId + 1;
         const formValues = this.crearDestinatarioForm.value;
-        this.datosNuevoDestinatario = JSON.stringify({
+        this.datosNuevoDestinatario = {
           id: newId.toString(),
           nombre: formValues.nombreDestinatario,
           apodo: formValues.apodoDestinatario,
@@ -381,20 +371,15 @@ export class AgregarDestinatarioComponent implements OnInit{
           email: formValues.emailDestinatario,
           celular: formValues.celularDestinatario.replace(/\s/g, ''),
           telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
-        });
-  
+        };
+
+        console.log('Datos que se enviarán:', this.datosNuevoDestinatario);
+    
         // Envía los datos al servicio
         this.agendaService.emitirDatosNuevoDestinatario(this.datosNuevoDestinatario);
       });
     }
     return of(null);
   }
-
-  /*toggleOffcanvas(): void {
-    if (this.crearDestinatarioCanvas?.nativeElement.classList.contains('show')) {
-      this.crearDestinatarioCanvas.nativeElement.classList.remove('show');
-      console.log('Offcanvas cerrado');
-    }
-  }*/
 
 }

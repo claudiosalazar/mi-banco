@@ -50,37 +50,6 @@ app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
   res.send(JSON.parse(fileData));
 });
 
-// Guarda un nuevo destinatario en la agenda
-app.put('/backend/data/agenda-usuario-transferencias.json', (req, res) => {
-  const nuevoDestinatario = req.body;
-  const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
-
-  // Leer el archivo existente
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error leyendo el archivo:', err);
-      res.status(500).send('Error leyendo el archivo');
-      return;
-    }
-
-    // Parsear el JSON y agregar el nuevo destinatario
-    const destinatarios = JSON.parse(data);
-    destinatarios.push(nuevoDestinatario);
-
-    // Escribir el nuevo JSON al archivo
-    fs.writeFile(filePath, JSON.stringify(destinatarios, null, 2), 'utf8', (err) => {
-      if (err) {
-        console.error('Error escribiendo al archivo:', err);
-        res.status(500).send('Error escribiendo al archivo');
-        return;
-      }
-
-      console.log('Nuevo destinatario guardado con éxito');
-      res.send('Nuevo destinatario guardado con éxito');
-    });
-  });
-});
-
 // Elimina destinatario de agenda
 app.delete('/backend/data/agenda-usuarios-transferencias/:id', (req, res) => {
   const id = String(req.params.id);
@@ -216,6 +185,39 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
   });
 });
 
+// Guarda un nuevo destinatario en la agenda
+app.put('/backend/data/agenda-usuario-transferencias.json', (req, res) => {
+  const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
+  const nuevoDestinatario = JSON.parse(req.body);
+
+  // Leer el archivo existente
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo:', err);
+      res.status(500).send('Error leyendo el archivo');
+      return;
+    }
+
+    // Parsear el JSON y agregar el nuevo destinatario
+    const destinatarios = JSON.parse(data);
+    nuevoDestinatario.id = new Date().getTime(); // Agregar un nuevo ID al destinatario
+    destinatarios.push(nuevoDestinatario);
+
+    console.log('Destinatarios actualizados:', destinatarios); // Ver los datos actualizados del JSON
+
+    // Escribir el nuevo JSON al archivo
+    fs.writeFile(filePath, JSON.stringify(destinatarios, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.error('Error escribiendo al archivo:', err);
+        res.status(500).send('Error escribiendo al archivo');
+        return;
+      }
+
+      console.log('Nuevo destinatario guardado con éxito');
+      res.send('Nuevo destinatario guardado con éxito');
+    });
+  });
+});
 
 app.listen(port, () => {
   console.log(`El servidor está corriendo en http://localhost:${port}`);

@@ -193,19 +193,20 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     // Indica que se están enviando los datos
     this.enviandoNuevoDestinatario = true;
   
+    // Mostrar en consola los datos capturados
+    console.log('Datos capturados:', this.datosCapturados);
+  
     // Envía los datos al servicio
     this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(response => {
-      console.log('Respuesta del servicio:', response);
   
-      // Espera un segundo y medio antes de indicar que los datos se han guardado correctamente
+      // Espera al menos 2 segundos antes de indicar que los datos se han guardado correctamente
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
         this.datosGuardadosNuevoDestinatario = true;
-      }, 1500);
+      }, 2000);
     }, error => {
-      console.error('Error al guardar los datos:', error);
   
-      // Espera un segundo y medio antes de indicar que ha habido un error
+      // Espera al menos 2 segundos antes de indicar que ha habido un error
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
         this.errorServerNuevoDestinatario = true;

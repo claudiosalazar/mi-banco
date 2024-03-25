@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of, throwError } from 'rxjs';
+import { Destinatario } from '../../shared/models/destinatarios.model';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -35,12 +37,48 @@ export class AgendaDestinatariosService {
     return this.datosNuevoDestinatarioSource.asObservable();
   }
 
-  guardarNuevoDestinatario(datos: any): Observable<any> {
-    console.log('Datos recibidos en guardarNuevoDestinatario:', datos);
-    // Aquí puedes hacer lo que necesites con los datos
+ /*guardarNuevoDestinatario(datos: Destinatario[]): Observable<any> {
+    // Primero, obtener los datos actuales
+    return this.http.get(this.baseUrl).pipe(
+      switchMap((datosActuales: any) => {
+        // Agregar los nuevos datos a los datos actuales
+        datos.forEach(dato => {
+        datosActuales[dato.id] = dato;
+      });
+  
+        // Mostrar en consola los datos que se enviarán al servidor
+        console.log('Datos que se enviarán al servidor:', datosActuales);
+  
+        // Luego, enviar los datos actualizados al servidor
+        return this.http.put(this.baseUrl, datosActuales);
+      })
+    );
+  }*/
 
-    // Realiza una solicitud HTTP PUT para guardar los datos
-    return this.http.put(this.baseUrl, datos);
+  guardarNuevoDestinatario(datos: Destinatario): Observable<any> {
+    // Mostrar en consola los datos recibidos del componente
+    console.log('Datos recibidos del componente:', datos);
+  
+    // Obtener los datos actuales
+    return this.http.get<Destinatario[]>(this.baseUrl).pipe(
+      switchMap((datosActuales: Destinatario[]) => {
+        // Agregar los nuevos datos a los datos actuales
+        const datosActualizados = [...datosActuales, datos];
+  
+        // Mostrar en consola los datos que se enviarán al servidor
+        console.log('Datos que se enviarán al servidor:', datosActualizados);
+  
+        // Enviar los datos actualizados al servidor
+        return this.http.put(this.baseUrl, datosActualizados, {responseType: 'text'});
+      }),
+      map((res: any) => {
+        return of(datos);
+      }),
+      catchError(error => {
+        console.error('Error del server:', error);
+        return throwError(error);
+      })
+    );
   }
 
 }
