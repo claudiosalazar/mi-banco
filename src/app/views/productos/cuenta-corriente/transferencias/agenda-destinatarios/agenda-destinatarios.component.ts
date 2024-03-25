@@ -182,21 +182,10 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     );
   }
 
-  /*escucharCambiosDestinatario(): Observable<any> {
-    return this.agendaService.getDatosNuevoDestinatario().pipe(
-      tap(datos => {
-        if (datos) {
-          console.log('Se recibieron los datos de datosNuevoDestinatario:', datos);
-        } else {
-          console.log('No se recibieron datos de datosNuevoDestinatario');
-        }
-      })
-    );
-  }*/
-
   // Modal para eliminar destinatario
   abrirModalNuevoDestinatario(): void {
-    // this.renderer.addClass(this.modalNuevoDestinatario?.nativeElement, 'show');
+    var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
+    modalNuevoDestinatario.show();
   }
 
 }
