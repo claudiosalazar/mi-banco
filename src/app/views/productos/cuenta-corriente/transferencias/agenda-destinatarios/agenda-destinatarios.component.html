@@ -189,16 +189,17 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body p-5">
-        <div *ngIf="envioDatosNuevoDestinatario" id="envioDatosNuevoDestinatario" class="text-center">
-          <h1 class="mb-2">Se estan guardando los nuevos datos del nuevo destinatario.</h1>
-          <p>Espera un momento por favor.</p>
-        </div>
-        <div *ngIf="datosGuardadosNuevoDestinatario" id="datosGuardadosNuevoDestinatario" class="text-center">
+        <div *ngIf="enviandoNuevoDestinatario" class="text-center">
           <h1 class="mb-2">Se estan guardando los nuevos datos del nuevo destinatario.</h1>
           <p>Espera un momento por favor.</p>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
         </div>
-        <div *ngIf="errorServerNuevoDestinatario" id="errorServerNuevoDestinatario" class="text-center">
+        <div *ngIf="datosGuardadosNuevoDestinatario" class="text-center">
+          <h1 class="mb-2">Se estan guardando los nuevos datos del nuevo destinatario.</h1>
+          <p>Espera un momento por favor.</p>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+        <div *ngIf="errorServerNuevoDestinatario" class="text-center">
           <h1 class="mb-2">Hubo un error al intentar guardar el nuevo destinatario.</h1>
           <p class="mb-2">Intento mas tarde.</p>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>

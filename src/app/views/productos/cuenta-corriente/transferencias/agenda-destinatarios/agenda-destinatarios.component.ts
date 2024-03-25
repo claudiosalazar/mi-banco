@@ -45,11 +45,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   // Variables para modal de nuevo destinatario
   private subscription: Subscription | undefined;
   datosNuevoDestinatario: any;
-  envioDatosNuevoDestinatario: boolean = true;
-  errorServerNuevoDestinatario: boolean = false;
+  enviandoNuevoDestinatario: boolean = true;
   datosGuardadosNuevoDestinatario: boolean = false;
+  errorServerNuevoDestinatario: boolean = false;
+
+  // Variables para offcanvas
   public mostrarOffcanvas = true;
   offcanvasRef: any;
+  datosCapturados: any;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -68,7 +71,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   ngAfterViewInit(_e: Event): void {
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       // Aquí puedes manejar los datos recibidos
-      // console.log('Se recibieron los datos de datosNuevoDestinatario:', datos);
+      this.datosCapturados = datos;
   
       // Cierra el offcanvas
       if (this.offcanvasRef) {
@@ -85,9 +88,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
       // Abre el modal
       this.abrirModalNuevoDestinatario();
-
-      // Envia los datos al servicio
-      this.agendaService.guardarNuevoDestinatario(datos);
     });
   }
 
@@ -189,6 +189,28 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
+  
+    // Indica que se están enviando los datos
+    this.enviandoNuevoDestinatario = true;
+  
+    // Envía los datos al servicio
+    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(response => {
+      console.log('Respuesta del servicio:', response);
+  
+      // Espera un segundo y medio antes de indicar que los datos se han guardado correctamente
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.datosGuardadosNuevoDestinatario = true;
+      }, 1500);
+    }, error => {
+      console.error('Error al guardar los datos:', error);
+  
+      // Espera un segundo y medio antes de indicar que ha habido un error
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.errorServerNuevoDestinatario = true;
+      }, 2000);
+    });
   }
 
 }
