@@ -35,7 +35,14 @@
       &.aviso {
         color: $dorado;
       }
+      &.cargando {
+        color: $dorado;
+        display: block;
+        width: 42px;
+        height: 42px;
+        display: block;
+        @include spin-animation;
+      }
     }
   }
 }
-

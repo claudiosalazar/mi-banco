@@ -19,7 +19,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
 
-  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transferencias';
+  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transerencias';
   
 
   // Variables para paginador
@@ -203,7 +203,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
         this.datosGuardadosNuevoDestinatario = true;
-      }, 2000);
+      }, 200000);
     }, error => {
   
       // Espera al menos 2 segundos antes de indicar que ha habido un error

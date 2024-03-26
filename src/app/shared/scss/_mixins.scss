@@ -10,7 +10,7 @@
 }
 
 // Input error
-// Animacion
+// Animacion para mostrar errores en inputs
 @keyframes fade {
   0%, 33% {
     opacity: 0;
@@ -26,12 +26,29 @@
   }
 }
 
-// Animacion para mostrar errores en inputs
 @mixin fade-animation($duration: .8s) {
   animation: fade $duration ease-in-out;
   animation-iteration-count: 1;
 }
 
+// Animacion para girar iconos
+@keyframes spin {
+  0% {
+		transform: rotate(0deg);
+  }
+  50% {
+		transform: rotate(-180deg);
+	}
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@mixin spin-animation($duration: 99999s) {
+  animation: spin 1s infinite linear;
+}
+
+// Ellipsis
 @mixin ellipse {
   $font-size: 1;
   $line-height: 1;
