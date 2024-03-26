@@ -9,7 +9,7 @@
     </div>
   
     <div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas($event)">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvasNuevoDestinatario($event)">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -111,7 +111,7 @@
             <span class="contenido-td-acciones d-block">
               <div class="d-flex justify-content-between">
                 <!-- Editar datos destinatario -->
-                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
+                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id)">
                   <span class="material-symbols-outlined">
                     edit
                   </span>

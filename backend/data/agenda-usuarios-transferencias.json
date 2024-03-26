@@ -286,5 +286,17 @@
     "email": "asdas@asdad.cl",
     "celular": "",
     "telefono": ""
+  },
+  {
+    "id": "24",
+    "nombre": "Bruce Wayne",
+    "apodo": "Batman",
+    "rut": "98.765.432-1",
+    "banco": "",
+    "tipoCuenta": "",
+    "numeroCuenta": "234234234",
+    "email": "batman@gmail.com",
+    "celular": "852159753",
+    "telefono": "852741963"
   }
 ]

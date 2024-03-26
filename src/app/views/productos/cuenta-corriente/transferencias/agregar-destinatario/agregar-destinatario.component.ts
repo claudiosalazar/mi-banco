@@ -102,7 +102,6 @@ export class AgregarDestinatarioComponent implements OnInit{
   offcanvasInitialized = false;
 
   constructor(
-    private fb: FormBuilder,
     private agendaService: AgendaDestinatariosService,
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,

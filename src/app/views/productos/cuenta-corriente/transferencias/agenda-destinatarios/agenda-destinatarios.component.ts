@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError, switchMap } from 'rxjs/operators';
+import { Destinatario } from 'src/app/shared/models/destinatarios.model';
 
 declare var bootstrap: any;
 
@@ -18,9 +19,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
-
-  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transerencias';
   
+  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transerencias';
+
 
   // Variables para paginador
   paginatedData: any[] | undefined;
@@ -53,6 +54,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   public mostrarOffcanvas = true;
   offcanvasRef: any;
   datosCapturados: any;
+  
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -66,6 +68,13 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       this.ordenarDatos('nombre');
       this.paginacionDatos();
     });
+  }
+
+  datosDestinarioId(id: any): void {
+    console.log('ID del usuario:', id);
+  
+    // Actualiza el ID del destinatario a editar en el servicio
+    this.agendaService.actualizarIdDestinatarioAeditar(id);
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -98,7 +107,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     }
   }
 
-  abrirOffcanvas(_e: Event): void {
+  abrirOffcanvasNuevoDestinatario(_e: Event): void {
     const handleClick = (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       const offcanvasElement = new bootstrap.Offcanvas(this.crearDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});

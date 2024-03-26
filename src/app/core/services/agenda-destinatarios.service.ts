@@ -17,12 +17,29 @@ export class AgendaDestinatariosService {
   private datosNuevoDestinatarioSource = new Subject<any>();
   datosNuevoDestinatario = this.datosNuevoDestinatarioSource.asObservable();
 
+  private idDestinatarioAeditarSource = new BehaviorSubject(null);
+  idDestinatarioAeditar = this.idDestinatarioAeditarSource.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
 
   getDestinatarios(): Observable<any> {
     return this.http.get(this.baseUrl);
+  }
+
+  actualizarIdDestinatarioAeditar(id: any): void {
+    this.idDestinatarioAeditarSource.next(id);
+  }
+
+  getDestinatarioPorId(id: any): Observable<Destinatario> {
+    return this.getDestinatarios().pipe(
+      map(destinatarios => destinatarios.find((destinatario: { id: any; }) => destinatario.id === id)),
+      catchError(error => {
+        console.error('Error al obtener los datos del destinatario:', error);
+        return throwError(error);
+      })
+    );
   }
 
   emitirDatosNuevoDestinatario(datos: any): void {
@@ -35,7 +52,7 @@ export class AgendaDestinatariosService {
     return this.datosNuevoDestinatarioSource.asObservable();
   }
 
- guardarNuevoDestinatario(datos: any): Observable<any> {
+  guardarNuevoDestinatario(datos: any): Observable<any> {
     return this.http.put(this.baseUrl, datos, {responseType: 'text'}).pipe(
       map((res: any) => {
         return of(datos);
