@@ -3,6 +3,6 @@
     <app-buscador-tabla></app-buscador-tabla>
   </div>
   <div class="p-0 p-md-4">
-    <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+    <app-tables [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
   </div>
 </div>

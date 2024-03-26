@@ -10,7 +10,7 @@ import { ProductosUsuario } from '../../../models/productos-usuario.model';
 export class TablesProductosComponent implements OnInit {
 
   @Input() mostrarPaginador: boolean | undefined;
-
+  @Input() nuevaClase: string | undefined;
   @Input() set id(id: string) {
   this._id = id;
   this.productosUsuarioService.actualizarIdActual(id);

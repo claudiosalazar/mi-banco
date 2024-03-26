@@ -15,60 +15,73 @@
     </div>
   </div>
 
+  <!-- Tabla -->
   <div>
-    <table class="table " role="table">
+    <table class="table tabla-agenda" role="table">
       <thead role="columnheader"ead role="rowgroup">
         <tr role="row">
-          <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
-            <div class="d-flex">
-              Nombre
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('nombre'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Nombre
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('apodo'); onHeaderClick()">
-            <div class="d-flex">
-              Apodo
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('apodo'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Apodo
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'apodo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'apodo'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()">
-            <div class="d-flex">
-              Rut
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('rut'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Rut
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
-            <div class="d-flex">
-              Banco
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('banco'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Banco
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()">
-            <div class="d-flex">
-              Tipo de cuenta
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Tipo de cuenta
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()">
-            <div class="d-flex">
-              Número de cuenta
+          <th role="columnheader" class="ancho" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span>
+                Número de cuenta
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'">
                 expand_more
               </span>
             </div>
           </th>
-          <th role="columnheader">
-            <div class="d-flex">
+          <th role="columnheader" class="ancho">
+            <div class="d-flex align-items-center">
               Acciones
             </div>
           </th>
@@ -76,26 +89,41 @@
       </thead>
       <tbody role="rowgroup">
         <tr *ngFor="let destinatario of paginatedData" role="row">
-          <td role="cell">{{ destinatario.nombre }}</td>
-          <td role="cell">{{ destinatario.apodo }}</td>
-          <td role="cell">{{ destinatario.rut| rut }}</td>
-          <td role="cell">{{ destinatario.banco }}</td>
-          <td role="cell">{{ destinatario.tipoCuenta }}</td>
-          <td role="cell">{{ destinatario.numeroCuenta }}</td>
-          <td role="cell" class="d-flex justify-content-between">
-            <!-- Editar datos destinatario -->
-            <!-- <a href="javascript:void(0)" routerLink="/mibanco/productos/cuenta-corriente/transferencias/editar-destinatario"> -->
-            <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
-              <span class="material-symbols-outlined">
-                edit
-              </span>
-            </a>
-            <!-- Eliminar destinatario -->
-            <a href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
-              <span class="material-symbols-outlined">
-                delete
-              </span>  
-            </a>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.nombre }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.apodo }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.rut| rut }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.banco }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-td-acciones d-block">
+              <div class="d-flex justify-content-between">
+                <!-- Editar datos destinatario -->
+                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
+                  <span class="material-symbols-outlined">
+                    edit
+                  </span>
+                </a>
+                <!-- Eliminar destinatario -->
+                <a href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>  
+                </a>
+              </div>
+            </span>
           </td>
         </tr>
       </tbody>

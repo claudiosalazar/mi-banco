@@ -26,7 +26,7 @@
             </div>
             <!-- Importacion de componente tables -->
             <div class="p-0 p-md-4">
-              <app-tables [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
+              <app-tables [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
             </div>
           </div>
         </div>

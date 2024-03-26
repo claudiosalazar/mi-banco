@@ -1,87 +1,135 @@
 .table {
   width: 100%;
   font-size: small;
-  @media (max-width: $md) {
-    &.thead, tbody, th, td, tr {
-      display: block;
-    }
-  }
-
   td {
     border-bottom: 1px solid #eee;
-    @media (max-width: $md)  {
-      border: none;
-      position: relative;
-      padding-left: 50%;
-      min-height: 30px;
-      display: flex;
-      align-items: center;
-      background-color: transparent;
-      &:before {
-        position: absolute;
-        top: 0;
-        left: 6px;
-        width: 45%;
-        white-space: nowrap;
-        font-weight: bold;
+  }
+
+  // Tablas de productos
+  &.table-productos {
+    td {
+      @media (max-width: $md)  {
+        border: none;
+        position: relative;
+        padding-left: 50%;
         min-height: 30px;
         display: flex;
         align-items: center;
-      }
-    }
-  }
-
-  thead {
-    tr {
-      @media (max-width: $md) {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-      th {
-        cursor: pointer;
-        position: relative;
-        &.material-symbols-outlined {
-          display: inline-block;
-        }
-        span {
-          &.rotated-in {
-            @include rotated-in;
-          }
-          &.rotated-out {
-            @include rotated-out;
-          }
-          @media (max-width: $md) {
-            display: none;
-          }
+        background-color: transparent;
+        &:before {
+          position: absolute;
+          top: 0;
+          left: 6px;
+          width: 45%;
+          white-space: nowrap;
+          font-weight: bold;
+          min-height: 30px;
+          display: flex;
+          align-items: center;
         }
       }
-    }
-  }
-
-  tbody {
-    tr {
-      padding: 15px;
-      &:nth-child(even) {
-        background-color: #f2f2f2; // Cambia esto al color que quieras
-      }
-    }
+    }  
     @media (max-width: $md) {
-      td:nth-of-type(1):before {
-        content: "Fecha";
+      &.thead, tbody, th, td, tr {
+        display: block;
       }
-      td:nth-of-type(2):before {
-        content: "Detalle";
+    }
+    thead {
+      tr {
+        @media (max-width: $md) {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+        th {
+          cursor: pointer;
+          position: relative;
+          &.material-symbols-outlined {
+            display: inline-block;
+          }
+          span {
+            &.rotated-in {
+              @include rotated-in;
+            }
+            &.rotated-out {
+              @include rotated-out;
+            }
+            @media (max-width: $md) {
+              display: none;
+            }
+          }
+        }
       }
-      td:nth-of-type(3):before {
-        content: "Cargo";
+    }
+  
+    tbody {
+      tr {
+        padding: 15px;
+        &:nth-child(even) {
+          background-color: #f2f2f2; // Cambia esto al color que quieras
+        }
       }
-      td:nth-of-type(4):before {
-        content: "Abono";
+      @media (max-width: $md) {
+        td:nth-of-type(1):before {
+          content: "Fecha";
+        }
+        td:nth-of-type(2):before {
+          content: "Detalle";
+        }
+        td:nth-of-type(3):before {
+          content: "Cargo";
+        }
+        td:nth-of-type(4):before {
+          content: "Abono";
+        }
+        td:nth-of-type(5):before {
+          content: "Saldo";
+        }
       }
-      td:nth-of-type(5):before {
-        content: "Saldo";
+    }
+  }
+  
+  // Tabla agenda
+  &.tabla-agenda {
+    th {
+      cursor: pointer;
+    }
+    th, td {
+      &.ancho {
+        &:nth-child(1) {
+          width: 14.2%;
+        }
+        &:nth-child(2) {
+          width: 10.2%;
+        }
+        &:nth-child(3) {
+          width: 14.2%;
+        }
+        &:nth-child(4) {
+          width: 16%;
+        }
+        &:nth-child(5) {
+          width: 19%;
+        }
+        &:nth-child(6) {
+          width: 20%;
+        }
+        &:nth-child(7) {
+          width: 8%;
+        }
+      }
+    }
+  }
+  td {
+    span {
+      &.contenido-td {
+        margin-top: 6px;
+        @include ellipse;
+      }
+      &.contenido-td-acciones {
+        width: 100%;
       }
     }
   }
 }
+
