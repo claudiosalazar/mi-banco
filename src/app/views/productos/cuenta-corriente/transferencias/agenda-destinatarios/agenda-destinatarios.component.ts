@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, throwError } from 'rxjs';
@@ -59,14 +59,26 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   constructor(
     private agendaService: AgendaDestinatariosService,
     private http: HttpClient,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+    // Obtén los destinatarios al inicializar el componente
     this.agendaService.getDestinatarios().subscribe(data => {
       this.destinatarios = data;
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.ordenarDatos('nombre');
       this.paginacionDatos();
+    });
+
+    // Actualiza los destinatarios cuando se guarda un nuevo destinatario
+    this.agendaService.nuevoDestinatarioGuardado.subscribe(() => {
+      this.agendaService.getDestinatarios().subscribe(data => {
+        // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
+        this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
+        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+        this.paginacionDatos();
+      });
     });
   }
 
@@ -205,16 +217,37 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     // Mostrar en consola los datos capturados
     console.log('Datos capturados:', this.datosCapturados);
   
-    // Envía los datos al servicio
-    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(response => {
-  
+   // Envía los datos al servicio
+    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(nuevoDestinatario => {
       // Espera al menos 2 segundos antes de indicar que los datos se han guardado correctamente
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
         this.datosGuardadosNuevoDestinatario = true;
       }, 2000);
+
+      // Ensure destinatarios is an array before pushing
+    if (!this.destinatarios) {
+      this.destinatarios = [];
+    }
+    this.destinatarios.push(nuevoDestinatario);
+
+      // Ordena los destinatarios por nombre en orden ascendente
+      this.destinatarios = this.destinatarios?.sort((a, b) => {
+        if (a.nombre && b.nombre) {
+          return a.nombre.localeCompare(b.nombre);
+        } else {
+          return 0;
+        }
+      });
+
+      // Forzar la actualización de los datos en la tabla
+      this.destinatarios = [...this.destinatarios];
+
+      // Forzar la detección de cambios
+      this.cdr.detectChanges();
+
+      this.agendaService.nuevoDestinatarioGuardado.next();
     }, error => {
-  
       // Espera al menos 2 segundos antes de indicar que ha habido un error
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
@@ -222,5 +255,4 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       }, 2000);
     });
   }
-
 }

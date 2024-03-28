@@ -20,6 +20,8 @@ export class AgendaDestinatariosService {
   private idDestinatarioAeditarSource = new BehaviorSubject(null);
   idDestinatarioAeditar = this.idDestinatarioAeditarSource.asObservable();
 
+  nuevoDestinatarioGuardado = new Subject<void>();
+
   constructor(
     private http: HttpClient
   ) { }

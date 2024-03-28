@@ -145,7 +145,7 @@ app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
   const nuevoDestinatario = req.body; // req.body ya es un objeto JavaScript
 
-  console.log('Datos recibidos:', nuevoDestinatario); // Imprimir los datos recibidos
+  // console.log('Datos recibidos:', nuevoDestinatario);
 
   // Leer el archivo existente
   fs.readFile(filePath, 'utf8', (err, data) => {
