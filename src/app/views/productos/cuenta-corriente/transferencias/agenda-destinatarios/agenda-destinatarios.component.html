@@ -260,3 +260,52 @@
     </div>
   </div>
 </div>
+
+<!-- Modal edición destinatario -->
+<div class="modal fade" id="modalEdicionDestinatario" tabindex="-1" aria-labelledby="modalEdicionDestinatario" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5">
+
+        <div *ngIf="enviandoNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+              sync
+            </span>
+            <h4 class="mb-3 ms-3 text-starts">Se estan guardando los nuevos datos del destinatario.</h4>
+          </div>
+          <div class="w-100 text-center">
+            <span>Espera un momento por favor.</span>
+          </div>
+        </div>
+
+        <div *ngIf="datosGuardadosNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <h4 class="mb-3 text-starts">El destinatario se edito con éxito.</h4>
+          </div>
+          <div class="w-100">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+        <div *ngIf="errorServerNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al intentar actualizar los datos del destinatario.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,33 +27,34 @@ export class EditarDestinatarioComponent implements OnInit{
   // Array bancos
   listaBancos = [
     { value: '0', label: '-' },
-    { value: '1', label: 'Banco de Chile' },
-    { value: '2', label: 'Banco Internacional' },
-    { value: '3', label: 'Scotiabank Chile' },
-    { value: '4', label: 'BCI' },
-    { value: '5', label: 'Corpbanca' },
-    { value: '6', label: 'Banco BICE' },
-    { value: '7', label: 'HSBC Bank' },
-    { value: '8', label: 'Banco Santander' },
-    { value: '9', label: 'Banco ITAÚ' },
-    { value: '10', label: 'Banco Security' },
-    { value: '11', label: 'Banco Falabella' },
-    { value: '12', label: 'Deutsche Bank' },
-    { value: '13', label: 'Banco Ripley' },
-    { value: '14', label: 'Rabobank Chile' },
-    { value: '15', label: 'Banco Consorcio' },
-    { value: '16', label: 'Banco Penta' },
-    { value: '17', label: 'Banco Paris' },
-    { value: '18', label: 'BBVA' },
-    { value: '19', label: 'Banco BTG Pactual Chile' },
-    { value: '20', label: 'Banco do Brasil S.A.' },
-    { value: '21', label: 'JP Morgan Cahse Bank, N. A.' },
-    { value: '22', label: 'Banco de La Nación Argentina' },
-    { value: '23', label: 'The Bank of Tokyo-Mitsubishi UFJ, LTD' },
-    { value: '24', label: 'BCI - Miami' },
-    { value: '25', label: 'Banco del Estado de Chile - Nueva York' },
-    { value: '26', label: 'Corpbanca - Nueva York' },
-    { value: '27', label: 'Banco del Estado de Chile' }
+    { value: '1', label: 'Mi Banco' },
+    { value: '2', label: 'Banco de Chile' },
+    { value: '3', label: 'Banco Internacional' },
+    { value: '4', label: 'Scotiabank Chile' },
+    { value: '5', label: 'BCI' },
+    { value: '6', label: 'Corpbanca' },
+    { value: '7', label: 'Banco BICE' },
+    { value: '8', label: 'HSBC Bank' },
+    { value: '9', label: 'Banco Santander' },
+    { value: '10', label: 'Banco ITAÚ' },
+    { value: '11', label: 'Banco Security' },
+    { value: '12', label: 'Banco Falabella' },
+    { value: '13', label: 'Deutsche Bank' },
+    { value: '14', label: 'Banco Ripley' },
+    { value: '15', label: 'Rabobank Chile' },
+    { value: '16', label: 'Banco Consorcio' },
+    { value: '17', label: 'Banco Penta' },
+    { value: '18', label: 'Banco Paris' },
+    { value: '19', label: 'BBVA' },
+    { value: '20', label: 'Banco BTG Pactual Chile' },
+    { value: '21', label: 'Banco do Brasil S.A.' },
+    { value: '22', label: 'JP Morgan Cahse Bank, N. A.' },
+    { value: '23', label: 'Banco de La Nación Argentina' },
+    { value: '24', label: 'The Bank of Tokyo-Mitsubishi UFJ, LTD' },
+    { value: '25', label: 'BCI - Miami' },
+    { value: '26', label: 'Banco del Estado de Chile - Nueva York' },
+    { value: '27', label: 'Corpbanca - Nueva York' },
+    { value: '28', label: 'Banco del Estado de Chile' }
   ];
 
   // Array de tipos de cuenta
@@ -105,6 +106,8 @@ export class EditarDestinatarioComponent implements OnInit{
   offcanvasInitialized = false;
 
   idDestinatarioAeditar: any;
+  bancoSeleccionado: any;
+  tipoCuentaSeleccionada: any;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -144,7 +147,7 @@ export class EditarDestinatarioComponent implements OnInit{
       offcanvasElement.show();
     };
     this.offcanvasInitialized = true;
-  }
+  }  
 
   ngAfterViewInit(): void {
     this.agendaService.getDestinatarioPorId(this.idDestinatarioAeditar).subscribe(destinatario => {
@@ -176,11 +179,18 @@ export class EditarDestinatarioComponent implements OnInit{
         celularDestinatario: destinatario.celular,
         telefonoDestinatario: destinatario.telefono,
       });
+  
+      // Actualiza bancoSeleccionado directamente con el valor del banco del destinatario
+      this.bancoSeleccionado = destinatario.banco;
+  
+      // Busca el objeto en tiposCuenta que tenga el mismo texto que el nodo tipoCuenta del destinatario
+      const tipoCuentaObjeto = this.tiposCuenta.find(tipoCuenta => tipoCuenta.label === destinatario.tipoCuenta);
+  
+      // Si se encontró el objeto, guarda su valor en tipoCuentaSeleccionada
+      if (tipoCuentaObjeto) {
+        this.tipoCuentaSeleccionada = tipoCuentaObjeto.label;
+      }
     }
-  }
-
-  getDestinatario(): void {
-
   }
 
   validaNombre(): void {

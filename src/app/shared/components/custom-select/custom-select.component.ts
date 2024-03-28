@@ -13,7 +13,8 @@ export class CustomSelectComponent implements OnInit {
   @Output() change = new EventEmitter<any>();
   @Input() labelSelect: string | undefined;
   @Input() zIndex: number | undefined;
-  selectedOption: any;
+  @Input() selectedValue: any;
+  private _selectedOption: any;
   private _isOpen = false;
 
   @Input()
@@ -40,6 +41,13 @@ export class CustomSelectComponent implements OnInit {
     private eRef: ElementRef,
     private el: ElementRef
   ) { }
+
+  get selectedOption(): any {
+    return this.selectedValue || this._selectedOption;
+  }
+  set selectedOption(value: any) {
+    this._selectedOption = value;
+  }
 
   ngOnInit() {
     const label = this.el.nativeElement.querySelector('.label');
