@@ -57,7 +57,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   datosGuardadosDestinatarioEditado: boolean = false;
   errorServerDestinatarioEditado: boolean = false;
 
-
   datosCapturados: any;
 
   mostrarBackdropCustomModal = false;
@@ -65,7 +64,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
   
-  offcanvasHidden = false;
+  //offcanvasHidden = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -255,7 +254,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
    // Envía los datos al servicio
     this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(nuevoDestinatario => {
 
-      this.offcanvasHidden = true;
+      //this.offcanvasHidden = true;
       // Espera al menos 2 segundos antes de indicar que los datos se han guardado correctamente
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;

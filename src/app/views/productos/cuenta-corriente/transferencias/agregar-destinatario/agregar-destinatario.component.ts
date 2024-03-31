@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
 // Services
@@ -99,6 +99,8 @@ export class AgregarDestinatarioComponent implements OnInit{
   inputTelefonoFijoValido: any;
   // Variable para enviar datos al services
   datosNuevoDestinatario: any;
+
+  botonGuardarDisabled = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -238,6 +240,8 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   
     this.inputValidoEmail = emailControl.valid;
+
+    this.verificarFormulario();
   }
 
   validaCelular(): void {
@@ -333,7 +337,21 @@ export class AgregarDestinatarioComponent implements OnInit{
     return true;
   }
 
+  // Nuevo método para verificar si todos los campos requeridos han sido tocados y son válidos
+  verificarFormulario(): void {
+    const { nombreDestinatario, rutDestinatario, bancoDestinatario, cuentaDestinatario, numeroCuentaDestinatario, emailDestinatario } = this.crearDestinatarioForm.controls;
+
+    // Si todos los campos han sido tocados y son válidos, habilitar el botón de guardar
+    if (nombreDestinatario.touched && rutDestinatario.touched && bancoDestinatario.touched && cuentaDestinatario.touched && numeroCuentaDestinatario.touched && emailDestinatario.touched &&
+        nombreDestinatario.valid && rutDestinatario.valid && numeroCuentaDestinatario.valid && emailDestinatario.valid) {
+      this.botonGuardarDisabled = false;
+    } else {
+      this.botonGuardarDisabled = true;
+    }
+  }
+
   validaFormulario(): Observable<any> {
+    // this.verificarFormulario();
     this.submitted = true;
   
     // Verifica que todos los campos del formulario estén llenos

@@ -115,7 +115,7 @@
   
       <!-- Botones -->
       <div class="d-flex flex-md-column mt-4">
-        <button type="submit" class="btn btn-primary mb-3">Guardar destinatario</button>
+        <button type="submit" class="btn btn-primary mb-3" data-bs-dismiss="offcanvas" [class.disabled]="!botonGuardarDisabled">Guardar destinatario</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button>
       </div>
   
