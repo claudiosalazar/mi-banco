@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, throwError } from 'rxjs';
@@ -9,7 +10,18 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-agenda-destinatarios',
-  templateUrl: './agenda-destinatarios.component.html'
+  templateUrl: './agenda-destinatarios.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      state('*', style({
+        opacity: 0.5
+      })),
+      transition('void <=> *', animate('0.2s'))
+    ])
+  ]
 })
 export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
