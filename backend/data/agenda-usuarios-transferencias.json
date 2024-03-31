@@ -126,9 +126,21 @@
     "rut": "987654321",
     "banco": "Scotiabank Chile",
     "tipoCuenta": "Cuenta de Ahorro",
-    "numeroCuenta": "654321333",
+    "numeroCuenta": "654321666",
     "email": "arido@gmail.com",
     "celular": "987654321",
     "telefono": "987654321"
+  },
+  {
+    "id": "11",
+    "nombre": "Ariana Gomez",
+    "apodo": "",
+    "rut": "123456789",
+    "banco": "Banco Internacional",
+    "tipoCuenta": "Cuenta Vista",
+    "numeroCuenta": "321654",
+    "email": "ariana@gmail.com",
+    "celular": "987654312",
+    "telefono": "654987321"
   }
 ]
