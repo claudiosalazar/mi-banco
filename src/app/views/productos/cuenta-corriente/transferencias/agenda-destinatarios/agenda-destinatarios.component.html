@@ -9,7 +9,7 @@
     </div>
   
     <div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvasNuevoDestinatario($event)">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -111,7 +111,7 @@
             <span class="contenido-td-acciones d-block">
               <div class="d-flex justify-content-between">
                 <!-- Editar datos destinatario -->
-                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id)">
+                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()">
                   <span class="material-symbols-outlined">
                     edit
                   </span>
@@ -153,13 +153,13 @@
 </div>
 
 <!-- Sidenav para crear nuevo destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas" *ngIf="mostrarOffcanvas">
-  <app-agregar-destinatario></app-agregar-destinatario>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas" [hidden]="offcanvasHidden">
+  <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
 </div>
 
 <!-- Sidenav para editar destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas" *ngIf="mostrarOffcanvas">
-  <app-editar-destinatario></app-editar-destinatario>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas">
+  <app-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-editar-destinatario>
 </div>
 
 <!-- Modal eliminar destinatario -->
@@ -262,7 +262,7 @@
 </div>
 
 <!-- Modal edición destinatario -->
-<div class="modal fade" id="modalEdicionDestinatario" tabindex="-1" aria-labelledby="modalEdicionDestinatario" aria-hidden="true">
+<div class="modal fade" id="modalEdicionDestinatario" tabindex="-1" aria-labelledby="modalEdicionDestinatario" aria-hidden="true" >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
@@ -309,3 +309,6 @@
     </div>
   </div>
 </div>
+
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal"></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado"></div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
@@ -20,37 +20,39 @@ declare var bootstrap: any;
 export class AgregarDestinatarioComponent implements OnInit{
 
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+  @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
 
   // Array bancos
   listaBancos = [
     { value: '0', label: '-' },
-    { value: '1', label: 'Banco de Chile' },
-    { value: '2', label: 'Banco Internacional' },
-    { value: '3', label: 'Scotiabank Chile' },
-    { value: '4', label: 'BCI' },
-    { value: '5', label: 'Corpbanca' },
-    { value: '6', label: 'Banco BICE' },
-    { value: '7', label: 'HSBC Bank' },
-    { value: '8', label: 'Banco Santander' },
-    { value: '9', label: 'Banco ITAÚ' },
-    { value: '10', label: 'Banco Security' },
-    { value: '11', label: 'Banco Falabella' },
-    { value: '12', label: 'Deutsche Bank' },
-    { value: '13', label: 'Banco Ripley' },
-    { value: '14', label: 'Rabobank Chile' },
-    { value: '15', label: 'Banco Consorcio' },
-    { value: '16', label: 'Banco Penta' },
-    { value: '17', label: 'Banco Paris' },
-    { value: '18', label: 'BBVA' },
-    { value: '19', label: 'Banco BTG Pactual Chile' },
-    { value: '20', label: 'Banco do Brasil S.A.' },
-    { value: '21', label: 'JP Morgan Cahse Bank, N. A.' },
-    { value: '22', label: 'Banco de La Nación Argentina' },
-    { value: '23', label: 'The Bank of Tokyo-Mitsubishi UFJ, LTD' },
-    { value: '24', label: 'BCI - Miami' },
-    { value: '25', label: 'Banco del Estado de Chile - Nueva York' },
-    { value: '26', label: 'Corpbanca - Nueva York' },
-    { value: '27', label: 'Banco del Estado de Chile' }
+    { value: '1', label: 'Mi Banco' },
+    { value: '2', label: 'Banco de Chile' },
+    { value: '3', label: 'Banco Internacional' },
+    { value: '4', label: 'Scotiabank Chile' },
+    { value: '5', label: 'BCI' },
+    { value: '6', label: 'Corpbanca' },
+    { value: '7', label: 'Banco BICE' },
+    { value: '8', label: 'HSBC Bank' },
+    { value: '9', label: 'Banco Santander' },
+    { value: '10', label: 'Banco ITAÚ' },
+    { value: '11', label: 'Banco Security' },
+    { value: '12', label: 'Banco Falabella' },
+    { value: '13', label: 'Deutsche Bank' },
+    { value: '14', label: 'Banco Ripley' },
+    { value: '15', label: 'Rabobank Chile' },
+    { value: '16', label: 'Banco Consorcio' },
+    { value: '17', label: 'Banco Penta' },
+    { value: '18', label: 'Banco Paris' },
+    { value: '19', label: 'BBVA' },
+    { value: '20', label: 'Banco BTG Pactual Chile' },
+    { value: '21', label: 'Banco do Brasil S.A.' },
+    { value: '22', label: 'JP Morgan Cahse Bank, N. A.' },
+    { value: '23', label: 'Banco de La Nación Argentina' },
+    { value: '24', label: 'The Bank of Tokyo-Mitsubishi UFJ, LTD' },
+    { value: '25', label: 'BCI - Miami' },
+    { value: '26', label: 'Banco del Estado de Chile - Nueva York' },
+    { value: '27', label: 'Corpbanca - Nueva York' },
+    { value: '28', label: 'Banco del Estado de Chile' }
   ];
 
   // Array de tipos de cuenta
@@ -98,18 +100,13 @@ export class AgregarDestinatarioComponent implements OnInit{
   // Variable para enviar datos al services
   datosNuevoDestinatario: any;
 
-  offcanvas: any;
-  offcanvasInitialized = false;
-
   constructor(
     private agendaService: AgendaDestinatariosService,
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe
-   ) {
-    
-   }
+   ) {}
 
   ngOnInit(): void {
     this.crearDestinatarioForm = new FormGroup({
@@ -123,13 +120,22 @@ export class AgregarDestinatarioComponent implements OnInit{
       celularDestinatario: new FormControl(''),
       telefonoDestinatario: new FormControl(''),
     });
+  }
 
-    const handleClick = (e: { preventDefault: () => void; }) => {
-      e.preventDefault();
-      const offcanvasElement = new bootstrap.Offcanvas(this.crearDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});
-      offcanvasElement.show();
-    };
-    this.offcanvasInitialized = true;
+  ngAfterViewInit(): void {
+    // Elmina backdrop de offcanvas y modal
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const backdropOffcanvas = document.querySelector('.offcanvas-backdrop.fade.show');
+          if (backdropOffcanvas && backdropOffcanvas.parentNode) {
+            backdropOffcanvas.parentNode.removeChild(backdropOffcanvas);
+            console.log('El backdrop ha sido eliminado');
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   validaNombre(): void {
@@ -329,13 +335,9 @@ export class AgregarDestinatarioComponent implements OnInit{
 
   validaFormulario(): Observable<any> {
     this.submitted = true;
-    
+  
     // Verifica que todos los campos del formulario estén llenos
-    if (!this.crearDestinatarioForm.valid) {
-      // Marca todos los campos del formulario como "touched" para mostrar las validaciones de error
-      this.crearDestinatarioForm.markAllAsTouched();
-      return of(null);
-    }
+    this.crearDestinatarioForm.markAllAsTouched();
   
     // ValidA custom-select banco
     const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
@@ -380,9 +382,16 @@ export class AgregarDestinatarioComponent implements OnInit{
   
         // Envía los datos al servicio
         this.agendaService.emitirDatosNuevoDestinatario(this.datosNuevoDestinatario);
+  
+        // Aquí cambias el valor de mostrarBackdropCustomChange a false
+        this.mostrarBackdropCustomChange.emit(false);
       });
     }
     return of(null);
+  }
+
+  cancelar(): void {
+    this.mostrarBackdropCustomChange.emit(false);
   }
 
 }

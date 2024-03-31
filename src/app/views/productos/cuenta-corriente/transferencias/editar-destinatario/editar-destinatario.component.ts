@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 // Services
@@ -23,6 +23,7 @@ export class EditarDestinatarioComponent implements OnInit{
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('bancoDestinatario', { static: false }) bancoDestinatario: ElementRef | undefined;
   @ViewChild('cuentaDestinatario', { static: false }) cuentaDestinatario: ElementRef | undefined;
+  @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
 
   idDestinatarioAeditar = new BehaviorSubject<any>(null);
 
@@ -102,8 +103,7 @@ export class EditarDestinatarioComponent implements OnInit{
   inputErrorTelefonoFijoInvalido: any;
   inputTelefonoFijoValido: any;
 
-  offcanvas: any;
-  offcanvasInitialized = false;
+  // mostrarBackdropCustom = false;
 
   bancoSeleccionado: any | undefined;
   tipoCuentaSeleccionada: any | undefined;
@@ -153,14 +153,6 @@ export class EditarDestinatarioComponent implements OnInit{
     this.editarDestinatarioForm.get('cuentaDestinatario')?.valueChanges.subscribe((valor: string) => {
       this.tipoCuentaSeleccionada = this.tiposCuenta.find(tipoCuenta => tipoCuenta.value === valor)?.label;
     });
-  
-    const handleClick = (e: { preventDefault: () => void; }) => {
-      e.preventDefault();
-      const offcanvasElement = new bootstrap.Offcanvas(this.editarDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});
-      offcanvasElement.show();
-    };
-    
-    this.offcanvasInitialized = true;
 
     this.editarDestinatarioForm.valueChanges.pipe(skip(1)).subscribe(() => {
       this.formChanged = true;
@@ -183,6 +175,20 @@ export class EditarDestinatarioComponent implements OnInit{
       const valorTransformado = this.telefonoFijoPipe.transform(valor);
       this.editarDestinatarioForm.get('telefonoDestinatario')?.setValue(valorTransformado, { emitEvent: false });
     });
+
+    // Elmina backdrop de offcanvas y modal
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const backdropOffcanvas = document.querySelector('.offcanvas-backdrop.fade.show');
+          if (backdropOffcanvas && backdropOffcanvas.parentNode) {
+            backdropOffcanvas.parentNode.removeChild(backdropOffcanvas);
+            console.log('El backdrop ha sido eliminado');
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   cargarDatosDestinatario(destinatario: any): void {
@@ -442,31 +448,38 @@ export class EditarDestinatarioComponent implements OnInit{
       console.log('El formulario es inválido');
       return of(null);
     }
+
+    if (this.editarDestinatarioForm.valid) {
+      const formValues = this.editarDestinatarioForm.value;
   
-    const formValues = this.editarDestinatarioForm.value;
-  
-    // Elimina los puntos y el guión del RUT
-    const rutSinFormato = formValues.rutDestinatario.replace(/\./g, '').replace(/-/g, '');
-  
-    const datosDestinatarioEditado = {
-      id: this.idDestinatarioAeditar.value, // Usa el ID del destinatario que se está editando
-      nombre: formValues.nombreDestinatario,
-      apodo: formValues.apodoDestinatario,
-      rut: rutSinFormato,
-      banco: this.listaBancos.find(b => b.value === formValues.bancoDestinatario)?.label ?? this.bancoSeleccionado,
-      tipoCuenta: this.tiposCuenta.find(t => t.value === formValues.cuentaDestinatario)?.label ?? this.tipoCuentaSeleccionada,
-      numeroCuenta: formValues.numeroCuentaDestinatario,
-      email: formValues.emailDestinatario,
-      celular: formValues.celularDestinatario.replace(/\s/g, ''),
-      telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
-    };
-  
-    console.log('Datos que se enviarán:', datosDestinatarioEditado);
-  
-    // Envía los datos al servicio
-    this.agendaService.emitirDatosNuevoDestinatario(datosDestinatarioEditado);
-  
+      // Elimina los puntos y el guión del RUT
+      const rutSinFormato = formValues.rutDestinatario.replace(/\./g, '').replace(/-/g, '');
+    
+      const datosDestinatarioEditado = {
+        id: this.idDestinatarioAeditar.value, // Usa el ID del destinatario que se está editando
+        nombre: formValues.nombreDestinatario,
+        apodo: formValues.apodoDestinatario,
+        rut: rutSinFormato,
+        banco: this.listaBancos.find(b => b.value === formValues.bancoDestinatario)?.label ?? this.bancoSeleccionado,
+        tipoCuenta: this.tiposCuenta.find(t => t.value === formValues.cuentaDestinatario)?.label ?? this.tipoCuentaSeleccionada,
+        numeroCuenta: formValues.numeroCuentaDestinatario,
+        email: formValues.emailDestinatario,
+        celular: formValues.celularDestinatario.replace(/\s/g, ''),
+        telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
+      };
+    
+      console.log('Datos que se enviarán:', datosDestinatarioEditado);
+    
+      // Envía los datos al servicio
+      this.agendaService.emitirDatosNuevoDestinatario(datosDestinatarioEditado);
+      // Aquí cambias el valor de mostrarBackdropCustomOffcanvasEstado a false
+      this.mostrarBackdropCustomChange.emit(false);
+      }
     return of(null);
+  }
+
+  cancelar(): void {
+    this.mostrarBackdropCustomChange.emit(false);
   }
 
 }

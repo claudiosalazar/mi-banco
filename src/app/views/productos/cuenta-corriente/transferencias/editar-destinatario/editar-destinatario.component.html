@@ -131,8 +131,8 @@
       <!-- Botones -->
       <div class="d-flex flex-md-column mt-4">
         <!-- <button type="submit" class="btn btn-primary mb-3" (click)="guardarDestinatario();" [class.disabled]="!formChanged">Guardar</button> -->
-        <button type="submit" class="btn btn-primary mb-3" [class.disabled]="!formChanged">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cancelar</button>
+        <button type="submit" class="btn btn-primary mb-3" data-bs-dismiss="offcanvas" [class.disabled]="!formChanged">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button>
       </div>
   
     </form>

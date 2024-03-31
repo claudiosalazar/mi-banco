@@ -11,7 +11,7 @@
 
     <small class="mb-4 d-block">* Campos son obligatorios</small>
   
-    <form [formGroup]="crearDestinatarioForm">
+    <form [formGroup]="crearDestinatarioForm" (ngSubmit)="validaFormulario()">
       <!-- Nombre -->
       <div class="form-floating mb-4">
         <input type="text" class="form-control" formControlName="nombreDestinatario" [class.is-invalid]="crearDestinatarioForm.get('nombreDestinatario')?.invalid && crearDestinatarioForm.get('nombreDestinatario')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombreDestinatario')?.valid && crearDestinatarioForm.get('nombreDestinatario')?.touched" (blur)="validaNombre();">
@@ -115,8 +115,8 @@
   
       <!-- Botones -->
       <div class="d-flex flex-md-column mt-4">
-        <button type="submit" class="btn btn-primary mb-3" (click)="validaFormulario();">Guardar destinatario</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cancelar</button>
+        <button type="submit" class="btn btn-primary mb-3">Guardar destinatario</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button>
       </div>
   
     </form>
