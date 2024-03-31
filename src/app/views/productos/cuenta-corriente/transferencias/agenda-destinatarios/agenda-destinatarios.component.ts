@@ -160,6 +160,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.mostrarBackdropCustomOffcanvas.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;
   }
+  
 
   // Anima icono de TH
   public onHeaderClick(): void {
