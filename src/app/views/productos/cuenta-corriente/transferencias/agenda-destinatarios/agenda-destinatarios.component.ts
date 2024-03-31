@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { catchError, switchMap } from 'rxjs/operators';
-import { Destinatario } from 'src/app/shared/models/destinatarios.model';
 
 declare var bootstrap: any;
 
@@ -15,12 +14,17 @@ declare var bootstrap: any;
 export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
 
   destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
   
   private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transerencias.json';
+
+
+  private subscription: Subscription | undefined;
 
 
   // Variables para paginador
@@ -44,11 +48,16 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   errorServer = false;
 
   // Variables para modal de nuevo destinatario
-  private subscription: Subscription | undefined;
   datosNuevoDestinatario: any;
   enviandoNuevoDestinatario: boolean = true;
   datosGuardadosNuevoDestinatario: boolean = false;
   errorServerNuevoDestinatario: boolean = false;
+
+  // Variables para modal de nuevo destinatario
+  datosDestinatarioEditado: any;
+  enviandoDestinatarioEditado: boolean = true;
+  datosGuardadosDestinatarioEditado: boolean = false;
+  errorServerDestinatarioEditado: boolean = false;
 
   // Variables para offcanvas
   public mostrarOffcanvas = true;
@@ -80,6 +89,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         this.paginacionDatos();
       });
     });
+    
   }
 
   datosDestinarioId(id: any): void {
@@ -87,6 +97,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
     // Actualiza el ID del destinatario a editar en el servicio
     this.agendaService.actualizarIdDestinatarioAeditar(id);
+
+    const handleClick = (e: { preventDefault: () => void; }) => {
+      e.preventDefault();
+      const offcanvasElement = new bootstrap.Offcanvas(this.editarDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});
+      offcanvasElement.show();
+    };
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -110,6 +126,31 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       // Abre el modal
       this.abrirModalNuevoDestinatario();
     });
+
+    // Suscríbete a getDatosEditadosDestinatario
+    this.subscription = this.agendaService.getDatosEditadosDestinatario().subscribe(datos => {
+      // Aquí puedes manejar los datos recibidos
+      this.datosCapturados = datos;
+
+      console.log('Datos editados del destinatario:', this.datosCapturados);
+
+      // Cierra el offcanvas
+      if (this.offcanvasRef) {
+        this.offcanvasRef.hide();
+      }
+
+      // Elimina el backdrop del DOM
+      const backdrop = document.querySelector('.offcanvas-backdrop.fade.show');
+      if (backdrop && backdrop.parentNode) {
+        backdrop.parentNode.removeChild(backdrop);
+      }
+
+      this.mostrarOffcanvas = false;
+
+      // Abre el modal
+      this.abrirModalEdicionDestinatario();
+    });
+    
   }
 
   ngOnDestroy(): void {
@@ -206,7 +247,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Modal para eliminar destinatario
+  // Modal para nuevo destinatario
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
@@ -226,10 +267,10 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       }, 2000);
 
       // Ensure destinatarios is an array before pushing
-    if (!this.destinatarios) {
-      this.destinatarios = [];
-    }
-    this.destinatarios.push(nuevoDestinatario);
+      if (!this.destinatarios) {
+        this.destinatarios = [];
+      }
+      this.destinatarios.push(nuevoDestinatario);
 
       // Ordena los destinatarios por nombre en orden ascendente
       this.destinatarios = this.destinatarios?.sort((a, b) => {
@@ -255,4 +296,66 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       }, 2000);
     });
   }
+
+  abrirModalEdicionDestinatario(): void {
+    var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
+    modalEdicionDestinatario.show();
+  
+    // Indica que se están enviando los datos
+    this.enviandoDestinatarioEditado = true;
+  
+    // Obtén los datos editados del servicio
+    const datosEditados = this.agendaService.datosEditadosDestinatario;
+  
+    // Mostrar en consola los datos capturados
+    console.log('Datos capturados:', datosEditados);
+  
+    // Envía los datos al servicio
+    if (this.destinatarioSeleccionado && this.destinatarioSeleccionado.id !== undefined) {
+      console.log('Llamando a guardarDestinatarioEditado con los siguientes datos:', datosEditados);
+      this.agendaService.guardarDestinatarioEditado(this.destinatarioSeleccionado.id, datosEditados).subscribe(destinatarioEditado => {
+        // Imprime en consola el objeto destinatarioEditado que devuelve el servidor
+        console.log('Datos del destinatario actualizados:', destinatarioEditado);
+  
+        // Espera al menos 2 segundos antes de indicar que los datos se han guardado correctamente
+        setTimeout(() => {
+          this.enviandoDestinatarioEditado = false;
+          this.datosGuardadosDestinatarioEditado = true;
+        }, 2000);
+  
+        // Comprueba que destinatarios está definido
+        if (this.destinatarios && this.destinatarioSeleccionado) {
+          // Busca el destinatario editado en la lista de destinatarios y actualiza sus datos
+          const index = this.destinatarios.findIndex(d => d.id === this.datosDestinatarioEditado.id);
+          if (index !== -1) {
+            this.destinatarios[index] = destinatarioEditado;
+          }
+  
+          // Ordena los destinatarios por nombre en orden ascendente
+          this.destinatarios = this.destinatarios.sort((a, b) => {
+            if (a.nombre && b.nombre) {
+              return a.nombre.localeCompare(b.nombre);
+            } else {
+              return 0;
+            }
+          });
+  
+          // Forzar la actualización de los datos en la tabla
+          this.destinatarios = [...this.destinatarios];
+        }
+  
+        // Forzar la detección de cambios
+        this.cdr.detectChanges();
+  
+        this.agendaService.datosEditadosDestinatario.next();
+      }, error => {
+        // Espera al menos 2 segundos antes de indicar que ha habido un error
+        setTimeout(() => {
+          this.enviandoDestinatarioEditado = false;
+          this.errorServerDestinatarioEditado = true;
+        }, 2000);
+      });
+    }
+  }
+    
 }

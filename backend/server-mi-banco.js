@@ -143,9 +143,7 @@ app.delete('/backend/data/agenda-usuarios-transferencias/:id', (req, res) => {
 // Guarda un nuevo destinatario en la agenda
 app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
-  const nuevoDestinatario = req.body; // req.body ya es un objeto JavaScript
-
-  // console.log('Datos recibidos:', nuevoDestinatario);
+  const destinatarioActualizado = req.body; // req.body ya es un objeto JavaScript
 
   // Leer el archivo existente
   fs.readFile(filePath, 'utf8', (err, data) => {
@@ -157,8 +155,16 @@ app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
 
     const datosActuales = JSON.parse(data);
 
-    // Agrega el nuevo destinatario al final del array
-    datosActuales.push(nuevoDestinatario);
+    // Busca el destinatario existente por su ID
+    const index = datosActuales.findIndex(d => d.id === destinatarioActualizado.id);
+
+    if (index !== -1) {
+      // Si el destinatario existe, actualiza sus datos
+      datosActuales[index] = destinatarioActualizado;
+    } else {
+      // Si el destinatario no existe, agrega el nuevo destinatario al final del array
+      datosActuales.push(destinatarioActualizado);
+    }
 
     // Escribir el nuevo JSON al archivo
     fs.writeFile(filePath, JSON.stringify(datosActuales, null, 2), 'utf8', (err) => {

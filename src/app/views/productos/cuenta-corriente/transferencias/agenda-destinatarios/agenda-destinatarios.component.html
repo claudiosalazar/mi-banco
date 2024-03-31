@@ -9,7 +9,7 @@
     </div>
   
     <div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvasNuevoDestinatario($event)">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvasNuevoDestinatario($event)">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -158,7 +158,7 @@
 </div>
 
 <!-- Sidenav para editar destinatario -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editarDestinatarioCanvas" *ngIf="mostrarOffcanvas">
   <app-editar-destinatario></app-editar-destinatario>
 </div>
 
@@ -267,7 +267,7 @@
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
 
-        <div *ngIf="enviandoNuevoDestinatario">
+        <div *ngIf="enviandoDestinatarioEditado">
           <div class="d-flex">
             <span class="icono material-symbols-outlined mensajes cargando ms-2">
               sync
@@ -279,7 +279,7 @@
           </div>
         </div>
 
-        <div *ngIf="datosGuardadosNuevoDestinatario">
+        <div *ngIf="datosGuardadosDestinatarioEditado">
           <div class="d-flex">
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
               done
@@ -291,7 +291,7 @@
           </div>
         </div>
 
-        <div *ngIf="errorServerNuevoDestinatario">
+        <div *ngIf="errorServerDestinatarioEditado">
           <div class="d-flex">
             <span class="icono material-symbols-outlined d-block me-3 mensajes error">
               Error

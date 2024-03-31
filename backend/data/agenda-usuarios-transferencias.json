@@ -121,74 +121,14 @@
   },
   {
     "id": "10",
-    "nombre": "Diana Woner",
-    "apodo": "WW",
-    "rut": "98.765.432-1",
-    "banco": "Banco de Chile",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "654321",
-    "email": "wonder@gmail.com",
-    "celular": "963214896",
-    "telefono": "654321987"
-  },
-  {
-    "id": "11",
-    "nombre": "Arido Seco",
-    "apodo": "",
-    "rut": "65.498.732-1",
-    "banco": "Banco ITAÚ",
-    "tipoCuenta": "Cuenta Vista",
-    "numeroCuenta": "654987",
-    "email": "arido@gmail.com",
-    "celular": "",
-    "telefono": ""
-  },
-  {
-    "id": "12",
-    "nombre": "Aron Carter",
-    "apodo": "",
-    "rut": "65.432.198-7",
-    "banco": "Banco Internacional",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "2344234",
-    "email": "aron@gmail.com",
-    "celular": "",
-    "telefono": ""
-  },
-  {
-    "id": "13",
-    "nombre": "A B",
-    "apodo": "",
-    "rut": "95.145.678-9",
+    "nombre": "Arturo Arido",
+    "apodo": "Seco",
+    "rut": "987654321",
     "banco": "Scotiabank Chile",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "2234234",
-    "email": "asd@sad.cl",
-    "celular": "",
-    "telefono": ""
-  },
-  {
-    "id": "14",
-    "nombre": "Boric Presi",
-    "apodo": "",
-    "rut": "65.432.198-7",
-    "banco": "Banco Internacional",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "23423423",
-    "email": "asda@adads.com",
-    "celular": "",
-    "telefono": ""
-  },
-  {
-    "id": "15",
-    "nombre": "aa bb",
-    "apodo": "",
-    "rut": "98.732.165-4",
-    "banco": "Deutsche Bank",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "123213123",
-    "email": "asdas@asdas.cl",
-    "celular": "",
-    "telefono": ""
+    "tipoCuenta": "Cuenta de Ahorro",
+    "numeroCuenta": "654321333",
+    "email": "arido@gmail.com",
+    "celular": "987654321",
+    "telefono": "987654321"
   }
 ]

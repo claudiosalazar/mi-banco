@@ -21,6 +21,7 @@ export class AgendaDestinatariosService {
   idDestinatarioAeditar = this.idDestinatarioAeditarSource.asObservable();
 
   nuevoDestinatarioGuardado = new Subject<void>();
+  datosEditadosDestinatario = new Subject<any>();
 
   constructor(
     private http: HttpClient
@@ -34,6 +35,7 @@ export class AgendaDestinatariosService {
     this.idDestinatarioAeditarSource.next(id);
   }
 
+  // Obtiene los datos del destinatario seleccionado
   getDestinatarioPorId(id: any): Observable<Destinatario> {
     return this.getDestinatarios().pipe(
       map(destinatarios => destinatarios.find((destinatario: { id: any; }) => destinatario.id === id)),
@@ -44,6 +46,7 @@ export class AgendaDestinatariosService {
     );
   }
 
+  // Guarda nuevo destinatario
   emitirDatosNuevoDestinatario(datos: any): void {
     if (datos !== undefined) {
       this.datosNuevoDestinatarioSource.next(datos);
@@ -58,6 +61,32 @@ export class AgendaDestinatariosService {
     return this.http.put(this.baseUrl, datos, {responseType: 'text'}).pipe(
       map((res: any) => {
         return of(datos);
+      }),
+      catchError(error => {
+        console.error('Error del server:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  // Guarda los datos editados del destinatario
+  emitirDatosEditadosDestinatario(datos: any): void {
+    this.datosEditadosDestinatario.next(datos);
+    console.log('Datos editados del destinatario:', datos);
+  }
+
+  // Crea la función getDatosEditadosDestinatario
+  getDatosEditadosDestinatario(): Observable<any> {
+    return this.datosEditadosDestinatario.asObservable();
+  }
+
+  
+  guardarDestinatarioEditado(id: string, datosEditados: any): Observable<any> {
+    console.log('Datos enviados al server:', datosEditados);
+    return this.http.put(`${this.baseUrl}/${id}`, datosEditados).pipe(
+      map((res: any) => {
+        console.log('Datos recibidos del server:', res);
+        return res;
       }),
       catchError(error => {
         console.error('Error del server:', error);

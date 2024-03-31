@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 // Services
 import { AgendaDestinatariosService } from 'src/app/core/services/agenda-destinatarios.service';
@@ -10,7 +9,8 @@ import { FormatoEmailService } from '../../../../../core/services/formato-email.
 import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../../../../shared/pipes/telefono-fijo.pipe';
-import { Destinatario } from 'src/app/shared/models/destinatarios.model';
+import { skip } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -23,6 +23,8 @@ export class EditarDestinatarioComponent implements OnInit{
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('bancoDestinatario', { static: false }) bancoDestinatario: ElementRef | undefined;
   @ViewChild('cuentaDestinatario', { static: false }) cuentaDestinatario: ElementRef | undefined;
+
+  idDestinatarioAeditar = new BehaviorSubject<any>(null);
 
   // Array bancos
   listaBancos = [
@@ -99,15 +101,16 @@ export class EditarDestinatarioComponent implements OnInit{
   // Variables para telefono fijo
   inputErrorTelefonoFijoInvalido: any;
   inputTelefonoFijoValido: any;
-  // Variable para enviar datos al services
-  datosNuevoDestinatario: any;
 
   offcanvas: any;
   offcanvasInitialized = false;
 
-  idDestinatarioAeditar: any;
-  bancoSeleccionado: any;
-  tipoCuentaSeleccionada: any;
+  bancoSeleccionado: any | undefined;
+  tipoCuentaSeleccionada: any | undefined;
+
+  formChanged = false;
+
+  datosDestinatarioEditado: any;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -115,30 +118,40 @@ export class EditarDestinatarioComponent implements OnInit{
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe
-   ) {
-    this.agendaService.idDestinatarioAeditar.subscribe(id => {
-      this.idDestinatarioAeditar = id;
-      console.log('ID del destinatario a editar:', id);
-  
-      if (id) {
-        this.agendaService.getDestinatarioPorId(id).subscribe(destinatario => {
-          this.cargarDatosDestinatario(destinatario);
-        });
-      }
-    });
-   }
+   ) {}
 
    ngOnInit(): void {
     this.editarDestinatarioForm = new FormGroup({
       nombreDestinatario: new FormControl('', [Validators.required]),
       apodoDestinatario: new FormControl(''),
       rutDestinatario: new FormControl('', [Validators.required]),
-      bancoDestinatario: new FormControl('0', [Validators.required, this.validaBanco()]),
-      cuentaDestinatario: new FormControl('0', [Validators.required, this.validaTipoCuenta()]),
+      bancoDestinatario: new FormControl('', [Validators.required, this.validaBanco()]),
+      cuentaDestinatario: new FormControl('', [Validators.required, this.validaTipoCuenta()]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required]),
       emailDestinatario: new FormControl('', [Validators.required]),
-      celularDestinatario: new FormControl(''),
-      telefonoDestinatario: new FormControl(''),
+      celularDestinatario: new FormControl('', [Validators.required, this.validaLongitudTelefonos()]),
+      telefonoDestinatario: new FormControl('', [Validators.required, this.validaLongitudTelefonos()]),
+    });
+
+    this.agendaService.idDestinatarioAeditar.subscribe(id => {
+      this.idDestinatarioAeditar.next(id);
+      console.log('ID del destinatario a editar:', id);
+  
+      if (id) {
+        this.agendaService.getDestinatarioPorId(id).subscribe(destinatario => {
+          this.cargarDatosDestinatario(destinatario);
+          console.log('Datos del destinatario cargados en el formulario:', destinatario);
+        });
+      }
+    });
+
+    // Suscribirse a los cambios de valor en los campos 'bancoDestinatario' y 'cuentaDestinatario'
+    this.editarDestinatarioForm.get('bancoDestinatario')?.valueChanges.subscribe((valor: string) => {
+      this.bancoSeleccionado = this.listaBancos.find(banco => banco.value === valor)?.label;
+    });
+
+    this.editarDestinatarioForm.get('cuentaDestinatario')?.valueChanges.subscribe((valor: string) => {
+      this.tipoCuentaSeleccionada = this.tiposCuenta.find(tipoCuenta => tipoCuenta.value === valor)?.label;
     });
   
     const handleClick = (e: { preventDefault: () => void; }) => {
@@ -146,7 +159,13 @@ export class EditarDestinatarioComponent implements OnInit{
       const offcanvasElement = new bootstrap.Offcanvas(this.editarDestinatarioCanvas?.nativeElement, {backdrop: false, keyboard: true});
       offcanvasElement.show();
     };
+    
     this.offcanvasInitialized = true;
+
+    this.editarDestinatarioForm.valueChanges.pipe(skip(1)).subscribe(() => {
+      this.formChanged = true;
+    });
+
   }  
 
   ngAfterViewInit(): void {
@@ -182,14 +201,7 @@ export class EditarDestinatarioComponent implements OnInit{
   
       // Actualiza bancoSeleccionado directamente con el valor del banco del destinatario
       this.bancoSeleccionado = destinatario.banco;
-  
-      // Busca el objeto en tiposCuenta que tenga el mismo texto que el nodo tipoCuenta del destinatario
-      const tipoCuentaObjeto = this.tiposCuenta.find(tipoCuenta => tipoCuenta.label === destinatario.tipoCuenta);
-  
-      // Si se encontró el objeto, guarda su valor en tipoCuentaSeleccionada
-      if (tipoCuentaObjeto) {
-        this.tipoCuentaSeleccionada = tipoCuentaObjeto.label;
-      }
+      this.tipoCuentaSeleccionada = destinatario.tipoCuenta;
     }
   }
 
@@ -362,6 +374,14 @@ export class EditarDestinatarioComponent implements OnInit{
       telefonoDestinatarioControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
     }
   }
+
+  validaLongitudTelefonos(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const tieneValor = control.value && control.value.trim() !== '';
+      const longitudValida = tieneValor ? control.value.length <= 11 : control.value.length <= 9;
+      return longitudValida ? null : { 'longitudInvalida': { value: control.value } };
+    };
+  }
   
   // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -388,17 +408,20 @@ export class EditarDestinatarioComponent implements OnInit{
     return true;
   }
 
-  validaFormulario(): Observable<any> {
+  detectarCambios(): void {
+    this.editarDestinatarioForm.valueChanges.subscribe(() => {
+      this.formChanged = true;
+    });
+  }
+
+  guardarDestinatario(): Observable<any> {
+
     this.submitted = true;
-    
-    // Verifica que todos los campos del formulario estén llenos
-    if (!this.editarDestinatarioForm.valid) {
-      // Marca todos los campos del formulario como "touched" para mostrar las validaciones de error
-      this.editarDestinatarioForm.markAllAsTouched();
-      return of(null);
-    }
   
-    // ValidA custom-select banco
+    // Marca todos los campos del formulario como "touched" para mostrar las validaciones de error
+    this.editarDestinatarioForm.markAllAsTouched();
+  
+    // Valida que 'bancoDestinatario' y 'cuentaDestinatario' sean distintos de 0
     const bancoDestinatarioControl = this.editarDestinatarioForm.get('bancoDestinatario');
     this.bancoInvalido = false;
     if (bancoDestinatarioControl && bancoDestinatarioControl.value === '0') {
@@ -406,7 +429,7 @@ export class EditarDestinatarioComponent implements OnInit{
       return of(null);
     }
   
-    // ValidA custom-select tipo de cuenta
+    // Valida custom-select tipo de cuenta
     const cuentaDestinatarioControl = this.editarDestinatarioForm.get('cuentaDestinatario');
     this.cuentaInvalida = false;
     if (cuentaDestinatarioControl && cuentaDestinatarioControl.value === '0') {
@@ -414,31 +437,35 @@ export class EditarDestinatarioComponent implements OnInit{
       return of(null);
     }
   
-    // Verifica que el formulario sea válido
-    if (this.editarDestinatarioForm.valid) {
-      this.agendaService.getDestinatarios().subscribe(destinatarios => {
-        const maxId = Math.max(...destinatarios.map((d: { id: any; }) => Number(d.id)).filter((id: number) => !isNaN(id)));
-        const newId = maxId + 1;
-        const formValues = this.editarDestinatarioForm.value;
-        this.datosNuevoDestinatario = {
-          id: newId.toString(),
-          nombre: formValues.nombreDestinatario,
-          apodo: formValues.apodoDestinatario,
-          rut: formValues.rutDestinatario,
-          banco: this.listaBancos.find(b => b.value === formValues.bancoDestinatario)?.label ?? '',
-          tipoCuenta: this.tiposCuenta.find(t => t.value === formValues.cuentaDestinatario)?.label ?? '',
-          numeroCuenta: formValues.numeroCuentaDestinatario,
-          email: formValues.emailDestinatario,
-          celular: formValues.celularDestinatario.replace(/\s/g, ''),
-          telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
-        };
-
-        console.log('Datos que se enviarán:', this.datosNuevoDestinatario);
-    
-        // Envía los datos al servicio
-        this.agendaService.emitirDatosNuevoDestinatario(this.datosNuevoDestinatario);
-      });
+    // Si el formulario es inválido, retorna un Observable que emite null
+    if (this.editarDestinatarioForm.invalid) {
+      console.log('El formulario es inválido');
+      return of(null);
     }
+  
+    const formValues = this.editarDestinatarioForm.value;
+  
+    // Elimina los puntos y el guión del RUT
+    const rutSinFormato = formValues.rutDestinatario.replace(/\./g, '').replace(/-/g, '');
+  
+    const datosDestinatarioEditado = {
+      id: this.idDestinatarioAeditar.value, // Usa el ID del destinatario que se está editando
+      nombre: formValues.nombreDestinatario,
+      apodo: formValues.apodoDestinatario,
+      rut: rutSinFormato,
+      banco: this.listaBancos.find(b => b.value === formValues.bancoDestinatario)?.label ?? this.bancoSeleccionado,
+      tipoCuenta: this.tiposCuenta.find(t => t.value === formValues.cuentaDestinatario)?.label ?? this.tipoCuentaSeleccionada,
+      numeroCuenta: formValues.numeroCuentaDestinatario,
+      email: formValues.emailDestinatario,
+      celular: formValues.celularDestinatario.replace(/\s/g, ''),
+      telefono: formValues.telefonoDestinatario.replace(/\s/g, '')
+    };
+  
+    console.log('Datos que se enviarán:', datosDestinatarioEditado);
+  
+    // Envía los datos al servicio
+    this.agendaService.emitirDatosNuevoDestinatario(datosDestinatarioEditado);
+  
     return of(null);
   }
 

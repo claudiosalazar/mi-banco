@@ -11,10 +11,13 @@
 
     <small class="mb-4 d-block">* Campos son obligatorios</small>
   
-    <form [formGroup]="editarDestinatarioForm">
+    <form [formGroup]="editarDestinatarioForm" (ngSubmit)="guardarDestinatario()">
       <!-- Nombre -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="nombreDestinatario" [class.is-invalid]="editarDestinatarioForm.get('nombreDestinatario')?.invalid && editarDestinatarioForm.get('nombreDestinatario')?.touched" [class.is-valid]="editarDestinatarioForm.get('nombreDestinatario')?.valid && editarDestinatarioForm.get('nombreDestinatario')?.touched" (blur)="validaNombre();">
+        <input type="text" class="form-control" formControlName="nombreDestinatario" 
+        [class.is-invalid]="editarDestinatarioForm.get('nombreDestinatario')?.invalid && editarDestinatarioForm.get('nombreDestinatario')?.touched" 
+        [class.is-valid]="editarDestinatarioForm.get('nombreDestinatario')?.valid && editarDestinatarioForm.get('nombreDestinatario')?.touched" 
+        (blur)="validaNombre();">
         <label for="nombreDestinatario">Nombre y Apellido <span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.get('nombreDestinatario')?.errors?.['inputErrorVacioNombre'] && editarDestinatarioForm.get('nombreDestinatario')?.touched" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
@@ -29,7 +32,10 @@
   
       <!-- Apodo -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="apodoDestinatario" [class.is-valid]="inputApodoValido" (blur)="validaApodo();">
+        <input type="text" class="form-control" formControlName="apodoDestinatario" 
+        [class.is-invalid]="editarDestinatarioForm.get('apodoDestinatario')?.invalid && editarDestinatarioForm.get('apodoDestinatario')?.touched && editarDestinatarioForm.get('apodoDestinatario')?.value" 
+        [class.is-valid]="editarDestinatarioForm.get('apodoDestinatario')?.valid && editarDestinatarioForm.get('apodoDestinatario')?.touched && editarDestinatarioForm.get('apodoDestinatario')?.value" 
+        (blur)="validaTelefono()" (keypress)="soloNumeros($event)">
         <label for="apodoDestinatario">Apodo</label>
       </div>
   
@@ -79,7 +85,10 @@
   
       <!-- Email -->
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" formControlName="emailDestinatario" [class.is-invalid]="editarDestinatarioForm.controls['emailDestinatario'].invalid && editarDestinatarioForm.controls['emailDestinatario'].touched" [class.is-valid]="inputValidoEmail" (blur)="validaEmail('emailDestinatario')">
+        <input type="email" class="form-control" formControlName="emailDestinatario" 
+        [class.is-invalid]="editarDestinatarioForm.get('emailDestinatario')?.invalid && editarDestinatarioForm.get('emailDestinatario')?.touched" 
+        [class.is-valid]="editarDestinatarioForm.get('emailDestinatario')?.valid && editarDestinatarioForm.get('emailDestinatario')?.touched" 
+        (blur)="validaEmail('emailDestinatario')">
         <label for="emailDestinatario">Email<span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.controls['emailDestinatario'].errors?.['required'] && editarDestinatarioForm.controls['emailDestinatario'].touched" class="invalid-feedback">
           El campo Email no puede quedar vacío.
@@ -94,7 +103,10 @@
   
       <!-- Celular -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control celular" formControlName="celularDestinatario" [class.is-invalid]="inputErrorCelularInvalido && editarDestinatarioForm.get('celularDestinatario')?.touched" [class.is-valid]="inputCelularValido && editarDestinatarioForm.get('celularDestinatario')?.touched && editarDestinatarioForm.get('celularDestinatario')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9">
+        <input type="text" class="form-control celular" formControlName="celularDestinatario" 
+        [class.is-invalid]="editarDestinatarioForm.get('celularDestinatario')?.invalid && editarDestinatarioForm.get('celularDestinatario')?.touched && editarDestinatarioForm.get('celularDestinatario')?.value" 
+        [class.is-valid]="editarDestinatarioForm.get('celularDestinatario')?.valid && editarDestinatarioForm.get('celularDestinatario')?.touched && editarDestinatarioForm.get('celularDestinatario')?.value" 
+        (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
         <label for="celularDestinatario">Celular</label>
         <div class="prefijo-chile"></div>
         <div *ngIf="inputErrorCelularInvalido && editarDestinatarioForm.get('celularDestinatario')?.touched" class="invalid-feedback">
@@ -104,7 +116,10 @@
   
       <!-- Telefono -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="telefonoDestinatario" [class.is-invalid]="inputErrorTelefonoFijoInvalido && editarDestinatarioForm.get('telefonoDestinatario')?.touched" [class.is-valid]="inputTelefonoFijoValido && editarDestinatarioForm.get('telefonoDestinatario')?.touched && editarDestinatarioForm.get('telefonoDestinatario')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9">
+        <input type="text" class="form-control" formControlName="telefonoDestinatario" 
+        [class.is-invalid]="editarDestinatarioForm.get('telefonoDestinatario')?.invalid && editarDestinatarioForm.get('telefonoDestinatario')?.touched && editarDestinatarioForm.get('telefonoDestinatario')?.value" 
+        [class.is-valid]="editarDestinatarioForm.get('telefonoDestinatario')?.valid && editarDestinatarioForm.get('telefonoDestinatario')?.touched && editarDestinatarioForm.get('telefonoDestinatario')?.value" 
+        (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
         <label for="telefonoDestinatario">Teléfono Fijo</label>
         <div *ngIf="inputErrorTelefonoFijoInvalido && editarDestinatarioForm.get('telefonoDestinatario')?.touched" class="invalid-feedback">
           <span>El número ingresado no es válido.</span>
@@ -115,7 +130,8 @@
   
       <!-- Botones -->
       <div class="d-flex flex-md-column mt-4">
-        <button type="submit" class="btn btn-primary mb-3" (click)="validaFormulario();">Guardar</button>
+        <!-- <button type="submit" class="btn btn-primary mb-3" (click)="guardarDestinatario();" [class.disabled]="!formChanged">Guardar</button> -->
+        <button type="submit" class="btn btn-primary mb-3" [class.disabled]="!formChanged">Guardar</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">Cancelar</button>
       </div>
   
