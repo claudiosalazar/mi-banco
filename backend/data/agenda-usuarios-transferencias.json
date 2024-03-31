@@ -24,18 +24,6 @@
     "telefono": "227654321"
   },
   {
-    "id": "2",
-    "nombre": "Constanza Morales",
-    "apodo": "Coni",
-    "rut": "222222222",
-    "banco": "Banco Chile",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "98767898",
-    "email": "constanzam@correo.cl",
-    "celular": "987654321",
-    "telefono": "227654321"
-  },
-  {
     "id": "3",
     "nombre": "Eduardo Flores",
     "apodo": "Compadre",
@@ -142,29 +130,5 @@
     "email": "ariana@gmail.com",
     "celular": "987654312",
     "telefono": "654987321"
-  },
-  {
-    "id": "12",
-    "nombre": "Boric Presi",
-    "apodo": "",
-    "rut": "987654321",
-    "banco": "Banco de Chile",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "23423423",
-    "email": "presi@gmail.com",
-    "celular": "",
-    "telefono": ""
-  },
-  {
-    "id": "13",
-    "nombre": "Boric Presi",
-    "apodo": "",
-    "rut": "987654321",
-    "banco": "Banco de Chile",
-    "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "23423423",
-    "email": "presi@gmail.com",
-    "celular": "",
-    "telefono": ""
   }
 ]

@@ -2,9 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef,
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { catchError, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -32,8 +30,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
-  
-  private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transerencias.json';
+  destinatarioId: string | undefined;
 
   private subscription: Subscription | undefined;
 
@@ -53,7 +50,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
 
-  // Variable para mensajes de modal
+  // Variable para mensajes de modal eliminar
   usuarioEliminado = false;
   errorServer = false;
 
@@ -95,6 +92,16 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     // Actualiza los destinatarios cuando se guarda un nuevo destinatario
     this.agendaService.nuevoDestinatarioGuardado.subscribe(() => {
+      this.agendaService.getDestinatarios().subscribe(data => {
+        // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
+        this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
+        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+        this.paginacionDatos();
+      });
+    });
+
+    // Actualiza los destinatarios cuando se elimina un destinatario
+    this.agendaService.destinatarioEliminado.subscribe(() => {
       this.agendaService.getDestinatarios().subscribe(data => {
         // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
         this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
@@ -221,35 +228,26 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.paginacionDatos();
   }
 
-  // Elimina usuario del server
-  eliminarDestinatario(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'}).pipe(
-      switchMap((response) => {
-        if (response) {
-          console.log('El usuario fue eliminado correctamente');
-          this.usuarioEliminado = true;
-        }
-        return this.agendaService.getDestinatarios();
-      }),
-      tap(destinatarios => {
-        this.destinatarios = destinatarios;
-        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-        this.ordenarDatos('nombre');
-        this.paginacionDatos();
-      }),
-      catchError(error => {
-        console.log('Hubo un error al eliminar el usuario', error);
-        this.errorServer = true;
-        return throwError(error);
-      })
-    );
-  }
-
   // Modal para eliminar destinatario
   abrirModalEliminar(destinatario: any): void {
-    this.destinatarioSeleccionado = destinatario;
-    var modalElininar = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
-    modalElininar.show();
+    this.destinatarioId = destinatario.id;
+    console.log('ID del destinatario:', this.destinatarioId);
+    var modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
+    modalEliminar.show();
+  }
+
+  eliminarDestinatario(): void {
+    if (this.destinatarioId) {
+      this.agendaService.eliminarDestinatarioServer(this.destinatarioId).subscribe(
+        () => {
+          console.log('El destinatario fue eliminado correctamente');
+          this.usuarioEliminado = true;
+          // Emitir el evento de destinatario eliminado
+          this.agendaService.destinatarioEliminado.next();
+        },
+        error => console.error('Hubo un error al eliminar el destinatario', error)
+      );
+    }
   }
 
   // Modal para nuevo destinatario

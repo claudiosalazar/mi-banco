@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, of, throwError } from 'rxjs';
 import { Destinatario } from '../../shared/models/destinatarios.model';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class AgendaDestinatariosService {
 
   nuevoDestinatarioGuardado = new Subject<void>();
   datosEditadosDestinatario = new Subject<any>();
+  destinatarioEliminado = new Subject<any>();
 
   constructor(
     private http: HttpClient
@@ -52,11 +53,9 @@ export class AgendaDestinatariosService {
       this.datosNuevoDestinatarioSource.next(datos);
     }
   }
-
   getDatosNuevoDestinatario(): Observable<any> {
     return this.datosNuevoDestinatarioSource.asObservable();
   }
-
   guardarNuevoDestinatario(datos: any): Observable<any> {
     return this.http.put(this.baseUrl, datos, {responseType: 'text'}).pipe(
       map((res: any) => {
@@ -74,13 +73,10 @@ export class AgendaDestinatariosService {
     this.datosEditadosDestinatario.next(datos);
     console.log('Datos editados del destinatario:', datos);
   }
-
   // Crea la función getDatosEditadosDestinatario
   getDatosEditadosDestinatario(): Observable<any> {
     return this.datosEditadosDestinatario.asObservable();
   }
-
-  
   guardarDestinatarioEditado(id: string, datosEditados: any): Observable<any> {
     console.log('Datos enviados al server:', datosEditados);
     return this.http.put(`${this.baseUrl}/${id}`, datosEditados).pipe(
@@ -88,6 +84,16 @@ export class AgendaDestinatariosService {
         console.log('Datos recibidos del server:', res);
         return res;
       }),
+      catchError(error => {
+        console.error('Error del server:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  // Elimnia un destinatario
+  eliminarDestinatarioServer(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}?id=${id}`, {responseType: 'text'}).pipe(
       catchError(error => {
         console.error('Error del server:', error);
         return throwError(error);
