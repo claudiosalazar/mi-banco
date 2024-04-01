@@ -72,8 +72,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   modales: any[] = [];
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
-  
-  //offcanvasHidden = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -179,7 +177,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.mostrarBackdropCustomOffcanvasEstado = true;
   }
   
-
   // Anima icono de TH
   public onHeaderClick(): void {
     this.isRotatedIn = !this.isRotatedIn;

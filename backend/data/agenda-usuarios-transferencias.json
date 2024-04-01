@@ -78,7 +78,7 @@
     "rut": "222222222",
     "banco": "Banco Chile",
     "tipoCuenta": "Cuenta Corriente",
-    "numeroCuenta": "98767898",
+    "numeroCuenta": "987678989",
     "email": "constanzam@correo.cl",
     "celular": "987654321",
     "telefono": "227654321"
@@ -114,7 +114,7 @@
     "rut": "987654321",
     "banco": "Scotiabank Chile",
     "tipoCuenta": "Cuenta de Ahorro",
-    "numeroCuenta": "654321666",
+    "numeroCuenta": "6543216665",
     "email": "arido@gmail.com",
     "celular": "987654321",
     "telefono": "987654321"
@@ -126,9 +126,21 @@
     "rut": "123456789",
     "banco": "Banco Internacional",
     "tipoCuenta": "Cuenta Vista",
-    "numeroCuenta": "3216544544",
+    "numeroCuenta": "32165445",
     "email": "ariana@gmail.com",
     "celular": "987654312",
     "telefono": "654987321"
+  },
+  {
+    "id": "12",
+    "nombre": "Boric Presi",
+    "apodo": "Presi",
+    "rut": "987654321",
+    "banco": "Mi Banco",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "3216549878",
+    "email": "presi@gmail.com",
+    "celular": "987654321",
+    "telefono": "321654987"
   }
 ]

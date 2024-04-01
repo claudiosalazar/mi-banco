@@ -479,7 +479,23 @@ export class EditarDestinatarioComponent implements OnInit{
   }
 
   cancelar(): void {
+    // Emite el evento para ocultar el backdrop
     this.mostrarBackdropCustomChange.emit(false);
+  
+    // Resetea el formulario
+    this.editarDestinatarioForm.reset();
+  
+    // Recorre cada control del formulario
+    Object.keys(this.editarDestinatarioForm.controls).forEach(key => {
+      // Obtiene el control
+      const control = this.editarDestinatarioForm.get(key);
+  
+      // Elimina las validaciones del control
+    if (control !== null) {
+      control.clearValidators();
+      control.updateValueAndValidity();
+    }
+    });
   }
 
 }

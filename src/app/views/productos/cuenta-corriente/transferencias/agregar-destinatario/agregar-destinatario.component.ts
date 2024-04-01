@@ -102,6 +102,9 @@ export class AgregarDestinatarioComponent implements OnInit{
 
   botonGuardarDisabled = false;
 
+  bancoSeleccionado: any | undefined;
+  tipoCuentaSeleccionada: any | undefined
+
   constructor(
     private agendaService: AgendaDestinatariosService,
     private formatoEmailService: FormatoEmailService,
@@ -227,20 +230,25 @@ export class AgregarDestinatarioComponent implements OnInit{
 
   validaEmail(emailDestinatario: string) {
     const emailControl = this.crearDestinatarioForm.controls[emailDestinatario];
-    emailControl.markAsTouched();
     emailControl.setValidators([Validators.required, Validators.email, this.formatoEmailService.formatoEmail]);
     emailControl.updateValueAndValidity();
   
-    if (emailControl.value.trim() === '') {
-      emailControl.setErrors({ 'required': true });
-    } else if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
-      emailControl.setErrors({ 'customEmail': true });
+    if (emailControl.value.trim() !== '') {
+      emailControl.markAsTouched();
+  
+      if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
+        emailControl.setErrors({ 'customEmail': true });
+      } else {
+        emailControl.setErrors(null);
+      }
+  
+      this.inputValidoEmail = emailControl.valid;
     } else {
+      emailControl.markAsUntouched();
       emailControl.setErrors(null);
+      this.inputValidoEmail = null;
     }
   
-    this.inputValidoEmail = emailControl.valid;
-
     this.verificarFormulario();
   }
 
@@ -409,7 +417,46 @@ export class AgregarDestinatarioComponent implements OnInit{
   }
 
   cancelar(): void {
+    // Emite el evento para ocultar el backdrop
     this.mostrarBackdropCustomChange.emit(false);
+  
+    // Imprime el valor actual de 'bancoSeleccionado' y 'tipoCuentaSeleccionada'
+    console.log('Banco seleccionado:', this.bancoSeleccionado);
+    console.log('Tipo de cuenta seleccionada:', this.tipoCuentaSeleccionada);
+  
+    // Resetea el formulario
+    this.crearDestinatarioForm.reset();
+  
+    // Limpia las validaciones
+    Object.keys(this.crearDestinatarioForm.controls).forEach(key => {
+      const control = this.crearDestinatarioForm.get(key);
+      control?.clearValidators();
+      control?.updateValueAndValidity();
+    });
+  
+    // Verifica si los controles existen antes de intentar establecer su valor
+    if (this.crearDestinatarioForm.controls['bancoDestinatario']) {
+      this.crearDestinatarioForm.controls['bancoDestinatario'].setValue(0, {onlySelf: true});
+    }
+  
+    if (this.crearDestinatarioForm.controls['cuentaDestinatarios']) {
+      this.crearDestinatarioForm.controls['cuentaDestinatarios'].setValue(0, {onlySelf: true});
+    }
+  
+    // Establece 'bancoSeleccionado' y 'tipoCuentaSeleccionada' a '-'
+    this.bancoSeleccionado = '-';
+    this.tipoCuentaSeleccionada = '-';
+
+    // Resetea el control 'emailDestinatario' y actualiza su estado de validez
+    const emailControl = this.crearDestinatarioForm.controls['emailDestinatario'];
+    emailControl.reset();
+    emailControl.markAsPristine();
+    emailControl.markAsUntouched();
+    emailControl.updateValueAndValidity();
+
+    // Establece 'inputValidoEmail' a null para que la clase 'is-valid' no se aplique
+    this.inputValidoEmail = null;
+
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +8,10 @@ export class FormatoEmailService {
 
   constructor() { }
 
-  formatoEmail(control: AbstractControl): { [key: string]: boolean } | null {
-    const value = control.value;
-    if (value && typeof value === 'string') {
-      const valid = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(value);
-      return valid ? null : { customEmail: true };
-    }
-    return null;
+  formatoEmail(control: FormControl): { [key: string]: boolean } | null {
+    const emailValidator = Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
+    const error = emailValidator(control);
+    return error ? { customEmail: true } : null;
   }
 
 }
