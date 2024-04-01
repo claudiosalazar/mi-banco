@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { DatosFiltradosService } from '../../../../core/services/productos-usuario.service';
 import { FormControl } from '@angular/forms';
@@ -11,6 +11,7 @@ import { combineLatest } from 'rxjs';
 export class BuscadorTablaComponent implements OnInit {
 
   @Output() datosFiltradosEvent = new EventEmitter<any[]>();
+  @Input() tituloBuscador: string | undefined;
   
   id: any | undefined;
   paginatedData: any[] | undefined;
