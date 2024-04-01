@@ -16,6 +16,7 @@ export class ProductosUsuarioService {
   productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;
   fecha: any;
+  destinatario: any;
   cupoDisponibleVisa: Number | undefined;
   nuevosDatos: any;
   nuevosDatosPago: any;
@@ -101,22 +102,6 @@ export class ProductosUsuarioService {
     });
   }
 
-  // Diferencia tipo de transacciones de cuenta corriente
-  getTransferenciasCtaCte(): Observable<any[]> {
-    return this.http.get<any>(this.baseUrl).pipe(
-      map(response => {
-        console.log(response);
-        const producto = response.productos.find((producto: { id: string; }) => producto.id === '0');
-        if (producto) {
-          return producto.transacciones.filter((transaccion: { detalle: string; }) => 
-            transaccion.detalle.toLowerCase().includes('transferencia')
-          );
-        }
-        return [];
-      })
-    );
-  }
-
   // Calcula el saldo de un producto
   calculosMontos(_producto: ProductosUsuario['productos']): ProductosUsuario['productos'] {
 
@@ -160,6 +145,7 @@ export class ProductosUsuarioService {
             cupoDisponible: cupoDisponibleCalculado.toString(),
             transacciones: producto.transacciones && Array.isArray(producto.transacciones) ? producto.transacciones.map(transaccion => ({
               id: transaccion.id,
+              destinatario: transaccion.destinatario,
               fecha: transaccion.fecha,
               detalle: transaccion.detalle,
               cargo: transaccion.cargo === 0 ? "0" : transaccion.cargo,
@@ -303,7 +289,6 @@ export class ProductosUsuarioService {
           const producto = datos.productos.find(producto => producto.id === id);
           if (producto) {
             const datosFiltrados = producto.transacciones.filter(transaccion => {
-              // Cambia 'propiedad1', 'propiedad2', etc., por las propiedades correctas
               return transaccion.fecha.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
                      transaccion.detalle.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
                      transaccion.cargo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
@@ -324,6 +309,34 @@ export class ProductosUsuarioService {
         observer.error(error);
       });
     });
+  }
+
+  // Diferencia tipo de transacciones de cuenta corriente
+  getTransferenciasCtaCte(): Observable<any[]> {
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(response => {
+        console.log(response);
+        const producto = response.productos.find((producto: { id: string; }) => producto.id === '0');
+        if (producto) {
+          return producto.transacciones.filter((transaccion: { detalle: string; }) => 
+            transaccion.detalle.toLowerCase().includes('transferencia')
+          );
+        }
+        return [];
+      })
+    );
+  }
+
+  buscarTransferencias(valorBusqueda: string): Observable<any[]> {
+    return this.getTransferenciasCtaCte().pipe(
+      map(transacciones => transacciones.filter((transaccion: { fecha: string; destinatario: string; detalle: string; cargo: string; saldo: string;}) =>
+        transaccion.fecha.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        transaccion.destinatario.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        transaccion.detalle.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        transaccion.cargo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        transaccion.saldo.toLowerCase().includes(valorBusqueda.toLowerCase()
+      ))
+    ));
   }
 
   actualizarIdActual(nuevoId: string) {

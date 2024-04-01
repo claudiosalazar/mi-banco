@@ -1,6 +1,7 @@
 interface Transaccion {
   id: any;
   fecha: string;
+  destinatario: any;
   detalle: string;
   cargo: string;
   abono: string;

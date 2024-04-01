@@ -116,8 +116,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.busquedaDestinatarios.valueChanges
     .pipe(
-      // Podrías agregar un operador debounceTime aquí para evitar demasiadas solicitudes
-      // debounceTime(300),
       switchMap(valorBusqueda => this.agendaService.filtrarDestinatarios(valorBusqueda))
     )
     .subscribe(datosFiltrados => {

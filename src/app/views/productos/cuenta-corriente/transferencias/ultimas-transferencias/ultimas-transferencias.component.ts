@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
+import { FormControl } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ultimas-transferencias',
@@ -21,9 +23,12 @@ export class UltimasTransferenciasComponent implements OnInit {
   sortedColumn = '';
   sortAscending: boolean = true;
 
+  busquedaTransferencias = new FormControl('');
+
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
+  productos: any[] = [];
 
   constructor(
     private productosUsuarioService: ProductosUsuarioService
@@ -31,6 +36,16 @@ export class UltimasTransferenciasComponent implements OnInit {
 
   ngOnInit (): void {
     this.getTransferencias();
+
+    this.busquedaTransferencias.valueChanges
+    .pipe(
+      switchMap(valorBusqueda => this.productosUsuarioService.buscarTransferencias(valorBusqueda))
+    )
+    .subscribe(datosFiltrados => {
+      this.transacciones = datosFiltrados;
+      this.totalPages = this.productos ? Math.ceil(this.productos.length / this.itemsPerPage) : 0;
+      this.paginacionDatos();
+    });
   }
 
   // Anima icono de TH
