@@ -101,4 +101,21 @@ export class AgendaDestinatariosService {
     );
   }
 
+  // Buscador
+  filtrarDestinatarios(valorBusqueda: string): Observable<any[]> {
+    return this.getDestinatarios().pipe(
+      map(destinatarios => destinatarios.filter((destinatario: { nombre: string; apodo: string; rut: string; banco: string; tipoCuenta: string; numeroCuenta: string; email: string; celular: string; telefono: string; }) =>
+        destinatario.nombre.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.apodo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.rut.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.banco.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.tipoCuenta.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.numeroCuenta.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.email.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.celular.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
+        destinatario.telefono.toLowerCase().includes(valorBusqueda.toLowerCase())
+      ))
+    );
+  }
+
 }

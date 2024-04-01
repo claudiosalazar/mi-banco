@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
-import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 declare var bootstrap: any;
 
@@ -73,9 +74,10 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
 
+  busquedaDestinatarios = new FormControl('');
+
   constructor(
     private agendaService: AgendaDestinatariosService,
-    private http: HttpClient,
     private cdr: ChangeDetectorRef,
   ) { }
 
@@ -110,6 +112,18 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
       this.mostrarBackdropCustomOffcanvasEstado = valor;
+    });
+
+    this.busquedaDestinatarios.valueChanges
+    .pipe(
+      // Podrías agregar un operador debounceTime aquí para evitar demasiadas solicitudes
+      // debounceTime(300),
+      switchMap(valorBusqueda => this.agendaService.filtrarDestinatarios(valorBusqueda))
+    )
+    .subscribe(datosFiltrados => {
+      this.destinatarios = datosFiltrados;
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.paginacionDatos();
     });
     
   }

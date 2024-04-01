@@ -384,7 +384,7 @@ export class EditarDestinatarioComponent implements OnInit{
   validaLongitudTelefonos(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const tieneValor = control.value && control.value.trim() !== '';
-      const longitudValida = tieneValor ? control.value.length <= 11 : control.value.length <= 9;
+      const longitudValida = tieneValor ? control.value.length <= 11 : true;
       return longitudValida ? null : { 'longitudInvalida': { value: control.value } };
     };
   }
