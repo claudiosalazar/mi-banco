@@ -10,7 +10,8 @@
         {
           "id": "0",
           "fecha": "2023-01-01",
-          "detalle": "Transferencia a Pepito",
+          "destinatario": "Pedro Palominos",
+          "detalle": "Transferencia a Pedro Palominos",
           "cargo": "10000",
           "abono": "0",
           "saldo": "45000"
@@ -18,6 +19,7 @@
         {
           "id": "1",
           "fecha": "2023-01-06",
+          "destinatario": "",
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
@@ -26,7 +28,8 @@
         {
           "id": "2",
           "fecha": "2023-01-20",
-          "detalle": "Deposito de Mario",
+          "destinatario": "",
+          "detalle": "Abono de Mario",
           "cargo": "0",
           "abono": "20000",
           "saldo": "45000"
@@ -34,6 +37,7 @@
         {
           "id": "3",
           "fecha": "2023-04-05",
+          "destinatario": "",
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
@@ -42,6 +46,7 @@
         {
           "id": "4",
           "fecha": "2023-04-15",
+          "destinatario": "",
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
@@ -50,7 +55,8 @@
         {
           "id": "5",
           "fecha": "2023-04-30",
-          "detalle": "Transferencia a Maria",
+          "destinatario": "Josefina Soto",
+          "detalle": "Transferencia a Josefina Soto",
           "cargo": "10000",
           "abono": "0",
           "saldo": "45000"
@@ -58,7 +64,8 @@
         {
           "id": "6",
           "fecha": "2023-06-10",
-          "detalle": "Transferencia a Jose",
+          "destinatario": "Constanza Miranda",
+          "detalle": "Transferencia a Constanza Miranda",
           "cargo": "10000",
           "abono": "0",
           "saldo": "45000"
@@ -66,6 +73,7 @@
         {
           "id": "7",
           "fecha": "2023-06-13",
+          "destinatario": "",
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
@@ -74,7 +82,8 @@
         {
           "id": "8",
           "fecha": "2023-08-11",
-          "detalle": "Deposito de Constanza",
+          "destinatario": "",
+          "detalle": "Abono de Constanza",
           "cargo": "0",
           "abono": "20000",
           "saldo": "45000"
@@ -82,6 +91,7 @@
         {
           "id": "9",
           "fecha": "2023-08-23",
+          "destinatario": "",
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
@@ -90,6 +100,7 @@
         {
           "id": "10",
           "fecha": "2024-03-20",
+          "destinatario": "",
           "detalle": "Pago a Visa",
           "cargo": "100",
           "abono": "0",
@@ -98,7 +109,8 @@
         {
           "id": "11",
           "fecha": "2024-03-20",
-          "detalle": "Transferencia recibida de Mister Satan",
+          "destinatario": "",
+          "detalle": "Abono de Mister Satan",
           "cargo": "0",
           "abono": "1000000",
           "saldo": "1044900"
@@ -106,6 +118,7 @@
         {
           "id": "12",
           "fecha": "2024-03-21",
+          "destinatario": "",
           "detalle": "Pago a Visa",
           "cargo": "100",
           "abono": "0",
@@ -139,7 +152,7 @@
         {
           "id": "2",
           "fecha": "2023-01-20",
-          "detalle": "Deposito de Mario",
+          "detalle": "Transferencia de Mario",
           "cargo": "0",
           "abono": "50000",
           "saldo": "346500"
@@ -187,7 +200,7 @@
         {
           "id": "8",
           "fecha": "2023-08-11",
-          "detalle": "Deposito de Constanza",
+          "detalle": "Transferencia de Constanza",
           "cargo": "0",
           "abono": "10000",
           "saldo": "346500"

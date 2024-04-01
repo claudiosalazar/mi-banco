@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, combineLatest, of, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 import { UrlBrowserService } from './url-browser.service';
@@ -99,6 +99,22 @@ export class ProductosUsuarioService {
         observer.complete();
       });
     });
+  }
+
+  // Diferencia tipo de transacciones de cuenta corriente
+  getTransferenciasCtaCte(): Observable<any[]> {
+    return this.http.get<any>(this.baseUrl).pipe(
+      map(response => {
+        console.log(response);
+        const producto = response.productos.find((producto: { id: string; }) => producto.id === '0');
+        if (producto) {
+          return producto.transacciones.filter((transaccion: { detalle: string; }) => 
+            transaccion.detalle.toLowerCase().includes('transferencia')
+          );
+        }
+        return [];
+      })
+    );
   }
 
   // Calcula el saldo de un producto
