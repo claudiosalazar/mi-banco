@@ -64,7 +64,7 @@ export class LineaCreditoComponent implements OnInit {
     this.productosUsuarioService.getProductosUsuarioResumen(id).subscribe(data => {
       this.productosUsuario = data.productos ? { productos: data.productos } : { productos: [] };
       
-      const transacciones = this.productosUsuario.productos[2]?.transacciones;
+      const transacciones = this.productosUsuario.productos[1]?.transacciones;
       let ultimaTransaccionConAbono;
   
       if (transacciones) {
