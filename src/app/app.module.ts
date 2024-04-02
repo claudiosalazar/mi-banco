@@ -62,6 +62,7 @@ import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
+import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 
 
 @NgModule({
@@ -96,13 +97,14 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
     ComprobanteTransferenciaComponent,
     SegurosComprobanteComponent,
     CustomSelectComponent,
+    PaginadorComponent,
     CartolaHistoricaComponent,
     MovimientosComponent,
     AgendaDestinatariosComponent,
     AgregarDestinatarioComponent,
     EditarDestinatarioComponent,
     UltimasTransferenciasComponent,
-    TransferenciaATercerosComponent
+    TransferenciaATercerosComponent,
   ],
   imports: [
     BrowserModule,

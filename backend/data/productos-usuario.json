@@ -123,6 +123,42 @@
           "cargo": "100",
           "abono": "0",
           "saldo": "1044800"
+        },
+        {
+          "id": "13",
+          "fecha": "2024-06-10",
+          "destinatario": "Constanza Miranda",
+          "detalle": "Transferencia a Constanza Miranda",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "45000"
+        },
+        {
+          "id": "14",
+          "fecha": "2023-03-10",
+          "destinatario": "Constanza Miranda",
+          "detalle": "Transferencia a Constanza Miranda",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "45000"
+        },
+        {
+          "id": "15",
+          "fecha": "2023-07-10",
+          "destinatario": "Constanza Miranda",
+          "detalle": "Transferencia a Constanza Miranda",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "45000"
+        },
+        {
+          "id": "16",
+          "fecha": "2023-06-15",
+          "destinatario": "Constanza Miranda",
+          "detalle": "Transferencia a Constanza Miranda",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "45000"
         }
       ]
     },
