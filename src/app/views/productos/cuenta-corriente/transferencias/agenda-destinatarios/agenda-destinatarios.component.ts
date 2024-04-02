@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { Subscription } from 'rxjs';
@@ -28,10 +28,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
+  @Output() datosOrdenados = new EventEmitter<void>();
 
-  destinatarios: { [key: string]: any }[] | undefined;
+  //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
   destinatarioId: string | undefined;
+
+  destinatarios: any[] = [];
+  paginatedDestinatarios: any[] = [];
 
   private subscription: Subscription | undefined;
 
@@ -79,15 +83,17 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   constructor(
     private agendaService: AgendaDestinatariosService,
     private cdr: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    
     // Obtén los destinatarios al inicializar el componente
     this.agendaService.getDestinatarios().subscribe(data => {
       this.destinatarios = data;
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.ordenarDatos('nombre');
-      this.paginacionDatos();
+      this.cdRef.detectChanges();
     });
 
     // Actualiza los destinatarios cuando se guarda un nuevo destinatario
@@ -96,7 +102,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
         this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
         this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-        this.paginacionDatos();
+        this.cdRef.detectChanges();
       });
     });
 
@@ -106,7 +112,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
         this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
         this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-        this.paginacionDatos();
+        this.cdRef.detectChanges();
       });
     });
 
@@ -121,15 +127,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     .subscribe(datosFiltrados => {
       this.destinatarios = datosFiltrados;
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-      this.paginacionDatos();
+      this.cdRef.detectChanges();
     });
-    
-  }
-
-  datosDestinarioId(id: any): void {
-    console.log('ID del usuario:', id);
-    // Actualiza el ID del destinatario a editar en el servicio
-    this.agendaService.actualizarIdDestinatarioAeditar(id);
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -177,6 +176,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     
   }
 
+  datosDestinarioId(id: any): void {
+    console.log('ID del usuario:', id);
+    // Actualiza el ID del destinatario a editar en el servicio
+    this.agendaService.actualizarIdDestinatarioAeditar(id);
+  }
+
   ngOnDestroy(): void {
     // Es importante cancelar la suscripción para evitar fugas de memoria
     if (this.subscription) {
@@ -208,33 +213,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.destinatarios?.sort((a: { [x: string]: any; }, b: { [x: string]: any; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
-    this.paginacionDatos();
-  }
-
-  // Functions para paginados
-  paginacionDatos(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = this.currentPage * this.itemsPerPage;
-    this.paginatedData = this.destinatarios ? this.destinatarios.slice(startIndex, endIndex) : [];
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.paginacionDatos();
-    }
-  }
+    
+    this.destinatarios?.sort((a: { [x: string]: string; }, b: { [x: string]: string; }) => {
+      return a[column].localeCompare(b[column]) * this.sortOrder;
+    });
   
-  nextPage(): void {
-    if (this.totalPages && this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.paginacionDatos();
-    }
-  }
-  
-  seleccionarPagina(page: number): void {
-    this.currentPage = page;
-    this.paginacionDatos();
+    this.datosOrdenados.emit();
   }
 
   // Modal para eliminar destinatario

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { DatosFiltradosService } from '../../../../core/services/productos-usuario.service';
 import { ProductosUsuario } from '../../../models/productos-usuario.model';
@@ -9,21 +9,23 @@ import { ProductosUsuario } from '../../../models/productos-usuario.model';
 })
 export class TablesProductosComponent implements OnInit {
 
+  @Output() datosOrdenados = new EventEmitter<void>();
   @Input() mostrarPaginador: boolean | undefined;
   @Input() nuevaClase: string | undefined;
   @Input() set id(id: string) {
-  this._id = id;
-  this.productosUsuarioService.actualizarIdActual(id);
-};
+    this._id = id;
+    this.productosUsuarioService.actualizarIdActual(id);
+  };
+
+  paginatedTransacciones: any[] = [];
 
   get id(): string {
     return this._id;
   }
   private _id: any;
   
-
   // Captura datos de nodo desde cualquier ID
-  transacciones: any[] | undefined;
+  transacciones: any[] = [];
   productos: any[] = [];
   originalData: any[] = [];
   itemsPerPage = 5;
@@ -44,6 +46,7 @@ export class TablesProductosComponent implements OnInit {
   constructor(
     private productosUsuarioService: ProductosUsuarioService,
     private datosFiltradosService: DatosFiltradosService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -58,14 +61,13 @@ export class TablesProductosComponent implements OnInit {
       this.transacciones = datosFiltrados;
       this.productos = [...this.transacciones];
       this.originalData = [...this.transacciones];
-      this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
-      this.mostrarPaginador = this.transacciones.length > 5;
-      this.paginacionDatos();
+      this.cdRef.detectChanges();
     });
 
     this.datosFiltradosService.paginationData$.subscribe(paginationData => {
       this.itemsPerPage = paginationData.itemsPerPage;
       this.currentPage = paginationData.currentPage;
+      this.cdRef.detectChanges();
     });
 
     this.productosUsuarioService.getProductosUsuarioTable().subscribe((productosUsuario: ProductosUsuario) => {
@@ -89,8 +91,8 @@ export class TablesProductosComponent implements OnInit {
         });
         this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
         this.mostrarPaginador = this.transacciones.length > 5;
-        this.paginacionDatos();
       }
+      this.cdRef.detectChanges();
     }, error => {
       console.error('Error al obtener los datos del producto:', error);
     });
@@ -117,33 +119,7 @@ export class TablesProductosComponent implements OnInit {
     this.transacciones?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
-    this.paginacionDatos();
-  }
-
-  // Functions para paginados
-  paginacionDatos(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = this.currentPage * this.itemsPerPage;
-    this.paginatedData = this.transacciones ? this.transacciones.slice(startIndex, endIndex) : [];
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.paginacionDatos();
-    }
-  }
-  
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.paginacionDatos();
-    }
-  }
-  
-  seleccionarPagina(page: number): void {
-    this.currentPage = page;
-    this.paginacionDatos();
+    this.datosOrdenados.emit();
   }
 
 }

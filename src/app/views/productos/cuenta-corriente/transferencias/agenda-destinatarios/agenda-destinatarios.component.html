@@ -88,7 +88,7 @@
         </tr>
       </thead>
       <tbody role="rowgroup">
-        <tr *ngFor="let destinatario of paginatedData" role="row">
+        <tr *ngFor="let destinatario of paginatedDestinatarios" role="row">
           <td role="cell" class="ancho">
             <span class="contenido-td">{{ destinatario.nombre }}</span>
           </td>
@@ -128,7 +128,10 @@
         </tr>
       </tbody>
     </table>
-    <nav class="d-flex justify-content-center mt-3" *ngIf="mostrarPaginador">
+
+    <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+
+    <!-- <nav class="d-flex justify-content-center mt-3" *ngIf="mostrarPaginador">
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
@@ -148,7 +151,7 @@
           </a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
   </div>
 </div>
 
