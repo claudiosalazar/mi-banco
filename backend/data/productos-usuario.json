@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "1044800",
+      "cupo": "1000000",
       "cupoDisponible": "55000",
       "transacciones": [
         {
@@ -126,39 +126,11 @@
         },
         {
           "id": "13",
-          "fecha": "2024-06-10",
-          "destinatario": "Constanza Miranda",
-          "detalle": "Transferencia a Constanza Miranda",
-          "cargo": "10000",
+          "fecha": "2024-04-01",
+          "detalle": "Pago a Visa",
+          "cargo": "44800",
           "abono": "0",
-          "saldo": "45000"
-        },
-        {
-          "id": "14",
-          "fecha": "2023-03-10",
-          "destinatario": "Constanza Miranda",
-          "detalle": "Transferencia a Constanza Miranda",
-          "cargo": "10000",
-          "abono": "0",
-          "saldo": "45000"
-        },
-        {
-          "id": "15",
-          "fecha": "2023-07-10",
-          "destinatario": "Constanza Miranda",
-          "detalle": "Transferencia a Constanza Miranda",
-          "cargo": "10000",
-          "abono": "0",
-          "saldo": "45000"
-        },
-        {
-          "id": "16",
-          "fecha": "2023-06-15",
-          "destinatario": "Constanza Miranda",
-          "detalle": "Transferencia a Constanza Miranda",
-          "cargo": "10000",
-          "abono": "0",
-          "saldo": "45000"
+          "saldo": "1000000"
         }
       ]
     },
@@ -256,7 +228,7 @@
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
       "cupo": "2316000",
-      "cupoDisponible": "2692900",
+      "cupoDisponible": "2737700",
       "transacciones": [
         {
           "id": "0",
@@ -352,6 +324,14 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "100",
+          "saldo": "2316000"
+        },
+        {
+          "id": "12",
+          "fecha": "2024-04-01",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "44800",
           "saldo": "2316000"
         }
       ]

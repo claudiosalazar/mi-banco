@@ -1,3 +1,222 @@
 <div class="col-12 mt-4">
-  formulario transferencia
+
+  <div class="d-flex justify-content-md-between flex-column flex-md-row">
+    <div class="d-flex align-items-center mb-5">
+      <p class="mb-0 me-3">Buscar destinatario</p>
+      <form class="d-flex ml-5" role="search" >
+        <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios">
+      </form>
+    </div>
+  
+    <div>
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
+        Agregar nuevo destinatario
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <form [formGroup]="transferenciaATerceros">
+    <div>
+      <table class="table tabla-agenda" role="table">
+        <thead role="columnheader"ead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  Destinatario
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  Banco
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  Rut
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  Tipo de cuenta
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  N° de cuenta
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('email'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span>
+                  Email
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'email'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'email'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr *ngFor="let destinatario of paginatedDestinatarios" role="row">
+            <td role="cell">
+              <div class="form-check me-3">
+                <input class="form-check-input" type="radio" formControlName="destinatarioSeleccionado">
+                <span class="contenido-td">{{ destinatario.nombre }}</span>
+              </div>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.banco }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.rut| rut }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.email }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+
+      <div class="card p-4 mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <p class="m-0">Transferir a <strong>NOMBRE</strong></p>
+          <button class="btn btn-secondary" type="button">
+            Cambiar destinatario
+          </button>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Datos a transferir -->
+        <div class="row" *ngIf="ingresarDatos">
+          <div class="col-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir">
+              <label for="montoATransferir" class="form-label">Monto</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje"></textarea>
+              <label for="mensaje" class="form-label">Mensaje</label>
+            </div>
+            <div class="input-group form-floating mb-3">
+              <input type="text" class="form-control" id="emailDestinatario" formControlName="emailDestinatario">
+              <label for="emailDestinatario" class="form-label">Email</label>
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                <span class="material-symbols-outlined">
+                  close
+                </span>
+              </button>
+            </div>
+            <button class="btn btn-secondary" type="button">
+              Continuar
+            </button>
+          </div>
+          <div class="col-6">
+            <div class="alert alert-primary" role="alert">
+              <h5>Ingresa el monto a transferir</h5>
+              <p>
+                Los campos monto e email son obligatorios.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirmar datos -->
+        <div class="row mt-4" *ngIf="confirmarDatos">
+          <div class="col-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="montoATransferirOk" formControlName="montoATransferirOk">
+              <label for="montoATransferir" class="form-label">Monto</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea type="text" class="form-control" id="mensajeOk" formControlName="mensajeOk"></textarea>
+              <label for="mensaje" class="form-label">Mensaje</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="emailDestinatarioOk" formControlName="emailDestinatarioOk">
+              <label for="emailDestinatario" class="form-label">Email</label>
+            </div>
+            <button class="btn btn-secondary" type="button">
+              Modificar datos
+            </button>
+          </div>
+          <div class="col-6">
+            <div class="alert alert-primary" role="alert">
+              <h5>
+                Confirmar los datos de la transferencia.
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirmar datos -->
+        <div class="row mt-4" *ngIf="realizarTransferencia">
+          <div class="col-6">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="montoATransferirOk" formControlName="montoATransferirOk">
+              <label for="montoATransferir" class="form-label">Monto</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea type="text" class="form-control" id="mensajeOk" formControlName="mensajeOk"></textarea>
+              <label for="mensaje" class="form-label">Mensaje</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="emailDestinatarioOk" formControlName="emailDestinatarioOk">
+              <label for="emailDestinatario" class="form-label">Email</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="alert alert-primary" role="alert">
+              <h5>Datos confirmados</h5>
+              <p>
+                Se transferira el monto de <strong>$100.000</strong> a <strong>NOMBRE</strong> con el mensaje <strong>"Mensaje"</strong> al email <strong>Email</strong>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4">
+            <button class="btn btn-primary mx-auto" type="button">
+              Realizar transferencia
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
 </div>
