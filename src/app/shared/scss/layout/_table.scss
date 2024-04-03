@@ -1,8 +1,11 @@
 .table {
   width: 100%;
-  font-size: small;
+  --bs-table-bg: transparent;
   td {
     border-bottom: 1px solid #eee;
+  }
+  span, label {
+    font-size: small;
   }
 
   // Tablas de productos
@@ -65,8 +68,11 @@
     tbody {
       tr {
         padding: 15px;
-        &:nth-child(even) {
-          background-color: #f2f2f2; // Cambia esto al color que quieras
+        --bs-table-bg: transparent;
+        @media (max-width: $md) {
+          &:nth-child(even) {
+            background-color: #f2f2f2; // Cambia esto al color que quieras
+          }
         }
       }
       @media (max-width: $md) {
@@ -128,6 +134,53 @@
       }
       &.contenido-td-acciones {
         width: 100%;
+      }
+    }
+  }
+
+  // Tabla agenda transferencias
+  &.tabla-agenda-transferencias {
+    th {
+      cursor: pointer;
+    }
+    th, td {
+      &.ancho {
+        &:nth-child(1) {
+          width: 14.2%;
+        }
+        &:nth-child(2) {
+          width: 10.2%;
+        }
+        &:nth-child(3) {
+          width: 14.2%;
+        }
+        &:nth-child(4) {
+          width: 20%;
+        }
+        &:nth-child(5) {
+          width: 19%;
+        }
+        &:nth-child(6) {
+          width: 16%;
+        }
+      }
+    }
+  }
+  td {
+    span {
+      &.contenido-td {
+        margin-top: 6px;
+        @include ellipse;
+      }
+      &.contenido-td-acciones {
+        width: 100%;
+      }
+    }
+  }
+  tbody {
+    tr {
+      &.seleccionado {
+        background-color: $dorado-seleccionado;
       }
     }
   }

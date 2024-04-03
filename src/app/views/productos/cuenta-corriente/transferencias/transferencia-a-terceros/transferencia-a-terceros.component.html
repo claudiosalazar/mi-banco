@@ -18,7 +18,7 @@
   <!-- Tabla -->
   <form [formGroup]="transferenciaATerceros">
     <div>
-      <table class="table tabla-agenda" role="table">
+      <table class="table tabla-agenda-transferencias" role="table">
         <thead role="columnheader"ead role="rowgroup">
           <tr role="row">
             <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
@@ -84,37 +84,42 @@
           </tr>
         </thead>
         <tbody role="rowgroup">
-          <tr *ngFor="let destinatario of paginatedDestinatarios" role="row">
-            <td role="cell">
-              <div class="form-check me-3">
-                <input class="form-check-input" type="radio" formControlName="destinatarioSeleccionado">
-                <span class="contenido-td">{{ destinatario.nombre }}</span>
-              </div>
-            </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.banco }}</span>
-            </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.rut| rut }}</span>
-            </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
-            </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
-            </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.email }}</span>
-            </td>
-          </tr>
+          <ng-container *ngFor="let destinatario of paginatedDestinatarios">
+            <tr *ngIf="!pasosTransferencia || destinatario.id === destinatarioId" role="row" [class.seleccionado]="destinatario.id === destinatarioId">
+              <td role="cell" class="ps-1">
+                <span class="contenido-td ps-1">
+                  <div class="form-check me-3">
+                    <input class="form-check-input" type="radio" id="destinatarioATransferir" (click)="seleccionarDestinatario(destinatario.id)">
+                    <label for="destinatarioATransferir">{{ destinatario.nombre }}</label>
+                  </div>
+                </span>
+              </td>
+              <td role="cell">
+                <span class="contenido-td">{{ destinatario.banco }}</span>
+              </td>
+              <td role="cell">
+                <span class="contenido-td">{{ destinatario.rut| rut }}</span>
+              </td>
+              <td role="cell">
+                <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
+              </td>
+              <td role="cell">
+                <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
+              </td>
+              <td role="cell">
+                <span class="contenido-td">{{ destinatario.email }}</span>
+              </td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     
-      <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+      <app-paginador *ngIf="!pasosTransferencia" [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
 
-      <div class="card p-4 mt-3">
+      <div class="card p-4 mt-3" *ngIf="pasosTransferencia">
         <div class="d-flex justify-content-between align-items-center">
-          <p class="m-0">Transferir a <strong>NOMBRE</strong></p>
+          <p class="m-0" *ngIf="destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small></p>
+          <p class="m-0" *ngIf="!destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.nombre }}</strong></p>
           <button class="btn btn-secondary" type="button">
             Cambiar destinatario
           </button>

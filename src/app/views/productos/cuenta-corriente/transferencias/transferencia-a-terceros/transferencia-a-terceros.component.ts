@@ -73,13 +73,15 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   transferenciaATerceros: FormGroup = new FormGroup({});
 
   // Variables proceso de transferencia
+  pasosTransferencia = false;
   ingresarDatos = true;
-  confirmarDatos = true;
-  realizarTransferencia = true;
+  confirmarDatos = false;
+  realizarTransferencia = false;
+  destinatarioATransferir: any[] = [];
+  destinatarioATransferirSeleccionado: any;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
-    private cdr: ChangeDetectorRef,
     private cdRef: ChangeDetectorRef
   ) { }
 
@@ -102,30 +104,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
 
-    // Actualiza los destinatarios cuando se guarda un nuevo destinatario
-    this.agendaService.nuevoDestinatarioGuardado.subscribe(() => {
-      this.agendaService.getDestinatarios().subscribe(data => {
-        // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
-        this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
-        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-        this.cdRef.detectChanges();
-      });
-    });
-
-    // Actualiza los destinatarios cuando se elimina un destinatario
-    this.agendaService.destinatarioEliminado.subscribe(() => {
-      this.agendaService.getDestinatarios().subscribe(data => {
-        // Ordena los datos por nombre en orden ascendente antes de asignarlos a this.destinatarios
-        this.destinatarios = data.sort((a: { nombre: string; }, b: { nombre: any; }) => a.nombre.localeCompare(b.nombre));
-        this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-        this.cdRef.detectChanges();
-      });
-    });
-
-    this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
-      this.mostrarBackdropCustomOffcanvasEstado = valor;
-    });
-
     this.busquedaDestinatarios.valueChanges
     .pipe(
       switchMap(valorBusqueda => this.agendaService.filtrarDestinatarios(valorBusqueda))
@@ -135,6 +113,18 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.cdRef.detectChanges();
     });
+  }
+
+  seleccionarDestinatario(id: any): void {
+    this.destinatarioId = id;
+    this.pasosTransferencia = true;
+    this.mostrarPaginador = false;
+
+    // Encuentra el destinatario seleccionado en la lista de destinatarios
+    this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
+
+    // Imprime los datos del destinatario seleccionado en la consola
+    console.log(this.destinatarioATransferirSeleccionado);
   }
 
   ngAfterViewInit(_e: Event): void {
