@@ -182,6 +182,9 @@
       &.seleccionado {
         background-color: $dorado-seleccionado;
       }
+      &.oculto {
+        display: none;
+      }
     }
   }
 }

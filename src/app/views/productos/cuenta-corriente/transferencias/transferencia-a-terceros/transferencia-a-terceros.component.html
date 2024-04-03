@@ -15,6 +15,8 @@
     </div>
   </div>
 
+  
+
   <!-- Tabla -->
   <form [formGroup]="transferenciaATerceros">
     <div>
@@ -84,33 +86,32 @@
           </tr>
         </thead>
         <tbody role="rowgroup">
-          <ng-container *ngFor="let destinatario of paginatedDestinatarios">
-            <tr *ngIf="!pasosTransferencia || destinatario.id === destinatarioId" role="row" [class.seleccionado]="destinatario.id === destinatarioId">
-              <td role="cell" class="ps-1">
-                <span class="contenido-td ps-1">
-                  <div class="form-check me-3">
-                    <input class="form-check-input" type="radio" id="destinatarioATransferir" (click)="seleccionarDestinatario(destinatario.id)">
-                    <label for="destinatarioATransferir">{{ destinatario.nombre }}</label>
-                  </div>
-                </span>
-              </td>
-              <td role="cell">
-                <span class="contenido-td">{{ destinatario.banco }}</span>
-              </td>
-              <td role="cell">
-                <span class="contenido-td">{{ destinatario.rut| rut }}</span>
-              </td>
-              <td role="cell">
-                <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
-              </td>
-              <td role="cell">
-                <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
-              </td>
-              <td role="cell">
-                <span class="contenido-td">{{ destinatario.email }}</span>
-              </td>
-            </tr>
-          </ng-container>
+          <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" [class.seleccionado]="destinatario.id === selectedId" [class.oculto]="selectedId !== null && destinatario.id !== selectedId">
+            <td role="cell" class="ps-1">
+              <span class="contenido-td ps-1">
+                <div class="form-check me-3">
+                  <!-- Cuando haces clic en este elemento de entrada de radio, se llama a seleccionarDestinatario(destinatario.id), que establece destinatarioId en el id del destinatario seleccionado -->
+                  <input class="form-check-input" type="radio" id="destinatarioATransferir" (click)="seleccionarDestinatario(destinatario.id)" [disabled]="pasosTransferencia && destinatario.id === selectedId">
+                  <label for="destinatarioATransferir">{{ destinatario.nombre }}</label>
+                </div>
+              </span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.banco }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.rut| rut }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ destinatario.email }}</span>
+            </td>
+          </tr>
         </tbody>
       </table>
     
@@ -120,7 +121,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <p class="m-0" *ngIf="destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small></p>
           <p class="m-0" *ngIf="!destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.nombre }}</strong></p>
-          <button class="btn btn-secondary" type="button">
+          <button class="btn btn-secondary" type="button" (click)="cambiarDestinatario(); ordenarDatos('nombre');">
             Cambiar destinatario
           </button>
         </div>

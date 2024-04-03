@@ -21,7 +21,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
-  destinatarioId: string | undefined;
+  destinatarioId: string | null | undefined;
 
   destinatarios: any[] = [];
   paginatedDestinatarios: any[] = [];
@@ -79,6 +79,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   realizarTransferencia = false;
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
+  selectedId: any = null;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -87,6 +88,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.transferenciaATerceros = new FormGroup({
+      destinatarioATransferir: new FormControl({value: ''}),
       destinatarioSeleccionado: new FormControl({value: ''}),
       montoATransferir: new FormControl({value: ''}),
       mensaje: new FormControl({value: ''}),
@@ -117,44 +119,48 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   seleccionarDestinatario(id: any): void {
     this.destinatarioId = id;
+    this.selectedId = id;
     this.pasosTransferencia = true;
     this.mostrarPaginador = false;
-
+  
     // Encuentra el destinatario seleccionado en la lista de destinatarios
     this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
-
+  
     // Imprime los datos del destinatario seleccionado en la consola
     console.log(this.destinatarioATransferirSeleccionado);
   }
 
-  ngAfterViewInit(_e: Event): void {
-
-    // Elmina backdrop de offcanvas y modal
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const backdropModal = document.querySelector('.modal-backdrop.fade.show');
-          if (backdropModal && backdropModal.parentNode) {
-            backdropModal.parentNode.removeChild(backdropModal);
-            // console.log('El backdrop ha sido eliminado');
-          }
-        }
-      });
+  /* cambiarDestinatario(): void {
+    this.pasosTransferencia = false;
+    this.agendaService.getDestinatarios().subscribe(data => {
+      this.destinatarios = data;
+      this.ordenarDatos('nombre');
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+        selected: false
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.cdRef.detectChanges();
     });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
+    this.selectedId = null;
+    this.cdRef.detectChanges();
+  } */
 
-    this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
-      // Aquí puedes manejar los datos recibidos
-      this.datosCapturados = datos;
+  cambiarDestinatario(): void {
+    this.pasosTransferencia = false;
+    this.agendaService.getDestinatarios().subscribe(data => {
+      // Hacer una copia de los datos
+      this.destinatarios = [...data];
+      this.ordenarDatos('nombre');
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+        selected: false
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.cdRef.detectChanges();
     });
-
-    // Suscríbete a getDatosEditadosDestinatario
-    this.subscription = this.agendaService.getDatosEditadosDestinatario().subscribe(datos => {
-      // Aquí puedes manejar los datos recibidos
-      this.datosCapturados = datos;
-      console.log('Datos editados del destinatario:', this.datosCapturados);
-    });
+    this.selectedId = null;
+    this.cdRef.detectChanges();
   }
 
   datosDestinarioId(id: any): void {
@@ -183,13 +189,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.sortAscending = !this.sortAscending;
     } else {
       this.sortedColumn = column;
-      this.sortAscending = true;
+      this.sortAscending = column === 'nombre' ? true : false;
     }
     this.sortOrder = this.sortAscending ? 1 : -1;
     this.destinatarios?.sort((a: { [x: string]: any; }, b: { [x: string]: any; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
-    
+  
     this.destinatarios?.sort((a: { [x: string]: string; }, b: { [x: string]: string; }) => {
       return a[column].localeCompare(b[column]) * this.sortOrder;
     });
