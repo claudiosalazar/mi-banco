@@ -1,23 +1,76 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-transferencia-a-terceros',
-  templateUrl: './transferencia-a-terceros.component.html'
+  templateUrl: './transferencia-a-terceros.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      state('*', style({
+        opacity: 0.5
+      })),
+      transition('void <=> *', animate('0.2s'))
+    ])
+  ]
 })
 export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
-  @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
-  @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
+
+   // Array bancos
+   listaBancos = [
+    { value: '0', label: '-' },
+    { value: '1', label: 'Mi Banco' },
+    { value: '2', label: 'Banco de Chile' },
+    { value: '3', label: 'Banco Internacional' },
+    { value: '4', label: 'Scotiabank Chile' },
+    { value: '5', label: 'BCI' },
+    { value: '6', label: 'Corpbanca' },
+    { value: '7', label: 'Banco BICE' },
+    { value: '8', label: 'HSBC Bank' },
+    { value: '9', label: 'Banco Santander' },
+    { value: '10', label: 'Banco ITAÚ' },
+    { value: '11', label: 'Banco Security' },
+    { value: '12', label: 'Banco Falabella' },
+    { value: '13', label: 'Deutsche Bank' },
+    { value: '14', label: 'Banco Ripley' },
+    { value: '15', label: 'Rabobank Chile' },
+    { value: '16', label: 'Banco Consorcio' },
+    { value: '17', label: 'Banco Penta' },
+    { value: '18', label: 'Banco Paris' },
+    { value: '19', label: 'BBVA' },
+    { value: '20', label: 'Banco BTG Pactual Chile' },
+    { value: '21', label: 'Banco do Brasil S.A.' },
+    { value: '22', label: 'JP Morgan Cahse Bank, N. A.' },
+    { value: '23', label: 'Banco de La Nación Argentina' },
+    { value: '24', label: 'The Bank of Tokyo-Mitsubishi UFJ, LTD' },
+    { value: '25', label: 'BCI - Miami' },
+    { value: '26', label: 'Banco del Estado de Chile - Nueva York' },
+    { value: '27', label: 'Corpbanca - Nueva York' },
+    { value: '28', label: 'Banco del Estado de Chile' }
+  ];
+
+  // Array de tipos de cuenta
+  tiposCuenta = [
+    { value: '0', label: '-' },
+    { value: '1', label: 'Cuenta Corriente' },
+    { value: '2', label: 'Cuenta Vista' },
+    { value: '3', label: 'Cuenta de Ahorro', },
+    { value: '4', label: 'Cuenta Bancaria para estudiante' },
+    { value: '5', label: 'Cuenta Chequera Electrónica' },
+    { value: '6', label: 'Cuenta Bancaria para extranjeros' },
+  ];
 
   //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
@@ -80,10 +133,16 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
   selectedId: any = null;
+  tablaDestinatarios = true;
+  buscadorDestinatarios = true;
+
+
+  offcanvasRef: any;
 
   constructor(
-    private agendaService: AgendaDestinatariosService,
-    private cdRef: ChangeDetectorRef
+    public agendaService: AgendaDestinatariosService,
+    private cdRef: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -115,6 +174,44 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.cdRef.detectChanges();
     });
+
+  }
+
+  ngAfterViewInit(_e: Event): void {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          const backdropModal = document.querySelector('.modal-backdrop.fade.show');
+          if (backdropModal && backdropModal.parentNode) {
+            backdropModal.parentNode.removeChild(backdropModal);
+          }
+        }
+      });
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
+      this.datosCapturados = datos;
+      this.abrirModalNuevoDestinatario();
+    });
+
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.mostrarBackdropCustomModal = true;
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.mostrarBackdropCustomModal = false;
+      });
+      return modal;
+    });
+
+    // Suscripción a getDatosNuevoDestinatario
+    this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
+      this.datosNuevoDestinatario = datos;
+      console.log('Datos del nuevo destinatario capturados:', this.datosNuevoDestinatario);
+    });
   }
 
   seleccionarDestinatario(id: any): void {
@@ -122,29 +219,46 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.selectedId = id;
     this.pasosTransferencia = true;
     this.mostrarPaginador = false;
+    this.tablaDestinatarios = false;
+    this.buscadorDestinatarios = false;
   
     // Encuentra el destinatario seleccionado en la lista de destinatarios
     this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
   
+    // Si no se encontró un destinatario con el ID dado, selecciona el último destinatario
+    if (!this.destinatarioATransferirSeleccionado) {
+      this.destinatarioATransferirSeleccionado = this.destinatarios[this.destinatarios.length - 1];
+    }
+  
+    // Llama a getClassForDestinatario con el ID del destinatario seleccionado
+    this.getClassForDestinatario(this.destinatarioATransferirSeleccionado.id);
+  
     // Imprime los datos del destinatario seleccionado en la consola
-    console.log(this.destinatarioATransferirSeleccionado);
+    console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
   }
 
-  /* cambiarDestinatario(): void {
-    this.pasosTransferencia = false;
-    this.agendaService.getDestinatarios().subscribe(data => {
-      this.destinatarios = data;
-      this.ordenarDatos('nombre');
-      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
-        ...destinatario,
-        selected: false
-      }));
-      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-      this.cdRef.detectChanges();
-    });
-    this.selectedId = null;
-    this.cdRef.detectChanges();
-  } */
+  /* seleccionarDestinatario(destinatario: any): void {
+    this.destinatarioId = destinatario.id;
+    this.selectedId = destinatario.id;
+    this.pasosTransferencia = true;
+    this.mostrarPaginador = false;
+
+    // Guarda el destinatario seleccionado en 'destinatarioATransferirSeleccionado'
+    this.destinatarioATransferirSeleccionado = destinatario;
+
+    // Imprime los datos del destinatario seleccionado en la consola
+    console.log(this.destinatarioATransferirSeleccionado);
+  }*/
+
+  getClassForDestinatario(destinatarioId: number): string {
+    if (destinatarioId === this.selectedId) {
+      return 'seleccionado';
+    } else if (this.selectedId !== null && destinatarioId !== this.selectedId) {
+      return 'oculto';
+    } else {
+      return '';
+    }
+  }
 
   cambiarDestinatario(): void {
     this.pasosTransferencia = false;
@@ -160,6 +274,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
     this.selectedId = null;
+    this.tablaDestinatarios = true;
+    this.buscadorDestinatarios = true;
     this.cdRef.detectChanges();
   }
 
@@ -203,5 +319,81 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.datosOrdenados.emit();
   }
 
-    
+  // Logica para nuevo destinatario
+
+  abrirOffcanvas(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.mostrarBackdropCustomOffcanvasEstado = true;
+  }
+  
+  // Modal para nuevo destinatario
+  abrirModalNuevoDestinatario(): void {
+    var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
+    modalNuevoDestinatario.show();
+  
+    // Indica que se están enviando los datos
+    this.enviandoNuevoDestinatario = true;
+  
+   // Envía los datos al servicio
+    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(nuevoDestinatario => {
+
+      //this.offcanvasHidden = true;
+      // Espera al menos 2 segundos antes de indicar que los datos se han guardado correctamente
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.datosGuardadosNuevoDestinatario = true;
+      }, 2000);
+
+      // Ensure destinatarios is an array before pushing
+      if (!this.destinatarios) {
+        this.destinatarios = [];
+      }
+      this.destinatarios.push(nuevoDestinatario);
+
+      // Ordena los destinatarios por nombre en orden ascendente
+      this.destinatarios = this.destinatarios?.sort((a, b) => {
+        if (a.nombre && b.nombre) {
+          return a.nombre.localeCompare(b.nombre);
+        } else {
+          return 0;
+        }
+      });
+
+      // Forzar la actualización de los datos en la tabla
+      this.destinatarios = [...this.destinatarios];
+
+      // Forzar la detección de cambios
+      this.cdr.detectChanges();
+
+      this.agendaService.nuevoDestinatarioGuardado.next();
+    }, error => {
+      // Espera al menos 2 segundos antes de indicar que ha habido un error
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.errorServerNuevoDestinatario = true;
+      }, 2000);
+    });
+  }
+
+  // Nueva función para cerrar el modal y seleccionar el nuevo destinatario
+  cerrarYSeleccionarNuevoDestinatario(): void {
+    this.agendaService.getDestinatarios().subscribe(data => {
+      // Hacer una copia de los datos
+      this.destinatarios = [...data];
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      console.log('Tabla actualizada:', this.destinatarios);
+  
+      // Guarda el último destinatario en la variable 'destinatarioId'
+      this.destinatarioId = this.destinatarios[this.destinatarios.length - 1];
+  
+      // Activa la función 'seleccionarDestinatario' con el último destinatario
+      this.seleccionarDestinatario(this.destinatarioId);
+  
+      this.cdRef.detectChanges();
+    });
+  }
+
 }

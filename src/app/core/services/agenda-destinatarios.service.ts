@@ -23,6 +23,7 @@ export class AgendaDestinatariosService {
   nuevoDestinatarioGuardado = new Subject<void>();
   datosEditadosDestinatario = new Subject<any>();
   destinatarioEliminado = new Subject<any>();
+  nuevoDestinatarioId = new Subject<string>();
 
   constructor(
     private http: HttpClient
@@ -53,9 +54,11 @@ export class AgendaDestinatariosService {
       this.datosNuevoDestinatarioSource.next(datos);
     }
   }
+
   getDatosNuevoDestinatario(): Observable<any> {
     return this.datosNuevoDestinatarioSource.asObservable();
   }
+
   guardarNuevoDestinatario(datos: any): Observable<any> {
     return this.http.put(this.baseUrl, datos, {responseType: 'text'}).pipe(
       map((res: any) => {

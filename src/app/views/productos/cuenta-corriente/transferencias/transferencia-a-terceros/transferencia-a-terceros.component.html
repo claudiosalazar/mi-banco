@@ -1,6 +1,6 @@
 <div class="col-12 mt-4">
 
-  <div class="d-flex justify-content-md-between flex-column flex-md-row">
+  <div class="d-flex justify-content-md-between flex-column flex-md-row" *ngIf="buscadorDestinatarios">
     <div class="d-flex align-items-center mb-5">
       <p class="mb-0 me-3">Buscar destinatario</p>
       <form class="d-flex ml-5" role="search" >
@@ -9,7 +9,7 @@
     </div>
   
     <div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -20,7 +20,7 @@
   <!-- Tabla -->
   <form [formGroup]="transferenciaATerceros">
     <div>
-      <table class="table tabla-agenda-transferencias" role="table">
+      <table class="table tabla-agenda-transferencias" role="table" *ngIf="tablaDestinatarios">
         <thead role="columnheader"ead role="rowgroup">
           <tr role="row">
             <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
@@ -86,12 +86,13 @@
           </tr>
         </thead>
         <tbody role="rowgroup">
-          <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" [class.seleccionado]="destinatario.id === selectedId" [class.oculto]="selectedId !== null && destinatario.id !== selectedId">
+          <!-- <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" [class]="getClassForDestinatario(destinatario.id)"> -->
+          <tr role="row" *ngFor="let destinatario of paginatedDestinatarios">
             <td role="cell" class="ps-1">
               <span class="contenido-td ps-1">
                 <div class="form-check me-3">
                   <!-- Cuando haces clic en este elemento de entrada de radio, se llama a seleccionarDestinatario(destinatario.id), que establece destinatarioId en el id del destinatario seleccionado -->
-                  <input class="form-check-input" type="radio" id="destinatarioATransferir" (click)="seleccionarDestinatario(destinatario.id)" [disabled]="pasosTransferencia && destinatario.id === selectedId">
+                  <input class="form-check-input" type="radio" id="destinatarioATransferir" (change)="seleccionarDestinatario(destinatario.id)" [disabled]="pasosTransferencia && destinatario.id === selectedId">
                   <label for="destinatarioATransferir">{{ destinatario.nombre }}</label>
                 </div>
               </span>
@@ -119,8 +120,13 @@
 
       <div class="card p-4 mt-3" *ngIf="pasosTransferencia">
         <div class="d-flex justify-content-between align-items-center">
-          <p class="m-0" *ngIf="destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small></p>
-          <p class="m-0" *ngIf="!destinatarioATransferirSeleccionado?.apodo">Transferir a <strong>{{ destinatarioATransferirSeleccionado?.nombre }}</strong></p>
+          <div>
+            <p class="m-0" *ngIf="destinatarioATransferirSeleccionado?.apodo">La transferencia se realizara a: <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small></p>
+            <p class="m-0" *ngIf="!destinatarioATransferirSeleccionado?.apodo">La transferencia se realizara a: <strong>{{ destinatarioATransferirSeleccionado?.nombre }}</strong></p>
+            <p class="m-0">Rut: <strong>{{ destinatarioATransferirSeleccionado?.rut }}</strong></p>
+            <p class="m-0">Banco: <strong>{{ destinatarioATransferirSeleccionado?.banco }}</strong></p>
+            <p class="m-0">{{ destinatarioATransferirSeleccionado?.tipoCuenta }}: <strong>{{ destinatarioATransferirSeleccionado?.numeroCuenta }}</strong></p>
+          </div>
           <button class="btn btn-secondary" type="button" (click)="cambiarDestinatario(); ordenarDatos('nombre');">
             Cambiar destinatario
           </button>
@@ -226,3 +232,61 @@
     </div>
   </form>
 </div>
+
+
+<!-- Sidenav para crear nuevo destinatario -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
+  <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+</div>
+
+<!-- Modal nuevo destinatario -->
+<div class="modal fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5">
+
+        <div *ngIf="enviandoNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+              sync
+            </span>
+            <h4 class="mb-3 ms-3 text-starts">Se estan guardando los nuevos datos del nuevo destinatario.</h4>
+          </div>
+          <div class="w-100 text-center">
+            <span>Espera un momento por favor.</span>
+          </div>
+        </div>
+
+        <div *ngIf="datosGuardadosNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <h4 class="mb-3 text-starts">El nuevo destinatario se guardo con éxito.</h4>
+          </div>
+          <div class="w-100">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cerrarYSeleccionarNuevoDestinatario()">Cerrar</button>
+          </div>
+        </div>
+
+        <div *ngIf="errorServerNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al intentar guardar el nuevo destinatario.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div>
