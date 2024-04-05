@@ -190,12 +190,12 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     });
     
     observer.observe(document.body, { childList: true, subtree: true });
-
+  
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();
     });
-
+  
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
@@ -206,6 +206,19 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       });
       return modal;
     });
+  
+    // Agrega el modal 'modalCambiosDestinatario' a la lista de modales
+    const modalCambiosDestinatario = document.getElementById('modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      const modal = new bootstrap.Modal(modalCambiosDestinatario);
+      modalCambiosDestinatario.addEventListener('show.bs.modal', () => {
+        this.mostrarBackdropCustomModal = true;
+      });
+      modalCambiosDestinatario.addEventListener('hide.bs.modal', () => {
+        this.mostrarBackdropCustomModal = false;
+      });
+      this.modales.push(modal);
+    }
 
     // Suscripción a getDatosNuevoDestinatario
     this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
@@ -237,19 +250,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
   }
 
-  /* seleccionarDestinatario(destinatario: any): void {
-    this.destinatarioId = destinatario.id;
-    this.selectedId = destinatario.id;
-    this.pasosTransferencia = true;
-    this.mostrarPaginador = false;
-
-    // Guarda el destinatario seleccionado en 'destinatarioATransferirSeleccionado'
-    this.destinatarioATransferirSeleccionado = destinatario;
-
-    // Imprime los datos del destinatario seleccionado en la consola
-    console.log(this.destinatarioATransferirSeleccionado);
-  }*/
-
   getClassForDestinatario(destinatarioId: number): string {
     if (destinatarioId === this.selectedId) {
       return 'seleccionado';
@@ -277,6 +277,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.tablaDestinatarios = true;
     this.buscadorDestinatarios = true;
     this.cdRef.detectChanges();
+
+    // Cierra el modal y oculta el backdrop-custom
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      modalCambiosDestinatario.hide();
+    }
+    this.mostrarBackdropCustomModal = false;
   }
 
   datosDestinarioId(id: any): void {
@@ -375,8 +382,19 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     });
   }
 
+  // Advertencia cambio de destinatario
+  abrirModalCambioDestinatario(): void {
+    // Encuentra el modal 'modalCambiosDestinatario' en la lista de modales y lo muestra
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      modalCambiosDestinatario.show();
+    } else {
+      console.error('No se encontró el modal con ID "modalCambiosDestinatario". Asegúrate de que el ID del modal en el HTML coincide con el ID en el método "abrirModalCambioDestinatario".');
+    }
+  }
+
   // Nueva función para cerrar el modal y seleccionar el nuevo destinatario
-  cerrarYSeleccionarNuevoDestinatario(): void {
+  cambiarANuevoDestinatarios(): void {
     this.agendaService.getDestinatarios().subscribe(data => {
       // Hacer una copia de los datos
       this.destinatarios = [...data];

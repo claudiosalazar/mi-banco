@@ -127,7 +127,7 @@
             <p class="m-0">Banco: <strong>{{ destinatarioATransferirSeleccionado?.banco }}</strong></p>
             <p class="m-0">{{ destinatarioATransferirSeleccionado?.tipoCuenta }}: <strong>{{ destinatarioATransferirSeleccionado?.numeroCuenta }}</strong></p>
           </div>
-          <button class="btn btn-secondary" type="button" (click)="cambiarDestinatario(); ordenarDatos('nombre');">
+          <button class="btn btn-secondary" type="button" (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');">
             Cambiar destinatario
           </button>
         </div>
@@ -239,6 +239,28 @@
   <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
 </div>
 
+<!-- Modal cambios destinatario -->
+<div class="modal fade" id="modalCambiosDestinatario" tabindex="-1" aria-labelledby="modalCambiosDestinatario" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5">
+
+        <div>
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
+              warning
+            </span>
+            <h4 class="mb-3 text-starts">¿Estás seguro de que quieres cambiar el actual destinatario?</h4>
+          </div>
+          <div class="w-100">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarDestinatario()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal nuevo destinatario -->
 <div class="modal fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -265,7 +287,7 @@
             <h4 class="mb-3 text-starts">El nuevo destinatario se guardo con éxito.</h4>
           </div>
           <div class="w-100">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cerrarYSeleccionarNuevoDestinatario()">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarANuevoDestinatarios()">Cerrar</button>
           </div>
         </div>
 
