@@ -138,8 +138,18 @@
         <div class="row" *ngIf="ingresarDatos">
           <div class="col-6">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir">
+              <!-- <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (focus)="vaciarMontoATransferir()" (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()"> -->
+              <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()">
               <label for="montoATransferir" class="form-label">Monto</label>
+              <div *ngIf="error1" class="invalid-feedback">
+                <span>Debes ingresar un monto superior a 0.</span>
+              </div>
+              <div *ngIf="error2" class="invalid-feedback">
+                <span>El monto ingresado para el pago es superior al saldo.</span>
+              </div>
+              <div *ngIf="montoValido" class="valid-feedback">
+                <span>El monto es correcto.</span>
+              </div>
             </div>
             <div class="form-floating mb-3">
               <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje"></textarea>
@@ -147,8 +157,8 @@
             </div>
             <div class="input-group form-floating mb-3">
               <input type="text" class="form-control" id="emailDestinatario" formControlName="emailDestinatario">
-              <label for="emailDestinatario" class="form-label">Email</label>
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+              <label for="emailDestinatario" class="form-label emailTransferencia">Email</label>
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="vaciarEmailDestinatario()">
                 <span class="material-symbols-outlined">
                   close
                 </span>

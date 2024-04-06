@@ -1,9 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
+
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
-import { Subscription, of } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
-import { catchError, switchMap } from 'rxjs/operators';
+import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
+import { ProductosUsuario } from '../../../../../shared/models/productos-usuario.model';
+import { PesosPipe } from '../../../../../shared/pipes/pesos.pipe';
 
 declare var bootstrap: any;
 
@@ -94,7 +98,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   mostrarPaginador: boolean = true;
 
 
-
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
@@ -136,11 +139,23 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   tablaDestinatarios = true;
   buscadorDestinatarios = true;
 
-
   offcanvasRef: any;
+
+  // Variables para input monto
+  // Variables para saldos
+  error1: boolean = false;
+  error2: boolean = false;
+  montoValido: boolean = false;
+  cupoCtaCte: any;
+  montoATransferir: any;
+
+  productosUsuario: { productos: any[] } = { productos: [] };
+
+  private pesosPipe = new PesosPipe();
 
   constructor(
     public agendaService: AgendaDestinatariosService,
+    public productosUsuarioService: ProductosUsuarioService,
     private cdRef: ChangeDetectorRef,
     private cdr: ChangeDetectorRef
   ) { }
@@ -149,7 +164,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.transferenciaATerceros = new FormGroup({
       destinatarioATransferir: new FormControl({value: ''}),
       destinatarioSeleccionado: new FormControl({value: ''}),
-      montoATransferir: new FormControl({value: ''}),
+      montoATransferir: new FormControl('', [Validators.required]),
       mensaje: new FormControl({value: ''}),
       emailDestinatario: new FormControl({value: ''}),
       montoATransferirOk: new FormControl({value: ''}),
@@ -175,6 +190,23 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
 
+    // Aplica pipe pesos
+    this.transferenciaATerceros.controls['montoATransferir'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.transferenciaATerceros.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
+    });
+
+  }
+
+  // Captura datos de cuenta corriente
+  getDatosCuentaCorriente(_id: any): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(_id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
+        console.log('Cupo cuenta corriente:', this.cupoCtaCte);
+      }
+    );
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -225,9 +257,12 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.datosNuevoDestinatario = datos;
       console.log('Datos del nuevo destinatario capturados:', this.datosNuevoDestinatario);
     });
+
+    this.getDatosCuentaCorriente(0);
   }
 
   seleccionarDestinatario(id: any): void {
+    this.getDatosCuentaCorriente(0);
     this.destinatarioId = id;
     this.selectedId = id;
     this.pasosTransferencia = true;
@@ -248,6 +283,56 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   
     // Imprime los datos del destinatario seleccionado en la consola
     console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
+
+    // Actualiza los campos del formulario
+    this.transferenciaATerceros.patchValue({
+      montoATransferir: 'Ingresa el monto a transferir', // Vacía el campo 'montoATransferir'
+      mensaje: '', // Vacía el campo 'mensaje'
+      emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
+    });
+  }
+
+  vaciarMontoATransferir(): void {
+    this.transferenciaATerceros.patchValue({
+      montoATransferir: '', // Vacía el campo 'montoATransferir'
+    });
+    this.error1 = false;
+    this.error2 = false;
+    this.montoValido = false;
+  }
+
+  vaciarEmailDestinatario(): void {
+    this.transferenciaATerceros.patchValue({
+      emailDestinatario: '', // Vacía el campo 'emailDestinatario'
+    });
+  }
+
+  validaMontoATransferir(): void {
+    const controlMontoATransferir = this.transferenciaATerceros.get('montoATransferir');
+  
+    if (controlMontoATransferir) {
+      let montoATransferir = controlMontoATransferir.value; // Modificado
+  
+      // Convertir el valor del input a número
+      montoATransferir = montoATransferir.replace(/\$|\.| /g, '');
+      const numericInputMonto = Number(montoATransferir);
+  
+      // Validación 1
+      if (numericInputMonto === 0 || !numericInputMonto) {
+        this.error1 = true;
+        console.log('valor 0 o vacío');
+      } 
+      
+      else if (numericInputMonto <= this.cupoCtaCte) {
+        this.montoValido = true;
+        console.log('valido');
+      }
+      
+      else if (numericInputMonto > this.cupoCtaCte) {
+        this.error2 = true;
+        console.log('valor superior');
+      }
+    }
   }
 
   getClassForDestinatario(destinatarioId: number): string {
@@ -297,6 +382,15 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  // Solo permite ingresar números en los campos de texto
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
   
   // Anima icono de TH
@@ -373,7 +467,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdr.detectChanges();
 
       this.agendaService.nuevoDestinatarioGuardado.next();
-    }, error => {
+    }, _error => {
       // Espera al menos 2 segundos antes de indicar que ha habido un error
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;

@@ -117,6 +117,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
   providers: [
     DatosUsuarioService,
     DatosFiltradosService,
+    PesosPipe,
     RutPipe,
     CelularPipe,
     TelefonoFijoPipe

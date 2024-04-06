@@ -73,9 +73,7 @@
                   
                   <!-- Input otro monto -->
                   <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
-                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" 
-                    [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido"
-                    (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
+                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
                     <label for="inputOtroMonto">Ingrese un monto a pagar</label>
                     <div *ngIf="error1" class="invalid-feedback">
                       <span>Debes ingresar un monto superior a 0.</span>

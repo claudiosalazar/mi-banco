@@ -5,7 +5,7 @@
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
       "cupo": "1000000",
-      "cupoDisponible": "55000",
+      "cupoDisponible": "",
       "transacciones": [
         {
           "id": "0",
