@@ -150,7 +150,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   cupoCtaCte: any;
   montoATransferir: any;
 
-  formChanged = false;
+  continuarTransferencia = false;
 
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
@@ -263,6 +263,20 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       console.log('Datos del nuevo destinatario capturados:', this.datosNuevoDestinatario);
     });
 
+    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
+    if (controlMontoATransferir) {
+      controlMontoATransferir.valueChanges.subscribe(() => {
+        this.validaDatosTransferencia();
+      });
+    }
+
+    const controlEmailDestinatario = this.transferenciaATercerosForm.get('emailDestinatario');
+    if (controlEmailDestinatario) {
+      controlEmailDestinatario.valueChanges.subscribe(() => {
+        this.validaDatosTransferencia();
+      });
+    }
+
     this.getDatosCuentaCorriente(0);
   }
 
@@ -306,10 +320,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.montoValido = false;
   }
 
-  vaciarEmailDestinatario(): void {
-    this.transferenciaATercerosForm.patchValue({
-      emailDestinatario: '', // Vacía el campo 'emailDestinatario'
-    });
+  vaciarEmailDestinatario() {
+    this.transferenciaATercerosForm.controls['emailDestinatario'].setValue('');
+    this.inputValidoEmail = false; // Establece inputValidoEmail en false
+    this.validaEmail('emailDestinatario'); // Valida el email después de vaciarlo
+    this.validaDatosTransferencia(); // Verifica las condiciones después de vaciar el email
   }
 
   validaMontoATransferir(): void {
@@ -338,6 +353,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
         console.log('valor superior');
       }
     }
+    this.validaDatosTransferencia();
   }
 
   validaEmail(emailDestinatario: string) {
@@ -356,6 +372,28 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   
     this.inputValidoEmail = emailControl.valid;
   }
+
+  validaDatosTransferencia() {
+    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
+    const controlEmailDestinatario = this.transferenciaATercerosForm.get('emailDestinatario');
+  
+    if (!controlMontoATransferir || !controlEmailDestinatario) {
+      this.continuarTransferencia = false; // Deshabilita el botón si los controles no existen
+      return;
+    }
+  
+    const montoATransferir = Number(controlMontoATransferir.value);
+    const emailDestinatario = controlEmailDestinatario.value;
+  
+    // Habilita el botón si montoATransferir es válido y emailDestinatario es válido
+    if (this.montoValido && emailDestinatario !== '') {
+      this.continuarTransferencia = true; 
+    } else {
+      this.continuarTransferencia = false; // Deshabilita el botón en caso contrario
+    }
+  }
+
+  botonContinuar(){}
 
   getClassForDestinatario(destinatarioId: number): string {
     if (destinatarioId === this.selectedId) {
