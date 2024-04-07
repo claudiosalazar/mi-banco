@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
-import { ProductosUsuario } from '../../../../../shared/models/productos-usuario.model';
+import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
 import { PesosPipe } from '../../../../../shared/pipes/pesos.pipe';
 
 declare var bootstrap: any;
@@ -79,6 +79,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
   destinatarioId: string | null | undefined;
+  productosUsuario: { productos: any[] } = { productos: [] };
 
   destinatarios: any[] = [];
   paginatedDestinatarios: any[] = [];
@@ -149,13 +150,17 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   cupoCtaCte: any;
   montoATransferir: any;
 
-  productosUsuario: { productos: any[] } = { productos: [] };
+  formChanged = false;
+
+  inputErrorVacioEmail: any;
+  inputValidoEmail: any;
 
   private pesosPipe = new PesosPipe();
 
   constructor(
     public agendaService: AgendaDestinatariosService,
     public productosUsuarioService: ProductosUsuarioService,
+    public formatoEmailService: FormatoEmailService,
     private cdRef: ChangeDetectorRef,
     private cdr: ChangeDetectorRef
   ) { }
@@ -333,6 +338,23 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
         console.log('valor superior');
       }
     }
+  }
+
+  validaEmail(emailDestinatario: string) {
+    const emailControl = this.transferenciaATercerosForm.controls[emailDestinatario];
+    emailControl.markAsTouched();
+    emailControl.setValidators([Validators.required, Validators.email, this.formatoEmailService.formatoEmail]);
+    emailControl.updateValueAndValidity();
+  
+    if (emailControl.value.trim() === '') {
+      emailControl.setErrors({ 'required': true });
+    } else if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
+      emailControl.setErrors({ 'customEmail': true });
+    } else {
+      emailControl.setErrors(null);
+    }
+  
+    this.inputValidoEmail = emailControl.valid;
   }
 
   getClassForDestinatario(destinatarioId: number): string {
