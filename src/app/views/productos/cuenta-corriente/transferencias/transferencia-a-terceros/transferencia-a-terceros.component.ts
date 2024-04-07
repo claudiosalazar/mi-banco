@@ -126,7 +126,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
 
   busquedaDestinatarios = new FormControl('');
-  transferenciaATerceros: FormGroup = new FormGroup({});
+  transferenciaATercerosForm: FormGroup = new FormGroup({});
 
   // Variables proceso de transferencia
   pasosTransferencia = false;
@@ -161,7 +161,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit(): void {
-    this.transferenciaATerceros = new FormGroup({
+    this.transferenciaATercerosForm = new FormGroup({
       destinatarioATransferir: new FormControl({value: ''}),
       destinatarioSeleccionado: new FormControl({value: ''}),
       montoATransferir: new FormControl('', [Validators.required]),
@@ -191,9 +191,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     });
 
     // Aplica pipe pesos
-    this.transferenciaATerceros.controls['montoATransferir'].valueChanges.subscribe((value) => {
+    this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
-      this.transferenciaATerceros.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
+      this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
     });
 
   }
@@ -285,7 +285,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
 
     // Actualiza los campos del formulario
-    this.transferenciaATerceros.patchValue({
+    this.transferenciaATercerosForm.patchValue({
       montoATransferir: 'Ingresa el monto a transferir', // Vacía el campo 'montoATransferir'
       mensaje: '', // Vacía el campo 'mensaje'
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
@@ -293,7 +293,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   vaciarMontoATransferir(): void {
-    this.transferenciaATerceros.patchValue({
+    this.transferenciaATercerosForm.patchValue({
       montoATransferir: '', // Vacía el campo 'montoATransferir'
     });
     this.error1 = false;
@@ -302,13 +302,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   vaciarEmailDestinatario(): void {
-    this.transferenciaATerceros.patchValue({
+    this.transferenciaATercerosForm.patchValue({
       emailDestinatario: '', // Vacía el campo 'emailDestinatario'
     });
   }
 
   validaMontoATransferir(): void {
-    const controlMontoATransferir = this.transferenciaATerceros.get('montoATransferir');
+    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
   
     if (controlMontoATransferir) {
       let montoATransferir = controlMontoATransferir.value; // Modificado
