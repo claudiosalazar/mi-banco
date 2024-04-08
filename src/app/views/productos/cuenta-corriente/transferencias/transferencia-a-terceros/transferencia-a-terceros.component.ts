@@ -150,6 +150,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   cupoCtaCte: any;
   montoATransferir: any;
 
+  emailInicialmenteValido = false;
+
   continuarTransferencia = false;
 
   inputErrorVacioEmail: any;
@@ -200,6 +202,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
     });
+
+    
 
   }
 
@@ -371,6 +375,14 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     }
   
     this.inputValidoEmail = emailControl.valid;
+  
+    if (this.inputValidoEmail) {
+      this.inputValidoEmail = true;
+      this.validaDatosTransferencia(); // Solo llama a validaDatosTransferencia si inputValidoEmail es true
+    } else {
+      this.inputValidoEmail = false;
+      this.continuarTransferencia = false; // Establece continuarTransferencia en false si inputValidoEmail es false
+    }
   }
 
   validaDatosTransferencia() {
@@ -385,13 +397,33 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     const montoATransferir = Number(controlMontoATransferir.value);
     const emailDestinatario = controlEmailDestinatario.value;
   
-    // Habilita el botón si montoATransferir es válido y emailDestinatario es válido
+    // Habilita el botón si montoATransferir es válido y emailDestinatario no está vacío
     if (this.montoValido && emailDestinatario !== '') {
       this.continuarTransferencia = true; 
     } else {
       this.continuarTransferencia = false; // Deshabilita el botón en caso contrario
     }
   }
+
+  /*validaDatosTransferencia() {
+    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
+    const controlEmailDestinatario = this.transferenciaATercerosForm.get('emailDestinatario');
+  
+    if (!controlMontoATransferir || !controlEmailDestinatario) {
+      this.continuarTransferencia = false; // Deshabilita el botón si los controles no existen
+      return;
+    }
+  
+    const montoATransferir = Number(controlMontoATransferir.value);
+    const emailDestinatario = controlEmailDestinatario.value;
+  
+    // Habilita el botón si montoATransferir es válido y emailDestinatario es válido
+    if (this.montoValido && this.inputValidoEmail) {
+      this.continuarTransferencia = true; 
+    } else {
+      this.continuarTransferencia = false; // Deshabilita el botón en caso contrario
+    }
+  }*/
 
   botonContinuar(){}
 
