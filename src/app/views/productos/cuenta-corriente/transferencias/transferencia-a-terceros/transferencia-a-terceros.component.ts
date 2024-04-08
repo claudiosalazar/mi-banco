@@ -405,27 +405,15 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     }
   }
 
-  /*validaDatosTransferencia() {
-    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
-    const controlEmailDestinatario = this.transferenciaATercerosForm.get('emailDestinatario');
-  
-    if (!controlMontoATransferir || !controlEmailDestinatario) {
-      this.continuarTransferencia = false; // Deshabilita el botón si los controles no existen
-      return;
-    }
-  
-    const montoATransferir = Number(controlMontoATransferir.value);
-    const emailDestinatario = controlEmailDestinatario.value;
-  
-    // Habilita el botón si montoATransferir es válido y emailDestinatario es válido
-    if (this.montoValido && this.inputValidoEmail) {
-      this.continuarTransferencia = true; 
-    } else {
-      this.continuarTransferencia = false; // Deshabilita el botón en caso contrario
-    }
-  }*/
+  botonContinuar(){
+    this.ingresarDatos = false;
+    this.confirmarDatos = true;
+  }
 
-  botonContinuar(){}
+  botonValidaDatosTransferencia(){
+    this.ingresarDatos = true;
+    this.confirmarDatos = false;
+  }
 
   getClassForDestinatario(destinatarioId: number): string {
     if (destinatarioId === this.selectedId) {
