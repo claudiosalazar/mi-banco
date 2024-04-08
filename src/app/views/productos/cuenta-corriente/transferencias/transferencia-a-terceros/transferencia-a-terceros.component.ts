@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
@@ -86,6 +87,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   private subscription: Subscription | undefined;
 
+  private pesosPipe = new PesosPipe();
+
   // Variables para ordenar datos de tabla
   sortOrder = 1;
   sortedColumn = '';
@@ -133,7 +136,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   pasosTransferencia = false;
   ingresarDatos = true;
   confirmarDatos = false;
-  realizarTransferencia = false;
+  //realizarTransferencia = false;
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
   selectedId: any = null;
@@ -157,7 +160,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
 
-  private pesosPipe = new PesosPipe();
+  transferenciaOk: boolean = true;
+  tranferenciaError: boolean = false;
+
+  datosTransferencia: any;
 
   constructor(
     public agendaService: AgendaDestinatariosService,
@@ -261,6 +267,18 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.modales.push(modal);
     }
 
+    const modalTransferencia = document.getElementById('modalTransferencia');
+    if (modalTransferencia) {
+      const modal = new bootstrap.Modal(modalTransferencia);
+      modalTransferencia.addEventListener('show.bs.modal', () => {
+        this.mostrarBackdropCustomModal = true;
+      });
+      modalTransferencia.addEventListener('hide.bs.modal', () => {
+        this.mostrarBackdropCustomModal = false;
+      });
+      this.modales.push(modal);
+    }
+
     // Suscripción a getDatosNuevoDestinatario
     this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosNuevoDestinatario = datos;
@@ -305,7 +323,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.getClassForDestinatario(this.destinatarioATransferirSeleccionado.id);
   
     // Imprime los datos del destinatario seleccionado en la consola
-    console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
+    // console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
 
     // Actualiza los campos del formulario
     this.transferenciaATercerosForm.patchValue({
@@ -586,6 +604,47 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   
       this.cdRef.detectChanges();
     });
+  }
+
+  abrirModalTransferencia(): void {
+    const modalTransferencia = this.modales.find(modal => modal._element.id === 'modalTransferencia');
+    if (modalTransferencia) {
+      modalTransferencia.show();
+      this.realizarTransferencia();
+    }
+  }
+
+  // Realiza la transferencia
+  realizarTransferencia(): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fechaActual = new Date();
+    const fechaFormateada = datePipe.transform(fechaActual, 'yyyy-MM-dd');
+  
+    let montoATransferir = this.transferenciaATercerosForm.get('montoATransferir')?.value;
+    montoATransferir = montoATransferir.replace(/\D/g, '');
+  
+    const destinatarioSeleccionado = this.destinatarioATransferirSeleccionado;
+    if (destinatarioSeleccionado) {
+      const producto = this.productosUsuario.productos.find(producto => Number(producto.id) === 0);
+      if (producto) {  
+        const nuevaTransferencia = {
+          id: producto.transacciones.length.toString(),
+          fecha: fechaFormateada,
+          destinatario: destinatarioSeleccionado.nombre,
+          detalle: `Transferencia a ${destinatarioSeleccionado.nombre}`,
+          cargo: montoATransferir,
+          abono: "",
+          saldo: ""
+        };
+  
+        producto.transacciones.push(nuevaTransferencia);
+  
+        const datosPago = nuevaTransferencia;
+  
+        
+      }
+    }
+    return of(null);
   }
 
 }

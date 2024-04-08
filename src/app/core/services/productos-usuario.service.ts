@@ -21,7 +21,7 @@ export class ProductosUsuarioService {
   nuevosDatos: any;
   nuevosDatosPago: any;
   datos: any;
-  datosPago: any;
+  datosTransaccion: any;
   datosPagoActualizados: any;
   datosPagoCalculos: any;
   
@@ -246,10 +246,10 @@ export class ProductosUsuarioService {
 
   
   // Captura datos de pago visa
-  getDatosPagoVisa(datosPago: any): Observable<any> {
+  getDatosPagoVisa(datosTransaccion: any): Observable<any> {
     // Verifica si datosPago tiene datos
-    if (datosPago) {
-      const datosPagoJson = JSON.parse(datosPago);
+    if (datosTransaccion) {
+      const datosPagoJson = JSON.parse(datosTransaccion);
       this.datosPagoVisa.next(datosPagoJson);
       this.calculosMontosPago(datosPagoJson);
     }
