@@ -29,10 +29,10 @@
               </span>
             </div>
           </th>
-          <th role="columnheader" (click)="ordenarDatos('detalle'); onHeaderClick()">
+          <th role="columnheader" (click)="ordenarDatos('mensaje'); onHeaderClick()">
             <div class="d-flex">
-              Detalle
-              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'detalle'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'detalle'">
+              Mensaje
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'mensaje'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'mensaje'">
                 expand_more
               </span>
             </div>
@@ -59,7 +59,7 @@
         <tr *ngFor="let transaccion of paginatedTransacciones" role="row">
           <td role="cell">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
           <td role="cell">{{ transaccion.destinatario }}</td>
-          <td role="cell">{{ transaccion.detalle }}</td>
+          <td role="cell">{{ transaccion.mensaje }}</td>
           <td role="cell">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</td>
           <td role="cell">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</td>
         </tr>

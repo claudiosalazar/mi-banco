@@ -680,8 +680,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
         productoCtaCte.transacciones.push({
           id: nuevoIdTransaccion.toString(),
-          fecha: fechaFormateada, // Usar la fecha formateada
+          fecha: fechaFormateada,
+          destinatario: this.nombreDestinatario,
           detalle: `Transferencia a ${this.nombreDestinatario}`,
+          mensaje: this.transferenciaATercerosForm.get('mensaje')?.value,
           cargo: montoTransferido,
           abono: '',
           saldo: '' // Reemplaza con el valor real
