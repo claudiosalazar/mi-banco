@@ -280,7 +280,7 @@ export class ProductosUsuarioService {
     // Verifica si datosTransaccion tiene datos
     if (datosTransaccion) {
       const datosTransaccionJson = JSON.parse(datosTransaccion);
-      console.log('Datos de Transferencia:', datosTransaccionJson); // Agrega esta línea
+      console.log('Datos de Transferencia:', datosTransaccionJson);
       this.datosTransferencia.next(datosTransaccionJson);
       this.calculosMontosTransaccion(datosTransaccionJson);
     }

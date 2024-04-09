@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "995000",
+      "cupo": "967500",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -136,9 +136,113 @@
           "id": "14",
           "fecha": "2024-04-08",
           "detalle": "Transferencia a Ariana Gomez",
-          "cargo": "995000",
+          "cargo": "5000",
           "abono": "",
-          "saldo": "5000"
+          "saldo": "995000"
+        },
+        {
+          "id": "15",
+          "fecha": "2024-04-08",
+          "detalle": "Transferencia a Boric Presi",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "994000"
+        },
+        {
+          "id": "16",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "5000",
+          "abono": "",
+          "saldo": "989000"
+        },
+        {
+          "id": "17",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "5000",
+          "abono": "",
+          "saldo": "984000"
+        },
+        {
+          "id": "18",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "983000"
+        },
+        {
+          "id": "19",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "982500"
+        },
+        {
+          "id": "20",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "981500"
+        },
+        {
+          "id": "21",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "981000"
+        },
+        {
+          "id": "22",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "980000"
+        },
+        {
+          "id": "23",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "10000",
+          "abono": "",
+          "saldo": "970000"
+        },
+        {
+          "id": "24",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Eduardo Flores",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "969500"
+        },
+        {
+          "id": "25",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Victorino Arriagada",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "968500"
+        },
+        {
+          "id": "26",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "968000"
+        },
+        {
+          "id": "27",
+          "fecha": "2024-04-09",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "967500"
         }
       ]
     },

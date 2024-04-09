@@ -49,7 +49,7 @@ export class UrlBrowserService {
 
   // Transferencia
   navegarAComprobanteTransferencia(): void {
-    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'transferencias', 'transferencia-a-terceros', 'comprobante-transferencia']);
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'comprobante-transferencia']);
   }
   
 }

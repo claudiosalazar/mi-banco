@@ -260,8 +260,11 @@
             </span>
             <h4 class="mb-3 text-starts">¿Estás seguro de que quieres cambiar el actual destinatario?</h4>
           </div>
-          <div class="w-100">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarDestinatario()">Cerrar</button>
+          <div class="mx-auto">
+            <div class="d-flex flex-column flex-md-row">
+              <button type="button" class="btn btn-secondary mx-auto" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarDestinatario()">Cambiar destinatario</button>
+            </div>
           </div>
         </div>
       </div>
@@ -270,7 +273,7 @@
 </div>
 
 <!-- Modal nuevo destinatario -->
-<div class="modal fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+<div class="modal fade" id="modalNuevoDestinatario" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
@@ -319,10 +322,11 @@
 </div>
 
 <!-- Modal transferencia -->
-<div class="modal fade" id="modalTransferencia" tabindex="-1" aria-labelledby="modalTransferencia" aria-hidden="true">
+<div class="modal fade" id="modalTransferencia" aria-labelledby="modalTransferencia" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body p-5">
+
         <div *ngIf="transferenciaOk" class="text-center">
           <div class="d-flex">
             <span class="icono material-symbols-outlined mensajes cargando ms-2">
@@ -344,7 +348,7 @@
           </div>
           <p>Intentalo más tarde.</p>
           <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="resetearFormulario()">Cerrar</button>
           </div>
         </div>
 

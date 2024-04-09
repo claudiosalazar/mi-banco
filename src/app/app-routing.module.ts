@@ -45,11 +45,7 @@ const routes: Routes = [
               { path: 'transferencias', component: TransferenciasComponent,
                 children: [
                   { path: '', pathMatch: 'full', redirectTo: 'transferencia-a-terceros'},
-                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent,
-                    children: [
-                      { path: 'comprobante-transferencia', component: ComprobanteTransferenciaComponent},
-                    ],
-                  },
+                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent},
                   { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent},
                   { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent},
                   { path: 'agregar-destinatario', component: AgregarDestinatarioComponent},
@@ -59,6 +55,7 @@ const routes: Routes = [
               { path: 'cartola-historica', component: CartolaHistoricaComponent },
             ]
           },
+          { path: 'cuenta-corriente/comprobante-transferencia', component: ComprobanteTransferenciaComponent},
           { path: 'linea-credito', component: LineaCreditoComponent },
           { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
           { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },

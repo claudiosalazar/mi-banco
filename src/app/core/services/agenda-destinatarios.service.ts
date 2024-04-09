@@ -25,6 +25,8 @@ export class AgendaDestinatariosService {
   destinatarioEliminado = new Subject<any>();
   nuevoDestinatarioId = new Subject<string>();
 
+  ultimoIdDestinatario: any;
+
   constructor(
     private http: HttpClient
   ) { }
@@ -39,6 +41,8 @@ export class AgendaDestinatariosService {
 
   // Obtiene los datos del destinatario seleccionado
   getDestinatarioPorId(id: any): Observable<Destinatario> {
+    console.log('ID del destinatario:', id);
+    this.ultimoIdDestinatario = id; // Almacena el último ID capturado
     return this.getDestinatarios().pipe(
       map(destinatarios => destinatarios.find((destinatario: { id: any; }) => destinatario.id === id)),
       catchError(error => {
@@ -46,6 +50,10 @@ export class AgendaDestinatariosService {
         return throwError(error);
       })
     );
+  }
+
+  getUltimoIdDestinatario(): any {
+    return this.ultimoIdDestinatario;
   }
 
   // Guarda nuevo destinatario

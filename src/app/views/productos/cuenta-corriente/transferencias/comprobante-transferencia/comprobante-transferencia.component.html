@@ -1,3 +1,37 @@
-<div class="col-12 mt-4">
-  comprobante
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="mt-5">
+        <div class="card text-center p-5">
+          <h1 class="mb-5">La tranferencia se realizo con exito</h1>
+          <p class="mb-4">
+            Se transfirio un monto de  <strong>{{ cargo | pesos }}</strong> a <strong>{{ nombreDestinatario }}</strong>.
+          </p>
+          <p>Enviamos el comprobante de pago a email <strong>{{ emailDestinatario }}</strong> de {{ nombreDestinatario }}, y tambien a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
+          <br>
+
+          <!-- Botones -->
+          <div class="col-12 px-3">
+            <div class="row d-flex justify-content-md-center flex-md-row">
+              <a class="btn btn-primary col-12 col-md me-md-3 mb-3 mb-md-0">
+                <span class="material-symbols-outlined">
+                  picture_as_pdf
+                </span>
+                <span class="ms-2">
+                  Descargo comprobante
+                </span>
+              </a>
+              <a class="btn btn-secondary col-12 col-md" routerLink="/mibanco/">
+                <span class="material-symbols-outlined">
+                  chevron_left
+                </span>
+                <span class="ms-2">
+                  Volver
+                </span>
+              </a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -31,6 +31,7 @@ declare var bootstrap: any;
 export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  @ViewChild('modalTransferencia') modalTransferencia: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
@@ -168,6 +169,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   
   nombreDestinatario: any;
 
+  modalTransferenciaInstance: any;
+
+
   constructor(
     public agendaService: AgendaDestinatariosService,
     public productosUsuarioService: ProductosUsuarioService,
@@ -275,14 +279,14 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
     const modalTransferencia = document.getElementById('modalTransferencia');
     if (modalTransferencia) {
-      const modal = new bootstrap.Modal(modalTransferencia);
+      this.modalTransferenciaInstance = new bootstrap.Modal(modalTransferencia);
       modalTransferencia.addEventListener('show.bs.modal', () => {
         this.mostrarBackdropCustomModal = true;
       });
       modalTransferencia.addEventListener('hide.bs.modal', () => {
         this.mostrarBackdropCustomModal = false;
       });
-      this.modales.push(modal);
+      this.modales.push(this.modalTransferenciaInstance);
     }
 
     // Suscripción a getDatosNuevoDestinatario
@@ -587,13 +591,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   // Advertencia cambio de destinatario
   abrirModalCambioDestinatario(): void {
-    // Encuentra el modal 'modalCambiosDestinatario' en la lista de modales y lo muestra
-    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
-    if (modalCambiosDestinatario) {
-      modalCambiosDestinatario.show();
-    } else {
-      console.error('No se encontró el modal con ID "modalCambiosDestinatario". Asegúrate de que el ID del modal en el HTML coincide con el ID en el método "abrirModalCambioDestinatario".');
-    }
+    var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
+    modalCambiosDestinatario.show();
   }
 
   // Nueva función para cerrar el modal y seleccionar el nuevo destinatario
@@ -624,12 +623,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     // Resta montoATransferir a cupoCtaCte
     this.cupoCtaCte -= montoATransferir;
   
-    // Guarda el resultado en montoATransferir
-    montoATransferir = this.cupoCtaCte;
-  
-    // Convertir 'montoATransferir' a un string
     const montoATransferirString = montoATransferir.toString();
-
     return {
       montoTransferido: montoATransferirString,
       cupoCtaCte: this.cupoCtaCte,
@@ -638,6 +632,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
   
   realizarTransferencia(): Observable<any> {
+
+    // Obtén los datos del destinatario
+    this.agendaService.getDestinatarioPorId(this.destinatarioId).subscribe(destinatario => {
+      // Utiliza el método setDestinatario de AgendaDestinatariosService para guardar los datos
+      // console.log('Destinatario:', destinatario);
+      this.agendaService.getDestinatarios();
+    });
   
     // Llama al metodo calculo y obtiene los valores
     const result = this.calculoTransferencia();
@@ -687,26 +688,54 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
         });
 
         // Imprimir la estructura de datos enviadas en la consola
-        //console.log('Datos que se van a enviar:', JSON.stringify(datosTransferencia));
+        console.log('Datos de transferencia desde componente:', datosTransferencia);
         return JSON.stringify(datosTransferencia);
       }),
       catchError(error => {
         console.error('Ha ocurrido un error:', error);
+        // Establecer tranferenciaError a true para mostrar el div de error
+        this.transferenciaOk = false;
+        this.tranferenciaError = true;
         return throwError(error);
       })
     );
   }
 
-
-
   abrirModalTransferencia(): void {
-    const modalTransferencia = this.modales.find(modal => modal._element.id === 'modalTransferencia');
-    if (modalTransferencia) {
-      modalTransferencia.show();
-      this.realizarTransferencia().subscribe(datosTransferencia => {
-        this.productosUsuarioService.getDatosTransferencia(datosTransferencia);
-      });
-    }
+    var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
+    modalTransferencia.show();
+    this.realizarTransferencia().subscribe(datosTransferencia => {
+      this.productosUsuarioService.getDatosTransferencia(datosTransferencia);
+    });
   }
 
+  resetearFormulario(): void {
+    // Restablecer todas las variables a sus valores iniciales
+    this.pasosTransferencia = false;
+    this.agendaService.getDestinatarios().subscribe(data => {
+      // Hacer una copia de los datos
+      this.destinatarios = [...data];
+      this.destinatarios.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+        selected: false
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.cdRef.detectChanges();
+    });
+    this.selectedId = null;
+    this.tablaDestinatarios = true;
+    this.buscadorDestinatarios = true;
+    this.cdRef.detectChanges();
+
+    // Restablecer el formulario
+    this.transferenciaATercerosForm.reset({
+      montoATransferir: 'Ingresa el monto a transferir',
+      mensaje: '',
+      emailDestinatario: ''
+    });
+
+    this.cdr.detectChanges();
+
+  }
 }
