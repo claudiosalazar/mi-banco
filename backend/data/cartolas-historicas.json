@@ -1,0 +1,72 @@
+[
+  {
+    "id": "0",
+    "numeroCartola": "01",
+    "fechaEmision": "2023-03-01"
+  },
+  {
+    "id": "1",
+    "numeroCartola": "02",
+    "fechaEmision": "2023-04-01"
+  },
+  {
+    "id": "2",
+    "numeroCartola": "03",
+    "fechaEmision": "2023-05-01"
+  },
+  {
+    "id": "3",
+    "numeroCartola": "04",
+    "fechaEmision": "2023-06-01"
+  },
+  {
+    "id": "4",
+    "numeroCartola": "05",
+    "fechaEmision": "2023-07-01"
+  },
+  {
+    "id": "5",
+    "numeroCartola": "06",
+    "fechaEmision": "2023-08-01"
+  },
+  {
+    "id": "6",
+    "numeroCartola": "07",
+    "fechaEmision": "2023-09-01"
+  },
+  {
+    "id": "7",
+    "numeroCartola": "08",
+    "fechaEmision": "2023-10-01"
+  },
+  {
+    "id": "8",
+    "numeroCartola": "09",
+    "fechaEmision": "2023-11-01"
+  },
+  {
+    "id": "9",
+    "numeroCartola": "10",
+    "fechaEmision": "2023-12-01"
+  },
+  {
+    "id": "10",
+    "numeroCartola": "11",
+    "fechaEmision": "2024-01-01"
+  },
+  {
+    "id": "11",
+    "numeroCartola": "12",
+    "fechaEmision": "2024-02-01"
+  },
+  {
+    "id": "12",
+    "numeroCartola": "13",
+    "fechaEmision": "2024-03-01"
+  },
+  {
+    "id": "13",
+    "numeroCartola": "14",
+    "fechaEmision": "2024-04-01"
+  }
+]

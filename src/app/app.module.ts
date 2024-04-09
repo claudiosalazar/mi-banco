@@ -17,6 +17,7 @@ import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
 // Services
 import { DatosUsuarioService } from './core/services/datos-usuario.service';
 import { DatosFiltradosService } from './core/services/productos-usuario.service';
+import { CartolasHistoricasService } from './core/services/cartolas-historicas.service';
 
 // Componentes compartidos
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -63,6 +64,7 @@ import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-c
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
+
 
 
 @NgModule({
@@ -117,6 +119,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
   providers: [
     DatosUsuarioService,
     DatosFiltradosService,
+    CartolasHistoricasService,
     PesosPipe,
     RutPipe,
     CelularPipe,

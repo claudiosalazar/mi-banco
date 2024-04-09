@@ -50,6 +50,13 @@ app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
   res.send(JSON.parse(fileData));
 });
 
+// Datos cartolas
+app.get('/backend/data/cartolas-historicas.json', (_req, res) => {
+  const filePath = path.join(__dirname, 'data', 'cartolas-historicas.json');
+  const fileData = fs.readFileSync(filePath);
+  res.send(JSON.parse(fileData));
+});
+
 // Datos productos
 app.get('/backend/data/productos-usuario.json', (req, res) => {
   const id = Number(req.query.id);
