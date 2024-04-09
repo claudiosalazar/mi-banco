@@ -46,5 +46,10 @@ export class UrlBrowserService {
   navegarAComprobanteSeguro(): void {
     this.router.navigate(['/mibanco', 'productos', 'seguros', 'comprobante']);
   }
+
+  // Transferencia
+  navegarAComprobanteTransferencia(): void {
+    this.router.navigate(['/mibanco', 'productos', 'cuenta-corriente', 'transferencias', 'transferencia-a-terceros', 'comprobante-transferencia']);
+  }
   
 }

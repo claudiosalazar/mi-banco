@@ -68,7 +68,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
   montoPreAprobadoSeguroAuto: any
-  datosPago: any;
+  datosTransaccion: any;
 
   // Variables para modal
   pagoCorrecto: boolean = true;
@@ -376,8 +376,8 @@ export class LineaCreditoPagoComponent implements OnInit {
       });
       modal.show();
   
-      this.datosPagoLineaCredito().subscribe((datosPago: any) => {
-        this.productosUsuarioService.getDatosPagoLineaCredito(datosPago);
+      this.datosPagoLineaCredito().subscribe((datosTransaccion: any) => {
+        this.productosUsuarioService.getDatosPagoLineaCredito(datosTransaccion);
         this.pagoCorrecto = true;
         setTimeout(() => {
           modal.hide();
@@ -435,10 +435,10 @@ export class LineaCreditoPagoComponent implements OnInit {
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
     return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
       // Los datos del archivo están en 'res'
-      const datosPago = res;
-      const productoCtaCte = datosPago.productos.find((productos: { id: string; }) => productos.id === '0');
-      const productoLineaCredito = datosPago.productos.find((productos: { id: string; }) => productos.id === '1');
-      const productoVisa = datosPago.productos.find((productos: { id: string; }) => productos.id === '2');
+      const datosTransaccion = res;
+      const productoCtaCte = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '0');
+      const productoLineaCredito = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '1');
+      const productoVisa = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '2');
 
 
       if (result.productoParaPagoValue === '1') {
@@ -524,8 +524,8 @@ export class LineaCreditoPagoComponent implements OnInit {
         });
       }
       // Imprimir la estructura de datos enviadas en la consola
-      console.log('Datos que se van a enviar:', JSON.stringify(datosPago));
-      return JSON.stringify(datosPago);
+      console.log('Datos que se van a enviar:', JSON.stringify(datosTransaccion));
+      return JSON.stringify(datosTransaccion);
       })
     );
   }

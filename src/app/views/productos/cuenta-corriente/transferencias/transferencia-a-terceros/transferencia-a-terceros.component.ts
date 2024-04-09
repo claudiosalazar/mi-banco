@@ -1,14 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of, from, throwError } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
 import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
 import { PesosPipe } from '../../../../../shared/pipes/pesos.pipe';
+import { HttpClient } from '@angular/common/http';
 
 declare var bootstrap: any;
 
@@ -78,7 +79,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   ];
 
   //destinatarios: { [key: string]: any }[] | undefined;
-  destinatarioSeleccionado: { id: any } | undefined;
+  destinatarioSeleccionado: { id: any, nombre?: string } | undefined;
   destinatarioId: string | null | undefined;
   productosUsuario: { productos: any[] } = { productos: [] };
 
@@ -163,15 +164,20 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   transferenciaOk: boolean = true;
   tranferenciaError: boolean = false;
 
-  datosTransferencia: any;
+  datosTransaccion: any;
+  
+  nombreDestinatario: any;
 
   constructor(
     public agendaService: AgendaDestinatariosService,
     public productosUsuarioService: ProductosUsuarioService,
     public formatoEmailService: FormatoEmailService,
     private cdRef: ChangeDetectorRef,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient,
+  ) { 
+    this.destinatarioSeleccionado = { id: null, nombre: '' };
+  }
 
   ngOnInit(): void {
     this.transferenciaATercerosForm = new FormGroup({
@@ -324,6 +330,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   
     // Imprime los datos del destinatario seleccionado en la consola
     // console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
+    // Encuentra el destinatario seleccionado en la lista de destinatarios
+    this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
+
+    // Asigna el nombre del destinatario seleccionado a nombreDestinatario
+    this.nombreDestinatario = this.destinatarioATransferirSeleccionado.nombre;
 
     // Actualiza los campos del formulario
     this.transferenciaATercerosForm.patchValue({
@@ -606,45 +617,96 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     });
   }
 
+  calculoTransferencia(): any {
+    let montoATransferir: any = this.transferenciaATercerosForm.get('montoATransferir')?.value;
+    montoATransferir = montoATransferir.replace(/\D/g, ''); // Asegúrate de que sea un número
+  
+    // Resta montoATransferir a cupoCtaCte
+    this.cupoCtaCte -= montoATransferir;
+  
+    // Guarda el resultado en montoATransferir
+    montoATransferir = this.cupoCtaCte;
+  
+    // Convertir 'montoATransferir' a un string
+    const montoATransferirString = montoATransferir.toString();
+
+    return {
+      montoTransferido: montoATransferirString,
+      cupoCtaCte: this.cupoCtaCte,
+      montoParaTransferencia: montoATransferir
+    };
+  }
+  
+  realizarTransferencia(): Observable<any> {
+  
+    // Llama al metodo calculo y obtiene los valores
+    const result = this.calculoTransferencia();
+    
+    // Obtener la fecha
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+    
+    let montoTransferido = result.montoTransferido;
+    let cupoCtaCte = result.cupoCtaCte;
+    
+    // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
+    return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(
+      tap(() => console.log('La petición HTTP se ha realizado')),
+      map((res: any) => {
+        console.log('La petición HTTP ha devuelto una respuesta');
+
+        // Los datos del archivo están en 'res'
+        const datosTransferencia = res;
+        let productoCtaCte = datosTransferencia.productos.find((producto: { id: string; }) => producto.id === "0");
+
+        // Si productoCtaCte es undefined, inicialízalo como un objeto con una propiedad transacciones que es un array vacío
+        if (!productoCtaCte) {
+          productoCtaCte = { id: "0", transacciones: [] };
+        }
+
+        // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
+        const cupoCtaCteString = cupoCtaCte.toString();
+
+        // Ahora puedes estar seguro de que productoCtaCte está definido
+        productoCtaCte.cupo = cupoCtaCteString;
+
+        // Obtener el último ID en el array de transacciones
+        const ultimoIdTransaccion = Math.max(...productoCtaCte.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
+
+        // Generar un nuevo ID que sea el siguiente al último ID existente
+        const nuevoIdTransaccion = ultimoIdTransaccion + 1;
+
+        productoCtaCte.transacciones.push({
+          id: nuevoIdTransaccion.toString(),
+          fecha: fechaFormateada, // Usar la fecha formateada
+          detalle: `Transferencia a ${this.nombreDestinatario}`,
+          cargo: montoTransferido,
+          abono: '',
+          saldo: '' // Reemplaza con el valor real
+        });
+
+        // Imprimir la estructura de datos enviadas en la consola
+        //console.log('Datos que se van a enviar:', JSON.stringify(datosTransferencia));
+        return JSON.stringify(datosTransferencia);
+      }),
+      catchError(error => {
+        console.error('Ha ocurrido un error:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
+
   abrirModalTransferencia(): void {
     const modalTransferencia = this.modales.find(modal => modal._element.id === 'modalTransferencia');
     if (modalTransferencia) {
       modalTransferencia.show();
-      this.realizarTransferencia();
+      this.realizarTransferencia().subscribe(datosTransferencia => {
+        this.productosUsuarioService.getDatosTransferencia(datosTransferencia);
+      });
     }
-  }
-
-  // Realiza la transferencia
-  realizarTransferencia(): Observable<any> {
-    const datePipe = new DatePipe('en-US');
-    const fechaActual = new Date();
-    const fechaFormateada = datePipe.transform(fechaActual, 'yyyy-MM-dd');
-  
-    let montoATransferir = this.transferenciaATercerosForm.get('montoATransferir')?.value;
-    montoATransferir = montoATransferir.replace(/\D/g, '');
-  
-    const destinatarioSeleccionado = this.destinatarioATransferirSeleccionado;
-    if (destinatarioSeleccionado) {
-      const producto = this.productosUsuario.productos.find(producto => Number(producto.id) === 0);
-      if (producto) {  
-        const nuevaTransferencia = {
-          id: producto.transacciones.length.toString(),
-          fecha: fechaFormateada,
-          destinatario: destinatarioSeleccionado.nombre,
-          detalle: `Transferencia a ${destinatarioSeleccionado.nombre}`,
-          cargo: montoATransferir,
-          abono: "",
-          saldo: ""
-        };
-  
-        producto.transacciones.push(nuevaTransferencia);
-  
-        const datosPago = nuevaTransferencia;
-  
-        
-      }
-    }
-    return of(null);
   }
 
 }

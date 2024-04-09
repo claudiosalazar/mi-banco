@@ -22,8 +22,15 @@ export class ProductosUsuarioService {
   nuevosDatosPago: any;
   datos: any;
   datosTransaccion: any;
-  datosPagoActualizados: any;
-  datosPagoCalculos: any;
+  datosTransaccionActualizados: any;
+  datosTransaccionCalculos: any;
+  // Codigo para buscador
+  private idActual = new BehaviorSubject<string>('');
+  private datosPagoVisa = new BehaviorSubject<any>(null);
+  private datosPagoLineaCredito = new BehaviorSubject<any>(null);
+  private datosTransferencia = new BehaviorSubject<any>(null);
+  private productosActualizados = new BehaviorSubject<ProductosUsuario['productos']>([]);
+  datosGuardados = new Subject<void>();
   
   constructor(
     private http: HttpClient,
@@ -179,25 +186,26 @@ export class ProductosUsuarioService {
   }
 
 
-  private datosPagoVisa = new BehaviorSubject<any>(null);
-  private datosPagoLineaCredito = new BehaviorSubject<any>(null);
-
-  calculosMontosPago(_producto: ProductosUsuario['productos']): any {
+  calculosMontosTransaccion(_producto: ProductosUsuario['productos']): any {
     combineLatest([
       this.datosPagoVisa.asObservable(),
-      this.datosPagoLineaCredito.asObservable()
-    ]).subscribe(([datosPagoVisa, datosPagoLineaCredito]) => {
-      let datosPagoCalculos = datosPagoVisa || datosPagoLineaCredito;
+      this.datosPagoLineaCredito.asObservable(),
+      this.datosTransferencia.asObservable()
+    ]).subscribe(([datosPagoVisa, datosPagoLineaCredito, datosTransferencia]) => {
+      let datosTransaccionCalculos = datosPagoVisa || datosPagoLineaCredito || datosTransferencia;
+      // console.log('datosTransaccionCalculos después de la asignación:', datosTransaccionCalculos);
       if (datosPagoVisa) {
         this.datosUsados = 'Visa';
       } else if (datosPagoLineaCredito) {
         this.datosUsados = 'LineaCredito';
+      } else if (datosTransferencia) {
+        this.datosUsados = 'Transferencia';
       }
-      if (Array.isArray(datosPagoCalculos.productos)) {
+      if (Array.isArray(datosTransaccionCalculos.productos)) {
         
-        console.log('datosPago:', datosPagoCalculos);
+        //console.log('datosTransaccion:', datosTransaccionCalculos);
     
-        datosPagoCalculos.productos.forEach((producto: {
+        datosTransaccionCalculos.productos.forEach((producto: {
           cupoDisponible: any; transacciones: any[]; cupo: string; id: any; productoNombre: any; productoNumero: any; }) => {
           
           if (producto.transacciones.length > 1) {
@@ -216,29 +224,29 @@ export class ProductosUsuarioService {
             }
           }
         });
-        console.log('datosPagoCalculos actualizado:', datosPagoCalculos);
+        //console.log('datosTransaccionCalculos actualizado:', datosTransaccionCalculos);
   
         // Guarda los datos actualizados en datosPago y los envía a otra función
-        this.datosPagoActualizados = datosPagoCalculos;
-        this.guardaResultadosCalculosPago(datosPagoCalculos);
-      } else {
-        console.error('datosPago.productos no es un array');
+        this.datosTransaccionActualizados = datosTransaccionCalculos;
+        this.guardaResultadosCalculosTransaccion(datosTransaccionCalculos);
       }
     });
   }
 
-  datosGuardados = new Subject<void>();
 
-  guardaResultadosCalculosPago(datosPagoActualizados: any): any {
-    console.log('datos para guardar en server',datosPagoActualizados);
-    this.http.put(this.baseUrl, datosPagoActualizados, {responseType: 'text'}).subscribe(response => {
+  guardaResultadosCalculosTransaccion(datosTransaccionCalculos: any): any {
+    //console.log('datos para guardar en server', datosTransaccionCalculos);
+    //console.log('Guardando datosTransferencia en el servidor:', datosTransaccionCalculos); // Agrega esta línea
+    this.http.put(this.baseUrl, datosTransaccionCalculos, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
-      console.log('Datos usados:', this.datosUsados); 
+      //console.log('Datos usados:', this.datosUsados); 
       setTimeout(() => {
         if (this.datosUsados === 'Visa') {
           this.urlBrowserService.navegarAComprobanteVisa();
         } else if (this.datosUsados === 'LineaCredito') {
           this.urlBrowserService.navegarAComprobanteLineaCredito();
+        } else if (this.datosUsados === 'Transferencia') {
+          this.urlBrowserService.navegarAComprobanteTransferencia();
         }
       }, 1500);
     });
@@ -249,34 +257,40 @@ export class ProductosUsuarioService {
   getDatosPagoVisa(datosTransaccion: any): Observable<any> {
     // Verifica si datosPago tiene datos
     if (datosTransaccion) {
-      const datosPagoJson = JSON.parse(datosTransaccion);
-      this.datosPagoVisa.next(datosPagoJson);
-      this.calculosMontosPago(datosPagoJson);
+      const datosTransaccionJson = JSON.parse(datosTransaccion);
+      this.datosPagoVisa.next(datosTransaccionJson);
+      this.calculosMontosTransaccion(datosTransaccionJson);
     }
+    //console.log('DatosTransferencia:', this.datosPagoVisa);
     return this.datosPagoVisa;
   }
 
   // Captura datos de pago linea de credito
-  getDatosPagoLineaCredito(datosPago: any): Observable<any> {
+  getDatosPagoLineaCredito(datosTransaccion: any): Observable<any> {
     // Verifica si datosPago tiene datos
-    if (datosPago) {
-      const datosPagoJson = JSON.parse(datosPago);
-      this.datosPagoLineaCredito.next(datosPagoJson);
-      this.calculosMontosPago(datosPagoJson);
+    if (datosTransaccion) {
+      const datosTransaccionJson = JSON.parse(datosTransaccion);
+      this.datosPagoLineaCredito.next(datosTransaccionJson);
+      this.calculosMontosTransaccion(datosTransaccionJson);
     }
     return this.datosPagoLineaCredito;
   }
 
-  // Crea un BehaviorSubject que mantendrá los datos actualizados
-  private productosActualizados = new BehaviorSubject<ProductosUsuario['productos']>([]);
+  getDatosTransferencia(datosTransaccion: any): Observable<any> {
+    // Verifica si datosTransaccion tiene datos
+    if (datosTransaccion) {
+      const datosTransaccionJson = JSON.parse(datosTransaccion);
+      console.log('Datos de Transferencia:', datosTransaccionJson); // Agrega esta línea
+      this.datosTransferencia.next(datosTransaccionJson);
+      this.calculosMontosTransaccion(datosTransaccionJson);
+    }
+    return this.datosTransferencia;
+  }
 
   // Crea un método para obtener los datos actualizados
   getProductosActualizados(): Observable<ProductosUsuario['productos']> {
     return this.productosActualizados.asObservable();
   }
-
-  // Codigo para buscador
-  private idActual = new BehaviorSubject<string>('');
 
   getIdActual() {
     return this.idActual.asObservable();

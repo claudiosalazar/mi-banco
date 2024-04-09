@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "1000000",
+      "cupo": "995000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -131,6 +131,14 @@
           "cargo": "44800",
           "abono": "0",
           "saldo": "1000000"
+        },
+        {
+          "id": "14",
+          "fecha": "2024-04-08",
+          "detalle": "Transferencia a Ariana Gomez",
+          "cargo": "995000",
+          "abono": "",
+          "saldo": "5000"
         }
       ]
     },
