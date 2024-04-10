@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
-import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+// Pipe
+import { RutPipe } from '../../shared/pipes/rut.pipe';
+import { CelularPipe } from '../../shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-datos-usuario',
@@ -34,53 +39,57 @@ export class DatosUsuarioComponent {
   ciudadComercial: string | undefined;
   comunaComercial: string | undefined;
 
+  mensajeInformativo = false;
   separadorBotonGuardar = false;
   botonGuardar = false;
 
   constructor(
-    private datosUsuarioService: DatosUsuarioService
+    private datosUsuarioService: DatosUsuarioService,
+    private rutPipe: RutPipe,
+    private celularPipe: CelularPipe,
+    private telefonoFijoPipe: TelefonoFijoPipe,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
     this.misDatosForm = new FormGroup({
-      primerNombre: new FormControl('', [Validators.required]),
-      segundoNombre: new FormControl('', [Validators.required]),
-      apellidoPaterno: new FormControl('', [Validators.required]),
-      apellidoMaterno: new FormControl('', [Validators.required]),
-      rut: new FormControl('', [Validators.required]),
-      fechaNacimiento: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      emailComercial: new FormControl(''),
-      celular: new FormControl('', [Validators.required]),
-      telefono: new FormControl(''),
-      callePersonal: new FormControl('', [Validators.required]),
-      numeroPersonal: new FormControl('', [Validators.required]),
-      deptoVillaBlockPersonal: new FormControl('', [Validators.required]),
-      regionPersonal: new FormControl('', [Validators.required]),
-      ciudadPersonal: new FormControl('', [Validators.required]),
-      comunaPersonal: new FormControl('', [Validators.required]),
-      calleComercial: new FormControl(''),
-      numeroComercial: new FormControl(''),
-      oficina: new FormControl(''),
-      regionComercial: new FormControl(''),
-      ciudadComercial: new FormControl(''),
-      comunaComercial: new FormControl(''),
+      primerNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
+      segundoNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
+      apellidoPaterno: new FormControl({value: '', disabled: true}, [Validators.required]),
+      apellidoMaterno: new FormControl({value: '', disabled: true}, [Validators.required]),
+      rut: new FormControl({value: '', disabled: true}, [Validators.required]),
+      fechaNacimiento: new FormControl({value: '', disabled: true}, [Validators.required]),
+      email: new FormControl({value: '', disabled: true}, [Validators.required]),
+      emailComercial: new FormControl({value: '', disabled: true}),
+      celular: new FormControl({value: '', disabled: true}, [Validators.required]),
+      telefono: new FormControl({value: '', disabled: true}),
+      callePersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      numeroPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      deptoVillaBlockPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      regionPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      ciudadPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      comunaPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
+      calleComercial: new FormControl({value: '', disabled: true}),
+      numeroComercial: new FormControl({value: '', disabled: true}),
+      oficina: new FormControl({value: '', disabled: true}),
+      regionComercial: new FormControl({value: '', disabled: true}),
+      ciudadComercial: new FormControl({value: '', disabled: true}),
+      comunaComercial: new FormControl({value: '', disabled: true}),
       //envioCorrespondencia: new FormControl(''),
     });
 
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
-      console.log('Datos del usuario recibidos:', datos);
       this.misDatosForm.setValue({
         primerNombre: datos.datosUsuario.primerNombre,
         segundoNombre: datos.datosUsuario.segundoNombre,
         apellidoPaterno: datos.datosUsuario.apellidoPaterno,
         apellidoMaterno: datos.datosUsuario.apellidoMaterno,
-        rut: datos.datosUsuario.rut,
-        fechaNacimiento: datos.datosUsuario.fechaNacimiento,
+        rut: this.rutPipe.transform(datos.datosUsuario.rut),
+        fechaNacimiento: this.datePipe.transform(datos.datosUsuario.fechaNacimiento, 'dd/MM/yyyy'),
         email: datos.datosUsuario.email,
         emailComercial: datos.datosUsuario.emailComercial,
-        celular: datos.datosUsuario.celular,
-        telefono:datos.datosUsuario.telefono,
+        celular: this.celularPipe.transform(datos.datosUsuario.celular),
+        telefono: this.telefonoFijoPipe.transform(datos.datosUsuario.telefono),
         callePersonal: datos.datosUsuario.callePersonal,
         numeroPersonal: datos.datosUsuario.numeroPersonal,
         deptoVillaBlockPersonal: datos.datosUsuario.deptoVillaBlockPersonal,
@@ -97,4 +106,22 @@ export class DatosUsuarioComponent {
     });
   }
 
+  // Boton editar datos
+  editarDatos() {
+    this.misDatosForm.enable();
+    this.mensajeInformativo = true;
+    this.separadorBotonGuardar = true;
+    this.botonGuardar = true;
+  }
+
+  // Solo permite ingresar números en los campos de texto
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
 }
+

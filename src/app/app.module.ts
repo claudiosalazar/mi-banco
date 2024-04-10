@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/components/login/login.component';
 
 // Pipe
+import { DatePipe } from '@angular/common';
 import { PesosPipe } from './shared/pipes/pesos.pipe';
 import { RutPipe } from './shared/pipes/rut.pipe';
 import { CelularPipe } from './shared/pipes/celular.pipe';
@@ -117,7 +118,8 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     PesosPipe,
     RutPipe,
     CelularPipe,
-    TelefonoFijoPipe
+    TelefonoFijoPipe,
+    DatePipe
   ],
   bootstrap: [MiBancoComponent]
 })

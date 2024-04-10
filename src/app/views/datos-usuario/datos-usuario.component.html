@@ -7,8 +7,14 @@
           <h1>Mis Datos</h1>
         </div>
         <div>
-          <button class="btn btn-primary">Editar mis datos</button>
+          <button class="btn btn-primary" (click)="editarDatos()">Editar mis datos</button>
         </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-5" *ngIf="mensajeInformativo">
+      <div class="alert alert-primary" role="alert" >
+        <h6 class="m-0">Todos los campos que ya contiene informacion son obligatorios.</h6>
       </div>
     </div>
 
@@ -64,12 +70,13 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="celular">
+              <input type="text" class="form-control celular" formControlName="celular" (keypress)="soloNumeros($event)" maxlength="9">
               <label for="celular">Celular</label>
+              <div class="prefijo-chile"></div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="telefono">
+              <input type="text" class="form-control" formControlName="telefono" (keypress)="soloNumeros($event)" maxlength="9">
               <label for="telefono">Teléfono Fijo</label>
             </div>
 
@@ -170,6 +177,7 @@
           <hr class="mt-5 mb-5" *ngIf="separadorBotonGuardar">
 
           <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar">
+            <button type="button" class="btn btn-secondary me-0 me-md-3" data-bs-dismiss="modal">Cancelar</button>
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar datos</button>
           </div>
         </div>
