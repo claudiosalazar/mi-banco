@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "967000",
+      "cupo": "949500",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -295,6 +295,32 @@
           "cargo": "500",
           "abono": "",
           "saldo": "967000"
+        },
+        {
+          "id": "29",
+          "fecha": "2024-04-10",
+          "destinatario": "Pedro Perez",
+          "detalle": "Transferencia a Pedro Perez",
+          "mensaje": "",
+          "cargo": "7000",
+          "abono": "",
+          "saldo": "960000"
+        },
+        {
+          "id": "30",
+          "fecha": "2024-04-10",
+          "detalle": "Pago a Visa",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "950000"
+        },
+        {
+          "id": "31",
+          "fecha": "2024-04-10",
+          "detalle": "Pago a Visa",
+          "cargo": "500",
+          "abono": "0",
+          "saldo": "949500"
         }
       ]
     },
@@ -302,8 +328,8 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "345500",
-      "cupoDisponible": "4655600",
+      "cupo": "346500",
+      "cupoDisponible": "4666600",
       "transacciones": [
         {
           "id": "0",
@@ -384,6 +410,22 @@
           "cargo": "200000",
           "abono": "0",
           "saldo": "346500"
+        },
+        {
+          "id": "10",
+          "fecha": "2024-04-10",
+          "detalle": "Abono a Línea de Crédito",
+          "cargo": "0",
+          "abono": "10000",
+          "saldo": "346500"
+        },
+        {
+          "id": "11",
+          "fecha": "2024-04-10",
+          "detalle": "Abono a Línea de Crédito",
+          "cargo": "0",
+          "abono": "1000",
+          "saldo": "346500"
         }
       ]
     },
@@ -391,8 +433,8 @@
       "id": "2",
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
-      "cupo": "2316000",
-      "cupoDisponible": "2737700",
+      "cupo": "2305000",
+      "cupoDisponible": "2748200",
       "transacciones": [
         {
           "id": "0",
@@ -497,6 +539,38 @@
           "cargo": "0",
           "abono": "44800",
           "saldo": "2316000"
+        },
+        {
+          "id": "13",
+          "fecha": "2024-04-10",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "10000",
+          "saldo": "2316000"
+        },
+        {
+          "id": "14",
+          "fecha": "2024-04-10",
+          "detalle": "Pago a LineaCredito",
+          "cargo": "10000",
+          "abono": "0",
+          "saldo": "2306000"
+        },
+        {
+          "id": "15",
+          "fecha": "2024-04-10",
+          "detalle": "Pago a LineaCredito",
+          "cargo": "1000",
+          "abono": "0",
+          "saldo": "2305000"
+        },
+        {
+          "id": "16",
+          "fecha": "2024-04-10",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "500",
+          "saldo": "2305000"
         }
       ]
     }

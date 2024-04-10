@@ -44,7 +44,6 @@
                   <div class="d-flex mb-3">
                     <!-- Pago total -->
                     <div class="form-check me-3">
-                      <!-- <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoPagoTotalmontoPago" value="pagoTotal" (change)="radioResetInput($event); detectaCambioRadio(); resetValidacionesInputOtroMonto()"> -->
                       <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal">
                       <label class="form-check-label" for="montoPago">
                         Pago Total
@@ -52,7 +51,6 @@
                     </div>
                     <!-- Otro monto -->
                     <div class="form-check">
-                      <!-- <input class="form-check-input" type="radio" formControlName="montoPago" id="checkMontoOtroMonto" value="otroMonto" (change)="detectaCambioRadio(); resetValidacionesInputPagoTotal()"> -->
                       <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto">
                       <label class="form-check-label" for="montoPago">
                         Otro Monto 
@@ -152,16 +150,35 @@
 <div class="modal fade" id="modalPagoLineaCredito" tabindex="-1" aria-labelledby="modalPagoLineaCredito" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body p-4">
-        <div *ngIf="pagoCorrecto" id="pagoCorrecto" class="text-center">
-          <h1 class="mb-2">Se esta confirmando el pago.</h1>
-          <p>Espera un momento por favor.</p>
+      <div class="modal-body p-5">
+
+        <div *ngIf="pagoCorrecto">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+              sync
+            </span>
+            <h4 class="mb-3 ms-3 text-starts">Se esta confirmando el pago.</h4>
+          </div>
+          <div class="w-100 text-center">
+            <span>Espera un momento por favor.</span>
+          </div>
         </div>
-        <div *ngIf="errorServer" id="errorServer" class="text-center">
-          <h1 class="mb-2">Hubo un error al realizar el pago.</h1>
-          <p class="mb-2">Intento mas tarde.</p>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+        <div *ngIf="errorServer">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al realizar el pago.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
