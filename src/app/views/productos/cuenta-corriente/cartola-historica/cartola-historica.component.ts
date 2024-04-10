@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CartolasHistoricasService } from '../../../../core/services/cartolas-historicas.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cartola-historica',
@@ -11,6 +14,7 @@ export class CartolaHistoricaComponent implements OnInit {
 
   paginatedCartolas: any[] = [];
   cartolas: any[] = [];
+  fechasEmision: any[] = [];
 
   // Variables para paginador
   paginatedData: any[] | undefined;
@@ -24,67 +28,31 @@ export class CartolaHistoricaComponent implements OnInit {
   sortedColumn = '';
   sortAscending: boolean = true;
 
+  fechaInicio: string = '';
+  fechaTermino: string = '';
+
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
+  
+  listaFechas = [];
 
   constructor(
     private cartolasHistoricasService: CartolasHistoricasService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) { };
 
   ngOnInit(): void {
-    this.rangoFechas();
-    this.setFechas();
     this.cartolasHistoricasService.getCartolasHistoricas().subscribe(data => {
-      this.cartolas = data;
-      this.totalPages = this.cartolas ? Math.ceil(this.cartolas.length / this.itemsPerPage) : 0;
-      this.ordenarDatos('fechaEmision');
+      if (Array.isArray(data)) { // Comprueba si 'data' es un array
+        this.cartolas = data; // Asigna 'data' a 'this.cartolas'
+      } else {
+        console.log('Los datos recibidos no son un array'); // Imprime un mensaje si 'data' no es un array
+      }
       this.cdRef.detectChanges();
     });
   }
 
-  rangoFechas () {
-    let fechaInicio: HTMLInputElement | null = document.getElementById('fechaInicio') as HTMLInputElement;
-    let fechaTermino: HTMLInputElement | null = document.getElementById('fechaTermino') as HTMLInputElement;
-
-    if (fechaInicio) {
-      fechaInicio.addEventListener('change', (e) => {
-        let fechaInicioVal: string = (e.target as HTMLInputElement).value;
-        let fechaInicioSelected: HTMLElement | null = document.getElementById('fechaInicioSelected');
-        if (fechaInicioSelected) {
-          fechaInicioSelected.innerText = fechaInicioVal;
-        }
-      });
-    }
-
-    if (fechaTermino) {
-      fechaTermino.addEventListener('change', (e) => {
-        let fechaTerminoVal: string = (e.target as HTMLInputElement).value;
-        let fechaTerminoSelected: HTMLElement | null = document.getElementById('fechaTerminoSelected');
-        if (fechaTerminoSelected) {
-          fechaTerminoSelected.innerText = fechaTerminoVal;
-        }
-      });
-    }
-  }
-
-  setFechas() {
-    let fechaInicio: HTMLInputElement | null = document.getElementById('fechaInicio') as HTMLInputElement;
-    let fechaTermino: HTMLInputElement | null = document.getElementById('fechaTermino') as HTMLInputElement;
-  
-    let fechaActual = new Date();
-    let fechaHace12Meses = new Date();
-    fechaHace12Meses.setFullYear(fechaHace12Meses.getFullYear() - 1);
-  
-    if (fechaInicio) {
-      fechaInicio.value = fechaActual.toISOString().slice(0,7);
-    }
-  
-    if (fechaTermino) {
-      fechaTermino.value = fechaHace12Meses.toISOString().slice(0,7);
-    }
-  }
 
   // Anima icono de TH
   public onHeaderClick(): void {

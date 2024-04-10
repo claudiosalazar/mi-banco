@@ -1,45 +1,10 @@
 <div class="tab-pane cartola" id="cartola-tab-pane" role="tabpanel" aria-labelledby="cartola-tab" tabindex="0">
-  <!-- Mensaje informativo -->
-  <div class="col-12 p-0 p-md-4">
-    <div class="alert alert-primary" role="alert">
-      <div class="d-flex align-items-center">
-        <div class="me-4">
-          <span class="material-symbols-outlined">
-            warning
-          </span>
-        </div>
-        <div>
-          <h6>El rango máximo de consulta es de 12 meses</h6>
-          <h6>Cartolas disponibles desde el 01/01/2019.</h6>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Formulario de busqueda -->
   <div class="col-12 p-0 p-md-4">
-    <h4>Buscar cartolas</h4>
-    <form>
-      <div class="row">
-        <div class="col-12 col-md-3">
-          <div class="form-floating mb-3">
-            <input type="month" id="fechaInicio" class="form-control" />
-            <label for="fechaInicio">Mes inicio</label>
-            <span id="fechaInicioSelected"></span>
-          </div>
-        </div>
-        <div class="col-12 col-md-3">
-          <div class="form-floating mb-3">
-            <input type="month" id="fechaTermino" class="form-control" />
-            <label for="fechaTermino">Mes fin</label>
-            <span id="fechaTerminoSelected"></span>
-          </div>
-        </div>
-      </div>
-    </form>
+    <h4>Cartolas Historicas</h4>
   </div>
 
-  <div class="col-12 p-0 p-md-4">
+  <div class="col-12 p-0 ps-md-4 pb-md-4 pe-md-4">
     <table class="table" role="table">
       <thead role="columnheader"ead role="rowgroup">
         <tr role="row">
@@ -64,7 +29,7 @@
             </div>
           </th>
           <th role="columnheader">
-            <div class="d-flex">
+            <div class="d-flex justify-content-end">
               <span>
                 Descargar
               </span>
@@ -73,12 +38,12 @@
         </tr>
       </thead>
       <tbody role="rowgroup">
-        <tr *ngFor="let cartola of paginatedCartolas" role="row">
+        <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row">
           <td role="cell"><span class="contenido-td">{{ cartola.numeroCartola }}</span></td>
           <td role="cell"><span class="contenido-td">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span></td>
           <td role="cell">
             <span class="contenido-td-acciones d-block">
-              <div class="d-flex justify-content-start">
+              <div class="d-flex justify-content-end">
                 <!-- Editar datos destinatario -->
                 <a href="javascript:void(0)" class="me-3">
                   <span class="material-symbols-outlined">
