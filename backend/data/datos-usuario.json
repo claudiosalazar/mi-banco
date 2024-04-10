@@ -5,11 +5,22 @@
     "apellidoPaterno": "Perez",
     "apellidoMaterno": "Soto",
     "rut": "000000000",
+    "fechaNacimiento": "01-01-1990",
     "email": "correo@correo.cl",
-    "fonoCelular": "5555 5555",
-    "fonoParticular": "555 55 55",
-    "direccionCalle": "Caller 677",
-    "direccionCiudad": "Temuco",
-    "direccionPais": "Chile"
+    "emailComercial": "trabajo@trabajo.cl",
+    "celular": "5555 5555",
+    "telefono": "555 55 55",
+    "callePersonal": "Caller",
+    "numeroPersonal": "586",
+    "deptoVillaBlockPersonal": "1201",
+    "regionPersonal": "Región de la Araucania",
+    "ciudadPersonal": "Temuco",
+    "comunaPersonal": "Temuco",
+    "calleComercial": "Manuel Montt",
+    "numeroComercial": "420",
+    "oficina": "10",
+    "regionComercial": "Región de la Araucania",
+    "ciudadComercial": "Temuco",
+    "comunaComercial": "Temuco"
   }
 }
