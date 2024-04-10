@@ -13,7 +13,6 @@
             <a class="nav-link" routerLink="/mibanco" (click)="onLinkClick()">Inicio</a>
           </li>
           <li class="nav-item">
-            <!-- <a class="nav-link" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'transferencias'}" (click)="onLinkClick()">Transferencias</a> -->
             <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="onLinkClick()">Transferencias</a>
           </li>
           <li class="nav-item menu-transacciones">
@@ -32,16 +31,7 @@
             </ul>
           </li>
           <li class="nav-item menu-transacciones">
-            <a class="nav-link d-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Seguros
-              <span class="material-symbols-outlined">
-                expand_more
-              </span>
-            </a>
-            <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/seguros/seguros-contratados" (click)="onLinkClick()">Resumen Seguros</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/seguros/contratar-seguro" (click)="onLinkClick()">Contratar Seguro</a></li>
-            </ul>
+            <a class="nav-link" routerLink="/mibanco/productos/seguros" (click)="onLinkClick()">Seguros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/mibanco/contactanos" (click)="onLinkClick()">Contactanos</a>

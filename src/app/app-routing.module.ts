@@ -26,8 +26,6 @@ import { VisaPagoComponent } from './views/productos/visa/visa-pago/visa-pago.co
 import { VisaComprobanteComponent } from './views/productos/visa/visa-comprobante/visa-comprobante.component';
 import { TransaccionesResumenComponent } from './views/productos/transacciones-resumen/transacciones-resumen.component';
 import { SegurosComponent } from './views/productos/seguros/seguros.component';
-import { SegurosResumenComponent } from './views/productos/seguros/seguros-resumen/seguros-resumen.component';
-import { SegurosContratarComponent } from './views/productos/seguros/seguros-contratar/seguros-contratar.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -63,8 +61,6 @@ const routes: Routes = [
           { path: 'visa/pago', component: VisaPagoComponent },
           { path: 'visa/comprobante', component: VisaComprobanteComponent },
           { path: 'seguros', component: SegurosComponent },
-          { path: 'seguros/seguros-contratados', component: SegurosResumenComponent },
-          { path: 'seguros/contratar-seguro', component: SegurosContratarComponent },
         ]
       },
       { path: 'contactanos', component: ContactanosComponent },

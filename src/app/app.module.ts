@@ -57,10 +57,7 @@ import { VisaComprobanteComponent } from './views/productos/visa/visa-comprobant
 // Otros componentes
 import { TransaccionesResumenComponent } from './views/productos/transacciones-resumen/transacciones-resumen.component';
 import { SegurosComponent } from './views/productos/seguros/seguros.component';
-import { SegurosResumenComponent } from './views/productos/seguros/seguros-resumen/seguros-resumen.component';
-import { SegurosContratarComponent } from './views/productos/seguros/seguros-contratar/seguros-contratar.component';
 import { AyudaComponent } from './views/ayuda/ayuda.component';
-import { SegurosComprobanteComponent } from './views/productos/seguros/seguros-comprobante/seguros-comprobante.component';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
@@ -86,8 +83,6 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     VisaComponent,
     TransaccionesResumenComponent,
     SegurosComponent,
-    SegurosResumenComponent,
-    SegurosContratarComponent,
     AyudaComponent,
     LineaCreditoPagoComponent,
     LineaCreditoComprobanteComponent,
@@ -97,7 +92,6 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     BuscadorTablaComponent,
     TransferenciasComponent,
     ComprobanteTransferenciaComponent,
-    SegurosComprobanteComponent,
     CustomSelectComponent,
     PaginadorComponent,
     CartolaHistoricaComponent,
