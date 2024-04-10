@@ -14,6 +14,11 @@
       "id": "2",
       "productoOferta": "Descuento Visa",
       "montoPreAprobado": "0.50"
+    },
+    {
+      "id": "3",
+      "productoOferta": "Seguro Accidentes Personales",
+      "montoPreAprobado": "0.5"
     }
   ]
 }

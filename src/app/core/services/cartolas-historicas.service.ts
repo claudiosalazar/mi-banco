@@ -12,8 +12,6 @@ interface CartolaResponse {
 })
 export class CartolasHistoricasService {
 
-  listaCartolas: any;
-
   private baseUrl = 'http://localhost:3000/backend/data/cartolas-historicas.json';
 
   constructor(
@@ -23,8 +21,7 @@ export class CartolasHistoricasService {
   getCartolasHistoricas(): Observable<any> {
     return this.http.get<CartolaResponse>(this.baseUrl).pipe(
       map(response => {
-        //console.log(JSON.stringify(response, null, 2)); // Imprime los datos que se están enviando en formato JSON
-        return response.listaCartolas; // Devuelve el array 'listaCartolas'
+        return response.listaCartolas;
       })
     );
   }

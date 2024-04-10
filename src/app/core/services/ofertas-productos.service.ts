@@ -10,7 +10,7 @@ export class OfertasProductosService {
   private baseUrl = 'http://localhost:3000/backend/data/ofertas-productos.json';
   constructor(private http: HttpClient) { }
 
-  getOfertasProductos(id: string): Observable<OfertasProductos> {
+  getOfertasProductos(id: any): Observable<OfertasProductos> {
     const url = `${this.baseUrl}?id=${id}`;
     console.log('URL de la solicitud:', url);
     return this.http.get<OfertasProductos>(url);

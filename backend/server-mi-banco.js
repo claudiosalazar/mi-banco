@@ -50,6 +50,13 @@ app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
   res.send(JSON.parse(fileData));
 });
 
+// Datos seguros
+app.get('/backend/data/seguros-usuario.json', (_req, res) => {
+  const filePath = path.join(__dirname, 'data', 'seguros-usuario.json');
+  const fileData = fs.readFileSync(filePath);
+  res.send(JSON.parse(fileData));
+});
+
 // Datos cartolas
 app.get('/backend/data/cartolas-historicas.json', (_req, res) => {
   const filePath = path.join(__dirname, 'data', 'cartolas-historicas.json');
@@ -93,13 +100,6 @@ app.get('/backend/data/ofertas-productos.json', (req, res) => {
   } else {
     res.send(fileData);
   }
-});
-
-// Datos seguros
-app.get('/backend', (_req, res) => {
-  const filePath = path.join(__dirname, 'data', 'seguros-usuario.json');
-  const fileData = fs.readFileSync(filePath);
-  res.send(JSON.parse(fileData));
 });
 
 // Elimina destinatario de agenda

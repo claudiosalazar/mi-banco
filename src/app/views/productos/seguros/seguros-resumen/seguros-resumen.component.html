@@ -19,28 +19,28 @@
             <div class="d-flex">
               <div>
                 <p class="mb-0">Plan</p>
-                <p><strong>{{ segurosUsuario?.seguros?.[0]?.plan }}</strong></p>
+                <p><strong>{{ seguros?.[0]?.plan }}</strong></p>
                 <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ segurosUsuario?.seguros?.[0]?.cuotaMensual }}</strong></p>
+                <p><strong>UF {{ seguros?.[0]?.cuotaMensual }}</strong></p>
                 <p class="mb-0">Cuotas</p>
-                <p><strong>{{ segurosUsuario?.seguros?.[0]?.cuotas }}</strong></p>
+                <p><strong>{{ seguros?.[0]?.cuotas }}</strong></p>
               </div>
             </div>
           </div>
           <div class="col">
             <p class="mb-0">Compañia</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[0]?.compania }}</strong></p>
+            <p><strong>{{ seguros?.[0]?.compania }}</strong></p>
             <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[0]?.nSeguro }}</strong></p>
+            <p><strong>{{ seguros?.[0]?.nSeguro }}</strong></p>
             <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ segurosUsuario?.seguros?.[0]?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ segurosUsuario?.seguros?.[0]?.fechaTermino }}</strong></p>
+            <p class="mb-0">Inicio <strong>{{ seguros?.[0]?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ seguros?.[0]?.fechaTermino }}</strong></p>
           </div>
           <div class="col">
             <p class="mb-0">Póliza</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[0]?.poliza }}</strong></p>
+            <p><strong>{{ seguros?.[0]?.poliza }}</strong></p>
             <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[0]?.nSeguro }}</strong></p>
+            <p><strong>{{ seguros?.[0]?.nSeguro }}</strong></p>
           </div>
         </div>
       </div>
@@ -60,28 +60,28 @@
             <div class="d-flex">
               <div>
                 <p class="mb-0">Plan</p>
-                <p><strong>{{ segurosUsuario?.seguros?.[1]?.plan }}</strong></p>
+                <p><strong>{{ seguros?.[1]?.plan }}</strong></p>
                 <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ segurosUsuario?.seguros?.[1]?.cuotaMensual }}</strong></p>
+                <p><strong>UF {{ seguros?.[1]?.cuotaMensual }}</strong></p>
                 <p class="mb-0">Cuotas</p>
-                <p><strong>{{ segurosUsuario?.seguros?.[1]?.cuotas }}</strong></p>
+                <p><strong>{{ seguros?.[1]?.cuotas }}</strong></p>
               </div>
             </div>
           </div>
           <div class="col">
             <p class="mb-0">Compañia</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[1]?.compania }}</strong></p>
+            <p><strong>{{ seguros?.[1]?.compania }}</strong></p>
             <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[1]?.nSeguro }}</strong></p>
+            <p><strong>{{ seguros?.[1]?.nSeguro }}</strong></p>
             <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ segurosUsuario?.seguros?.[1]?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ segurosUsuario?.seguros?.[1]?.fechaTermino }}</strong></p>
+            <p class="mb-0">Inicio <strong>{{ seguros?.[1]?.fechaInicio }}</strong></p>
+            <p>Termino <strong>{{ seguros?.[1]?.fechaTermino }}</strong></p>
           </div>
           <div class="col">
             <p class="mb-0">Póliza</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[1]?.poliza }}</strong></p>
+            <p><strong>{{ seguros?.[1]?.poliza }}</strong></p>
             <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ segurosUsuario?.seguros?.[1]?.nSeguro }}</strong></p>
+            <p><strong>{{ seguros?.[1]?.nSeguro }}</strong></p>
           </div>
         </div>
       </div>
@@ -90,9 +90,9 @@
     <!-- Banner -->
     <div class="col-12">
       <div class="card p-4 p-md-5">
-        <h4 class="d-flex justify-content-between mt-3">Seguro Accidentes</h4>
+        <h4 class="d-flex justify-content-between mt-3">{{ productoOferta }}</h4>
         <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
-        <p>Valor mensual: <strong>{{ ofertasProductos?.ofertas?.[1]?.montoPreAprobado }}</strong></p>
+        <p>Valor mensual: <strong>UF {{ montoPreAprobado }}</strong></p>
         <button class="btn btn-outline-secondary" type="button" routerLink="/mibanco/seguros/contratar-seguro">Contratar Seguro</button>
       </div>
     </div>

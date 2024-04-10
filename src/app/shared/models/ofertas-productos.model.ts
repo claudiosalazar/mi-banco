@@ -5,6 +5,7 @@ interface Oferta {
 }
 
 export interface OfertasProductos {
+  find(arg0: (ofertas: any) => boolean): unknown;
   id: string;
   ofertas: Oferta[];
 }
