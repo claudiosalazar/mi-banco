@@ -9,7 +9,6 @@ import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna
 import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
-import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -66,13 +65,25 @@ export class DatosUsuarioComponent {
 
   inputValido: any;
   inputVacio: any;
+  valoresIniciales: { [key: string]: any } = {};
+
+  // Variables para email
+  inputErrorVacioEmail: any;
+  inputValidoEmail: any;
+  // Variables para celular
+  inputErrorCelularInvalido: any;
+  inputErrorCelularVacio: any;
+  inputCelularValido: any;
+  // Variables para telefono fijo
+  inputErrorTelefonoInvalido: any;
+  inputErrorTelefonoVacio: any;
+  inputTelefonoValido: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe,
-    private datePipe: DatePipe,
     private http: HttpClient
   ) { }
 
@@ -94,14 +105,18 @@ export class DatosUsuarioComponent {
       regionPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
       ciudadPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
       comunaPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
-      calleComercial: new FormControl({value: '', disabled: true}),
-      numeroComercial: new FormControl({value: '', disabled: true}),
-      oficina: new FormControl({value: '', disabled: true}),
+      calleComercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      numeroComercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      oficina: new FormControl({value: '', disabled: true}, [Validators.required]),
       regionComercial: new FormControl({value: '', disabled: true}),
       ciudadComercial: new FormControl({value: '', disabled: true}),
       comunaComercial: new FormControl({value: '', disabled: true}),
       //envioCorrespondencia: new FormControl(''),
     });
+
+    for (const controlName in this.misDatosForm.controls) {
+      this.valoresIniciales[controlName] = this.misDatosForm.get(controlName)?.value;
+    }
 
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.misDatosForm.setValue({
@@ -182,12 +197,104 @@ export class DatosUsuarioComponent {
   validaInput(controlName: string): void {
     const control = this.misDatosForm.get(controlName);
   
-    if (control?.touched) {
+    if (control?.value !== this.valoresIniciales[controlName]) {
       if (control?.value.trim() === '') {
-        control.setErrors({ [controlName]: true });
+        control.setErrors({ required: true });
       } else {
-        control.setErrors(null);
+        control?.setErrors(null);
       }
+    }
+  }
+
+  validaCelular(): void {
+    const celularControl = this.misDatosForm.get('celular');
+    if (celularControl) {
+      let value = celularControl.value as string;
+  
+      // Si el campo está vacío, establecer inputErrorCelularVacio en true y retornar
+      if (value === '') {
+        this.inputErrorCelularVacio = true;
+        return;
+      } else {
+        // Si el campo no está vacío, establecer inputErrorCelularVacio en false
+        this.inputErrorCelularVacio = false;
+      }
+
+      if (celularControl?.value !== this.valoresIniciales['celular']) {
+        if (celularControl?.value.trim() === '') {
+          celularControl.setErrors({ required: true });
+        } else {
+          celularControl?.setErrors(null);
+        }
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorCelularInvalido = true;
+        this.inputCelularValido = false;
+      } else {
+        this.inputErrorCelularInvalido = false;
+        this.inputCelularValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.celularPipe.transform(value);
+        celularControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputCelularValido) {
+        celularControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        celularControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      celularControl.updateValueAndValidity();
+      celularControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+    }
+  }
+
+  validaTelefono(): void {
+    const telefonoControl = this.misDatosForm.get('telefono');
+    if (telefonoControl) {
+      let value = telefonoControl.value as string;
+  
+      // Si el campo está vacío, establecer inputErrorCelularVacio en true y retornar
+      if (value === '') {
+        this.inputErrorTelefonoVacio = true;
+        return;
+      } else {
+        // Si el campo no está vacío, establecer inputErrorCelularVacio en false
+        this.inputErrorTelefonoVacio = false;
+      }
+
+      if (telefonoControl?.value !== this.valoresIniciales['telefono']) {
+        if (telefonoControl?.value.trim() === '') {
+          telefonoControl.setErrors({ required: true });
+        } else {
+          telefonoControl?.setErrors(null);
+        }
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorTelefonoInvalido = true;
+        this.inputTelefonoValido = false;
+      } else {
+        this.inputErrorTelefonoInvalido = false;
+        this.inputTelefonoValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.telefonoFijoPipe.transform(value);
+        telefonoControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputTelefonoValido) {
+        telefonoControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        telefonoControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      telefonoControl.updateValueAndValidity();
+      telefonoControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
     }
   }
 

@@ -7,7 +7,7 @@
   padding: 10px;
   display: block;
   width: 100%;
-  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  padding: 0.375rem 0 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -19,6 +19,11 @@
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
   .selected-option {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 14.7 6.7 9.4l.7-.7 4.6 4.6 4.6-4.6.7.7-5.3 5.3Z' fill='%23bcbcbc'/%3E%3C/svg%3E");
+    background-size: 32px 32px;
+    background-position-x: 98%;
+    background-position-y: 6px;
+    background-repeat: no-repeat;
     padding: 20px 10px 0 0;
     cursor: pointer;
   }
@@ -75,6 +80,7 @@
 
   &.custom-select-disabled {
     background-color: var(--bs-secondary-bg);
+    background-image: none;
     cursor: not-allowed;
   }
 

@@ -25,46 +25,38 @@
             <h5 class="mb-4">Información personal</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="primerNombre" [class.is-invalid]="misDatosForm.get('primerNombre')?.invalid && misDatosForm.get('primerNombre')?.touched" [class.is-valid]="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" (blur)="validaInput('primerNombre');">
+              <input type="text" class="form-control" formControlName="primerNombre" [class.is-invalid]="misDatosForm.get('primerNombre')?.invalid && misDatosForm.get('primerNombre')?.dirty" 
+              [class.is-valid]="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.dirty" (blur)="validaInput('primerNombre');">
               <label for="primerNombre">Primera nombre</label>
-              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.required && misDatosForm.get('primerNombre')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
-              </div>
-              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
-                <span>El primer nombre es válido.</span>
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="segundoNombre">
+              <input type="text" class="form-control" formControlName="segundoNombre" [class.is-invalid]="misDatosForm.get('segundoNombre')?.invalid && misDatosForm.get('segundoNombre')?.dirty" 
+              [class.is-valid]="misDatosForm.get('segundoNombre')?.valid && misDatosForm.get('segundoNombre')?.dirty" (blur)="validaInput('segundoNombre');">
               <label for="segundoNombre">Segundo nombre</label>
-              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+              <div *ngIf="misDatosForm.get('segundoNombre')?.errors?.required && misDatosForm.get('segundoNombre')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
-              </div>
-              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
-                <span>El segundo nombre es válido.</span>
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="apellidoPaterno">
+              <input type="text" class="form-control" formControlName="apellidoPaterno" [class.is-invalid]="misDatosForm.get('apellidoPaterno')?.invalid && misDatosForm.get('apellidoPaterno')?.dirty" 
+              [class.is-valid]="misDatosForm.get('apellidoPaterno')?.valid && misDatosForm.get('apellidoPaterno')?.dirty" (blur)="validaInput('apellidoPaterno');">
               <label for="apellidoPaterno">Apellido Paterno</label>
-              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+              <div *ngIf="misDatosForm.get('apellidoPaterno')?.errors?.required && misDatosForm.get('apellidoPaterno')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
-              </div>
-              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
-                <span>El apellido paterno es válido.</span>
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="apellidoMaterno">
+              <input type="text" class="form-control" formControlName="apellidoMaterno" [class.is-invalid]="misDatosForm.get('apellidoMaterno')?.invalid && misDatosForm.get('apellidoMaterno')?.dirty" 
+              [class.is-valid]="misDatosForm.get('apellidoMaterno')?.valid && misDatosForm.get('apellidoMaterno')?.dirty" (blur)="validaInput('apellidoMaterno');">
               <label for="apellidoMaterno">Apellido Materno</label>
-              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+              <div *ngIf="misDatosForm.get('apellidoMaterno')?.errors?.required && misDatosForm.get('apellidoMaterno')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
-              </div>
-              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
-                <span>El apellido es válido.</span>
               </div>
             </div>
 
@@ -89,14 +81,32 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control celular" formControlName="celular" (keypress)="soloNumeros($event)" maxlength="9">
+              <input type="text" class="form-control celular" formControlName="celular" 
+              [class.is-invalid]="inputErrorCelularVacio || (misDatosForm.get('celular')?.invalid && misDatosForm.get('celular')?.touched)" 
+              [class.is-valid]="misDatosForm.get('celular')?.valid && misDatosForm.get('celular')?.touched && misDatosForm.get('celular')?.value" 
+              (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
               <label for="celular">Celular</label>
               <div class="prefijo-chile"></div>
+              <div *ngIf="inputErrorCelularVacio && misDatosForm.get('celular')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="inputErrorCelularInvalido && misDatosForm.get('celular')?.dirty" class="invalid-feedback">
+                <span>El número ingresado no es válido.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="telefono" (keypress)="soloNumeros($event)" maxlength="9">
-              <label for="telefono">Teléfono Fijo</label>
+              <input type="text" class="form-control" formControlName="telefono" 
+              [class.is-invalid]="inputErrorTelefonoVacio || (misDatosForm.get('telefono')?.invalid && misDatosForm.get('telefono')?.touched)" 
+              [class.is-valid]="misDatosForm.get('telefono')?.valid && misDatosForm.get('telefono')?.touched && misDatosForm.get('telefono')?.value" 
+              (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
+              <label for="telefono">Teléfono</label>
+              <div *ngIf="inputErrorTelefonoVacio && misDatosForm.get('telefono')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="inputErrorTelefonoInvalido && misDatosForm.get('telefono')?.dirty" class="invalid-feedback">
+                <span>El número ingresado no es válido.</span>
+              </div>
             </div>
 
           </div>
@@ -107,18 +117,30 @@
             <h5 class="mb-4">Dirección personal</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="callePersonal">
+              <input type="text" class="form-control" formControlName="callePersonal" [class.is-invalid]="misDatosForm.get('callePersonal')?.invalid && misDatosForm.get('callePersonal')?.dirty" 
+              [class.is-valid]="misDatosForm.get('callePersonal')?.valid && misDatosForm.get('callePersonal')?.dirty" (blur)="validaInput('callePersonal');">
               <label for="callePersonal">Calle</label>
+              <div *ngIf="misDatosForm.get('callePersonal')?.errors?.required && misDatosForm.get('callePersonal')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="numeroPersonal">
+              <input type="text" class="form-control" formControlName="numeroPersonal" [class.is-invalid]="misDatosForm.get('numeroPersonal')?.invalid && misDatosForm.get('numeroPersonal')?.dirty" 
+              [class.is-valid]="misDatosForm.get('numeroPersonal')?.valid && misDatosForm.get('numeroPersonal')?.dirty" (blur)="validaInput('numeroPersonal');" (keypress)="soloNumeros($event)">
               <label for="numeroPersonal">Número</label>
+              <div *ngIf="misDatosForm.get('numeroPersonal')?.errors?.required && misDatosForm.get('numeroPersonal')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="deptoVillaBlockPersonal">
+              <input type="text" class="form-control" formControlName="deptoVillaBlockPersonal" [class.is-invalid]="misDatosForm.get('deptoVillaBlockPersonal')?.invalid && misDatosForm.get('deptoVillaBlockPersonal')?.dirty" 
+              [class.is-valid]="misDatosForm.get('deptoVillaBlockPersonal')?.valid && misDatosForm.get('deptoVillaBlockPersonal')?.dirty" (blur)="validaInput('deptoVillaBlockPersonal');">
               <label for="deptoVillaBlockPersonal">Depto / Villa / Block</label>
+              <div *ngIf="misDatosForm.get('deptoVillaBlockPersonal')?.errors?.required && misDatosForm.get('deptoVillaBlockPersonal')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
@@ -139,18 +161,30 @@
             <h5 class="mb-4">Dirección comercial</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="calleComercial">
+              <input type="text" class="form-control" formControlName="calleComercial" [class.is-invalid]="misDatosForm.get('calleComercial')?.invalid && misDatosForm.get('calleComercial')?.dirty" 
+              [class.is-valid]="misDatosForm.get('calleComercial')?.valid && misDatosForm.get('calleComercial')?.dirty" (blur)="validaInput('calleComercial');">
               <label for="calleComercial">Calle</label>
+              <div *ngIf="misDatosForm.get('calleComercial')?.errors?.required && misDatosForm.get('calleComercial')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="numeroComercial">
-              <label for="numeroComercial">Número</label>
+              <input type="text" class="form-control" formControlName="numeroComercial" [class.is-invalid]="misDatosForm.get('numeroComercial')?.invalid && misDatosForm.get('numeroComercial')?.dirty" 
+              [class.is-valid]="misDatosForm.get('numeroComercial')?.valid && misDatosForm.get('numeroComercial')?.dirty" (blur)="validaInput('numeroComercial');">
+              <label for="numeroComercial" (keypress)="soloNumeros($event)">Número</label>
+              <div *ngIf="misDatosForm.get('numeroComercial')?.errors?.required && misDatosForm.get('numeroComercial')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="oficina">
+              <input type="text" class="form-control" formControlName="oficina" [class.is-invalid]="misDatosForm.get('oficina')?.invalid && misDatosForm.get('oficina')?.dirty" 
+              [class.is-valid]="misDatosForm.get('oficina')?.valid && misDatosForm.get('oficina')?.dirty" (blur)="validaInput('oficina');">
               <label for="oficina">Oficina</label>
+              <div *ngIf="misDatosForm.get('oficina')?.errors?.required && misDatosForm.get('oficina')?.dirty" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
