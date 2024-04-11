@@ -2,11 +2,15 @@ import { Component } from '@angular/core';
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+// Model
+import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna.model';
+
 // Pipe
 import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-datos-usuario',
@@ -14,7 +18,23 @@ import { DatePipe } from '@angular/common';
 })
 export class DatosUsuarioComponent {
 
+  listaRegiones: any[] = [];
+  listaCiudad: any[] = [];
+  listaComuna: any[] = [];
+
+  regionSeleccionada: any | undefined;
+  ciudadSeleccionada: any | undefined;
+  comunaSeleccionada: any | undefined;
+  regionSeleccionadaComercial: any | undefined;
+  ciudadSeleccionadaComercial: any | undefined;
+  comunaSeleccionadaComercial: any | undefined;
+
+  regionInvalida: any;
+  ciudadInvalida: any;
+  comunaInvalida: any;
+
   misDatosForm: FormGroup = new FormGroup({});
+  submitted: boolean = false;
   //datosUsuario: any;
   primerNombre: string | undefined;
   segundoNombre: string | undefined;
@@ -48,10 +68,12 @@ export class DatosUsuarioComponent {
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
+    this.listasGeograficas();
     this.misDatosForm = new FormGroup({
       primerNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
       segundoNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -104,6 +126,8 @@ export class DatosUsuarioComponent {
         comunaComercial: datos.datosUsuario.comunaComercial
       });
     });
+
+
   }
 
   // Boton editar datos
@@ -121,6 +145,34 @@ export class DatosUsuarioComponent {
       return false;
     }
     return true;
+  }
+
+  // Array de regiones, ciudades y comunas
+  listasGeograficas(): void {
+    this.http.get<RegionesCiudadComuna>('http://localhost:4200/assets/json/regiones-ciudad-comuna.json').subscribe(data => {
+      this.listaRegiones = data.listaRegiones;
+      this.listaCiudad = data.listaCiudad;
+      this.listaComuna = data.listaComuna;
+      console.log(this.listaRegiones);
+
+      const regionPersonal = this.listaRegiones.find(region => region.value === '10');
+      this.regionSeleccionada = regionPersonal ? regionPersonal.label : null;
+
+      const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.value === '14');
+      this.ciudadSeleccionada = ciudadPersonal ? ciudadPersonal.label : null;
+
+      const comunaPersonal = this.listaComuna.find(comuna => comuna.value === '49');
+      this.comunaSeleccionada = comunaPersonal ? comunaPersonal.label : null;
+
+      const regionComercial = this.listaRegiones.find(region => region.value === '10');
+      this.regionSeleccionadaComercial = regionComercial ? regionComercial.label : null;
+
+      const ciudadComercial = this.listaCiudad.find(ciudad => ciudad.value === '14');
+      this.ciudadSeleccionadaComercial = ciudadComercial ? ciudadComercial.label : null;
+
+      const comunaComercial = this.listaComuna.find(comuna => comuna.value === '49');
+      this.comunaSeleccionadaComercial = comunaComercial ? comunaComercial.label : null;
+    });
   }
 
 }

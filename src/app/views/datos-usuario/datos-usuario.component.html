@@ -103,18 +103,15 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="regionPersonal">
-              <label for="regionPersonal">Región</label>
+              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionada" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="ciudadPersonal">
-              <label for="ciudadPersonal">Ciudad</label>
+              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="comunaPersonal">
-              <label for="comunaPersonal">Comuna</label>
+              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionada" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'"></custom-select>
             </div>
 
           </div>
@@ -138,18 +135,15 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="regionComercial">
-              <label for="regionComercial">Región</label>
+              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="ciudadComercial">
-              <label for="ciudadComercial">Ciudad</label>
+              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="comunaComercial">
-              <label for="comunaComercial">Comuna</label>
+              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'"></custom-select>
             </div>
 
           </div>
