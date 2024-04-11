@@ -129,8 +129,10 @@ export class EditarDestinatarioComponent implements OnInit{
       cuentaDestinatario: new FormControl('', [Validators.required, this.validaTipoCuenta()]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required]),
       emailDestinatario: new FormControl('', [Validators.required]),
-      celularDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),
-      telefonoDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),
+      celularDestinatario: new FormControl('', [Validators.required]),
+      telefonoDestinatario: new FormControl('', [Validators.required]),
+      /*celularDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),
+      telefonoDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),*/
     });
 
     this.agendaService.idDestinatarioAeditar.subscribe(id => {
@@ -381,13 +383,13 @@ export class EditarDestinatarioComponent implements OnInit{
     }
   }
 
-  validaLongitudTelefonos(): ValidatorFn {
+  /*validaLongitudTelefonos(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const tieneValor = control.value && control.value.trim() !== '';
       const longitudValida = tieneValor ? control.value.length <= 11 : true;
       return longitudValida ? null : { 'longitudInvalida': { value: control.value } };
     };
-  }
+  }*/
   
   // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {

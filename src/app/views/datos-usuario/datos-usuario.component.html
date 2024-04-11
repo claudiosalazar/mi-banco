@@ -144,15 +144,24 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionada" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaPersonal" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionPersonalInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionRegionPersonal()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('regionPersonal')?.errors?.['regionPersonalInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadPersonalInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionCiudadPersonal()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('ciudadPersonal')?.errors?.['ciudadPersonalInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una ciudad.
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionada" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('comunaPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaPersonalInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionComunaPersonal()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('comunaPersonal')?.errors?.['comunaPersonalInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una comuna.
+              </div>
             </div>
 
           </div>
@@ -188,15 +197,24 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegionesComercial" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionComercialInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionRegionComercial()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('regionComercial')?.errors?.['regionComercialInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudadComercial" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadComercialInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionCiudadComercial()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('ciudadComercial')?.errors?.['ciudadComercialInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select [control]="misDatosForm.get('comunaComercial')" [options]="listaComunaComercial" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaComercialInvalida'" [customDisabled]="customSelectDisabled" (click)="activarSeleccionComunaComercial()"></custom-select>
+              <div *ngIf="submitted && misDatosForm.get('comunaComercial')?.errors?.['comunaComercialInvalida']" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
             </div>
 
           </div>
@@ -225,7 +243,7 @@
 
           <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar">
             <button type="button" class="btn btn-secondary me-0 me-md-3" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion">Guardar datos</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" (click)="validaEnvioDatos()">Guardar datos</button>
           </div>
         </div>
      </form>
