@@ -103,15 +103,15 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionada" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionada" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionada" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionada" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
           </div>
@@ -135,15 +135,15 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [errorKey]="'regionInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [errorKey]="'ciudadInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'"></custom-select>
+              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [errorKey]="'comunaInvalida'" [customDisabled]="customSelectDisabled"></custom-select>
             </div>
 
           </div>

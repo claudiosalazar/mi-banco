@@ -62,6 +62,7 @@ export class DatosUsuarioComponent {
   mensajeInformativo = false;
   separadorBotonGuardar = false;
   botonGuardar = false;
+  customSelectDisabled: boolean = true;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -136,6 +137,7 @@ export class DatosUsuarioComponent {
     this.mensajeInformativo = true;
     this.separadorBotonGuardar = true;
     this.botonGuardar = true;
+    this.customSelectDisabled = false;
   }
 
   // Solo permite ingresar números en los campos de texto

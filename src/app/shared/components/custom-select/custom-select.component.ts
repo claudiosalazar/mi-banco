@@ -14,6 +14,7 @@ export class CustomSelectComponent implements OnInit {
   @Input() labelSelect: string | undefined;
   @Input() zIndex: number | undefined;
   @Input() selectedValue: any;
+  @Input() customDisabled: boolean = false;
   private _selectedOption: any;
   private _isOpen = false;
 
