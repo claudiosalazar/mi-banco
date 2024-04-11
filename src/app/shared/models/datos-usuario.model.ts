@@ -5,7 +5,6 @@ export interface DatosUsuarioActual {
     apellidoPaterno: string,
     apellidoMaterno: string,
     rut: string,
-    fechaNacimiento: string,
     email: string,
     emailComercial: string,
     celular: string,

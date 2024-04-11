@@ -25,33 +25,52 @@
             <h5 class="mb-4">Información personal</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="primerNombre">
+              <input type="text" class="form-control" formControlName="primerNombre" [class.is-invalid]="misDatosForm.get('primerNombre')?.invalid && misDatosForm.get('primerNombre')?.touched" [class.is-valid]="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" (blur)="validaInput('primerNombre');">
               <label for="primerNombre">Primera nombre</label>
+              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
+                <span>El primer nombre es válido.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control" formControlName="segundoNombre">
               <label for="segundoNombre">Segundo nombre</label>
+              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
+                <span>El segundo nombre es válido.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control" formControlName="apellidoPaterno">
               <label for="apellidoPaterno">Apellido Paterno</label>
+              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
+                <span>El apellido paterno es válido.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control" formControlName="apellidoMaterno">
               <label for="apellidoMaterno">Apellido Materno</label>
+              <div *ngIf="misDatosForm.get('primerNombre')?.errors?.['primerNombre'] && misDatosForm.get('primerNombre')?.touched" class="invalid-feedback">
+                <span>El campo no puede quedar vacio.</span>
+              </div>
+              <div *ngIf="misDatosForm.get('primerNombre')?.valid && misDatosForm.get('primerNombre')?.touched" class="valid-feedback">
+                <span>El apellido es válido.</span>
+              </div>
             </div>
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control" formControlName="rut">
               <label for="rut">Rut</label>
-            </div>
-
-            <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="fechaNacimiento">
-              <label for="fechaNacimiento">Fecha de Nacimiento</label>
             </div>
 
           </div>

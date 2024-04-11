@@ -64,6 +64,9 @@ export class DatosUsuarioComponent {
   botonGuardar = false;
   customSelectDisabled: boolean = true;
 
+  inputValido: any;
+  inputVacio: any;
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private rutPipe: RutPipe,
@@ -80,8 +83,7 @@ export class DatosUsuarioComponent {
       segundoNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
       apellidoPaterno: new FormControl({value: '', disabled: true}, [Validators.required]),
       apellidoMaterno: new FormControl({value: '', disabled: true}, [Validators.required]),
-      rut: new FormControl({value: '', disabled: true}, [Validators.required]),
-      fechaNacimiento: new FormControl({value: '', disabled: true}, [Validators.required]),
+      rut: new FormControl({value: '', disabled: true}),
       email: new FormControl({value: '', disabled: true}, [Validators.required]),
       emailComercial: new FormControl({value: '', disabled: true}),
       celular: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -108,7 +110,6 @@ export class DatosUsuarioComponent {
         apellidoPaterno: datos.datosUsuario.apellidoPaterno,
         apellidoMaterno: datos.datosUsuario.apellidoMaterno,
         rut: this.rutPipe.transform(datos.datosUsuario.rut),
-        fechaNacimiento: this.datePipe.transform(datos.datosUsuario.fechaNacimiento, 'dd/MM/yyyy'),
         email: datos.datosUsuario.email,
         emailComercial: datos.datosUsuario.emailComercial,
         celular: this.celularPipe.transform(datos.datosUsuario.celular),
@@ -134,6 +135,7 @@ export class DatosUsuarioComponent {
   // Boton editar datos
   editarDatos() {
     this.misDatosForm.enable();
+    this.misDatosForm.get('rut')?.disable();
     this.mensajeInformativo = true;
     this.separadorBotonGuardar = true;
     this.botonGuardar = true;
@@ -176,6 +178,19 @@ export class DatosUsuarioComponent {
       this.comunaSeleccionadaComercial = comunaComercial ? comunaComercial.label : null;
     });
   }
+
+  validaInput(controlName: string): void {
+    const control = this.misDatosForm.get(controlName);
+  
+    if (control?.touched) {
+      if (control?.value.trim() === '') {
+        control.setErrors({ [controlName]: true });
+      } else {
+        control.setErrors(null);
+      }
+    }
+  }
+
 
 }
 
