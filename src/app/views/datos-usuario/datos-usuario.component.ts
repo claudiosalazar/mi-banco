@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Model
 import { RegionesCiudadComuna, RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciudad-comuna.model';
@@ -10,8 +10,6 @@ import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
 import { HttpClient } from '@angular/common/http';
-import { skip } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-datos-usuario',
@@ -26,6 +24,7 @@ export class DatosUsuarioComponent {
   listaCiudadComercial: any[] = [];
   listaComunaComercial: any[] = [];
 
+  regionSeleccionadaPersonalInicial: any | undefined;
   regionSeleccionadaPersonal: any | undefined;
   ciudadSeleccionadaPersonal: any | undefined;
   comunaSeleccionadaPersonal: any | undefined;
@@ -34,45 +33,42 @@ export class DatosUsuarioComponent {
   ciudadSeleccionadaComercial: any | undefined;
   comunaSeleccionadaComercial: any | undefined;
 
-  regionPersonalInvalida = false;
-  ciudadPersonalInvalida = false;
-  comunaPersonalInvalida = false;
-
-  regionComercialInvalida = false;
-  ciudadComercialInvalida = false;
-  comunaComercialInvalida = false;
-  
-
   misDatosForm: FormGroup = new FormGroup({});
   submitted: boolean = false;
   //datosUsuario: any;
-  primerNombre: string | undefined;
-  segundoNombre: string | undefined;
-  apellidoPaterno: string | undefined;
-  apellidoMaterno: string | undefined;
-  rut: string | undefined;
-  fechaNacimiento: string | undefined;
-  email: string | undefined;
-  emailComercial: string | undefined;
-  celular: string | undefined;
-  telefono: string | undefined;
-  callePersonal: string | undefined;
-  numeroPersonal: string | undefined;
-  deptoVillaBlockPersonal: string | undefined;
-  regionPersonal: string | undefined;
-  ciudadPersonal: string | undefined;
-  comunaPersonal: string | undefined;
-  calleComercial: string | undefined;
-  numeroComercial: string | undefined;
-  oficina: string | undefined;
-  regionComercial: string | undefined;
-  ciudadComercial: string | undefined;
-  comunaComercial: string | undefined;
+  primerNombre: any;
+  segundoNombre: any;
+  apellidoPaterno: any;
+  apellidoMaterno: any;
+  rut: any;
+  fechaNacimiento: any;
+  email: any;
+  emailComercial: any;
+  celular: any;
+  telefono: any;
+  callePersonal: any;
+  numeroPersonal: any;
+  deptoVillaBlockPersonal: any;
+  regionPersonal: any;
+  ciudadPersonal: any;
+  comunaPersonal: any;
+  calleComercial: any;
+  numeroComercial: any;
+  oficina: any;
+  regionComercial: any;
+  ciudadComercial: any;
+  comunaComercial: any;
 
   mensajeInformativo = false;
   separadorBotonGuardar = false;
   botonGuardar = false;
   customSelectDisabled: boolean = true;
+
+  customRegionPersonalValido: boolean | null = null;
+  customRegionPersonalInvalido: boolean | null = null;
+  customRegionPersonalInvalidoMensaje: boolean | null = null;
+
+  valorInicial: string | null = null;
 
   inputValido: any;
   inputVacio: any;
@@ -89,8 +85,6 @@ export class DatosUsuarioComponent {
   inputErrorTelefonoInvalido: any;
   inputErrorTelefonoVacio: any;
   inputTelefonoValido: any;
-
-  formChanged = false;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -116,15 +110,15 @@ export class DatosUsuarioComponent {
       callePersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
       numeroPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
       deptoVillaBlockPersonal: new FormControl({value: '', disabled: true}, [Validators.required]),
-      regionPersonal: new FormControl('', [Validators.required, this.validaRegionPersonal()]),
-      ciudadPersonal: new FormControl('', [Validators.required, this.validaCiudadPersonal()]),
-      comunaPersonal: new FormControl('', [Validators.required, this.validaComunaPersonal()]),
+      regionPersonal: new FormControl('', [Validators.required]),
+      ciudadPersonal: new FormControl('', [Validators.required]),
+      comunaPersonal: new FormControl('', [Validators.required]),
       calleComercial: new FormControl({value: '', disabled: true}, [Validators.required]),
       numeroComercial: new FormControl({value: '', disabled: true}, [Validators.required]),
       oficina: new FormControl({value: '', disabled: true}, [Validators.required]),
-      regionComercial: new FormControl('', [Validators.required, this.validaRegionComercial()]),
-      ciudadComercial: new FormControl('', [Validators.required, this.validaCiudadComercial()]),
-      comunaComercial: new FormControl('', [Validators.required, this.validaComunaComercial()]),
+      regionComercial: new FormControl('', [Validators.required]),
+      ciudadComercial: new FormControl('', [Validators.required]),
+      comunaComercial: new FormControl('', [Validators.required]),
       //envioCorrespondencia: new FormControl(''),
     });
 
@@ -156,54 +150,45 @@ export class DatosUsuarioComponent {
         ciudadComercial: datos.datosUsuario.ciudadComercial,
         comunaComercial: datos.datosUsuario.comunaComercial
       });
+      const region = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);
+      this.regionSeleccionadaPersonalInicial = region?.value;
+      // console.log(this.regionSeleccionadaPersonalInicial);
     });
-
+    
   }
 
   activarSeleccionRegionPersonal(): void {
     this.misDatosForm.get('regionPersonal')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.regionSeleccionadaPersonal = this.listaRegiones.find(regionPersonal => regionPersonal.value === value)?.label;
     });
   }
 
   activarSeleccionCiudadPersonal(): void {
     this.misDatosForm.get('ciudadPersonal')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.ciudadSeleccionadaPersonal = this.listaCiudad.find(ciudadPersonal => ciudadPersonal.value === value)?.label;
     });
   }
 
   activarSeleccionComunaPersonal(): void {
     this.misDatosForm.get('comunaPersonal')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.comunaSeleccionadaPersonal = this.listaComuna.find(comunaPersonal => comunaPersonal.value === value)?.label;
     });
   }
 
   activarSeleccionRegionComercial(): void {
     this.misDatosForm.get('regionComercial')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.regionSeleccionadaComercial = this.listaRegionesComercial.find(regionComercial => regionComercial.value === value)?.label;
     });
   }
 
   activarSeleccionCiudadComercial(): void {
     this.misDatosForm.get('ciudadComercial')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.ciudadSeleccionadaComercial = this.listaCiudadComercial.find(ciudadComercial => ciudadComercial.value === value)?.label;
     });
   }
 
   activarSeleccionComunaComercial(): void {
     this.misDatosForm.get('comunaComercial')?.valueChanges.subscribe(value => {
-      // Aquí puedes manejar el nuevo valor seleccionado
-      console.log('Nuevo valor seleccionado:', value);
       this.comunaSeleccionadaComercial = this.listaComunaComercial.find(comunaComercial => comunaComercial.value === value)?.label;
     });
   }
@@ -216,6 +201,14 @@ export class DatosUsuarioComponent {
     this.separadorBotonGuardar = true;
     this.botonGuardar = true;
     this.customSelectDisabled = false;
+    this.activarSeleccionRegionPersonal();
+    this.activarSeleccionCiudadPersonal();
+    this.activarSeleccionComunaPersonal();
+    this.activarSeleccionRegionComercial();
+    this.activarSeleccionCiudadComercial();
+    this.activarSeleccionComunaComercial();
+
+    this.observarCambiosRegionPersonal();
   }
 
   // Solo permite ingresar números en los campos de texto
@@ -233,7 +226,6 @@ export class DatosUsuarioComponent {
       this.listaRegiones = data.listaRegiones;
       this.listaCiudad = data.listaCiudad;
       this.listaComuna = data.listaComuna;
-      //console.log(this.listaRegionesComercial);
 
       const regionPersonal = this.listaRegiones.find(region => region.value === '10');
       this.regionSeleccionadaPersonal = regionPersonal ? regionPersonal.label : null;
@@ -368,85 +360,28 @@ export class DatosUsuarioComponent {
     }
   }
 
-  validaRegionPersonal(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0';
-      return isInvalid ? { 'regionPersonalInvalida': { value: control.value } } : null;
-    };
+  nuevoValorRegionPersonal: string | null = null;
+
+  observarCambiosRegionPersonal(): void {
+    const control = this.misDatosForm.get('regionPersonal');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorRegionPersonal = value;
+      if (this.nuevoValorRegionPersonal !== this.regionSeleccionadaPersonalInicial) {
+        this.validaRegionPersonal();
+      }
+    });
   }
-
-  validaCiudadPersonal(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '00';
-      return isInvalid ? { 'ciudadPersonalInvalida': { value: control.value } } : null;
-    };
-  }
-
-  validaComunaPersonal(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '000';
-      return isInvalid ? { 'comunaPersonalInvalida': { value: control.value } } : null;
-    };
-  }
-
-  validaRegionComercial(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0000';
-      return isInvalid ? { 'regionComercialInvalida': { value: control.value } } : null;
-    };
-  }
-
-  validaCiudadComercial(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '00000';
-      return isInvalid ? { 'ciudadComercialInvalida': { value: control.value } } : null;
-    };
-  }
-
-  validaComunaComercial(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '000000';
-      return isInvalid ? { 'comunaComercialInvalida': { value: control.value } } : null;
-    };
-  }
-
-
-  validaEnvioDatos(): any {
-    this.submitted = true;
-    // ValidA custom-select banco
-    const regionPersonalControl = this.misDatosForm.get('regionPersonal');
-    const ciudadPersonalControl = this.misDatosForm.get('ciudadPersonal');
-    const comunaPersonalControl = this.misDatosForm.get('comunaPersonal');
-    const regionComercialControl = this.misDatosForm.get('regionComercial');
-    const ciudadComercialControl = this.misDatosForm.get('ciudadComercial');
-    const comunaComercialControl = this.misDatosForm.get('comunaComercial');
-
-    if (regionPersonalControl && regionPersonalControl.value === '0') {
-      this.regionPersonalInvalida = true;
-      console.log('Region invalida');
-      return of(null);
+  
+  validaRegionPersonal(): void {
+    if (this.nuevoValorRegionPersonal === '0') {
+      this.customRegionPersonalValido = false;
+      this.customRegionPersonalInvalido = true;
+      this.customRegionPersonalInvalidoMensaje = true;
+    } else {
+      this.customRegionPersonalValido = true;
+      this.customRegionPersonalInvalido = false;
+      this.customRegionPersonalInvalidoMensaje = false;
     }
-    if (ciudadPersonalControl && ciudadPersonalControl.value === '00') {
-      this.ciudadPersonalInvalida = true;
-      return;
-    }
-    if (comunaPersonalControl && comunaPersonalControl.value === '000') {
-      this.comunaPersonalInvalida = true;
-      return;
-    }
-    if (regionComercialControl && regionComercialControl.value === '0000') {
-      this.regionComercialInvalida = true;
-      return;
-    }
-    if (ciudadComercialControl && ciudadComercialControl.value === '00000') {
-      this.ciudadComercialInvalida = true;
-      return;
-    }
-    if (comunaComercialControl && comunaComercialControl.value === '000000') {
-      this.comunaComercialInvalida = true;
-      return;
-    }
-    
   }
 
 }

@@ -15,8 +15,13 @@ export class CustomSelectComponent implements OnInit {
   @Input() zIndex: number | undefined;
   @Input() selectedValue: any;
   @Input() customDisabled: boolean = false;
+  @Input() isValid: boolean | null = null;
+  @Input() isInvalid: boolean | null = null;
   private _selectedOption: any;
   private _isOpen = false;
+  customSelectBloqueado: any;
+
+  optionsBloqueado: true | undefined;
 
   @Input()
   set isOpen(value: boolean) {
@@ -63,6 +68,14 @@ export class CustomSelectComponent implements OnInit {
         this.selectedOption = option.label;
         this.change.emit(option.value);
       }
+    }
+
+    if (this.control) {
+      this.control.statusChanges.subscribe((status: string) => {
+        if (this.control.touched) {
+          this.isValid = status === 'VALID' ? true : false;
+        }
+      });
     }
   }
 
