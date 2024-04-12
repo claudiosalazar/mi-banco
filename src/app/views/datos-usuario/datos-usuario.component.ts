@@ -64,9 +64,42 @@ export class DatosUsuarioComponent {
   botonGuardar = false;
   customSelectDisabled: boolean = true;
 
+  // Variable para region personal
   customRegionPersonalValido: boolean | null = null;
   customRegionPersonalInvalido: boolean | null = null;
   customRegionPersonalInvalidoMensaje: boolean | null = null;
+
+  // Variable para ciudad personal
+  customCiudadPersonalValido: boolean | null = null;
+  customCiudadPersonalInvalido: boolean | null = null;
+  customCiudadPersonalInvalidoMensaje: boolean | null = null;
+
+  // Variable para comuna personal
+  customComunaPersonalValido: boolean | null = null;
+  customComunaPersonalInvalido: boolean | null = null;
+  customComunaPersonalInvalidoMensaje: boolean | null = null;
+
+  // Variable para region comercial
+  customRegionComercialValido: boolean | null = null;
+  customRegionComercialInvalido: boolean | null = null;
+  customRegionComercialInvalidoMensaje: boolean | null = null;
+
+  // Variable para ciudad comercial
+  customCiudadComercialValido: boolean | null = null;
+  customCiudadComercialInvalido: boolean | null = null;
+  customCiudadComercialInvalidoMensaje: boolean | null = null;
+
+  // Variable para comuna comercial
+  customComunaComercialValido: boolean | null = null;
+  customComunaComercialInvalido: boolean | null = null;
+  customComunaComercialInvalidoMensaje: boolean | null = null;
+
+  nuevoValorRegionPersonal: string | null = null;
+  nuevoValorCiudadPersonal: string | null = null;
+  nuevoValorComunaPersonal: string | null = null;
+  nuevoValorRegionComercial: string | null = null;
+  nuevoValorCiudadComercial: string | null = null;
+  nuevoValorComunaComercial: string | null = null;
 
   valorInicial: string | null = null;
 
@@ -360,8 +393,6 @@ export class DatosUsuarioComponent {
     }
   }
 
-  nuevoValorRegionPersonal: string | null = null;
-
   observarCambiosRegionPersonal(): void {
     const control = this.misDatosForm.get('regionPersonal');
     control?.valueChanges.subscribe(value => {
@@ -372,6 +403,7 @@ export class DatosUsuarioComponent {
     });
   }
   
+  // Valida region personal
   validaRegionPersonal(): void {
     if (this.nuevoValorRegionPersonal === '0') {
       this.customRegionPersonalValido = false;
@@ -381,6 +413,71 @@ export class DatosUsuarioComponent {
       this.customRegionPersonalValido = true;
       this.customRegionPersonalInvalido = false;
       this.customRegionPersonalInvalidoMensaje = false;
+    }
+  }
+
+  // Valida ciudad personal
+  validaCiudadPersonal(): void {
+    if (this.nuevoValorCiudadPersonal === '0') {
+      this.customCiudadPersonalValido = false;
+      this.customCiudadPersonalInvalido = true;
+      this.customCiudadPersonalInvalidoMensaje = true;
+    } else {
+      this.customCiudadPersonalValido = true;
+      this.customCiudadPersonalInvalido = false;
+      this.customCiudadPersonalInvalidoMensaje = false;
+    }
+  }
+
+  // Valida comuna personal
+  validaComunaPersonal(): void {
+    if (this.nuevoValorComunaPersonal === '0') {
+      this.customComunaPersonalValido = false;
+      this.customComunaPersonalInvalido = true;
+      this.customComunaPersonalInvalidoMensaje = true;
+    } else {
+      this.customComunaPersonalValido = true;
+      this.customComunaPersonalInvalido = false;
+      this.customComunaPersonalInvalidoMensaje = false;
+    }
+  }
+
+  // Valida region comercial
+  validaRegionComercial(): void {
+    if (this.nuevoValorRegionComercial === '0') {
+      this.customRegionComercialValido = false;
+      this.customRegionComercialInvalido = true;
+      this.customRegionComercialInvalidoMensaje = true;
+    } else {
+      this.customRegionPersonalValido = true;
+      this.customRegionPersonalInvalido = false;
+      this.customRegionPersonalInvalidoMensaje = false;
+    }
+  }
+
+  // Valida ciudad comercial
+  validaCiudadComercial(): void {
+    if (this.nuevoValorCiudadComercial === '0') {
+      this.customCiudadComercialValido = false;
+      this.customCiudadComercialInvalido = true;
+      this.customCiudadComercialInvalidoMensaje = true;
+    } else {
+      this.customRegionComercialValido = true;
+      this.customRegionComercialInvalido = false;
+      this.customRegionComercialInvalidoMensaje = false;
+    }
+  }
+
+  // Valida comuna comercial
+  validaComunaComercial(): void {
+    if (this.nuevoValorComunaComercial === '0') {
+      this.customComunaComercialValido = false;
+      this.customComunaComercialInvalido = true;
+      this.customRegionComercialInvalidoMensaje = true;
+    } else {
+      this.customComunaComercialValido = true;
+      this.customComunaComercialInvalido = false;
+      this.customComunaComercialInvalidoMensaje = false;
     }
   }
 
