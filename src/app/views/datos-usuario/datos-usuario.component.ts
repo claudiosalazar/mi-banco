@@ -26,11 +26,16 @@ export class DatosUsuarioComponent {
 
   regionSeleccionadaPersonalInicial: any | undefined;
   regionSeleccionadaPersonal: any | undefined;
+  ciudadSeleccionadaPersonalInicial: any | undefined;
   ciudadSeleccionadaPersonal: any | undefined;
+  comunaSeleccionadaPersonalInicial: any | undefined;
   comunaSeleccionadaPersonal: any | undefined;
 
+  regionSeleccionadaComercialInicial: any | undefined;
   regionSeleccionadaComercial: any | undefined;
+  ciudadSeleccionadaComercialInicial: any | undefined;
   ciudadSeleccionadaComercial: any | undefined;
+  comunaSeleccionadaComercialInicial: any | undefined;
   comunaSeleccionadaComercial: any | undefined;
 
   misDatosForm: FormGroup = new FormGroup({});
@@ -183,9 +188,30 @@ export class DatosUsuarioComponent {
         ciudadComercial: datos.datosUsuario.ciudadComercial,
         comunaComercial: datos.datosUsuario.comunaComercial
       });
-      const region = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);
-      this.regionSeleccionadaPersonalInicial = region?.value;
-      // console.log(this.regionSeleccionadaPersonalInicial);
+
+      // captura valor inicial de region personal
+      const regionPersonal = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);
+      this.regionSeleccionadaPersonalInicial = regionPersonal?.value;
+
+      // captura valor inicial de ciudad personal
+      const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.label === datos.datosUsuario.ciudadPersonal);
+      this.ciudadSeleccionadaPersonalInicial = ciudadPersonal?.value;
+
+      // captura valor inicial de comuna personal
+      const comunaPersonal = this.listaComuna.find(comuna => comuna.label === datos.datosUsuario.comunaPersonal);
+      this.comunaSeleccionadaPersonalInicial = comunaPersonal?.value;
+
+      // captura valor inicial de region comercial
+      const regionComercial = this.listaRegionesComercial.find(region => region.label === datos.datosUsuario.regionComercial);
+      this.regionSeleccionadaComercialInicial = regionComercial?.value;
+
+      // captura valor inicial de ciudad comercial
+      const ciudadComercial = this.listaCiudadComercial.find(ciudad => ciudad.label === datos.datosUsuario.ciudadComercial);
+      this.ciudadSeleccionadaComercialInicial = ciudadComercial?.value;
+
+      // captura valor inicial de comuna comercial
+      const comunaComercial = this.listaComunaComercial.find(comuna => comuna.label === datos.datosUsuario.comunaComercial);
+      this.comunaSeleccionadaComercialInicial = comunaComercial?.value;
     });
     
   }
@@ -242,6 +268,11 @@ export class DatosUsuarioComponent {
     this.activarSeleccionComunaComercial();
 
     this.observarCambiosRegionPersonal();
+    this.observarCambiosCiudadPersonal();
+    this.observarCambiosComunaPersonal();
+    this.observarCambiosRegionComercial();
+    this.observarCambiosCiudadComercial();
+    this.observarCambiosComunaComercial();
   }
 
   // Solo permite ingresar números en los campos de texto
@@ -402,6 +433,56 @@ export class DatosUsuarioComponent {
       }
     });
   }
+
+  observarCambiosCiudadPersonal(): void {
+    const control = this.misDatosForm.get('ciudadPersonal');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorCiudadPersonal = value;
+      if (this.nuevoValorCiudadPersonal !== this.ciudadSeleccionadaPersonalInicial) {
+        this.validaCiudadPersonal();
+      }
+    });
+  }
+
+  observarCambiosComunaPersonal(): void {
+    const control = this.misDatosForm.get('comunaPersonal');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorComunaPersonal = value;
+      if (this.nuevoValorComunaPersonal !== this.comunaSeleccionadaPersonalInicial) {
+        this.validaComunaPersonal();
+      }
+    });
+  }
+
+  observarCambiosRegionComercial(): void {
+    const control = this.misDatosForm.get('regionComercial');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorRegionComercial = value;
+      if (this.nuevoValorRegionComercial !== this.regionSeleccionadaComercialInicial) {
+        this.validaRegionComercial();
+      }
+    });
+  }
+
+  observarCambiosCiudadComercial(): void {
+    const control = this.misDatosForm.get('ciudadComercial');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorCiudadComercial = value;
+      if (this.nuevoValorCiudadComercial !== this.ciudadSeleccionadaComercialInicial) {
+        this.validaCiudadComercial();
+      }
+    });
+  }
+
+  observarCambiosComunaComercial(): void {
+    const control = this.misDatosForm.get('comunaComercial');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorComunaComercial = value;
+      if (this.nuevoValorComunaComercial !== this.comunaSeleccionadaComercialInicial) {
+        this.validaComunaComercial();
+      }
+    });
+  }
   
   // Valida region personal
   validaRegionPersonal(): void {
@@ -418,7 +499,7 @@ export class DatosUsuarioComponent {
 
   // Valida ciudad personal
   validaCiudadPersonal(): void {
-    if (this.nuevoValorCiudadPersonal === '0') {
+    if (this.nuevoValorCiudadPersonal === '00') {
       this.customCiudadPersonalValido = false;
       this.customCiudadPersonalInvalido = true;
       this.customCiudadPersonalInvalidoMensaje = true;
@@ -431,7 +512,7 @@ export class DatosUsuarioComponent {
 
   // Valida comuna personal
   validaComunaPersonal(): void {
-    if (this.nuevoValorComunaPersonal === '0') {
+    if (this.nuevoValorComunaPersonal === '000') {
       this.customComunaPersonalValido = false;
       this.customComunaPersonalInvalido = true;
       this.customComunaPersonalInvalidoMensaje = true;
@@ -444,23 +525,10 @@ export class DatosUsuarioComponent {
 
   // Valida region comercial
   validaRegionComercial(): void {
-    if (this.nuevoValorRegionComercial === '0') {
+    if (this.nuevoValorRegionComercial === '0000') {
       this.customRegionComercialValido = false;
       this.customRegionComercialInvalido = true;
       this.customRegionComercialInvalidoMensaje = true;
-    } else {
-      this.customRegionPersonalValido = true;
-      this.customRegionPersonalInvalido = false;
-      this.customRegionPersonalInvalidoMensaje = false;
-    }
-  }
-
-  // Valida ciudad comercial
-  validaCiudadComercial(): void {
-    if (this.nuevoValorCiudadComercial === '0') {
-      this.customCiudadComercialValido = false;
-      this.customCiudadComercialInvalido = true;
-      this.customCiudadComercialInvalidoMensaje = true;
     } else {
       this.customRegionComercialValido = true;
       this.customRegionComercialInvalido = false;
@@ -468,12 +536,25 @@ export class DatosUsuarioComponent {
     }
   }
 
+  // Valida ciudad comercial
+  validaCiudadComercial(): void {
+    if (this.nuevoValorCiudadComercial === '00000') {
+      this.customCiudadComercialValido = false;
+      this.customCiudadComercialInvalido = true;
+      this.customCiudadComercialInvalidoMensaje = true;
+    } else {
+      this.customCiudadComercialValido = true;
+      this.customCiudadComercialInvalido = false;
+      this.customCiudadComercialInvalidoMensaje = false;
+    }
+  }
+
   // Valida comuna comercial
   validaComunaComercial(): void {
-    if (this.nuevoValorComunaComercial === '0') {
+    if (this.nuevoValorComunaComercial === '000000') {
       this.customComunaComercialValido = false;
       this.customComunaComercialInvalido = true;
-      this.customRegionComercialInvalidoMensaje = true;
+      this.customComunaComercialInvalidoMensaje = true;
     } else {
       this.customComunaComercialValido = true;
       this.customComunaComercialInvalido = false;
