@@ -50,7 +50,7 @@
   
       <!-- banco -->
       <div class="form-floating mb-4">
-        <custom-select-reactivo [control]="crearDestinatarioForm.get('bancoDestinatario')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></custom-select-reactivo>
+        <custom-select-reactivo [control]="crearDestinatarioForm.get('bancoDestinatario')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></custom-select-reactivo>
         <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
           Debes seleccionar un banco.
         </div>
@@ -58,7 +58,7 @@
   
       <!-- Tipo cuenta -->
       <div class="form-floating mb-4">
-        <custom-select-reactivo [control]="crearDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></custom-select-reactivo>
+        <custom-select-reactivo [control]="crearDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></custom-select-reactivo>
         <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
           Debes seleccionar un tipo de cuenta.
         </div>

@@ -2,6 +2,9 @@ import { Component,  } from '@angular/core';
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+// Services
+import { FormatoEmailService } from '../../core/services/formato-email.service';
+
 // Model
 import { RegionesCiudadComuna, RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciudad-comuna.model';
 
@@ -125,6 +128,7 @@ export class DatosUsuarioComponent {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private rutPipe: RutPipe,
+    private formatoEmailService: FormatoEmailService,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe,
     private http: HttpClient
@@ -331,6 +335,23 @@ export class DatosUsuarioComponent {
     }
   }
 
+  validaEmailPersonal(emailDestinatario: string) {
+    const emailControl = this.misDatosForm.controls[emailDestinatario];
+    emailControl.markAsTouched();
+    emailControl.setValidators([Validators.required, Validators.email, this.formatoEmailService.formatoEmail]);
+    emailControl.updateValueAndValidity();
+  
+    if (emailControl.value.trim() === '') {
+      emailControl.setErrors({ 'required': true });
+    } else if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
+      emailControl.setErrors({ 'customEmail': true });
+    } else {
+      emailControl.setErrors(null);
+    }
+  
+    this.inputValidoEmail = emailControl.valid;
+  }
+
   validaCelular(): void {
     const celularControl = this.misDatosForm.get('celular');
     if (celularControl) {
@@ -373,7 +394,7 @@ export class DatosUsuarioComponent {
       }
   
       celularControl.updateValueAndValidity();
-      celularControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+      //celularControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
     }
   }
 
@@ -419,7 +440,7 @@ export class DatosUsuarioComponent {
       }
   
       telefonoControl.updateValueAndValidity();
-      telefonoControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+      //telefonoControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
     }
   }
 

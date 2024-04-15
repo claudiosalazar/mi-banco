@@ -142,5 +142,17 @@
     "email": "presi@gmail.com",
     "celular": "987654321",
     "telefono": "321654987"
+  },
+  {
+    "id": "13",
+    "nombre": "Alado Volados",
+    "apodo": "",
+    "rut": "951753698",
+    "banco": "Scotiabank Chile",
+    "tipoCuenta": "Cuenta Vista",
+    "numeroCuenta": "98765",
+    "email": "alado@gmail.com",
+    "celular": "",
+    "telefono": ""
   }
 ]
