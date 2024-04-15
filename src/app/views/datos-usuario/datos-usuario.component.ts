@@ -1,4 +1,4 @@
-import { Component,  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -13,12 +13,14 @@ import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-datos-usuario',
   templateUrl: './datos-usuario.component.html'
 })
-export class DatosUsuarioComponent {
+export class DatosUsuarioComponent implements OnInit{
 
   listaRegiones: any[] = [];
   listaCiudad: any[] = [];
@@ -125,6 +127,17 @@ export class DatosUsuarioComponent {
   inputErrorTelefonoVacio: any;
   inputTelefonoValido: any;
 
+  botonGuardarDisabled = false;
+
+  private cambiosDetectados = false;
+
+  datosUsuarioEditado: any;
+
+  // Variables modal
+  actualizarDatosUsuario = true;
+  datosGuardadosUsuarioEditado = false;
+  errorServerAlGuardarDatos = false;
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private rutPipe: RutPipe,
@@ -193,29 +206,42 @@ export class DatosUsuarioComponent {
 
       // captura valor inicial de region personal
       const regionPersonal = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);
-      this.regionSeleccionadaPersonalInicial = regionPersonal?.value;
+      this.regionSeleccionadaPersonalInicial = regionPersonal?.value && regionPersonal?.label;
+      this.regionSeleccionadaPersonal = this.regionSeleccionadaPersonalInicial;
 
       // captura valor inicial de ciudad personal
       const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.label === datos.datosUsuario.ciudadPersonal);
-      this.ciudadSeleccionadaPersonalInicial = ciudadPersonal?.value;
+      this.ciudadSeleccionadaPersonalInicial = ciudadPersonal?.value && ciudadPersonal?.label;
+      this.ciudadSeleccionadaPersonal = this.ciudadSeleccionadaPersonalInicial;
 
       // captura valor inicial de comuna personal
       const comunaPersonal = this.listaComuna.find(comuna => comuna.label === datos.datosUsuario.comunaPersonal);
-      this.comunaSeleccionadaPersonalInicial = comunaPersonal?.value;
+      this.comunaSeleccionadaPersonalInicial = comunaPersonal?.value && comunaPersonal?.label;
+      this.comunaSeleccionadaPersonal = this.comunaSeleccionadaPersonalInicial;
 
       // captura valor inicial de region comercial
       const regionComercial = this.listaRegionesComercial.find(region => region.label === datos.datosUsuario.regionComercial);
-      this.regionSeleccionadaComercialInicial = regionComercial?.value;
+      this.regionSeleccionadaComercialInicial = regionComercial?.value && regionComercial?.label;
+      this.regionSeleccionadaComercial = this.regionSeleccionadaComercialInicial;
 
       // captura valor inicial de ciudad comercial
       const ciudadComercial = this.listaCiudadComercial.find(ciudad => ciudad.label === datos.datosUsuario.ciudadComercial);
-      this.ciudadSeleccionadaComercialInicial = ciudadComercial?.value;
+      this.ciudadSeleccionadaComercialInicial = ciudadComercial?.value && ciudadComercial?.label;
+      this.ciudadSeleccionadaComercial = this.ciudadSeleccionadaComercialInicial;
 
       // captura valor inicial de comuna comercial
       const comunaComercial = this.listaComunaComercial.find(comuna => comuna.label === datos.datosUsuario.comunaComercial);
-      this.comunaSeleccionadaComercialInicial = comunaComercial?.value;
+      this.comunaSeleccionadaComercialInicial = comunaComercial?.value && comunaComercial?.label;
+      this.comunaSeleccionadaComercial = this.comunaSeleccionadaComercialInicial;
     });
     
+  }
+  
+  detectarCambios(): void {
+    this.misDatosForm.valueChanges.subscribe(() => {
+      this.botonGuardarDisabled = true;
+      console.log('Cambios detectados');
+    });
   }
 
   activarSeleccionRegionPersonal(): void {
@@ -275,6 +301,13 @@ export class DatosUsuarioComponent {
     this.observarCambiosRegionComercial();
     this.observarCambiosCiudadComercial();
     this.observarCambiosComunaComercial();
+
+    this.detectarCambios();
+  }
+
+  // Vuelve el formulario a su estado inicial
+  datosGuardados() {
+    location.reload();
   }
 
   // Solo permite ingresar números en los campos de texto
@@ -293,33 +326,24 @@ export class DatosUsuarioComponent {
       this.listaCiudad = data.listaCiudad;
       this.listaComuna = data.listaComuna;
 
-      // CORREGIR DATO DE RECION CIUDAD Y COMUNA, DEBEN ESTAR EN 0
-      const regionPersonal = this.listaRegiones.find(region => region.value === '10');
-      this.regionSeleccionadaPersonal = regionPersonal ? regionPersonal.label : null;
-
-      const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.value === '014');
-      this.ciudadSeleccionadaPersonal = ciudadPersonal ? ciudadPersonal.label : null;
-
-      const comunaPersonal = this.listaComuna.find(comuna => comuna.value === '0049');
-      this.comunaSeleccionadaPersonal = comunaPersonal ? comunaPersonal.label : null;
+      this.listaRegiones.find(region => region.value === this.regionSeleccionadaPersonal);
+      this.listaCiudad.find(ciudad => ciudad.value === this.ciudadSeleccionadaPersonal);
+      this.listaComuna.find(comuna => comuna.value === this.comunaSeleccionadaPersonal);
     });
   }
+
+
 
   listasGeograficasComercial(): void {
     this.http.get<RegionesCiudadComunaComercial>('http://localhost:4200/assets/json/regiones-ciudad-comuna.json').subscribe(data => {
       this.listaRegionesComercial = data.listaRegionesComercial;
       this.listaCiudadComercial = data.listaCiudadComercial;
       this.listaComunaComercial = data.listaComunaComercial;
-      console.log(this.listaRegionesComercial);
 
-      const regionComercial = this.listaRegionesComercial.find(regionComercial => regionComercial.value === '00010');
-      this.regionSeleccionadaComercial = regionComercial ? regionComercial.label : null;
+      this.listaRegionesComercial.find(regionComercial => regionComercial.value === this.regionSeleccionadaComercial);
+      this.listaCiudadComercial.find(ciudadComercial => ciudadComercial.value === this.ciudadSeleccionadaComercial);
+      this.listaComunaComercial.find(comunaComercial => comunaComercial.value === this.comunaSeleccionadaComercial);
 
-      const ciudadComercial = this.listaCiudadComercial.find(ciudadComercial => ciudadComercial.value === '000014');
-      this.ciudadSeleccionadaComercial = ciudadComercial ? ciudadComercial.label : null;
-
-      const comunaComercial = this.listaComunaComercial.find(comunaComercial => comunaComercial.value === '0000049');
-      this.comunaSeleccionadaComercial = comunaComercial ? comunaComercial.label : null;
     });
   }
 
@@ -447,60 +471,54 @@ export class DatosUsuarioComponent {
   observarCambiosRegionPersonal(): void {
     const control = this.misDatosForm.get('regionPersonal');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorRegionPersonal = value;
-      if (this.nuevoValorRegionPersonal !== this.regionSeleccionadaPersonalInicial) {
-        this.validaRegionPersonal();
-      }
+      const regionPersonal = this.listaRegiones.find(region => region.value === value);
+      this.nuevoValorRegionPersonal = regionPersonal ? regionPersonal.label : null;
+      this.validaRegionPersonal();
     });
   }
 
   observarCambiosCiudadPersonal(): void {
     const control = this.misDatosForm.get('ciudadPersonal');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorCiudadPersonal = value;
-      if (this.nuevoValorCiudadPersonal !== this.ciudadSeleccionadaPersonalInicial) {
-        this.validaCiudadPersonal();
-      }
+      const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.value === value);
+      this.nuevoValorCiudadPersonal = ciudadPersonal ? ciudadPersonal.label : null;
+      this.validaCiudadPersonal();
     });
   }
 
   observarCambiosComunaPersonal(): void {
     const control = this.misDatosForm.get('comunaPersonal');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorComunaPersonal = value;
-      if (this.nuevoValorComunaPersonal !== this.comunaSeleccionadaPersonalInicial) {
-        this.validaComunaPersonal();
-      }
+      const comunaPersonal = this.listaComuna.find(comuna => comuna.value === value);
+      this.nuevoValorComunaPersonal = comunaPersonal ? comunaPersonal.label : null;
+      this.validaComunaPersonal();
     });
   }
 
   observarCambiosRegionComercial(): void {
     const control = this.misDatosForm.get('regionComercial');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorRegionComercial = value;
-      if (this.nuevoValorRegionComercial !== this.regionSeleccionadaComercialInicial) {
-        this.validaRegionComercial();
-      }
+      const regionComercial = this.listaRegionesComercial.find(region => region.value === value);
+      this.nuevoValorRegionComercial = regionComercial ? regionComercial.label : null;
+      this.validaRegionComercial();
     });
   }
 
   observarCambiosCiudadComercial(): void {
     const control = this.misDatosForm.get('ciudadComercial');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorCiudadComercial = value;
-      if (this.nuevoValorCiudadComercial !== this.ciudadSeleccionadaComercialInicial) {
-        this.validaCiudadComercial();
-      }
+      const ciudadComercial = this.listaCiudadComercial.find(ciudad => ciudad.value === value);
+      this.nuevoValorCiudadComercial = ciudadComercial ? ciudadComercial.label : null;
+      this.validaCiudadComercial();
     });
   }
 
   observarCambiosComunaComercial(): void {
     const control = this.misDatosForm.get('comunaComercial');
     control?.valueChanges.subscribe(value => {
-      this.nuevoValorComunaComercial = value;
-      if (this.nuevoValorComunaComercial !== this.comunaSeleccionadaComercialInicial) {
-        this.validaComunaComercial();
-      }
+      const comunaComercial = this.listaComunaComercial.find(comuna => comuna.value === value);
+      this.nuevoValorComunaComercial = comunaComercial ? comunaComercial.label : null;
+      this.validaComunaComercial();
     });
   }
   
@@ -581,6 +599,71 @@ export class DatosUsuarioComponent {
       this.customComunaComercialInvalidoMensaje = false;
     }
   }
+
+  guardarDatosUsuario(): Observable<any> {
+    this.submitted = true;
+  
+    // Verifica que misDatosForm y datosUsuario estén definidos
+    if (!this.misDatosForm) {
+      console.log('El formulario no está definido');
+      return of(null);
+    }
+  
+    // Si el formulario es inválido, retorna un Observable que emite null
+    if (this.misDatosForm.invalid) {
+      console.log('El formulario es inválido');
+      return of(null);
+    }
+  
+    if (this.misDatosForm.valid) {
+      const formValues = this.misDatosForm.value;
+  
+      const datosUsuarioEditado = {
+        primerNombre: formValues.primerNombre,
+        segundoNombre: formValues.segundoNombre,
+        apellidoPaterno: formValues.apellidoPaterno,
+        apellidoMaterno: formValues.apellidoMaterno,
+        email: formValues.email,
+        emailComercial: formValues.emailComercial,
+        celular: formValues.celular.replace(/\s/g, ''),
+        telefono: formValues.telefono.replace(/\s/g, ''),
+        callePersonal: formValues.callePersonal,
+        numeroPersonal: formValues.numeroPersonal,
+        deptoVillaBlockPersonal: formValues.deptoVillaBlockPersonal,
+        regionPersonal: formValues.regionPersonal = this.nuevoValorRegionPersonal,
+        ciudadPersonal: formValues.ciudadPersonal = this.nuevoValorCiudadPersonal,
+        comunaPersonal: formValues.comunaPersonal = this.nuevoValorComunaPersonal,
+        calleComercial: formValues.calleComercial,
+        numeroComercial: formValues.numeroComercial,
+        oficina: formValues.oficina,
+        regionComercial: formValues.regionComercial = this.nuevoValorRegionComercial,
+        ciudadComercial: formValues.ciudadComercial = this.nuevoValorCiudadComercial,
+        comunaComercial: formValues.comunaComercial = this.nuevoValorComunaComercial,
+      };
+  
+      if (!datosUsuarioEditado) {
+        console.log('datosUsuarioEditado no está definido');
+        return of(null);
+      }
+  
+      // Envía los datos al servicio
+      this.datosUsuarioService.guardarDestinatarioEditado(datosUsuarioEditado).subscribe(
+        (response: any) => {
+          console.log('Datos guardados en el servidor:', response);
+          this.actualizarDatosUsuario = false;
+          this.datosGuardadosUsuarioEditado = true;
+        },
+        (error: any) => {
+          console.error('Error al guardar los datos en el servidor:', error);
+          this.actualizarDatosUsuario = false;
+          this.errorServerAlGuardarDatos = true;
+        }
+      );
+    }
+  
+    return of(null);
+  }
+  
 
 }
 

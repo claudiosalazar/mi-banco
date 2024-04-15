@@ -76,7 +76,7 @@
                 [class.is-invalid]="misDatosForm.get('email')?.invalid && misDatosForm.get('email')?.dirty" 
                 [class.is-valid]="misDatosForm.get('email')?.valid && misDatosForm.get('email')?.dirty" 
                 (blur)="validaEmailPersonal('email')">
-                <label for="email">Email<span class="obligatorio">*</span></label>
+                <label for="email">Email</label>
                 <div *ngIf="misDatosForm.controls['email'].errors?.['required'] && misDatosForm.controls['email'].dirty" class="invalid-feedback">
                   El campo Email no puede quedar vacío.
                 </div>
@@ -95,7 +95,7 @@
                 [class.is-invalid]="misDatosForm.get('emailComercial')?.invalid && misDatosForm.get('emailComercial')?.dirty" 
                 [class.is-valid]="misDatosForm.get('emailComercial')?.valid && misDatosForm.get('emailComercial')?.dirty" 
                 (blur)="validaEmailPersonal('emailComercial')">
-                <label for="emailComercial">Email<span class="obligatorio">*</span></label>
+                <label for="emailComercial">Email comercial</label>
                 <div *ngIf="misDatosForm.controls['emailComercial'].errors?.['required'] && misDatosForm.controls['emailComercial'].dirty" class="invalid-feedback">
                   El campo Email no puede quedar vacío.
                 </div>
@@ -271,7 +271,7 @@
 
           <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar">
             <button type="button" class="btn btn-secondary me-0 me-md-3" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion">Guardar datos</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" [class.disabled]="!botonGuardarDisabled">Guardar datos</button>
           </div>
         </div>
      </form>
@@ -285,7 +285,8 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
-        <div id="usuarioAEliminar">
+
+        <div *ngIf="actualizarDatosUsuario">
           <div class="d-flex align-items-center mb-2">
             <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
               warning
@@ -295,10 +296,38 @@
             </h4>
           </div>
           <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Confirmar cambios</button>
+            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" (click)="guardarDatosUsuario()">Confirmar cambios</button>
           </div>
         </div>
+
+        <div *ngIf="datosGuardadosUsuarioEditado">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <h4 class="mb-3 text-starts">Tus nuevos datos se guardaron con éxito.</h4>
+          </div>
+          <div class="w-100">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
+          </div>
+        </div>
+
+        <div *ngIf="errorServerAlGuardarDatos">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al intentar guardar tus nuevos datos.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

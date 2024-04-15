@@ -142,6 +142,37 @@ app.delete('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
   });
 });
 
+// Actualiza los datos de usuario
+app.put('/backend/data/datos-usuario.json', (req, res) => {
+  const filePath = path.join(__dirname, 'data', 'datos-usuario.json');
+  const datosUsuarioEditado = req.body; // req.body ya es un objeto JavaScript
+
+  // Leer el archivo existente
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo:', err);
+      res.status(500).send(`Error leyendo el archivo: ${err}`);
+      return;
+    }
+
+    const datosActuales = JSON.parse(data);
+
+    // Actualiza los datos con los nuevos datos recibidos
+    Object.assign(datosActuales.datosUsuario, datosUsuarioEditado);
+
+    // Escribe el nuevo JSON al archivo
+    fs.writeFile(filePath, JSON.stringify(datosActuales, null, 2), 'utf8', (err) => {
+      if (err) {
+        console.error('Error escribiendo al archivo:', err);
+        res.status(500).send(`Error escribiendo al archivo: ${err}`);
+      } else {
+        console.log('Datos de usuario actualizados con éxito');
+        res.status(200).send('Datos de usuario actualizados con éxito');
+      }
+    });
+  });
+});
+
 // Guarda un nuevo destinatario en la agenda
 app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');

@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 // Services
@@ -130,8 +130,7 @@ export class EditarDestinatarioComponent implements OnInit{
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
-    private telefonoFijoPipe: TelefonoFijoPipe,
-    // private cdRef: ChangeDetectorRef
+    private telefonoFijoPipe: TelefonoFijoPipe
    ) {}
 
    ngOnInit(): void {

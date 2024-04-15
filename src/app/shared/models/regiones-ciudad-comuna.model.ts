@@ -1,37 +1,37 @@
 interface Region {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 interface RegionComercial {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 interface Ciudad {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 interface CiudadComercial {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 interface Comuna {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 interface ComunaComercial {
-  id: string;
-  value: string;
-  label: string;
+  id: any;
+  value: any;
+  label: any;
 }
 
 export interface RegionesCiudadComuna {
