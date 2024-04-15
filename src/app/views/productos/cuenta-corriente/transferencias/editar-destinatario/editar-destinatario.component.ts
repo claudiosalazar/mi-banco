@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 // Services
@@ -9,12 +9,13 @@ import { FormatoEmailService } from '../../../../../core/services/formato-email.
 import { RutPipe } from '../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../../../../shared/pipes/telefono-fijo.pipe';
-import { skip } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
 declare var bootstrap: any;
 
 @Component({
+
   selector: 'app-editar-destinatario',
   templateUrl: './editar-destinatario.component.html'
 })
@@ -79,8 +80,7 @@ export class EditarDestinatarioComponent implements OnInit{
   rutDestinatario: any;
   numeroCuentaDestinatario: any;
   emailDestinatario: any;
-  bancoInvalido: any;
-  cuentaInvalida: any;
+
   // Variable para nombre
   inputErrorVacioNombre: any;
   inputErrorApellido: any;
@@ -103,12 +103,25 @@ export class EditarDestinatarioComponent implements OnInit{
   inputErrorTelefonoFijoInvalido: any;
   inputTelefonoFijoValido: any;
 
-  // mostrarBackdropCustom = false;
-
+  // Variables para banco
+  banco: any;
+  valorBancoInicial: any | undefined;
+  nuevoValorBanco: string | null = null;
   bancoSeleccionado: any | undefined;
-  tipoCuentaSeleccionada: any | undefined;
+  bancoValido: any;
+  bancoInvalido: any;
+  bancoInvalidoMensaje: any;
 
-  formChanged = false;
+  // Variables para tipo cuenta
+  tipoCuenta: any;
+  valorTipoCuentaInicial: any | undefined;
+  nuevoValorTipoCuenta: string | null = null;
+  tipoCuentaSeleccionada: any | undefined;
+  cuentaValida: any;
+  cuentaInvalida: any;
+  cuentaInvalidaMensaje: any;
+
+  botonGuardarDisabled = false;
 
   datosDestinatarioEditado: any;
 
@@ -117,7 +130,8 @@ export class EditarDestinatarioComponent implements OnInit{
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
-    private telefonoFijoPipe: TelefonoFijoPipe
+    private telefonoFijoPipe: TelefonoFijoPipe,
+    // private cdRef: ChangeDetectorRef
    ) {}
 
    ngOnInit(): void {
@@ -125,14 +139,12 @@ export class EditarDestinatarioComponent implements OnInit{
       nombreDestinatario: new FormControl('', [Validators.required]),
       apodoDestinatario: new FormControl(''),
       rutDestinatario: new FormControl('', [Validators.required]),
-      bancoDestinatario: new FormControl('', [Validators.required, this.validaBanco()]),
-      cuentaDestinatario: new FormControl('', [Validators.required, this.validaTipoCuenta()]),
+      bancoDestinatario: new FormControl('', [Validators.required]),
+      cuentaDestinatario: new FormControl('', [Validators.required]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required]),
       emailDestinatario: new FormControl('', [Validators.required]),
       celularDestinatario: new FormControl('', [Validators.required]),
       telefonoDestinatario: new FormControl('', [Validators.required]),
-      /*celularDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),
-      telefonoDestinatario: new FormControl('', [this.validaLongitudTelefonos()]),*/
     });
 
     this.agendaService.idDestinatarioAeditar.subscribe(id => {
@@ -147,6 +159,14 @@ export class EditarDestinatarioComponent implements OnInit{
       }
     });
 
+    // captura valor inicial de banco
+    const bancoInicial = this.listaBancos.find(banco => banco.label === this.banco);
+    this.valorBancoInicial = bancoInicial?.value;
+
+    // captura valor inicial de tipo cuenta
+    const tipoCuentaInicia = this.tiposCuenta.find(tipoCuenta => tipoCuenta.label === this.tipoCuenta);
+    this.valorTipoCuentaInicial = tipoCuentaInicia?.value;
+
     // Suscribirse a los cambios de valor en los campos 'bancoDestinatario' y 'cuentaDestinatario'
     this.editarDestinatarioForm.get('bancoDestinatario')?.valueChanges.subscribe((valor: string) => {
       this.bancoSeleccionado = this.listaBancos.find(banco => banco.value === valor)?.label;
@@ -157,10 +177,10 @@ export class EditarDestinatarioComponent implements OnInit{
     });
 
     this.editarDestinatarioForm.valueChanges.pipe(skip(1)).subscribe(() => {
-      this.formChanged = true;
+      this.botonGuardarDisabled = true;
     });
 
-  }  
+  }
 
   ngAfterViewInit(): void {
     this.agendaService.getDestinatarioPorId(this.idDestinatarioAeditar).subscribe(destinatario => {
@@ -207,9 +227,17 @@ export class EditarDestinatarioComponent implements OnInit{
         telefonoDestinatario: destinatario.telefono,
       });
   
-      // Actualiza bancoSeleccionado directamente con el valor del banco del destinatario
+      // Actualiza bancoSeleccionado y tipoCuentaSeleccionada directamente con el valor del banco y tipo de cuenta del destinatario
       this.bancoSeleccionado = destinatario.banco;
       this.tipoCuentaSeleccionada = destinatario.tipoCuenta;
+  
+      // Busca en listaBancos y tiposCuenta el objeto con el label igual a bancoSeleccionado y tipoCuentaSeleccionada
+      const bancoInicial = this.listaBancos.find(b => b.label === this.bancoSeleccionado);
+      const tipoCuentaInicial = this.tiposCuenta.find(t => t.label === this.tipoCuentaSeleccionada);
+  
+      // Asigna el valor de los objetos encontrados a valorBancoInicial y valorTipoCuentaInicial
+      this.valorBancoInicial = bancoInicial?.value;
+      this.valorTipoCuentaInicial = tipoCuentaInicial?.value;
     }
   }
 
@@ -267,18 +295,70 @@ export class EditarDestinatarioComponent implements OnInit{
     }
   }
 
-  validaBanco(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0';
-      return isInvalid ? { 'bancoInvalido': { value: control.value } } : null;
-    };
+  editarDatos() {
+    this.activarSeleccionBanco();
+    this.activarSeleccionTipoCuenta();
+
+    this.observarCambioBanco();
+    this.observarCambioTipoCuenta();
   }
 
-  validaTipoCuenta(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0';
-      return isInvalid ? { 'cuentaInvalida': { value: control.value } } : null;
-    };
+  activarSeleccionBanco(): void {
+    this.editarDestinatarioForm.get('bancoDestinatario')?.valueChanges.subscribe(value => {
+      this.bancoSeleccionado = this.listaBancos.find(listaBancos => listaBancos.value === value)?.label;
+    });
+  }
+
+  activarSeleccionTipoCuenta(): void {
+    this.editarDestinatarioForm.get('cuentaDestinatario')?.valueChanges.subscribe(value => {
+      this.tipoCuentaSeleccionada = this.tiposCuenta.find(tiposCuenta => tiposCuenta.value === value)?.label;
+    });
+  }
+
+  observarCambioBanco(): void {
+    const control = this.editarDestinatarioForm.get('bancoDestinatario');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorBanco = value;
+      if (this.nuevoValorBanco !== this.valorBancoInicial) {
+        this.validaBanco();
+      }
+    });
+  }
+
+  observarCambioTipoCuenta(): void {
+    const control = this.editarDestinatarioForm.get('cuentaDestinatario');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorTipoCuenta = value;
+      if (this.nuevoValorTipoCuenta !== this.valorTipoCuentaInicial) {
+        this.validaTipoCuenta();
+      }
+    });
+  }
+
+  // Valida banco
+  validaBanco(): any {
+    if (this.nuevoValorBanco === '0') {
+      this.bancoValido = false;
+      this.bancoInvalido = true;
+      this.bancoInvalidoMensaje = true;
+    } else {
+      this.bancoValido = true;
+      this.bancoInvalido = false;
+      this.bancoInvalidoMensaje = false;
+    }
+  }
+
+  // Valida tipo cuenta
+  validaTipoCuenta(): any {
+    if (this.nuevoValorTipoCuenta === '0') {
+      this.cuentaValida = false;
+      this.cuentaInvalida = true;
+      this.cuentaInvalidaMensaje = true;
+    } else {
+      this.cuentaValida = true;
+      this.cuentaInvalida = false;
+      this.cuentaInvalidaMensaje = false;
+    }
   }
 
   validaNumeroCuenta(): void {
@@ -383,13 +463,13 @@ export class EditarDestinatarioComponent implements OnInit{
     }
   }
 
-  /*validaLongitudTelefonos(): ValidatorFn {
+  validaLongitudTelefonos(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const tieneValor = control.value && control.value.trim() !== '';
       const longitudValida = tieneValor ? control.value.length <= 11 : true;
       return longitudValida ? null : { 'longitudInvalida': { value: control.value } };
     };
-  }*/
+  }
   
   // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -418,9 +498,10 @@ export class EditarDestinatarioComponent implements OnInit{
 
   detectarCambios(): void {
     this.editarDestinatarioForm.valueChanges.subscribe(() => {
-      this.formChanged = true;
+      this.botonGuardarDisabled = true;
     });
   }
+
 
   guardarDestinatario(): Observable<any> {
 

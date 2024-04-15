@@ -106,8 +106,6 @@ export class DatosUsuarioComponent {
   nuevoValorCiudadComercial: string | null = null;
   nuevoValorComunaComercial: string | null = null;
 
-  valorInicial: string | null = null;
-
   inputValido: any;
   inputVacio: any;
   valoresIniciales: { [key: string]: any } = {};
@@ -291,6 +289,7 @@ export class DatosUsuarioComponent {
       this.listaCiudad = data.listaCiudad;
       this.listaComuna = data.listaComuna;
 
+      // CORREGIR DATO DE RECION CIUDAD Y COMUNA, DEBEN ESTAR EN 0
       const regionPersonal = this.listaRegiones.find(region => region.value === '10');
       this.regionSeleccionadaPersonal = regionPersonal ? regionPersonal.label : null;
 

@@ -1,5 +1,5 @@
 <div class="offcanvas-header d-flex align-items-center justify-content-between px-4">
-  <h5 class="offcanvas-title ps-2" id="staticBackdropLabel">Crear nuevo destinatario.</h5>
+  <h5 class="offcanvas-title ps-2" id="crearDestinatarioCanvas">Crear nuevo destinatario.</h5>
   <a href="javascript:void(0);" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">
     <span class="material-symbols-outlined">
       close
@@ -50,20 +50,19 @@
   
       <!-- banco -->
       <div class="form-floating mb-4">
-        <custom-select [control]="crearDestinatarioForm.get('bancoDestinatario')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Banco *'" [errorKey]="'bancoInvalido'"></custom-select>
-        <div *ngIf="submitted && crearDestinatarioForm.get('bancoDestinatario')?.errors?.['bancoInvalido']" class="invalid-feedback d-block">
+        <custom-select-reactivo [control]="crearDestinatarioForm.get('bancoDestinatario')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></custom-select-reactivo>
+        <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
           Debes seleccionar un banco.
         </div>
       </div>
   
       <!-- Tipo cuenta -->
       <div class="form-floating mb-4">
-        <custom-select [control]="crearDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [errorKey]="'cuentaInvalida'"></custom-select>
-        <div *ngIf="submitted && crearDestinatarioForm.get('cuentaDestinatario')?.errors?.['cuentaInvalida']" class="invalid-feedback d-block">
+        <custom-select-reactivo [control]="crearDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></custom-select-reactivo>
+        <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
           Debes seleccionar un tipo de cuenta.
         </div>
       </div>
-      
   
       <!-- Numero cuenta -->
       <div class="form-floating mb-4">
@@ -115,7 +114,7 @@
   
       <!-- Botones -->
       <div class="d-flex flex-md-column mt-4">
-        <button type="submit" class="btn btn-primary mb-3" data-bs-dismiss="offcanvas" [class.disabled]="!botonGuardarDisabled">Guardar destinatario</button>
+        <button type="submit" class="btn btn-primary mb-3" data-bs-dismiss="offcanvas" aria-label="Close" [class.disabled]="!botonGuardarDisabled">Guardar destinatario</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button>
       </div>
   

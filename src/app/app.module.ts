@@ -60,6 +60,7 @@ import { TransaccionesResumenComponent } from './views/productos/transacciones-r
 import { SegurosComponent } from './views/productos/seguros/seguros.component';
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
+import { CustomSelectReactivoComponent } from './shared/components/custom-select-reactivo/custom-select-reactivo.component';
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 
@@ -102,6 +103,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     EditarDestinatarioComponent,
     UltimasTransferenciasComponent,
     TransferenciaATercerosComponent,
+    CustomSelectReactivoComponent,
   ],
   imports: [
     BrowserModule,

@@ -74,8 +74,6 @@ export class AgregarDestinatarioComponent implements OnInit{
   rutDestinatario: any;
   numeroCuentaDestinatario: any;
   emailDestinatario: any;
-  bancoInvalido: any;
-  cuentaInvalida: any;
   // Variable para nombre
   inputErrorVacioNombre: any;
   inputErrorApellido: any;
@@ -100,10 +98,25 @@ export class AgregarDestinatarioComponent implements OnInit{
   // Variable para enviar datos al services
   datosNuevoDestinatario: any;
 
-  botonGuardarDisabled = false;
-
+  // Variables para banco
+  banco: any;
+  valorBancoInicial: any | undefined;
+  nuevoValorBanco: string | null = null;
   bancoSeleccionado: any | undefined;
-  tipoCuentaSeleccionada: any | undefined
+  bancoValido: any;
+  bancoInvalido: any;
+  bancoInvalidoMensaje: any;
+
+  // Variables para tipo cuenta
+  tipoCuenta: any;
+  valorTipoCuentaInicial: any | undefined;
+  nuevoValorTipoCuenta: string | null = null;
+  tipoCuentaSeleccionada: any | undefined;
+  cuentaValida: any;
+  cuentaInvalida: any;
+  cuentaInvalidaMensaje: any;
+
+  botonGuardarDisabled = false;
 
   constructor(
     private agendaService: AgendaDestinatariosService,
@@ -118,8 +131,8 @@ export class AgregarDestinatarioComponent implements OnInit{
       nombreDestinatario: new FormControl('', [Validators.required]),
       apodoDestinatario: new FormControl(''),
       rutDestinatario: new FormControl('', [Validators.required]),
-      bancoDestinatario: new FormControl('0', [Validators.required, this.validaBanco()]),
-      cuentaDestinatario: new FormControl('0', [Validators.required, this.validaTipoCuenta()]),
+      bancoDestinatario: new FormControl('0', [Validators.required]),
+      cuentaDestinatario: new FormControl('0', [Validators.required]),
       numeroCuentaDestinatario: new FormControl('', [Validators.required]),
       emailDestinatario: new FormControl('', [Validators.required]),
       celularDestinatario: new FormControl(''),
@@ -197,18 +210,70 @@ export class AgregarDestinatarioComponent implements OnInit{
     }
   }
 
-  validaBanco(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0';
-      return isInvalid ? { 'bancoInvalido': { value: control.value } } : null;
-    };
+  editarDatos() {
+    this.activarSeleccionBanco();
+    this.activarSeleccionTipoCuenta();
+
+    this.observarCambioBanco();
+    this.observarCambioTipoCuenta();
   }
 
-  validaTipoCuenta(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      const isInvalid = control.value === '0';
-      return isInvalid ? { 'cuentaInvalida': { value: control.value } } : null;
-    };
+  activarSeleccionBanco(): void {
+    this.crearDestinatarioForm.get('regionPersonal')?.valueChanges.subscribe(value => {
+      this.bancoSeleccionado = this.listaBancos.find(listaBancos => listaBancos.value === value)?.label;
+    });
+  }
+
+  activarSeleccionTipoCuenta(): void {
+    this.crearDestinatarioForm.get('cuentaDestinatario')?.valueChanges.subscribe(value => {
+      this.tipoCuentaSeleccionada = this.tiposCuenta.find(tiposCuenta => tiposCuenta.value === value)?.label;
+    });
+  }
+
+  observarCambioBanco(): void {
+    const control = this.crearDestinatarioForm.get('bancoDestinatario');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorBanco = value;
+      if (this.nuevoValorBanco !== this.valorBancoInicial) {
+        this.validaBanco();
+      }
+    });
+  }
+
+  // Valida banco
+  validaBanco(): void {
+    if (this.nuevoValorBanco === '0') {
+      this.bancoValido = false;
+      this.bancoInvalido = true;
+      this.bancoInvalidoMensaje = true;
+    } else {
+      this.bancoValido = true;
+      this.bancoInvalido = false;
+      this.bancoInvalidoMensaje = false;
+    }
+  }
+
+  observarCambioTipoCuenta(): void {
+    const control = this.crearDestinatarioForm.get('cuentaDestinatario');
+    control?.valueChanges.subscribe(value => {
+      this.nuevoValorTipoCuenta = value;
+      if (this.nuevoValorTipoCuenta !== this.valorTipoCuentaInicial) {
+        this.validaTipoCuenta();
+      }
+    });
+  }
+
+  // Valida tipo cuenta
+  validaTipoCuenta(): void {
+    if (this.nuevoValorTipoCuenta === '0') {
+      this.cuentaValida = false;
+      this.cuentaInvalida = true;
+      this.cuentaInvalidaMensaje = true;
+    } else {
+      this.cuentaValida = true;
+      this.cuentaInvalida = false;
+      this.cuentaInvalidaMensaje = false;
+    }
   }
 
   validaNumeroCuenta(): void {
@@ -359,27 +424,11 @@ export class AgregarDestinatarioComponent implements OnInit{
   }
 
   validaFormulario(): Observable<any> {
-    // this.verificarFormulario();
+
     this.submitted = true;
   
     // Verifica que todos los campos del formulario estén llenos
     this.crearDestinatarioForm.markAllAsTouched();
-  
-    // ValidA custom-select banco
-    const bancoDestinatarioControl = this.crearDestinatarioForm.get('bancoDestinatario');
-    this.bancoInvalido = false;
-    if (bancoDestinatarioControl && bancoDestinatarioControl.value === '0') {
-      this.bancoInvalido = true;
-      return of(null);
-    }
-  
-    // ValidA custom-select tipo de cuenta
-    const cuentaDestinatarioControl = this.crearDestinatarioForm.get('cuentaDestinatario');
-    this.cuentaInvalida = false;
-    if (cuentaDestinatarioControl && cuentaDestinatarioControl.value === '0') {
-      this.cuentaInvalida = true;
-      return of(null);
-    }
   
     // Verifica que el formulario sea válido
     if (this.crearDestinatarioForm.valid) {

@@ -144,21 +144,21 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaPersonal" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionPersonalValido" [isInvalid]="customRegionPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaPersonal" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionPersonalValido" [isInvalid]="customRegionPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customRegionPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una región.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadPersonalValido" [isInvalid]="customCiudadPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadPersonalValido" [isInvalid]="customCiudadPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customCiudadPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una ciudad.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('comunaPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaPersonalValido" [isInvalid]="customComunaPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('comunaPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="4000" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaPersonalValido" [isInvalid]="customComunaPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customComunaPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una comuna.
               </div>
@@ -197,21 +197,21 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('regionComercial')" [options]="listaRegionesComercial" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionComercialValido" [isInvalid]="customRegionComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('regionComercial')" [options]="listaRegionesComercial" [selectedValue]="regionSeleccionadaComercial" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionComercialValido" [isInvalid]="customRegionComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customRegionComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una región.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudadComercial" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadComercialValido" [isInvalid]="customCiudadComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudadComercial" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="2000" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadComercialValido" [isInvalid]="customCiudadComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customCiudadComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una ciudad.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select [control]="misDatosForm.get('comunaComercial')" [options]="listaComunaComercial" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaComercialValido" [isInvalid]="customComunaComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select>
+              <custom-select-reactivo [control]="misDatosForm.get('comunaComercial')" [options]="listaComunaComercial" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="1000" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaComercialValido" [isInvalid]="customComunaComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customComunaComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una comuna.
               </div>

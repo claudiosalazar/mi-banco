@@ -26,7 +26,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
-  @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+  //@ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('crearDestinatarioCanvas', { static: false }) crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
@@ -295,6 +296,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     });
   }
 
+
   // Modal para edicion destinatario
   abrirModalEdicionDestinatario(): void {
     var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
@@ -355,6 +357,5 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         }, 2000);
       });
     }
-  }
-    
+  }    
 }
