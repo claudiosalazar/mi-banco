@@ -16,7 +16,7 @@ import { CelularPipe } from './shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
 
 // Services
-import { DatosUsuarioService } from './core/services/datos-usuario.service';
+import { DatosUsuarioService, ListaGeograficaService, ListaGeograficaComercialService } from './core/services/datos-usuario.service';
 import { DatosFiltradosService } from './core/services/productos-usuario.service';
 import { CartolasHistoricasService } from './core/services/cartolas-historicas.service';
 
@@ -102,6 +102,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     UltimasTransferenciasComponent,
     TransferenciaATercerosComponent,
     CustomSelectReactivoComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -119,7 +120,9 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     RutPipe,
     CelularPipe,
     TelefonoFijoPipe,
-    DatePipe
+    DatePipe,
+    ListaGeograficaService,
+    ListaGeograficaComercialService,
   ],
   bootstrap: [MiBancoComponent]
 })

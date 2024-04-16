@@ -1,26 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Services
+import { DatosUsuarioService, ListaGeograficaService, ListaGeograficaComercialService } from '../../core/services/datos-usuario.service';
 import { FormatoEmailService } from '../../core/services/formato-email.service';
-
-// Model
-import { RegionesCiudadComuna, RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciudad-comuna.model';
 
 // Pipe
 import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-datos-usuario',
   templateUrl: './datos-usuario.component.html'
 })
 export class DatosUsuarioComponent implements OnInit{
+
 
   listaRegiones: any[] = [];
   listaCiudad: any[] = [];
@@ -140,11 +136,12 @@ export class DatosUsuarioComponent implements OnInit{
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
+    private listaGeograficaService: ListaGeograficaService,
+    private listaGeograficaComercialService: ListaGeograficaComercialService,
     private rutPipe: RutPipe,
     private formatoEmailService: FormatoEmailService,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe,
-    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -203,6 +200,7 @@ export class DatosUsuarioComponent implements OnInit{
         ciudadComercial: datos.datosUsuario.ciudadComercial,
         comunaComercial: datos.datosUsuario.comunaComercial
       });
+      console.log('datosUsuario', datos.datosUsuario.regionPersonal);
 
       // captura valor inicial de region personal
       const regionPersonal = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);
@@ -321,7 +319,7 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Array de regiones, ciudades y comunas
   listasGeograficas(): void {
-    this.http.get<RegionesCiudadComuna>('http://localhost:4200/assets/json/regiones-ciudad-comuna.json').subscribe(data => {
+    this.listaGeograficaService.getListaGeografica().subscribe(data => {
       this.listaRegiones = data.listaRegiones;
       this.listaCiudad = data.listaCiudad;
       this.listaComuna = data.listaComuna;
@@ -332,10 +330,8 @@ export class DatosUsuarioComponent implements OnInit{
     });
   }
 
-
-
   listasGeograficasComercial(): void {
-    this.http.get<RegionesCiudadComunaComercial>('http://localhost:4200/assets/json/regiones-ciudad-comuna.json').subscribe(data => {
+    this.listaGeograficaComercialService.getListaGeograficaComercial().subscribe(data => {
       this.listaRegionesComercial = data.listaRegionesComercial;
       this.listaCiudadComercial = data.listaCiudadComercial;
       this.listaComunaComercial = data.listaComunaComercial;

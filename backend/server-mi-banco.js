@@ -43,6 +43,14 @@ app.get('/backend/data/datos-usuario.json', (_req, res) => {
   res.send(JSON.parse(fileData));
 });
 
+// Datos geograficos usuario
+app.get('/backend/data/regiones-ciudad-comuna.json', (_req, res) => {
+  const filePath = path.join(__dirname, 'data', 'regiones-ciudad-comuna.json');
+  const fileData = fs.readFileSync(filePath);
+  res.send(JSON.parse(fileData));
+  console.log('El server envio los datos de regiones-ciudad-comuna.json', fileData);
+});
+
 // Datos agenda
 app.get('/backend/data/agenda-usuarios-transferencias.json', (_req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');

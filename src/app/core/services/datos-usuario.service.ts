@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
-import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 import { catchError, map } from 'rxjs/operators';
+
+// Models
+import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class DatosUsuarioService {
 
   constructor(
     private http: HttpClient
-    ) { }
+  ) { }
 
     getDatosUsuario(): Observable<DatosUsuarioActual> {
       const observable = this.http.get<DatosUsuarioActual>(this.baseUrl);
@@ -35,6 +37,47 @@ export class DatosUsuarioService {
         })
       );
     }
+
+}
+
+
+import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ListaGeograficaService {
+
+  private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getListaGeografica(): Observable<RegionesCiudadComuna> {
+    const observable = this.http.get<RegionesCiudadComuna>(this.baseUrlGeografica);;
+    return observable;
+  }
+
+}
+
+import { RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciudad-comuna.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ListaGeograficaComercialService {
+
+  private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getListaGeograficaComercial(): Observable<RegionesCiudadComunaComercial> {
+    const observable = this.http.get<RegionesCiudadComunaComercial>(this.baseUrlGeografica);
+    return observable;
+  }
 
 }
 
