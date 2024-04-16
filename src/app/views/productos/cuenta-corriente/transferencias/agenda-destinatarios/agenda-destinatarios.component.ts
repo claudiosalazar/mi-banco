@@ -26,7 +26,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
-  //@ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas', { static: false }) crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();

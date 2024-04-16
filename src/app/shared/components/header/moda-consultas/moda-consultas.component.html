@@ -1,0 +1,109 @@
+
+<!-- Formulario consultas -->
+<form  [formGroup]="consultasForm">
+  <div *ngIf="formularioConsultas">
+    
+    <div class="d-flex justify-content-between align-items-center mb-5 mt-2">
+      <h4>Dudas y consultas</h4>
+      <a href="javascript:void(0);" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelarConsulta()">
+        <span class="material-symbols-outlined">
+          close
+        </span>
+      </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <p class="m-0">Tus datos de contacto</p>
+      <button type="button" class="btn btn-primary" routerLink="/mibanco/mis-datos" data-bs-dismiss="modal">Actualizar mis datos</button>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="card py-3 px-4">
+          <div class="row">
+            <div class="col-6">
+              <small class="m-0">Nombre</small>
+              <p><strong>{{ primerNombre }} {{ segundoNombre }} {{ apellidoPaterno }} {{ apellidoMaterno }}</strong></p>
+            </div>
+            <div class="col-6">
+              <small class="m-0">Email</small>
+              <p><strong>{{ email }}</strong></p>
+            </div>
+            <div class="col-6">
+              <small class="m-0">Celular</small>
+              <p><strong>+56 {{ celular | celular }}</strong></p>
+            </div>
+            <div class="col-6">
+              <small class="m-0">Teléfono</small>
+              <p><strong>{{ telefono | telefonoFijo }}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-4">
+        <!-- Lista de consultas -->
+        <div class="form-floating mb-4">
+          <custom-select-reactivo [control]="consultasForm.get('consulta')" [options]="listaConsultas" [selectedValue]="consultaSeleccionada" [zIndex]="9999" [submitted]="submitted" [labelSelect]="'Selecciona el tipo de consulta *'" [isValid]="consultaValida" [isInvalid]="consultaValidaReset" (click)="activarSeleccionConsultas()"></custom-select-reactivo>
+        </div>
+        <!-- Campos formulario -->
+        <div class="form-floating mb-4">
+          <textarea class="form-control" id="textoConsulta" formControlName="textoConsulta" placeholder="Consulta" [ngClass]="{ 'is-valid': consultasForm.get('textoConsulta')?.valid }" style="height: 150px;"></textarea>
+          <label for="textoConsulta">Consulta</label>
+          <div class="d-flex justify-content-between">
+            <div class="d-block mt-1">
+              <span class="caracteres-textarea">Debes ingresar una consulta con una cantidad mínima de 50 caracteres y un máximo de 2.000.</span>
+            </div>
+            <div class="d-block mt-1">
+              <span class="caracteres-textarea">{{ longitudTextoConsulta }} / 2000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarConsulta()">Cancelar</button>
+      <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()">Enviar consulta</button>
+    </div>
+  </div>
+
+  <!-- Mensaje enviado -->
+  <div *ngIf="envioConsultaCorrecta">
+    <div class="w-100 mx-5 mt-4">
+      <div class="d-flex">
+        <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+          done
+        </span>
+        <div class="d-flex flex-column">
+          <h4 class="mb-3 text-starts">Tu consulta fue enviada con éxito.</h4>
+          <p>En un plazo de 48 hrs nos contactaremos contigo, gracias por comunicarte con nosotros.</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100">
+      <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Mensaje error -->
+  <div *ngIf="errorEnvioConsulta">
+
+    <div class="w-100 mx-5 mt-4">
+      <div class="d-flex">
+        <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+          Error
+        </span>
+        <div class="d-flex flex-column">
+          <h4 class="mb-3 text-starts">Hubo un error al enviar tu consulta.</h4>
+          <p>Intento mas tarde.</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-100">
+      <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button>
+    </div>
+  </div>
+
+</form>

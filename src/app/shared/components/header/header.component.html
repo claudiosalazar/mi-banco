@@ -33,10 +33,13 @@
             <a class="nav-link" routerLink="/mibanco/productos/seguros" (click)="ocultaDropdownMobile()">Seguros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalConsultas" (click)="ocultaDropdownMobile()">Consultas</a>
+            <a class="nav-link" href="javascript:void(0);" (click)="ocultaDropdownMobile(); abrirModalConsulta()">Consultas</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a>
+          <li class="nav-item ms-md-2">
+            <div class="d-flex">
+              <span class="pt-2 me-md-2">|</span>
+              <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a>
+            </div>
           </li>
         </ul>
         <div class="d-flex align-items-center">
@@ -69,7 +72,7 @@
 </header>
 
 <!-- Modal cerrar sesion -->
-<div class="modal fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" style="z-index: 9998;">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
@@ -95,51 +98,30 @@
   </div>
 </div>
 
-<!-- Modal cconsultas -->
-<div class="modal fade" id="modalConsultas" tabindex="-2"  aria-labelledby="modalConsultas"data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<!-- Modal consultas -->
+<div class="modal fade" id="modalConsultas" tabindex="-2"  aria-labelledby="modalConsultas" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" style="z-index: 9998;">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <div class="modal-body px-4 py-5">
-        
-        <!-- Formulario consultas -->
-        <div *ngIf="formularioConsultas">
-          <div class="d-flex align-items-center mb-2">
-            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
-              warning
-            </span>
-            <h4 class="d-block">
-              Estas cerrando tu sesión
-            </h4>
-          </div>
-          <div class="w-100 text-center">
-            <p>Para confirmar da click en el boton</p>
-          </div>
-          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Enviar</button>
-          </div>
-        </div>
-
-        <!-- Mensaje enviado -->
-        <div *ngIf="envioConsultaCorrecta">
-        </div>
-
-        <!-- Mensaje error -->
-        <div *ngIf="errorEnvioConsulta">
-        </div>
-
+      <div class="modal-body px-4 py-4">
+        <app-moda-consultas *ngIf="modalConsultaAbierto" (consultaCancelada)="modalConsultaAbierto = false"></app-moda-consultas>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal ejecutivo -->
-<div class="modal fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" style="z-index: 9998;">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
-        ejecutivo
+        <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
+          <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
+
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>

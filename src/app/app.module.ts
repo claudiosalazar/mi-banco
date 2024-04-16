@@ -62,6 +62,7 @@ import { CustomSelectComponent } from './shared/components/custom-select/custom-
 import { CustomSelectReactivoComponent } from './shared/components/custom-select-reactivo/custom-select-reactivo.component';
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
+import { ModaConsultasComponent } from './shared/components/header/moda-consultas/moda-consultas.component';
 
 
 
@@ -77,6 +78,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     PesosPipe,
     RutPipe,
     CelularPipe,
+    TelefonoFijoPipe,
     DatosUsuarioComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,
@@ -102,6 +104,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     UltimasTransferenciasComponent,
     TransferenciaATercerosComponent,
     CustomSelectReactivoComponent,
+    ModaConsultasComponent,
 
   ],
   imports: [

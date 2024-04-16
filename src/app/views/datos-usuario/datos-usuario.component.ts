@@ -200,7 +200,6 @@ export class DatosUsuarioComponent implements OnInit{
         ciudadComercial: datos.datosUsuario.ciudadComercial,
         comunaComercial: datos.datosUsuario.comunaComercial
       });
-      console.log('datosUsuario', datos.datosUsuario.regionPersonal);
 
       // captura valor inicial de region personal
       const regionPersonal = this.listaRegiones.find(region => region.label === datos.datosUsuario.regionPersonal);

@@ -469,10 +469,6 @@ export class AgregarDestinatarioComponent implements OnInit{
     // Emite el evento para ocultar el backdrop
     this.mostrarBackdropCustomChange.emit(false);
   
-    // Imprime el valor actual de 'bancoSeleccionado' y 'tipoCuentaSeleccionada'
-    console.log('Banco seleccionado:', this.bancoSeleccionado);
-    console.log('Tipo de cuenta seleccionada:', this.tipoCuentaSeleccionada);
-  
     // Resetea el formulario
     this.crearDestinatarioForm.reset();
   
