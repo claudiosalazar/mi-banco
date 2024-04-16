@@ -6,7 +6,6 @@ import { AuthGuard } from './auth/class/auth.guard';
 import { AyudaComponent } from './views/ayuda/ayuda.component';
 import { ResumenUsuarioComponent } from './views/resumen-usuario/resumen-usuario.component';
 import { ProductosComponent } from './views/productos/productos.component';
-import { ContactanosComponent } from './views/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
 import { CuentaCorrienteComponent } from './views/productos/cuenta-corriente/cuenta-corriente.component';
 import { MovimientosComponent } from './views/productos/cuenta-corriente/movimientos/movimientos.component';
@@ -63,7 +62,6 @@ const routes: Routes = [
           { path: 'seguros', component: SegurosComponent },
         ]
       },
-      { path: 'contactanos', component: ContactanosComponent },
       { path: 'mis-datos', component: DatosUsuarioComponent },
       { path: 'ayuda/:id', component: AyudaComponent }
     ]

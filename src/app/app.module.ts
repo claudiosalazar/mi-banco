@@ -31,7 +31,6 @@ import { MiBancoComponent } from './mi-banco.component';
 import { MainComponent } from './shared/components/main/main.component';
 import { ResumenUsuarioComponent } from './views/resumen-usuario/resumen-usuario.component';
 import { ProductosComponent } from './views/productos/productos.component';
-import { ContactanosComponent } from './views/contactanos/contactanos.component';
 import { DatosUsuarioComponent } from './views/datos-usuario/datos-usuario.component';
 
 // Cuenta corriente
@@ -75,7 +74,6 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
     FooterComponent,
     ResumenUsuarioComponent,
     ProductosComponent,
-    ContactanosComponent,
     PesosPipe,
     RutPipe,
     CelularPipe,

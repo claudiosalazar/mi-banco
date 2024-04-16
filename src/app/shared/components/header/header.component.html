@@ -10,46 +10,48 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco" (click)="onLinkClick()">Inicio</a>
+            <a class="nav-link" routerLink="/mibanco" (click)="ocultaDropdownMobile()">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="onLinkClick()">Transferencias</a>
+            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="ocultaDropdownMobile()">Transferencias</a>
           </li>
           <li class="nav-item menu-transacciones">
-            <a class="nav-link d-flex" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Productos
               <span class="material-symbols-outlined">
                 expand_more
               </span>
             </a>
             <ul class="dropdown-menu p-0">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/resumen" (click)="onLinkClick()">Mis Productos</a></li>
-              <!-- <li><a class="dropdown-item px-4 py-3" [routerLink]="['/mibanco/productos/cuenta-corriente']" [queryParams]="{tab: 'movimientos'}" (click)="onLinkClick()">Cuenta Corriente</a></li> -->
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="onLinkClick()">Cuenta Corriente</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/linea-credito" (click)="onLinkClick()">Línea de Crédito</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/visa" (click)="onLinkClick()">Visa</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/resumen" (click)="ocultaDropdownMobile()">Mis Productos</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="ocultaDropdownMobile()">Cuenta Corriente</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/linea-credito" (click)="ocultaDropdownMobile()">Línea de Crédito</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/productos/visa" (click)="ocultaDropdownMobile()">Visa</a></li>
             </ul>
           </li>
           <li class="nav-item menu-transacciones">
-            <a class="nav-link" routerLink="/mibanco/productos/seguros" (click)="onLinkClick()">Seguros</a>
+            <a class="nav-link" routerLink="/mibanco/productos/seguros" (click)="ocultaDropdownMobile()">Seguros</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco/contactanos" (click)="onLinkClick()">Contactanos</a>
+            <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalConsultas" (click)="ocultaDropdownMobile()">Consultas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a>
           </li>
         </ul>
         <div class="d-flex align-items-center">
           <span class="navbar-text me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} {{ segundoNombre }} {{ apellidoPaterno }} {{ apellidoMaterno }}</span>
           <div class="dropdown">
-            <a class="btn-header" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="btn-header" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               <span class="material-symbols-outlined">
                 settings
               </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/mis-datos" (click)="onLinkClick()">Mis datos</a></li>
-              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="onLinkClick()">Emergencias</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
+              <li><a class="dropdown-item px-4 py-3" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>
               <li>
-                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="onLinkClick()">
+                <a class="dropdown-item px-4 py-3 d-flex align-items-center" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
                   <span class="material-symbols-outlined">
                     close
                   </span>
@@ -66,8 +68,8 @@
   </nav>
 </header>
 
-<!-- Modal -->
-<div class="modal fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOutLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<!-- Modal cerrar sesion -->
+<div class="modal fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">
@@ -88,6 +90,55 @@
             <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal cconsultas -->
+<div class="modal fade" id="modalConsultas" tabindex="-2"  aria-labelledby="modalConsultas"data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5">
+        
+        <!-- Formulario consultas -->
+        <div *ngIf="formularioConsultas">
+          <div class="d-flex align-items-center mb-2">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
+              warning
+            </span>
+            <h4 class="d-block">
+              Estas cerrando tu sesión
+            </h4>
+          </div>
+          <div class="w-100 text-center">
+            <p>Para confirmar da click en el boton</p>
+          </div>
+          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Enviar</button>
+          </div>
+        </div>
+
+        <!-- Mensaje enviado -->
+        <div *ngIf="envioConsultaCorrecta">
+        </div>
+
+        <!-- Mensaje error -->
+        <div *ngIf="errorEnvioConsulta">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ejecutivo -->
+<div class="modal fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5">
+        ejecutivo
       </div>
     </div>
   </div>

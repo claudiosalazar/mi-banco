@@ -18,6 +18,11 @@ export class HeaderComponent implements OnInit {
   apellidoMaterno: string | undefined;
   currentUrl: string | undefined;
 
+  // Variable para modal consultas
+  formularioConsultas = true;
+  envioConsultaCorrecta = false;
+  errorEnvioConsulta = false;
+
   constructor(
     private authService: AuthService, 
     private router: Router,
@@ -41,28 +46,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  showConfirmLogoutModal() {
-    // Muestra el modal de confirmación
-    const modal = this.el.nativeElement.querySelector('#confirmLogoutModal');
-    this.renderer.addClass(modal, 'show');
-    this.renderer.setStyle(modal, 'display', 'block');
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  ngAfterViewInit() {
-    this.navbarNavDropdown?.nativeElement.addEventListener('hidden.bs.dropdown', () => {
-      this.navbarNavDropdown?.nativeElement.classList.remove('show');
-    });
-  }
-  
-  onLinkClick() {
+  // Reestablece menu en mobile despues de un click
+  ocultaDropdownMobile() {
     if (this.navbarNavDropdown?.nativeElement.classList.contains('show')) {
       this.navbarNavDropdown.nativeElement.classList.remove('show');
     }
+  }
+
+  // Cierra sesión
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
