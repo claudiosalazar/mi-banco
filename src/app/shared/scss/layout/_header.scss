@@ -1,7 +1,10 @@
 // Hoja de estilos par header
 
 header.mi-banco-header {
+  width: 100%;
   background-color: $rojo;
+  position: fixed;
+  z-index: 1;
   .navbar {
     .logo-mb-blanco {
       width: 106px;

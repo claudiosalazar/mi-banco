@@ -3,15 +3,7 @@
 <div class="container" *ngIf="datosUsuarioActual && productosUsuario && ofertasProductos ">
   <div class="row">
     <div class="col-12">
-      <div class="card p-4 p-md-5 mb-4 banner-principal">
-        <h4>Hola {{ datosUsuarioActual.datosUsuario.primerNombre }} {{ datosUsuarioActual.datosUsuario.apellidoPaterno }}, tienes un crédito de consumo <br>pre-aprobado por un monto de: </h4>
-        <h2 class="mb-4">
-          <strong>{{ montoPreAprobadoCreditoConsumo | pesos }}</strong>
-        </h2>
-        <div>
-          <button class="btn btn-primary" type="button">Solicitar crédito</button>
-        </div>
-      </div>
+      
       
       <div class="row align-items-md-stretch">
         <div class="col-md-4 mb-3 mb-md-0">
@@ -39,6 +31,18 @@
             </h4>
             <small><strong>N° {{ numeroVisa }}</strong></small>
             <p>Disponible: <strong>{{ cupoVisa | pesos }}</strong></p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-4 p-md-5 mb-4 banner-principal">
+            <h4>Hola {{ datosUsuarioActual.datosUsuario.primerNombre }} {{ datosUsuarioActual.datosUsuario.apellidoPaterno }}, tienes un crédito de consumo <br>pre-aprobado por un monto de: </h4>
+            <h2 class="mb-4">
+              <strong>{{ montoPreAprobadoCreditoConsumo | pesos }}</strong>
+            </h2>
+            <div>
+              <button class="btn btn-primary" type="button">Solicitar crédito</button>
+            </div>
           </div>
         </div>
 
