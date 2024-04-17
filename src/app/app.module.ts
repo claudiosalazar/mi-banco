@@ -63,6 +63,7 @@ import { CustomSelectReactivoComponent } from './shared/components/custom-select
 import { TransferenciaATercerosComponent } from './views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 import { ModaConsultasComponent } from './shared/components/header/moda-consultas/moda-consultas.component';
+import { CarouselComponent } from './views/resumen-usuario/carousel/carousel.component';
 
 
 
@@ -105,6 +106,7 @@ import { ModaConsultasComponent } from './shared/components/header/moda-consulta
     TransferenciaATercerosComponent,
     CustomSelectReactivoComponent,
     ModaConsultasComponent,
+    CarouselComponent,
 
   ],
   imports: [

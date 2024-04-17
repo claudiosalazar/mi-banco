@@ -6,11 +6,43 @@
 }
 
 // Clase de todos los button del sitio
-.btn{
+.btn {
   // min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 2rem;
+  padding: 10px 25px;
+  &.btn-primary {
+    background-color: $rojo;
+    color: $blanco;
+    border: none;
+    &:hover {
+      box-shadow: $shadow-card;
+    }
+  }
+  &.btn-xs {
+    padding: .2rem 1rem;
+    font-size: .75rem;
+    border: 1px solid $rojo;
+    color: $rojo;
+    &:hover {
+      box-shadow: $shadow-card;
+      background-color: $rojo;
+      color: $blanco;
+    }
+  }
+  &.btn-secondary {
+    border-color: $rojo;
+    background-color: $blanco;
+    color: $rojo;
+  }
+  &.btn-carousel-right {
+    position: absolute;
+    right: 25%;
+    bottom: 20%;
+    background-color: $blanco;
+  }
 }
 
 // Toggle de header en version mobile

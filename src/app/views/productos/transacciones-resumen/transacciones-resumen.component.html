@@ -1,38 +1,42 @@
 <div class="container">
   <div class="row">
-    <div class="mt-3 mt-md-5">
+    <div class="mt-3 mt-md-5 mb-4">
       <h1>Últimos movimientos</h1>
       <p>Elije uno de tus productos para todos los movimientos que haz realizado.</p>
     </div>
     <div class="col-md-4 mb-3 mb-md-0">
-      <div class="h-100 p-4 p-md-5 text-bg-dark rounded-3">
+      <div class="card p-4 p-md-4">
         <h4>Cuenta Corriente</h4>
         <p><strong>N° {{ numeroCtaCte }}</strong></p>
-        <p>Disponible: {{ cupoCtaCte | pesos }}</p>
+        <p>Disponible: <strong>{{ cupoCtaCte | pesos }}</strong></p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/cuenta-corriente">Ver movimientos</a>
       </div>
     </div>
     <div class="col-md-4 mb-3 mb-md-0">
-      <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3">
+      <div class="card p-4 p-md-4">
         <h4>Línea de Crédito</h4>
         <p><strong>N° {{ numeroLineaCredito }}</strong></p>
-        <p>Disponible: {{ cupoLineaCredito | pesos }}</p>
+        <p>Disponible: <strong>{{ cupoLineaCredito | pesos }}</strong></p>
         <a class="btn btn-info w-100" routerLink="/mibanco/transacciones/linea-credito">Ver movimientos</a>
       </div>
     </div>
     <div class="col-md-4 mb-3 mb-md-0">
-      <div class="h-100 p-4 p-md-5 bg-body-tertiary border rounded-3">
+      <div class="card p-4 p-md-4">
         <h4>Visa</h4>
         <p><strong>N° {{ numeroVisa }}</strong></p>
-        <p>Disponible: {{ cupoVisa | pesos }}</p>
+        <p>Disponible: <strong>{{ cupoVisa | pesos }}</strong></p>
         <button class="btn btn-info w-100" type="button" routerLink="/mibanco/transacciones/visa">Ver movimientos</button>
       </div>
     </div>
-    <div class="col-12">
-      <div class="card p-4 p-md-5 mt-0 mt-md-4">
-        <h3>{{ datosUsuarioActual?.datosUsuario?.primerNombre }}, tienes un crédito pre-aprobado de </h3>
-        <h1 class="mb-4">{{ montoPreAprobadoCreditoConsumo | pesos }}</h1>
-        <button class="btn btn-primary btn-lg" type="button">Simular Crédito</button>
+    <div class="col-12 mt-5">
+      <div class="card p-4 p-md-5 mb-4 banner-principal">
+        <h4>Hola {{ datosUsuarioActual?.datosUsuario?.primerNombre }}, tienes un crédito de consumo <br>pre-aprobado por un monto de: </h4>
+        <h2 class="mb-4">
+          <strong>{{ montoPreAprobadoCreditoConsumo | pesos }}</strong>
+        </h2>
+        <div>
+          <button class="btn btn-primary" type="button">Solicitar crédito</button>
+        </div>
       </div>
     </div>
   </div>

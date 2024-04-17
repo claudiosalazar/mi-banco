@@ -1,0 +1,14 @@
+.carousel {
+  background-color: $rojo;
+  .carousel-item {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 100%;
+      max-width: 1200px;
+    }
+  }
+  .carousel-indicators {
+    bottom: -10px;
+  }
+}

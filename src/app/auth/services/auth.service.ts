@@ -11,7 +11,7 @@ export class AuthService {
   authenticate(user: User) {
     // Aquí es donde normalmente harías una llamada a un servidor de backend.
     // Para este ejemplo, simplemente comprobamos los datos del usuario contra los datos mockup.
-    if (user.user === '1-1' && user.password === 'usuario-12345') {
+    if (user.user === '128404325' && user.password === 'usuario-12345') {
       localStorage.setItem('user', JSON.stringify(user));
       this.router.navigate(['mibanco']);  // Aquí es donde rediriges al usuario al componente 'main'.
     } else {
