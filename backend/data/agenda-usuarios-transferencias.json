@@ -150,9 +150,21 @@
     "rut": "951753698",
     "banco": "Scotiabank Chile",
     "tipoCuenta": "Cuenta Vista",
-    "numeroCuenta": "98765",
+    "numeroCuenta": "9876555",
     "email": "alado@gmail.com",
     "celular": "",
+    "telefono": ""
+  },
+  {
+    "id": "14",
+    "nombre": "Alexis Sanchez",
+    "apodo": "Maravilla",
+    "rut": "987654321",
+    "banco": "Scotiabank Chile",
+    "tipoCuenta": "Cuenta Corriente",
+    "numeroCuenta": "6546845",
+    "email": "alexis@gmail.com",
+    "celular": "987654321",
     "telefono": ""
   }
 ]

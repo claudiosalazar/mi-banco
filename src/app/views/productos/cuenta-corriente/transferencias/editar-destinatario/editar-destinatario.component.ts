@@ -135,15 +135,15 @@ export class EditarDestinatarioComponent implements OnInit{
 
    ngOnInit(): void {
     this.editarDestinatarioForm = new FormGroup({
-      nombreDestinatario: new FormControl('', [Validators.required]),
+      nombreDestinatario: new FormControl(''),
       apodoDestinatario: new FormControl(''),
-      rutDestinatario: new FormControl('', [Validators.required]),
-      bancoDestinatario: new FormControl('', [Validators.required]),
-      cuentaDestinatario: new FormControl('', [Validators.required]),
-      numeroCuentaDestinatario: new FormControl('', [Validators.required]),
-      emailDestinatario: new FormControl('', [Validators.required]),
-      celularDestinatario: new FormControl('', [Validators.required]),
-      telefonoDestinatario: new FormControl('', [Validators.required]),
+      rutDestinatario: new FormControl(''),
+      bancoDestinatario: new FormControl(''),
+      cuentaDestinatario: new FormControl(''),
+      numeroCuentaDestinatario: new FormControl(''),
+      emailDestinatario: new FormControl(''),
+      celularDestinatario: new FormControl(''),
+      telefonoDestinatario: new FormControl(''),
     });
 
     this.agendaService.idDestinatarioAeditar.subscribe(id => {
