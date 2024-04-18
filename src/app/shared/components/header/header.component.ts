@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener, Renderer2 } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
@@ -19,13 +19,33 @@ declare var bootstrap: any;
         opacity: 0.5
       })),
       transition('void <=> *', animate('0.2s'))
-    ])
+    ]),
+    trigger('changeDivSize', [
+      state('initial', style({
+        height: '102px',
+        paddingTop: '16px',
+        paddingBottom: '16px',
+        //backgroundColor: 'rgba(255, 23, 68, 1)'
+      })),
+      state('final', style({
+        height: '70px',
+        paddingTop: '12px',
+        paddingBottom: '12px',
+        //backgroundColor: 'rgba(255, 23, 68, .9)'
+      })),
+      transition('initial=>final', animate('100ms')),
+      transition('final=>initial', animate('100ms'))
+    ]),
   ]
 })
 export class HeaderComponent implements OnInit {
 
   @ViewChild('navbarNavDropdown') navbarNavDropdown: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  @ViewChild('header') headerElement: ElementRef | undefined;
+  @ViewChild('fondoHeader') fondoHeaderElement: ElementRef | undefined;
+  currentState = 'initial';
+
 
   primerNombre:any;
   segundoNombre:any;
@@ -44,6 +64,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService, 
     private router: Router,
     private datosUsuarioService: DatosUsuarioService,
+    private renderer: Renderer2
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -65,7 +86,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngAfterViewInit(_e: Event): void {
-
     // Elmina backdrop de offcanvas y modal
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -91,7 +111,35 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
-    
+
+    // Estilos para header
+    if (this.headerElement && this.fondoHeaderElement) {
+      const header: HTMLElement = this.headerElement.nativeElement;
+      const fondoHeader: HTMLElement = this.fondoHeaderElement.nativeElement;
+
+      header.style.height = '102px';
+      header.style.paddingTop = '16px';
+      header.style.paddingBottom = '16px';
+
+      fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+      fondoHeader.style.height = '102px';
+      fondoHeader.style.paddingTop = '16px';
+      fondoHeader.style.paddingBottom = '16px';
+    }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(_event: any) {
+    this.currentState = window.scrollY >= 102 ? 'final' : 'initial';
+
+    if (this.fondoHeaderElement) {
+      const fondoHeader: HTMLElement = this.fondoHeaderElement.nativeElement;
+      if (window.scrollY >= 102) {
+        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 0.9)';
+      } else {
+        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+      }
+    }
   }
 
   // Reestablece menu en mobile despues de un click
