@@ -5,6 +5,7 @@ header.mi-banco-header {
   position: fixed;
   z-index: 2;
   display: flex;
+  color: $blanco;
   .navbar {
     width: 100%;
     padding-top: inherit;
@@ -21,7 +22,11 @@ header.mi-banco-header {
       z-index: 3;
     }
     li a {
-      color: $blanco;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 500;
+      &:hover {
+        color: $blanco;
+      }
     }
     .btn-header {
       color: $blanco;
@@ -32,23 +37,46 @@ header.mi-banco-header {
   }
 
   .nav-link {
+    position: relative;
     &.active, &.show {
-      color: $dorado
+      color: $blanco;
     }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: $blanco; /* color de la línea */
+      transition: all 0.2s ease-in-out;
+      transform: translateX(-50%);
+    }
+    &:hover::after {
+      width: 90%;
+    }
+    
   }
 
   // Menu usuario
   .dropdown-menu {
-    background-color: $rojo-claro;
-    box-shadow: $shadow-heavy;
+    background-color: $rojo;
+    border: none;
+    //box-shadow: $shadow-heavy;
     li {
-      border-bottom: 1px solid $blanco ;
+      //border-bottom: 1px solid $blanco ;
       &:last-child {
         border-bottom: none;
       }
       &.dropdown-item:focus, .dropdown-item:hover {
         color: $blanco;
         background-color: $rojo;
+        border-radius: 0 0 0.4rem 0.4rem;
+      }
+      a {
+        &.dropdown-item {
+          padding: 12px 22px;
+        }
       }
     } 
   }

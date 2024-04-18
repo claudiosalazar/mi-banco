@@ -13,7 +13,7 @@ import { OfertasProductosService } from '../../../core/services/ofertas-producto
 })
 export class TransaccionesResumenComponent implements OnInit {
 
-  datosUsuarioActual: DatosUsuarioActual | undefined;
+  datosUsuarioActual: any = {};
 
   // Variables para ofertas
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
@@ -27,6 +27,8 @@ export class TransaccionesResumenComponent implements OnInit {
   numeroCtaCte: any | undefined;
   numeroLineaCredito: any | undefined;
   numeroVisa: any | undefined;
+  primerNombre: any | undefined;
+  apellidoPaterno: any | undefined;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -42,7 +44,9 @@ export class TransaccionesResumenComponent implements OnInit {
 
   getDatosUsuario(): void {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
-      this.datosUsuarioActual = data;
+      this.datosUsuarioActual = data.datosUsuario || {};
+      this.primerNombre = this.datosUsuarioActual.primerNombre;
+      this.apellidoPaterno = this.datosUsuarioActual?.apellidoPaterno;
     });
   }
   

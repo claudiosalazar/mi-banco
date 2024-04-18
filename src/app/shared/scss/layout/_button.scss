@@ -12,13 +12,28 @@
   align-items: center;
   justify-content: center;
   border-radius: 2rem;
-  padding: 10px 25px;
+  padding: 8px 20px;
+  font-weight: 500;
+  &:hover {
+    box-shadow: $shadow-btn-hover;
+  }
   &.btn-primary {
     background-color: $rojo;
     color: $blanco;
     border: none;
     &:hover {
-      box-shadow: $shadow-btn-hover;
+      background-color: $dorado;
+      color: $negro;
+    }
+  }
+  &.btn-secondary {
+    background-color: $blanco;
+    color: $gris;
+    border: 1px solid $gris-claro-dos;
+    &:hover {
+      border: 1px solid $gris;
+      color: $gris-oscuro;
+      background-color: $gris-claro-uno;
     }
   }
   &.btn-xs {
@@ -32,11 +47,11 @@
       color: $blanco;
     }
   }
-  &.btn-secondary {
+  /*&.btn-secondary {
     border-color: $rojo;
     background-color: $blanco;
     color: $rojo;
-  }
+  }*/
   &.btn-carousel-right {
     position: absolute;
     right: 25%;
