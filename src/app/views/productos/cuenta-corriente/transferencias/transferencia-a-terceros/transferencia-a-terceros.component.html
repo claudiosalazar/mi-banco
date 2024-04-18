@@ -20,13 +20,15 @@
   <!-- Tabla -->
   <form [formGroup]="transferenciaATercerosForm">
     <div>
-      <table class="table tabla-agenda-transferencias" role="table" *ngIf="tablaDestinatarios">
+      <table class="table table-striped tabla-agenda-transferencias" role="table" *ngIf="tablaDestinatarios">
         <thead role="columnheader"ead role="rowgroup">
           <tr role="row">
             <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  Destinatario
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Destinatario
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'">
                   expand_more
@@ -35,8 +37,10 @@
             </th>
             <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  Banco
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Banco
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'">
                   expand_more
@@ -45,8 +49,10 @@
             </th>
             <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  Rut
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Rut
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'">
                   expand_more
@@ -55,8 +61,10 @@
             </th>
             <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  Tipo de cuenta
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Tipo de cuenta
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'">
                   expand_more
@@ -65,8 +73,10 @@
             </th>
             <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  N° de cuenta
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    N° de cuenta
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'">
                   expand_more
@@ -75,8 +85,10 @@
             </th>
             <th role="columnheader" (click)="ordenarDatos('email'); onHeaderClick()">
               <div class="d-flex align-items-center">
-                <span>
-                  Email
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Email
+                  </div>
                 </span>
                 <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'email'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'email'">
                   expand_more
@@ -88,29 +100,29 @@
         <tbody role="rowgroup">
           <!-- <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" [class]="getClassForDestinatario(destinatario.id)"> -->
           <tr role="row" *ngFor="let destinatario of paginatedDestinatarios">
-            <td role="cell" class="ps-1">
-              <span class="contenido-td ps-1">
-                <div class="form-check me-3">
+            <td role="cell" class="ancho">
+              <span class="contenido-celda ps-1">
+                <div class="form-check ps-0 d-flex align-items-center">
                   <!-- Cuando haces clic en este elemento de entrada de radio, se llama a seleccionarDestinatario(destinatario.id), que establece destinatarioId en el id del destinatario seleccionado -->
-                  <input class="form-check-input" type="radio" id="destinatarioATransferir" (change)="seleccionarDestinatario(destinatario.id)" [disabled]="pasosTransferencia && destinatario.id === selectedId">
-                  <label for="destinatarioATransferir">{{ destinatario.nombre }}</label>
+                  <input class="form-check-input m-0" type="radio" id="destinatarioATransferir" (change)="seleccionarDestinatario(destinatario.id)" [disabled]="pasosTransferencia && destinatario.id === selectedId">
+                  <label for="destinatarioATransferir" class="ms-3">{{ destinatario.nombre }}</label>
                 </div>
               </span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.banco }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ destinatario.banco }}</span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.rut| rut }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ destinatario.rut| rut }}</span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.tipoCuenta }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ destinatario.tipoCuenta }}</span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.numeroCuenta }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ destinatario.numeroCuenta }}</span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ destinatario.email }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ destinatario.email }}</span>
             </td>
           </tr>
         </tbody>
@@ -248,7 +260,7 @@
 </div>
 
 <!-- Modal cambios destinatario -->
-<div class="modal fade" id="modalCambiosDestinatario" tabindex="-1" aria-labelledby="modalCambiosDestinatario" aria-hidden="true">
+<div class="modal fade" id="modalCambiosDestinatario" tabindex="-1" aria-labelledby="modalCambiosDestinatario" aria-hidden="true"style="z-index: 9998;">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body px-4 py-5">

@@ -10,44 +10,64 @@
   </div>
 
   <div>
-    <table class="table table-productos" role="table">
+    <table class="table table-striped ultimas-transferencias" role="table">
       <thead role="columnheader"ead role="rowgroup">
         <tr role="row">
           <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">
-            <div class="d-flex">
-              Fecha
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Fecha
+                </div>
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
                 expand_more
               </span>
             </div>
           </th>
           <th role="columnheader" (click)="ordenarDatos('destinatario'); onHeaderClick()">
-            <div class="d-flex">
-              Destinatario
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Destinatario
+                </div>
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'destinatario'">
                 expand_more
               </span>
             </div>
           </th>
           <th role="columnheader" (click)="ordenarDatos('mensaje'); onHeaderClick()">
-            <div class="d-flex">
-              Mensaje
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Mensaje
+                </div>
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'mensaje'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'mensaje'">
                 expand_more
               </span>
             </div>
           </th>
           <th role="columnheader" (click)="ordenarDatos('cargo'); onHeaderClick()">
-            <div class="d-flex">
-              Cargo
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Cargo
+                </div>
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'">
                 expand_more
               </span>
             </div>
           </th>
           <th role="columnheader" (click)="ordenarDatos('saldo'); onHeaderClick()">
-            <div class="d-flex">
-              Saldo
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Saldo
+                </div>
+              </span>
               <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'saldo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'saldo'">
                 expand_more
               </span>
@@ -57,11 +77,21 @@
       </thead>
       <tbody role="rowgroup">
         <tr *ngFor="let transaccion of paginatedTransacciones" role="row">
-          <td role="cell">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</td>
-          <td role="cell">{{ transaccion.destinatario }}</td>
-          <td role="cell">{{ transaccion.mensaje }}</td>
-          <td role="cell">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</td>
-          <td role="cell">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transaccion.destinatario }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transaccion.mensaje }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</span>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -3,6 +3,7 @@
   .nav-tabs {
     border-bottom: none;
     .nav-link {
+      padding: 20px 30px;
       &.active {
         font-weight: bold;
       }
@@ -15,6 +16,8 @@
     border-left: 1px solid #ddd;
     border-bottom-left-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
+    background-color: $blanco;
+    box-shadow: $shadow-card;
   
     &.movimientos {
       border-top-right-radius: 0.375rem;
