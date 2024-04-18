@@ -1,5 +1,9 @@
 
-h1 {
+strong {
+  font-weight: 700;
+}
+
+h1, h2, h3 {
   font-weight: 700;
 }
 
@@ -23,3 +27,11 @@ h1 {
 span.caracteres-textarea {
   font-size: 12px;
 }
+
+.titulo-ofertas {
+  font-size: 32px;
+  font-weight: 500;
+  display: block;
+  text-transform: uppercase;
+}
+

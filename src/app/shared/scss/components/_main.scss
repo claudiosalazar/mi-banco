@@ -11,6 +11,13 @@
     padding-top: 102px;
     flex-grow:1;
     align-self:auto;
+    background-image: url('/assets/images/fondo-home.jpg');
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: contain;
+    @media (min-width: $md) {
+      background-size: 697px 1000px;
+    }
   }
 
 }

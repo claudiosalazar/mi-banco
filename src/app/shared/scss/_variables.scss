@@ -1,7 +1,9 @@
 // Colores básicos
 $blanco: #ffffff;
+$negro: #000000;
 $rojo: rgba(255, 23, 68, 1);
 $dorado: #daa64e;
+$dorado-hover: #F4C16C;
 $dorado-seleccionado: rgb(218, 166, 78, 0.5);
 $dorado-hover: #F1AA2E;
 $verde: #4caf50;
@@ -25,6 +27,7 @@ $shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 $shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 $shadow-heavy: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 $shadow-card: 0px 0px 24px -4px rgba(0,0,0,0.4);
+$shadow-btn-hover: 0px 3px 6px rgba(0, 0, 0, 0.349);
 
 // Media breakpoints
 $sm: 575.98px;

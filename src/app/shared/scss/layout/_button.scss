@@ -18,7 +18,7 @@
     color: $blanco;
     border: none;
     &:hover {
-      box-shadow: $shadow-card;
+      box-shadow: $shadow-btn-hover;
     }
   }
   &.btn-xs {
@@ -42,6 +42,15 @@
     right: 25%;
     bottom: 20%;
     background-color: $blanco;
+  }
+  &.btn-call-to-action {
+    background-color: $dorado;
+    color: $blanco;
+    border: none;
+    &:hover {
+      background-color: $dorado-hover;
+      box-shadow: $shadow-card;
+    }
   }
 }
 
