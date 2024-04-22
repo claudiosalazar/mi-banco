@@ -1,5 +1,12 @@
+.modal-content {
+  border-radius: 30px;
+}
+
 .modal-body {
-  font-size: 18px;
+  padding: 48px;
+  .btn {
+    margin-top: 24px;
+  }
 }
 
 /*.modal-backdrop {

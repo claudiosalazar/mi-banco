@@ -1,11 +1,22 @@
+.pagination {
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  margin-top: 10px;
+}
+
 .page-link {
-  padding: 5px 10px;
-  height: 30px;
+  border-radius: 0.375rem;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: $rojo;
   margin-top: 10px;
   color: #000;
+  text-align: center;
+  margin: 5px;
+  border: none;
   &:hover {
     color: $rojo;
   }
@@ -13,6 +24,7 @@
     background-color: $rojo;
     color: $blanco;
     border-color: $rojo;
+    font-weight: 800;
     &:hover {
       color: $blanco;
     }

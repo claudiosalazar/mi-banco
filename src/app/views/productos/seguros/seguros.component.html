@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-12">
       <!-- Seguro hogar -->
-      <div class="card mb-3 mb-md-4 p-4 p-md-5">
+      <div class="card mb-3 mb-md-4 p-4 p-md-4">
         <div class="row">
           <div class="col-12 d-flex align-items-center mb-4">
             <div class="pe-4">
@@ -48,7 +48,7 @@
 
     <!-- Seguro vida -->
     <div class="col-md-12">
-      <div class="card mb-3 mb-md-4 p-4 p-md-5">
+      <div class="card mb-3 mb-md-4 p-4 p-md-4">
         <div class="row">
           <div class="col-12 d-flex align-items-center mb-4">
             <div class="pe-4">
@@ -89,11 +89,33 @@
 
     <!-- Banner -->
     <div class="col-12">
-      <div class="card p-4 p-md-5">
-        <h4 class="d-flex justify-content-between mt-3">{{ productoOferta }}</h4>
-        <p>Contrata Seguro Accidentes, oferta exclusiva para el presente mes.</p>
-        <p>Valor mensual: <strong>UF {{ montoPreAprobado }}</strong></p>
-        <button class="btn btn-outline-secondary" type="button" routerLink="/mibanco/seguros/contratar-seguro">Contratar Seguro</button>
+      <div class="card card-banner">
+        <div class="row d-flex justify-content-between">
+          <div class="col-md-6 info-banner d-flex justify-content-around flex-column">
+            <span class="titulo-banner text-start">
+              Contrata tu Seguro Auto
+            </span>
+            <span class="texto-secundario">
+              oferta exclusiva para solo por este mes 
+            </span>
+            <span class="texto-explicativo">
+              Valor mensual por el primer año.
+            </span>
+            <span class="monto-cuota text-start rojo">
+              <!-- UF {{ montoPreAprobadoSeguroAuto}} -->
+            </span>
+            <img src="../../../../assets/images/aseguradora.jpg" alt="Aseguradora" class="logo-seguro mt-3">
+            <span class="texto-legal">
+              * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
+            </span>
+          </div>
+          <div class="col-md-6 contenido-imagen">
+            <div class="contenedor-boton">
+              <button class="btn btn-call-to-action" type="button">Solicitar Crédito</button>
+            </div>
+            <img src="../../../../assets/images/banner-home-credito-consumo.jpg" alt="Seguro" class="img-fluid imagen-banner">
+          </div>
+        </div>
       </div>
     </div>
   </div>

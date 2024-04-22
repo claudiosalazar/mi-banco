@@ -4,7 +4,7 @@
     padding: 18px 20px;
   }
   thead {
-    border-bottom: transparent;
+    
     th {
       background-color: $color-th;
       &:first-child {
@@ -135,13 +135,13 @@
     }
     th, td {
       &:nth-child(1) {
-        width: 16%;
+        width: 20%;
       }
       &:nth-child(2) {
         width: 16%;
       }
       &:nth-child(3) {
-        width: 16%;
+        width: 12%;
       }
       &:nth-child(4) {
         width: 16%;

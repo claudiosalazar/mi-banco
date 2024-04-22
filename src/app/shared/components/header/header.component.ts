@@ -44,8 +44,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
   @ViewChild('fondoHeader') fondoHeaderElement: ElementRef | undefined;
+  
   currentState = 'initial';
-
 
   primerNombre:any;
   segundoNombre:any;
@@ -135,7 +135,7 @@ export class HeaderComponent implements OnInit {
     if (this.fondoHeaderElement) {
       const fondoHeader: HTMLElement = this.fondoHeaderElement.nativeElement;
       if (window.scrollY >= 102) {
-        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 0.9)';
+        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 0.92)';
       } else {
         fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 1)';
       }
