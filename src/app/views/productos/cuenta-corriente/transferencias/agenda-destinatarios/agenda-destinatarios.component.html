@@ -153,12 +153,16 @@
 
 <!-- Sidenav para crear nuevo destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
-  <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+  <div class="contenido-offcanvas">
+    <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+  </div>
 </div>
 
 <!-- Sidenav para editar destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">
-  <app-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-editar-destinatario>
+  <div class="contenido-offcanvas">
+    <app-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-editar-destinatario>
+  </div>
 </div>
 
 <!-- Modal eliminar destinatario -->

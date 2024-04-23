@@ -1,14 +1,16 @@
 .offcanvas {
   border-radius: 6px;
-  box-shadow: $shadow-card;
-  //min-height: fit-content !important;
   overflow: scroll !important;
   right: 18px !important;
   bottom: 18px !important;
   top: 18px !important;
   z-index: 7000 !important;
-  height: fit-content;
+  background-color: transparent !important;
+  border-left: 0 !important;
   
+  .contenido-offcanvas {
+    box-shadow: $shadow-card;
+  }
 
   .offcanvas-header {
     position: sticky !important;
@@ -46,6 +48,7 @@
       padding: 24px !important;
       overflow: scroll !important;
       z-index: 4;
+      background-color: $blanco;
    }
    
    .offcanvas-footer {
