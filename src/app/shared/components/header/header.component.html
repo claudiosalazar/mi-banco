@@ -47,28 +47,26 @@
           </ul>
           <div class="d-flex align-items-center menu-usuario">
             <span class="me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ segundoNombre }}</span> {{ apellidoPaterno }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellidoMaterno }}</span></span>
-            <div class="dropdown">
-              <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
-                <span class="material-symbols-outlined icono-datos-usuario" style="font-variation-settings: 'FILL' 1">
-                  settings
-                </span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
-                <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
-                <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>
-                <li>
-                  <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
-                    <span class="material-symbols-outlined icono-dropdown">
-                      close
-                    </span>
-                    <span>
-                      Cerrar sesión
-                    </span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
+              <span class="material-symbols-outlined icono-datos-usuario" style="font-variation-settings: 'FILL' 1">
+                settings
+              </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
+              <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
+              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
+                  <span class="material-symbols-outlined icono-dropdown">
+                    close
+                  </span>
+                  <span>
+                    Cerrar sesión
+                  </span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

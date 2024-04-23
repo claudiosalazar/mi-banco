@@ -8,7 +8,6 @@ header.mi-banco-header {
   align-items: center;
   color: $blanco;
   .navbar {
-    //height: fit-content;
     width: 100%;
     padding-top: inherit;
     padding-bottom: inherit;
@@ -35,31 +34,6 @@ header.mi-banco-header {
     }
   }
 
-  .menu-usuario {
-    border: 0;
-    position: relative;
-    .nombre-usuario {
-      color: $blanco;
-      display: block !important;
-      text-align: right;
-      font-weight: 500;
-      font-size: 14px;
-      z-index: 8000;
-    }
-    .icono-datos-usuario{
-      line-height: 32px;
-    }
-    /*@media (max-width: $lg) {
-      position: absolute;
-      width: calc(100% - 34px);
-      top: 86px;
-      margin: 0 auto;
-      border-bottom: 1px solid rgb(255, 255, 255, .3);
-      display: flex;
-      justify-content: end;
-    }*/
-  }
-
   .nav-item {
     color: $blanco;
     margin: 0 !important;
@@ -72,14 +46,15 @@ header.mi-banco-header {
       background-color: #D61A3F;
     }
     &.menu-productos {
-      position: relative;
+      height: fit-content !important;
+      @media (min-width: $md) {
+        position: relative;
+      }
     }
-
     .nav-link {
       position: relative;
       color: $blanco;
       font-weight: 500;
-      //padding: 0;
       z-index: 8000;
       padding: 14px 18px !important;
       &.show {
@@ -90,63 +65,75 @@ header.mi-banco-header {
         height: 12px;
       }
     }
-    /*@media (min-width: $lg) {
-      padding: 8px 12px !important;
-    }
-    @media (min-width: $xl) {
-      padding: 8px 18px !important;
-    }
-    @media (min-width: $md) {
-      .dropdown-menu.menu-productos {
-        padding: 42px 0 0 0 !important;
-        &.dropdown-item {
-          background: transparent !important;
-          padding: 14px 0 !important;
-          &:last-child {
-            padding-bottom: 0 !important;
-          }
-        }
-      }
-    }*/
-    
   }
+}
 
-  // Menu usuario
-  .dropdown-menu {
-    background: linear-gradient(rgba(255, 23, 68, 0) 0%, #ff1744 25%);
-    border: none;
-    font-size: 12px;
-    padding: 42px 8px 8px 8px !important;
-    border-radius: 0 0 8px 8px;
-    margin-top: -36px !important;
-    z-index: 7000;
-    position: absolute !important;
-    margin-left: 0 !important;
-    /* @media (min-width: $md) {
-      background: none;
-    } */
-    li {
-      padding: 0;
-      &:last-child {
-        border-bottom: none;
-      }
+.menu-usuario {
+  border: 0;
+  // position: absolute;
+  .nombre-usuario {
+    color: $blanco;
+    display: block !important;
+    text-align: right;
+    font-weight: 500;
+    font-size: 14px;
+    z-index: 8000;
+  }
+  .icono-datos-usuario{
+    line-height: 32px;
+  }
+  @media (max-width: $lg) {
+    position: absolute;
+    width: calc(100% - 34px);
+    top: 86px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgb(255, 255, 255, .3);
+    display: flex;
+    justify-content: end;
+    .dropdown-menu {
+      background: linear-gradient(rgba(255, 23, 68, 1) 0%, #D61A3F 25%);
+      z-index: 8800;
+      right: 0;
+      left: 0;
+      top: 72px !important;
+      padding: 8px !important;
       .dropdown-item {
-        padding: 12px 22px;
-        border-radius: 6px;
-        margin: 0;
-        color: $blanco;
-        font-weight: 500;
-        background-color: $rojo;
-        &:hover {
-          background-color: #D61A3F;
-        }
-        .icono-dropdown {
-          font-size: 18px;
-          line-height: 11px;
-          height: 12px;
-          margin-left: -4px;
-          margin-right: 4px;
-        }
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  background: linear-gradient(rgba(255, 23, 68, 0) 0%, #ff1744 25%);
+  border: none;
+  font-size: 12px;
+  padding: 42px 8px 8px 8px !important;
+  border-radius: 0 0 8px 8px;
+  margin-top: -36px !important;
+  z-index: 7000;
+  margin-left: 0 !important;
+  li {
+    padding: 0;
+    &:last-child {
+      border-bottom: none;
+    }
+    .dropdown-item {
+      padding: 12px 22px;
+      border-radius: 6px;
+      margin: 0;
+      color: $blanco;
+      font-weight: 500;
+      background-color: $rojo;
+      &:hover {
+        background-color: #D61A3F;
+      }
+      .icono-dropdown {
+        font-size: 18px;
+        line-height: 11px;
+        height: 12px;
+        margin-left: -4px;
+        margin-right: 4px;
       }
     }
   }
@@ -159,11 +146,11 @@ header.mi-banco-header {
 .navbar-collapse {
   .navbar-nav {
     margin-top: auto !important;
-    /*@media (max-width: $lg) {
+    @media (max-width: $lg) {
       margin-top: 120px !important;
-    }*/
+    }
   }
-  /*@media (max-width: $lg) {
+  @media (max-width: $lg) {
     flex-basis: 100%;
     flex-grow: 1;
     align-items: left;
@@ -174,12 +161,11 @@ header.mi-banco-header {
     left: 0;
     right: 0;
     padding: 0;
-    box-shadow: $shadow-card;
     border-radius: 0 0 12px 12px;
     padding: 16px;
     margin-left: 12px;
     margin-right: 12px;
-  }*/
+  }
 }
 
 .fondo-header {
