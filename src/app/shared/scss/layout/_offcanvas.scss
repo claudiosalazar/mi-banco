@@ -1,6 +1,57 @@
-.offcanvas-header {
-  a {
-    width: 24px;
-    height: 24px;
-  }
+.offcanvas {
+  border-radius: 6px;
+  box-shadow: $shadow-card;
+  //min-height: fit-content !important;
+  overflow: scroll !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  top: 18px !important;
+  z-index: 7000 !important;
+  height: fit-content;
+  
+
+  .offcanvas-header {
+    position: sticky !important;
+    padding: 0 !important;
+    top: 0;
+    z-index: 5;
+    .contenido-offcanvas-header {
+      background-color: #F4F4F4;
+      border-radius: 6px 6px 0 0;
+      padding: 24px;
+      width: 100%;
+      height: 93px;
+    }
+     .titulo {
+       font-size: 16px;
+       font-weight: 600;
+       display: block;
+     }
+     .nota {
+       font-size: 14px;
+       font-weight: 400;
+       display: block;
+     }
+     a {
+       width: 24px;
+       height: 24px;
+       color: $gris-claro-dos;
+       &:hover {
+         color: $negro;
+       }
+     }
+   }
+   
+   .offcanvas-body {
+      padding: 24px !important;
+      overflow: scroll !important;
+      z-index: 4;
+   }
+   
+   .offcanvas-footer {
+     background-color: #F4F4F4;
+     border-radius: 0 0 6px 6px;
+     padding: 24px;
+   }
 }
+

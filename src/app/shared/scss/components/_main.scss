@@ -7,11 +7,11 @@
 
   #informacion {
     position: relative;
-    z-index: 0;
     padding-top: 102px;
     flex-grow:1;
     align-self:auto;
     background-image: none;
+    //z-index: 0;
     @media (min-width: $md) {
       background-image: url('/assets/images/fondo-home.jpg');
       background-position: bottom left;

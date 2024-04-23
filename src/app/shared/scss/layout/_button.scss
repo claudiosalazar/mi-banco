@@ -1,3 +1,13 @@
+
+/*a {
+  color: $gris;
+  &:hover {
+    color: $negro;
+  }
+}*/
+
+
+
 // Elimina border del focus
 .page-link, .page-item, .accordion-button, .navbar-toggler {
   &:focus {

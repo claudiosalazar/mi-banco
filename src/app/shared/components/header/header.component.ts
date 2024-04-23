@@ -43,7 +43,6 @@ export class HeaderComponent implements OnInit {
   @ViewChild('navbarNavDropdown') navbarNavDropdown: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
-  @ViewChild('fondoHeader') fondoHeaderElement: ElementRef | undefined;
   
   currentState = 'initial';
 
@@ -63,8 +62,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private datosUsuarioService: DatosUsuarioService,
-    private renderer: Renderer2
+    private datosUsuarioService: DatosUsuarioService
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -113,18 +111,13 @@ export class HeaderComponent implements OnInit {
     });
 
     // Estilos para header
-    if (this.headerElement && this.fondoHeaderElement) {
+    if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
-      const fondoHeader: HTMLElement = this.fondoHeaderElement.nativeElement;
 
       header.style.height = '102px';
       header.style.paddingTop = '16px';
       header.style.paddingBottom = '16px';
-
-      fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 1)';
-      fondoHeader.style.height = '102px';
-      fondoHeader.style.paddingTop = '16px';
-      fondoHeader.style.paddingBottom = '16px';
+      header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
     }
   }
 
@@ -132,12 +125,12 @@ export class HeaderComponent implements OnInit {
   onWindowScroll(_event: any) {
     this.currentState = window.scrollY >= 102 ? 'final' : 'initial';
 
-    if (this.fondoHeaderElement) {
-      const fondoHeader: HTMLElement = this.fondoHeaderElement.nativeElement;
+    if (this.headerElement) {
+      const header: HTMLElement = this.headerElement.nativeElement;
       if (window.scrollY >= 102) {
-        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 0.92)';
+        header.style.backgroundColor = 'rgba(255, 23, 68, 0.92)';
       } else {
-        fondoHeader.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+        header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
       }
     }
   }
