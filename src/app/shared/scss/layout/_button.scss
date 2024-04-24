@@ -4,38 +4,121 @@
   border-radius: 2rem;
   padding: 8px 20px;
   font-size: 16px;
-
-  .btn-primario {
-    background-color: $rojo;
-    color: $blanco;
+  font-weight: 500;
+  @media (min-width: $md) {
+    margin-right: 12px;
+    &:last-child {
+      margin-right: 0;
+    }
   }
-}
-
-// Botones para card
-.btn-card {
-  border-radius: 2rem;
-  padding: 4px 12px;
-  font-size: 14px;
-  border: 1px solid;
 
   &.btn-primario {
     background-color: $rojo;
     color: $blanco;
     border-color: $rojo;
+    &:hover {
+      color: $rojo;
+      background-color: $blanco;
+      box-shadow: $shadow-btn-hover;
+    }
+  }
+  &.btn-secundario {
+    background-color: $blanco;
+    color: $gris-40;
+    border-color: $gris-20;
+    &:hover {
+      background-color: $gris-01;
+      color: $gris-60;
+      border-color: $gris-60;
+    }
+  }
+  &.btn-terciario {
+    background-color: $blanco;
+    color: $rojo;
+    border-color: $rojo;
+    &:hover {
+      background-color: $rojo;
+      color: $blanco;
+    }
+  }
+}
+
+// Botones para card
+.btn-card {
+  @include animacion-btn;
+  border-radius: 2rem;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid;
+  @media (min-width: $md) {
+    margin-right: 12px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.btn-primario {
+    background-color: $rojo;
+    color: $blanco;
+    border-color: $rojo;
+    &:hover {
+      color: $rojo;
+      background-color: $blanco;
+      box-shadow: $shadow-btn-hover;
+    }
   }
 
   &.btn-secundario {
     background-color: $blanco;
     color: $gris-40;
-    border-color: $gris-40;
+    border-color: $gris-20;
+    &:hover {
+      background-color: $gris-01;
+      color: $gris-60;
+      border-color: $gris-60;
+    }
   }
 }
 
-// Botone banner
+// Botones banner
 .btn-banner {
-  border-radius: 2rem;
+  @include animacion-btn;
   padding: 8px 20px;
   font-size: 16px;
   background-color: $dorado;
   color: $blanco;
+  border: 1px solid $dorado;
+  border-radius: 2rem;
+  font-weight: 600;
+  &:hover {
+    background-color: $dorado-oscuro;
+    color: $blanco;
+    border-color: $dorado-oscuro;
+    box-shadow: $shadow-btn-banner-hover;
+  }
 }
+
+// Botones tabs
+.btn-tab {
+  @include animacion-btn;
+  background-color: transparent;
+  color: $rojo;
+  margin-right: 24px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  &:hover {
+    color: $rojo;
+    border: 1px solid $rojo;
+    background-color: $blanco;
+  }
+  &.active {
+    background-color: $rojo;
+    color: $blanco;
+  }
+}
+
+
+

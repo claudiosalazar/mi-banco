@@ -4,7 +4,7 @@
         <h1>Cuenta Corriente</h1>
 
         <div class="row">
-          <div class="col-12" *ngIf="!currentUrl.endsWith('cartola-historica')" id="datosCuentaCorriente">
+          <div class="col-12" id="datosCuentaCorriente">
             <div class="card mb-5">
               <div class="p-4">
                 <div class="row">
@@ -21,9 +21,9 @@
                   </div>
                 </div>
               </div>
-              <div class="bg-gris p-4">
+              <div class="fondo-gris-01 p-4" *ngIf="!urlActual.includes('transferencias') && !urlActual.includes('cartola-historica')">
                 <div class="row">
-                  <div class="col-12 col-md-6" *ngIf="!currentUrl.includes('transferencias')">
+                  <div class="col-12 col-md-6">
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Saldo contable</small>
                       <small class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></small>
@@ -37,7 +37,7 @@
                       <small class="mb-0"><strong>$ 0</strong></small>
                     </div>
                   </div>
-                  <div class="col-12 col-md-6" *ngIf="!currentUrl.includes('transferencias')">
+                  <div class="col-12 col-md-6" *ngIf="!urlActual.includes('transferencias')">
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Último cargo</small>
                       <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small>
@@ -47,63 +47,14 @@
                       <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
                     </div>
                   </div>
-                  <div class="col-12" *ngIf="!currentUrl.includes('transferencias')">
+                  <div class="col-12" *ngIf="!urlActual.includes('transferencias')">
                     <div class="alert alert-primary mt-4 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
                       <small class="ms-2">Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
-                      <button class="btn btn-primary btn-sm" type="button">Simular aquí</button>
+                      <button class="btn btn-primario" type="button">Simular aquí</button>
                     </div>
                   </div>
                 </div>
               </div>
-              
-
-
-
-
-              <!-- <div class="row">
-                <div class="col-12 mb-3">
-                  <p>Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong></p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <small class="mb-0">Saldo disponible</small>
-                  <h4 class="mb-0 rojo"><strong>{{ cupoCtaCte | pesos }}</strong></h4>
-                </div>
-                <div class="col-12 col-md-6">
-                  <small class="mb-0">Saldo disponible en Línea de Crédito <strong>Nº {{numeroLineaCredito}}</strong></small>
-                  <h4 class="mb-0 rojo"><strong>{{ cupoLineaCredito | pesos }}</strong></h4>
-                </div>
-
-                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.includes('transferencias')">
-                  <div class="d-flex flex-row justify-content-between">
-                    <small class="mb-0">Saldo contable</small>
-                    <small class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></small>
-                  </div>
-                  <div class="d-flex flex-row justify-content-between">
-                    <small class="mb-0">Retenciones a 24 Hrs</small>
-                    <small class="mb-0"><strong>$ 0</strong></small>
-                  </div>
-                  <div class="d-flex flex-row justify-content-between">
-                    <small class="mb-0">Retenciones a 48 Hrs</small>
-                    <small class="mb-0"><strong>$ 0</strong></small>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 mt-2 mt-md-4" *ngIf="!currentUrl.includes('transferencias')">
-                  <div class="d-flex flex-row justify-content-between">
-                    <small class="mb-0">Último cargo</small>
-                    <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small>
-                  </div>
-                  <div class="d-flex flex-row justify-content-between">
-                    <small class="mb-0">Último abono</small>
-                    <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
-                  </div>
-                </div>
-                <div class="col-12" *ngIf="!currentUrl.includes('transferencias')">
-                  <div class="alert alert-primary mt-5 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
-                    <small>Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
-                    <button class="btn btn-primary btn-sm" type="button">Simular aquí</button>
-                  </div>
-                </div>
-              </div> -->
             </div>
           </div>
 
@@ -112,13 +63,13 @@
 
               <ul class="nav nav-tabs" id="tabCtaCte" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="btn-tab" [ngClass]="{'active': currentUrl.endsWith('ultimos-movimientos')}" id="movimientos-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"><span class="d-none d-md-inline">Últimos</span> Movimientos</button>
+                  <button class="btn-tab" [ngClass]="{'active': urlActual.includes('ultimos-movimientos')}" id="movimientos-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"><span class="d-none d-md-inline">Últimos</span> Movimientos</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="btn-tab" [ngClass]="{'active': currentUrl.includes('transferencias')}" id="transferencias-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/transferencias"><span class="d-none d-md-inline">Realizar</span> Transferencia</button>
+                  <button class="btn-tab" [ngClass]="{'active': urlActual.includes('transferencias')}" id="transferencias-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/transferencias"><span class="d-none d-md-inline">Realizar</span> Transferencia</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="btn-tab" [ngClass]="{'active': currentUrl.endsWith('cartola-historica')}" id="cartola-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="cartola-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola <span class="d-none d-md-inline">historica</span></button>
+                  <button class="btn-tab" [ngClass]="{'active': urlActual.includes('cartola-historica')}" id="cartola-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="cartola-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola <span class="d-none d-md-inline">historica</span></button>
                 </li>
               </ul>
 

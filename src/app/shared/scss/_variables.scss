@@ -4,22 +4,26 @@ $negro: #0D0E0F;
 
 // Escala de rojos
 $rojo: #ff1744;
+$rojo-claro: #f7a699;
 $rojo-oscuro: #D61A3F;
 
 // Escala dorado
 $dorado: #daa64e;
-$dorado-oscuro: #A27A37;
+$dorado-oscuro: #a57111;
 
 // Escala de grises
 $gris-80: #373839;
 $gris-60: #626264;
 $gris-40: #8E8E8F;
-$gris-30: #b3b3b8;
+$gris-20: #b3b3b8;
 $gris-10: #c8c9cf;
 $gris-05: #d1d0d9;
+$gris-02: #e5e4ef;
+$gris-01: #f1f1f6;
 
 // Menjajes
-$aviso: #3A7BED;
+$aviso: #a1c1eb;
+$aviso-borde: #3A7BED;
 $adventencia:#E3CA42;
 $valido: #4AD574;
 $error: #FF0300;
@@ -29,7 +33,8 @@ $shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 $shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 $shadow-heavy: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 $shadow-card: 0px 0px 24px -4px rgba(0,0,0,0.4);
-$shadow-btn-hover: 5px 3px 12px rgba(0, 0, 0, 0.2);
+$shadow-btn-hover: 0 0 6px $error;
+$shadow-btn-banner-hover: 0 0 6px $adventencia;
 
 // Media breakpoints
 $sm: 575.98px;

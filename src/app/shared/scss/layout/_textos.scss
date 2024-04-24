@@ -3,13 +3,21 @@ strong {
   font-weight: 700;
 }
 
+// Encabe
 h1, h2, h3 {
+  color: $gris-80;
   font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+h4, h5, h6 {
+  color: $gris-60;
+  font-weight: 600;
+  margin: 0 0 16px 0;
 }
 
 h1 {
-  margin-top: 48px;
-  margin-bottom: 48px;
+  margin: 48px 0;
 }
 
 .pasos-transferencia {

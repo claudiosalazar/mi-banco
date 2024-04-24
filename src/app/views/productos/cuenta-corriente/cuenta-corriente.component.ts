@@ -14,7 +14,7 @@ import { OfertasProductosService } from '../../../core/services/ofertas-producto
 })
 export class CuentaCorrienteComponent implements OnInit {
 
-  currentUrl: any;
+  urlActual: any;
   productosUsuario: { productos: any[] } = { productos: [] };
   cupoCtaCte: any;
   numeroCtaCte: any;
@@ -36,7 +36,7 @@ export class CuentaCorrienteComponent implements OnInit {
     private ofertasProductosService: OfertasProductosService,
     private datePipe: DatePipe
   ) {
-    this.currentUrl = this.route.url;
+    this.urlActual = this.route.url;
   }
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class CuentaCorrienteComponent implements OnInit {
     this.route.events.pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
-      this.currentUrl = event.urlAfterRedirects;
+      this.urlActual = event.urlAfterRedirects;
     });
   }
 

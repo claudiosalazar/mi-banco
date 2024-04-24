@@ -2,7 +2,7 @@
 .tabs-cta-cte {
   
   .nav {
-    background-color: $gris-05;
+    background-color: $gris-01;
     border-radius: 5px 5px 0 0 !important;
     padding: 16px 24px;
   }
@@ -31,20 +31,3 @@
   }
 }
 
-.btn-tab {
-  background-color: transparent;
-  color: $rojo;
-  margin-right: 24px;
-  padding: 10px 15px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  font-weight: 600;
-  &:hover {
-    color: $rojo;
-    border: 1px solid $rojo;
-  }
-  &.active {
-    background-color: $rojo;
-    color: $blanco;
-  }
-}
