@@ -26,10 +26,10 @@
   }
   .btn {
     background-color: $dorado;
-    color: $gris-oscuro;
+    color: $gris-80;
     font-weight: 700;
     &:hover {
-      background-color: $dorado-hover;
+      background-color: $dorado-oscuro;
       color: $blanco;
       box-shadow: $shadow-medium;
     }

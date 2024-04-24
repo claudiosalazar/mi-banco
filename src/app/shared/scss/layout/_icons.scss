@@ -27,13 +27,13 @@
   
       // Colores iconos
       &.valido {
-        color: $verde;
+        color: $valido;
       }
       &.error {
-        color: $rojo;
+        color: $error;
       }
       &.aviso {
-        color: $dorado;
+        color: $aviso;
       }
       &.cargando {
         color: $dorado;

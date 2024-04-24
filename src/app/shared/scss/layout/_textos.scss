@@ -7,6 +7,11 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
+h1 {
+  margin-top: 48px;
+  margin-bottom: 48px;
+}
+
 .pasos-transferencia {
   min-width: 40px;
   min-height: 40px;
@@ -16,7 +21,7 @@ h1, h2, h3 {
   font-weight: 500;
   margin-bottom: 1.6rem;
   text-align: center;
-  border: 1px solid red;
+  border: 1px solid $rojo;
   border-radius: 50%;
   display: block;
   align-items: center;
@@ -33,6 +38,6 @@ span.caracteres-textarea {
   font-weight: 500;
   display: block;
   text-transform: uppercase;
-  color: $gris;
+  color: $gris-80;
 }
 

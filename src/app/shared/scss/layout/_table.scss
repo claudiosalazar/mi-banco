@@ -6,12 +6,12 @@
   thead {
     
     th {
-      background-color: $color-th;
+      background-color: $gris-10;
       &:first-child {
-        border-radius: 16px 0 0 0;
+        border-radius: 5px 0 0 0;
       }
       &:last-child {
-        border-radius: 0 16px 0 0;
+        border-radius: 0 5px 0 0;
       }
       div {
         span {
@@ -33,22 +33,22 @@
   tbody {
     border-radius: 20px 20px 0 0;
     tr {
-      border-bottom: 1px solid $color-tr;
+      border-bottom: 1px solid $gris-10;
       background-color: inherit;
       &:last-child {
         td {
           &:first-child {
-            border-radius: 0 0 0 16px;
+            border-radius: 0 0 0 5px;
           }
           &:last-child {
-            border-radius: 0 0 16px 0;
+            border-radius: 0 0 5px 0;
           }
         }
         
       }
       &:nth-child(even) {
-        border-right: 1px inset $color-tr;
-        border-left: 1px inset $color-tr;
+        border-right: 1px inset $gris-05;
+        border-left: 1px inset $gris-10;
       }
     }
   }

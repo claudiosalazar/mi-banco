@@ -1,23 +1,23 @@
 // Tabs para cuenta corriente
 .tabs-cta-cte {
+  
+  .nav {
+    background-color: $gris-05;
+    border-radius: 5px 5px 0 0 !important;
+    padding: 16px 24px;
+  }
   .nav-tabs {
     border-bottom: none;
     .nav-link {
-      padding: 20px 30px;
+      //padding: 20px 30px;
       &.active {
         font-weight: bold;
       }
     }
   }
   .tab-pane {
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-bottom-left-radius: 0.375rem;
-    border-bottom-right-radius: 0.375rem;
     background-color: $blanco;
-    box-shadow: $shadow-card;
+    border-radius: 0 0 5px 5px;
   
     &.movimientos {
       border-top-right-radius: 0.375rem;
@@ -28,5 +28,23 @@
       border-top-right-radius: 0.375rem;
     }
   
+  }
+}
+
+.btn-tab {
+  background-color: transparent;
+  color: $rojo;
+  margin-right: 24px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  &:hover {
+    color: $rojo;
+    border: 1px solid $rojo;
+  }
+  &.active {
+    background-color: $rojo;
+    color: $blanco;
   }
 }

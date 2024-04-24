@@ -43,7 +43,7 @@ header.mi-banco-header {
     text-transform: uppercase;
     transition: background-color 0.3s ease-in-out;
     &:hover {
-      background-color: $rojo-header-hover;
+      background-color: $rojo-oscuro;
     }
     &.menu-productos {
       height: fit-content !important;

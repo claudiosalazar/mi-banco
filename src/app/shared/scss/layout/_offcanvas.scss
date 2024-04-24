@@ -18,7 +18,7 @@
     top: 0;
     z-index: 5;
     .contenido-offcanvas-header {
-      background-color: #F4F4F4;
+      background-color: $gris-10;
       border-radius: 6px 6px 0 0;
       padding: 24px;
       width: 100%;
@@ -37,7 +37,7 @@
      a {
        width: 24px;
        height: 24px;
-       color: $gris-claro-dos;
+       color: $gris-60;
        &:hover {
          color: $negro;
        }
@@ -52,7 +52,7 @@
    }
    
    .offcanvas-footer {
-     background-color: #F4F4F4;
+     background-color: $gris-10;
      border-radius: 0 0 6px 6px;
      padding: 24px;
    }
