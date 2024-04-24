@@ -13,7 +13,7 @@
   height: 58px;
   color: $gris-80;
   background-color: $blanco;
-  border: 1px solid $gris-10;
+  border: 1px solid $gris-10 !important;
   padding: 10px;
   display: block;
   width: 100%;
@@ -41,8 +41,12 @@
   .label {
     position: absolute;
     top: 6px;
-    font-size: 0.8em;
-    color: $gris-60;
+    left: 6px;
+    font-size: 12px;
+    color: $gris-40;
+    background-color: $blanco;
+    padding: 0 5px;
+    border-radius: 4px;
     span {
       &.obligatorio {
         color: $rojo;
@@ -74,7 +78,7 @@
       margin-top: -2px;
       font-size: 1rem;
       &:hover {
-        background-color: $gris-60;
+        background-color: $gris-01;
       }
       &:first-child {
         padding-top: 26px;
@@ -89,32 +93,35 @@
   }
 
   &.custom-select-disabled {
-    background-color: var(--bs-secondary-bg);
+    background-color: $gris-01;
+    border-color: $gris-01 !important;
     background-image: none;
     cursor: not-allowed;
     pointer-events: none;
-  }
-
-
-  &.is-invalid {
-    border-color: $error;
-    padding-right: calc(1.5em + 0.75rem);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right calc(.375em + .1875rem) center;
-    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
-    @include fade-animation;
+    .label {
+      color: $gris-40;
+      background-color: transparent;
+    }
   }
 
   &.is-valid {
-    border-color: $valido;
-    border-color: var(--bs-form-valid-border-color);
+    border-color: $valido !important;
     padding-right: calc(1.5em + 0.75rem);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right calc(0.375em + 0.1875rem) center;
+    background-position: right calc(0.8em + 0.1875rem) center;
     background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
   }
+
+  &.is-invalid {
+    border-color: $error !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 16c-.4 0-.8-.2-1.2-.5-.3-.3-.5-.7-.5-1.2s.2-.8.5-1.2c.3-.3.7-.5 1.2-.5s.8.2 1.2.5c.3.3.5.7.5 1.2s-.2.8-.5 1.2c-.3.3-.7.5-1.2.5Zm-1.6-5.3V0h3.3v10.7H6.4Z' fill='%23ff1744'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(.8em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    @include fade-animation;
+  }  
 }
 
 

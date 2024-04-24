@@ -1,22 +1,69 @@
 
-
-label {
-  span {
-    &.obligatorio {
-      color: $rojo;
-      font-size: 20px;
-      margin-top: 1px;
-      position: absolute;
-      margin-left: 5px;
+.form-floating {
+  input {
+    background-color: $blanco !important;
+    border-color: $gris-10 !important;
+    font-weight: 500;
+    color: $gris-40 !important;
+    &:disabled {
+      background-color: $gris-01 !important;
+      border-color: $gris-01 !important;
+      color: $gris-40 !important;
+    }
+    &:focus {
+      box-shadow: $shadow-focus-input !important;
+      border-color: $dorado !important;
+      color: $gris-80 !important;
     }
   }
-  &.emailTransferencia {
-    z-index: 1000;
-  }
-}
 
-.is-invalid {
-  @include fade-animation;
+  .form-control {
+    &:disabled~label::after {
+      background-color: $gris-01;
+    }
+
+    &.is-valid {
+      @include fade-animation;
+      border-color: $valido !important;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E") !important;
+      background-size: 16px 16px !important;
+      background-position: right calc(.8em + .1875rem) center !important;
+      &:focus {
+        border-color: $dorado !important;
+      }
+    }
+    &.is-invalid {
+      @include fade-animation;
+      border-color: $error !important;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 16c-.4 0-.8-.2-1.2-.5-.3-.3-.5-.7-.5-1.2s.2-.8.5-1.2c.3-.3.7-.5 1.2-.5s.8.2 1.2.5c.3.3.5.7.5 1.2s-.2.8-.5 1.2c-.3.3-.7.5-1.2.5Zm-1.6-5.3V0h3.3v10.7H6.4Z' fill='%23ff1744'/%3E%3C/svg%3E") !important;
+      background-position: right calc(.8em + .1875rem) center !important;
+      &:focus {
+        border-color: $dorado !important;
+      }
+    }
+  }
+  
+  label {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: $gris-40 !important;
+    span {
+      &.obligatorio {
+        color: $rojo;
+        font-size: 20px;
+        margin-top: 1px;
+        position: absolute;
+        margin-left: 5px;
+      }
+    }
+    &.emailTransferencia {
+      z-index: 1000;
+    }
+  }
+
+  .invalid-feedback {
+    color: $error !important;
+  }
 }
 
 .buscador {

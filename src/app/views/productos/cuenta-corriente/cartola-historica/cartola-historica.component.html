@@ -1,68 +1,81 @@
 <div class="tab-pane cartola" id="cartola-tab-pane" role="tabpanel" aria-labelledby="cartola-tab" tabindex="0">
   <!-- Formulario de busqueda -->
-  <div class="col-12 p-0 p-md-4">
+  <div class="col-12 p-4 pb-1">
     <h4>Cartolas Historicas</h4>
   </div>
 
-  <div class="col-12 p-0 ps-md-4 pb-md-4 pe-md-4">
-    <table class="table" role="table">
-      <thead role="columnheader"ead role="rowgroup">
-        <tr role="row">
-          <th role="columnheader" (click)="ordenarDatos('numeroCartola'); onHeaderClick()">
-            <div class="d-flex align-items-center">
-              <span>
-                Número de Cartola
-              </span>
-              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCartola'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCartola'">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <th role="columnheader" (click)="ordenarDatos('fechaEmision'); onHeaderClick()">
-            <div class="d-flex align-items-center">
-              <span>
-                Fecha Emisión Cartola
-              </span>
-              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fechaEmision'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fechaEmision'">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <th role="columnheader">
-            <div class="d-flex justify-content-end">
-              <span>
-                Descargar
-              </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody role="rowgroup">
-        <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row">
-          <td role="cell"><span class="contenido-td">{{ cartola.numeroCartola }}</span></td>
-          <td role="cell"><span class="contenido-td">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span></td>
-          <td role="cell">
-            <span class="contenido-td-acciones d-block">
-              <div class="d-flex justify-content-end">
-                <!-- Editar datos destinatario -->
-                <a href="javascript:void(0)" class="me-3">
-                  <span class="material-symbols-outlined">
-                    picture_as_pdf
-                  </span>
-                </a>
-                <!-- Eliminar destinatario -->
-                <a href="javascript:void(0)">
-                  <span class="material-symbols-outlined">
-                    description
-                  </span>  
-                </a>
+  <div class="col-12">
+    <div class="p-0 p-md-4 pt-md-0">
+      <table class="table table-striped tabla-cartolas-historicas" role="table">
+        <thead role="columnheader"ead role="rowgroup">
+          <tr role="row">
+            <th role="columnheader" (click)="ordenarDatos('numeroCartola'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Número de Cartola
+                  </div>
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCartola'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCartola'">
+                  expand_more
+                </span>
               </div>
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <app-paginador [datosPaginador]="cartolas" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedCartolas = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+            </th>
+            <th role="columnheader" (click)="ordenarDatos('fechaEmision'); onHeaderClick()">
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Fecha Emisión Cartola
+                  </div>
+                </span>
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fechaEmision'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fechaEmision'">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader">
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Descargar
+                  </div>
+                </span>
+                <span>&nbsp;</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row">
+            <td role="cell">
+              <span class="contenido-td">{{ cartola.numeroCartola }}</span>
+            </td>
+            <td role="cell">
+              <span class="contenido-td">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span>
+            </td>
+            <td role="cell" class="ancho py-0">
+              <div class="contenido-celda">
+                <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
+                  <!-- PDF -->
+                  <a href="javascript:void(0)">
+                    <span class="material-symbols-outlined">
+                      picture_as_pdf
+                    </span>
+                  </a>
+                  <!-- Doc -->
+                  <a href="javascript:void(0)">
+                    <span class="material-symbols-outlined">
+                      description
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <app-paginador [datosPaginador]="cartolas" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedCartolas = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+    </div>
   </div>
 </div>

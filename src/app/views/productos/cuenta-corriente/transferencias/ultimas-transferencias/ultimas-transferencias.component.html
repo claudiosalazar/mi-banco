@@ -1,8 +1,8 @@
 <div class="col-12 mt-4">
 
-  <div class="d-flex justify-content-md-between flex-column flex-md-row">
-    <div class="d-flex align-items-center mb-5">
-      <p class="mb-0 me-3">Buscar transferencia</p>
+  <div class="p-4 pt-0 px-md-4">
+    <div class="d-flex align-items-md-center flex-column flex-md-row">
+      <p class="mt-0 mt-md-3 me-0 me-md-3">Buscar transferencia</p>
       <form class="d-flex ml-5" role="search" >
         <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaTransferencias">
       </form>
@@ -10,7 +10,7 @@
   </div>
 
   <div>
-    <table class="table table-striped ultimas-transferencias" role="table">
+    <table class="table table-striped tabla-ultimas-transferencias" role="table">
       <thead role="columnheader"ead role="rowgroup">
         <tr role="row">
           <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">

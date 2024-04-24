@@ -9,7 +9,7 @@
     </div>
   
     <div>
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
+      <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
         Agregar nuevo destinatario
       </button>
     </div>
@@ -124,23 +124,23 @@
           <td role="cell" class="ancho">
             <span class="contenido-celda">{{ destinatario.numeroCuenta }}</span>
           </td>
-          <td role="cell" class="ancho px-3 py-1">
-            <span class="contenido-celda">
-              <div class="d-flex justify-content-between">
+          <td role="cell" class="ancho py-0">
+            <div class="contenido-celda">
+              <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
                 <!-- Editar datos destinatario -->
-                <a href="javascript:void(0)" class="pt-1" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()">
+                <a href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()">
                   <span class="material-symbols-outlined">
                     edit
                   </span>
                 </a>
                 <!-- Eliminar destinatario -->
-                <a href="javascript:void(0)" class="pt-1" (click)="abrirModalEliminar(destinatario)">
+                <a href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
                   <span class="material-symbols-outlined">
                     delete
                   </span>  
                 </a>
               </div>
-            </span>
+            </div>
           </td>
         </tr>
       </tbody>

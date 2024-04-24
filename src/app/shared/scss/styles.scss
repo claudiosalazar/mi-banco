@@ -49,5 +49,12 @@ body {
       transition: all .3s ease;
     }
   }
+
+  hr {
+    background: rgb(218,166,78) !important;
+    background: radial-gradient(circle, rgba(218,166,78,1) 10%, rgba(218,166,78,1) 50%, rgba(218,166,78,0) 90%) !important;
+    height: 2px !important;
+    border: none !important;
+  }
 }
 

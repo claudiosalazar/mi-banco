@@ -9,14 +9,14 @@
               <div class="p-4">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <p class="mb-0">Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong></p>
+                    <p class="mb-0">Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> <br class="d-md-none">al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong></p>
                   </div>
-                  <div class="col-12 col-md-6">
+                  <div class="col-12 col-md-6 mb-3 mb-md-auto">
                     <small class="mb-0">Saldo disponible</small>
                     <h4 class="mb-0 rojo"><strong>{{ cupoCtaCte | pesos }}</strong></h4>
                   </div>
                   <div class="col-12 col-md-6">
-                    <small class="mb-0">Saldo disponible en Línea de Crédito <strong>Nº {{numeroLineaCredito}}</strong></small>
+                    <small class="mb-0">Saldo disponible en Línea de Crédito <br class="d-md-none"><strong>Nº {{numeroLineaCredito}}</strong></small>
                     <h4 class="mb-0 rojo"><strong>{{ cupoLineaCredito | pesos }}</strong></h4>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                       <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
                     </div>
                   </div>
-                  <div class="col-12" *ngIf="!urlActual.includes('transferencias')">
+                  <div class="col-12 mt-4" *ngIf="!urlActual.includes('transferencias')">
                     <div class="alert alert-primary mt-4 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
                       <small class="ms-2">Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
                       <button class="btn btn-primario" type="button">Simular aquí</button>
