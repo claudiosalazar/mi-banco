@@ -1,26 +1,5 @@
 
 
-/*.modal-dialog {
-  position: absolute;
-  bottom: -8px !important;
-}
-
-.modal-content {
-  border-radius: 5px 5px 0 0; 
-  //position: absolute;
-  //bottom: -8px !important;
-  border: none !important;
-  @media (min-width: $md) {
-    border-radius: 5px;
-  }
-}
-
-.modal-body {
-  padding: 24px;
-}
-
-*/
-
 .modal {
   &.posicion{
     position: absolute;
@@ -37,6 +16,8 @@
           bottom: -8px;
           .modal-dialog {
             bottom: -8px;
+            left: 0;
+            right: 0;
             display: inherit;
             align-items: inherit;
             min-height: inherit;
