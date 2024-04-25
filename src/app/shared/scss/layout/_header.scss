@@ -139,10 +139,7 @@ header.mi-banco-header {
   }
 }
 
-.navbar-toggler {
-  position: relative;
-  z-index: 8000;
-}
+
 .navbar-collapse {
   .navbar-nav {
     margin-top: auto !important;
@@ -168,12 +165,51 @@ header.mi-banco-header {
   }
 }
 
-/*.fondo-header {
-  min-width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}*/
+.navbar-toggler {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 8000;
+  padding: 0 !important;
+  border: none !important;
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &:not(.collapsed) span:nth-child(1) {
+    transform: translate(15%, -33%) rotate(45deg);
+  }
+  &:not(.collapsed) span:nth-child(2) {
+    opacity: 0;
+  }
+  &:not(.collapsed) span:nth-child(3) {
+    transform: translate(15%, 33%) rotate(-45deg);
+  }
+
+  span {
+    display: block;
+    background-color: $blanco;
+    height: 3px;
+    width: 25px;
+    margin: 5px auto;
+    position: relative;
+    left: 0;
+    opacity: 1;
+    transition: all 0.35s ease-out;
+    transform-origin: center left;
+
+    &:nth-child(1) {
+      transform: translate(0%, 0%) rotate(0deg);
+      margin-top: 0.3em;
+    }
+    &:nth-child(2) {
+      opacity: 1;
+    }
+    &:nth-child(3) {
+      transform: translate(0%, 0%) rotate(0deg);
+    }
+  }
+}
 
 

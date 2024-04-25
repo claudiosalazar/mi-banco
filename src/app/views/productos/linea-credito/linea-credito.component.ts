@@ -27,6 +27,7 @@ export class LineaCreditoComponent implements OnInit {
   productosUsuario: { productos: any[] } = { productos: [] };
   fechaUltimoAbono: any;
   ultimoMontoAbono: any;
+  numeroProducto: any;
 
   // Variables para buscador
   campoBusqueda = new FormControl('');
@@ -80,6 +81,8 @@ export class LineaCreditoComponent implements OnInit {
         this.fechaUltimoAbono = ultimaTransaccionConAbono.fecha;
         this.ultimoMontoAbono = ultimaTransaccionConAbono.abono;
       }
+
+      this.numeroProducto = this.productosUsuario.productos[1]?.productoNumero;
     });
   }
 

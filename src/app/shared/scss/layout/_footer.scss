@@ -1,5 +1,6 @@
 footer.mi-banco-header {
   background-color: $gris-01;
+  color: $gris-60;
   .logo-mb-footer {
     width: 106px;
     height: 44px;
@@ -7,6 +8,10 @@ footer.mi-banco-header {
     background-size: 106px 44px;
     background-position: 0 0;
     background-repeat: no-repeat;
+  }
+
+  strong {
+    color: $gris-80;
   }
 
   ul {

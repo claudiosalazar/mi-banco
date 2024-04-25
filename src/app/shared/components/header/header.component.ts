@@ -41,6 +41,7 @@ declare var bootstrap: any;
 export class HeaderComponent implements OnInit {
 
   @ViewChild('navbarNavDropdown') navbarNavDropdown: ElementRef | undefined;
+  @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
   
@@ -62,7 +63,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private datosUsuarioService: DatosUsuarioService
+    private datosUsuarioService: DatosUsuarioService,
+    private renderer: Renderer2,
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -139,6 +141,9 @@ export class HeaderComponent implements OnInit {
   ocultaDropdownMobile() {
     if (this.navbarNavDropdown?.nativeElement.classList.contains('show')) {
       this.navbarNavDropdown.nativeElement.classList.remove('show');
+    }
+    if (this.navbarToggler && !this.navbarToggler.nativeElement.classList.contains('collapsed')) {
+      this.renderer.addClass(this.navbarToggler.nativeElement, 'collapsed');
     }
   }
 

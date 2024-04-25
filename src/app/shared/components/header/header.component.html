@@ -5,9 +5,13 @@
         <a class="navbar-brand" routerLink="/mibanco/">
           <div class="logo-mb-blanco"></div>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <span class="icon-bar top-bar"></span>
+          <span class="icon-bar middle-bar"></span>
+          <span class="icon-bar bottom-bar"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
           <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
           <ul class="navbar-nav me-auto d-md-flex">

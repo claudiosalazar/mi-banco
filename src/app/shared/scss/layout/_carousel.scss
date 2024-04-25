@@ -1,11 +1,126 @@
 .carousel {
   background-color: $rojo;
+  position: relative;
+  z-index: 0;
+
+  .carousel-inner {
+    margin: 0 auto !important;
+    width: 100%;
+    max-width: 1320px;
+  }
+
   .carousel-item {
-    display: flex;
-    justify-content: center;
     img {
+      z-index: 0;
       width: 100%;
-      max-width: 1200px;
+    }
+    .info-slide-izq {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      bottom: 0;
+      top: 0;
+      width: 89%;
+      height: 82%;
+      margin: 18px 28px;
+      // border: 1px solid $blanco;
+      @media (min-width: $sm) {
+        width: 70%;
+        height: 78%;
+      }
+      @media (min-width: $md) {
+        margin: 10px 24px;
+        width: 36%;
+        height: 85%;
+      }
+      
+    }
+    .info-slide-der {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      width: 89%;
+      height: 82%;
+      margin: 18px 28px;
+      // border: 1px solid $blanco;
+      @media (min-width: $sm) {
+        width: 70%;
+        height: 78%;
+      }
+      @media (min-width: $md) {
+        margin: 10px 24px;
+        width: 36%;
+        height: 85%;
+      }
+    }
+
+    .contenido-slide {
+      .pre-titulo {
+        font-size: .8rem;
+        line-height: .8rem;
+        margin-bottom: .6rem;
+        color: $blanco;
+        text-transform: uppercase;
+        display: block;
+        font-weight: 500;
+        &.dorado {
+          color: $dorado;
+          font-weight: 700;
+        }
+        @media (min-width: $sm){
+          font-size: .9rem;
+          line-height: .9rem;
+        }
+        @media (min-width: $md){
+          font-size: 1.2rem;
+          line-height: 1.2rem;
+        }
+        @media (min-width: $lg){
+          font-size: 1.6rem;
+          line-height: 1.6rem;
+        }
+      }
+      .titulo {
+        font-size: 1.3rem;
+        line-height: 1.3rem;
+        font-weight: 800;
+        color: $blanco;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 20px;
+        @media (min-width: $sm){
+          font-size: 1.4rem;
+          line-height: 1.4rem;
+        }
+        @media (min-width: $md){
+          font-size: 1.5rem;
+          line-height: 1.5rem;
+        }
+        @media (min-width: $lg){
+          font-size: 2.1rem;
+          line-height: 2.1rem;
+        }
+      }
+      .bajada {
+        font-size: 1.1rem;
+        line-height: 1.1rem;
+        color: $blanco;
+        display: block;
+        font-weight: 400;
+      }
+    }
+
+    .call-to-action {
+      position: absolute;
+      bottom: 0;
+      .texto-legal {
+        margin-top: 12px;
+        font-size: 10px;
+        color: $blanco;
+        display: block;
+      }
     }
   }
   .carousel-indicators {

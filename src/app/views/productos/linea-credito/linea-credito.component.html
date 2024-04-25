@@ -4,23 +4,26 @@
     <div class="row">
       <div class="col-12">
         <div class="mt-3 mt-md-5">
-          <h1>Movimientos Línea de Crédito</h1>
+          <h1>
+            Línea de Crédito
+            <span>N° {{numeroProducto}}</span>
+          </h1>
           <div class="card p-4 mt-4">
             <div class="d-flex justify-content-between flex-column flex-md-row">
               <div class="d-flex align-items-center">
-                <p class="mb-1">
-                  Último pago realizado el <strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>, por un valor de  <strong>{{ ultimoMontoAbono | pesos }}</strong>.
+                <p class="mb-0">
+                  Último pago realizado el <br class="d-md-none"><strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong>{{ ultimoMontoAbono | pesos }}</strong>.
                 </p>
               </div>
-              <button class="btn btn-primary ms-3" (click)="mostrarPagoLineaDeCredito()">Pagar Línea de Crédito</button>
+              <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoLineaDeCredito()">Pagar Línea de Crédito</button>
             </div>
           </div>
           <div class="card mt-4">
-            <div class="p-0 px-md-4">
+            <div class="p-4">
               <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
             </div>
             <!-- Importacion de componente tables -->
-            <div class="p-0 p-md-4">
+            <div class="p-0 p-md-4 pt-md-0">
               <app-tables [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
             </div>
           </div>

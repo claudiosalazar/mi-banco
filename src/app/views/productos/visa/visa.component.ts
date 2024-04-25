@@ -26,6 +26,7 @@ export class VisaComponent implements OnInit {
   productosUsuario: { productos: any[] } = { productos: [] };
   fechaUltimoAbono: any;
   ultimoMontoAbono: any;
+  numeroProducto: any;
 
   // Variables para buscador
   campoBusqueda = new FormControl('');
@@ -79,6 +80,8 @@ export class VisaComponent implements OnInit {
         this.fechaUltimoAbono = ultimaTransaccionConAbono.fecha;
         this.ultimoMontoAbono = ultimaTransaccionConAbono.abono;
       }
+
+      this.numeroProducto = this.productosUsuario.productos[2]?.productoNumero;
     });
   }
 
