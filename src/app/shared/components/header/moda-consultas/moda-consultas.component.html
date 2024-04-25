@@ -3,7 +3,7 @@
 <form  [formGroup]="consultasForm">
   <div *ngIf="formularioConsultas">
     
-    <div class="d-flex justify-content-between align-items-center mb-5 mt-2">
+    <div class="d-flex justify-content-between align-items-center">
       <h4>Dudas y consultas</h4>
       <a href="javascript:void(0);" aria-label="Close" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">
         <span class="material-symbols-outlined">
@@ -12,9 +12,11 @@
       </a>
     </div>
 
+    <hr>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <p class="m-0">Tus datos de contacto</p>
-      <button type="button" class="btn btn-primary" routerLink="/mibanco/mis-datos" data-bs-dismiss="modal">Actualizar mis datos</button>
+      <h5 class="m-0">Tus datos de contacto</h5>
+      <button type="button" class="btn btn-primario" routerLink="/mibanco/mis-datos" data-bs-dismiss="modal">Actualizar mis datos</button>
     </div>
 
     <div class="row mt-3">
@@ -63,9 +65,9 @@
     </div>
 
     <!-- Botones -->
-    <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarConsulta()">Cancelar</button>
-      <button type="button" class="btn btn-primary ms-md-3 mb-3 mb-md-0" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()">Enviar consulta</button>
+    <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row">
+      <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" (click)="cancelarConsulta()">Cancelar</button>
+      <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()">Enviar consulta</button>
     </div>
   </div>
 

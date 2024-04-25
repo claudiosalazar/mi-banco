@@ -61,6 +61,14 @@
     }
   }
 
+  textarea {
+    &:focus {
+      box-shadow: $shadow-focus-input !important;
+      border-color: $dorado !important;
+      color: $gris-80 !important;
+    }
+  }
+
   .invalid-feedback {
     color: $error !important;
   }

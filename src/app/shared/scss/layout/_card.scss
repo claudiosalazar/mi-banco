@@ -21,6 +21,15 @@
       margin-bottom: 20px;
       &.monto {
         font-weight: 800;
+        @media (min-width: $md) {
+          margin-bottom: 20px;
+        }
+      }
+      @media (min-width: $md) {
+        margin-bottom: 0;
+      }
+      @media (min-width: $lg) {
+        margin-bottom: 20px;
       }
     }
   }

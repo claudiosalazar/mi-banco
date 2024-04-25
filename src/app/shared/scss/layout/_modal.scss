@@ -1,15 +1,78 @@
-.modal-content {
-  border-radius: 30px;
+
+
+/*.modal-dialog {
+  position: absolute;
+  bottom: -8px !important;
 }
 
-.modal-body {
-  padding: 48px;
-  .btn {
-    margin-top: 24px;
+.modal-content {
+  border-radius: 5px 5px 0 0; 
+  //position: absolute;
+  //bottom: -8px !important;
+  border: none !important;
+  @media (min-width: $md) {
+    border-radius: 5px;
   }
 }
 
-/*.modal-backdrop {
-  display: none !important;
-}*/
+.modal-body {
+  padding: 24px;
+}
+
+*/
+
+.modal {
+  &.posicion{
+    position: absolute;
+  }
+
+  // Estilos para modal en mobile
+  @media (max-width: $sm) {
+    &.posicion {
+      position: fixed;
+      &.fade {
+        bottom: -100%;
+        transition: opacity 0.3s linear, bottom 0.3s ease-out;
+        &.show {
+          bottom: -8px;
+          .modal-dialog {
+            bottom: -8px;
+            display: inherit;
+            align-items: inherit;
+            min-height: inherit;
+          }
+        }
+        .modal-dialog {
+          bottom: -100%;
+          transition: opacity 0.3s linear, bottom 0.3s ease-out;
+        }
+      }
+    }
+    .modal-dialog {
+      position: fixed;
+    }
+  }
+  
+  // Estilos para modal en desktop
+  .modal-dialog {
+    min-height: calc(100% - var(--bs-modal-margin)* 2);
+    display: flex;
+    align-items: center;
+  }
+  .modal-body {
+    padding: 24px;
+  }
+  .modal-content {
+    border: none !important;
+    border-radius: 5px 5px 0 0;
+    @media (min-width: $sm) {
+      border-radius: 5px;
+      border: none !important;
+    }
+  }
+
+}
+
+
+
 
