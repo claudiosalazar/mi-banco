@@ -1,12 +1,18 @@
 .offcanvas {
   border-radius: 6px;
-  overflow: scroll !important;
+  overflow: auto !important;
   right: 18px !important;
   bottom: 18px !important;
   top: 18px !important;
   z-index: 7000 !important;
   background-color: transparent !important;
   border-left: 0 !important;
+  @media (max-width: $md) {
+    max-width: 96vw !important;
+    right: 2vw !important;
+    bottom: 2vw !important;
+    top: 10vh !important;
+  }
   
   .contenido-offcanvas {
     box-shadow: $shadow-card;
@@ -18,7 +24,7 @@
     top: 0;
     z-index: 5;
     .contenido-offcanvas-header {
-      background-color: $gris-10;
+      background-color: $gris-01;
       border-radius: 6px 6px 0 0;
       padding: 24px;
       width: 100%;
@@ -46,13 +52,13 @@
    
    .offcanvas-body {
       padding: 24px !important;
-      overflow: scroll !important;
+      //overflow: scroll !important;
       z-index: 4;
       background-color: $blanco;
    }
    
    .offcanvas-footer {
-     background-color: $gris-10;
+     background-color: $gris-01;
      border-radius: 0 0 6px 6px;
      padding: 24px;
    }

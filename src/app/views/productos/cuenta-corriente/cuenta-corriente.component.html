@@ -24,6 +24,7 @@
               <div class="fondo-gris-01 p-4" *ngIf="!urlActual.includes('transferencias') && !urlActual.includes('cartola-historica')">
                 <div class="row">
                   <div class="col-12 col-md-6">
+                    <p class="d-md-none mb-1"><strong>Cuenta Corriente</strong></p>
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Saldo contable</small>
                       <small class="mb-0"><strong>{{cupoCtaCte | pesos}}</strong></small>
@@ -38,6 +39,7 @@
                     </div>
                   </div>
                   <div class="col-12 col-md-6" *ngIf="!urlActual.includes('transferencias')">
+                    <p class="d-md-none mt-3 mb-1"><strong>Línea de Crédito</strong></p>
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Último cargo</small>
                       <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small>
@@ -61,12 +63,12 @@
           <div class="col-12">
             <div class="tabs-cta-cte card">
 
-              <ul class="nav nav-tabs" id="tabCtaCte" role="tablist">
+              <ul class="nav nav-tabs d-flex flex-column flex-md-row" id="tabCtaCte" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="btn-tab" [ngClass]="{'active': urlActual.includes('ultimos-movimientos')}" id="movimientos-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"><span class="d-none d-md-inline">Últimos</span> Movimientos</button>
+                  <button class="btn-tab mb-2 mb-md-0" [ngClass]="{'active': urlActual.includes('ultimos-movimientos')}" id="movimientos-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="movimientos-tab-pane" aria-selected="true" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"><span class="d-none d-md-inline">Últimos</span> Movimientos</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="btn-tab" [ngClass]="{'active': urlActual.includes('transferencias')}" id="transferencias-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/transferencias"><span class="d-none d-md-inline">Realizar</span> Transferencia</button>
+                  <button class="btn-tab mb-2 mb-md-0" [ngClass]="{'active': urlActual.includes('transferencias')}" id="transferencias-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="transferencias-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/transferencias"><span class="d-none d-md-inline">Realizar</span> Transferencia</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="btn-tab" [ngClass]="{'active': urlActual.includes('cartola-historica')}" id="cartola-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="cartola-tab-pane" aria-selected="false" routerLink="/mibanco/productos/cuenta-corriente/cartola-historica">Cartola <span class="d-none d-md-inline">historica</span></button>

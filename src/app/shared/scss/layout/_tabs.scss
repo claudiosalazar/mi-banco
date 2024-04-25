@@ -1,6 +1,5 @@
 // Tabs para cuenta corriente
 .tabs-cta-cte {
-  
   .nav {
     background-color: $gris-01;
     border-radius: 5px 5px 0 0 !important;
@@ -9,25 +8,24 @@
   .nav-tabs {
     border-bottom: none;
     .nav-link {
-      //padding: 20px 30px;
       &.active {
         font-weight: bold;
       }
     }
   }
-  .tab-pane {
+}
+
+.tabs-transferencias {
+  .nav {
     background-color: $blanco;
-    border-radius: 0 0 5px 5px;
-  
-    &.movimientos {
-      border-top-right-radius: 0.375rem;
+    border-radius: 5px 5px 0 0 !important;
+    padding: 0;
+    @media (max-width: $md) {
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
     }
-  
-    &.transferencias, &.cartola {
-      border-top-left-radius: 0.375rem;
-      border-top-right-radius: 0.375rem;
-    }
-  
   }
 }
 

@@ -1,18 +1,16 @@
-<div class="col-12 mt-4">
+<div class="col-12">
 
-  <div class="d-flex justify-content-md-between flex-column flex-md-row">
-    <div class="d-flex align-items-center mb-5">
-      <p class="mb-0 me-3">Buscar destinatario</p>
+  <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-4 px-4 px-md-0">
+    <div class="d-flex flex-column flex-md-row align-items-md-center">
+      <p class="mb-3 mb-md-0 me-3">Buscar destinatario</p>
       <form class="d-flex ml-5" role="search" >
         <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios">
       </form>
     </div>
-  
-    <div>
-      <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
-        Agregar nuevo destinatario
-      </button>
-    </div>
+    <hr class="d-md-none my-4">
+    <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
+      Agregar nuevo destinatario
+    </button>
   </div>
 
   <!-- Tabla -->

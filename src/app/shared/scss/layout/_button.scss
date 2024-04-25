@@ -5,12 +5,6 @@
   padding: 8px 20px;
   font-size: 16px;
   font-weight: 500;
-  @media (min-width: $md) {
-    margin-right: 12px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 
   &.btn-primario {
     background-color: $rojo;
@@ -31,6 +25,11 @@
       color: $gris-60;
       border-color: $gris-60;
     }
+    &.active {
+      background-color: $blanco;
+    color: $rojo;
+    border-color: $rojo;
+    }
   }
   &.btn-terciario {
     background-color: $blanco;
@@ -44,7 +43,7 @@
 }
 
 // Botones para card
-.btn-card {
+.btn-small {
   @include animacion-btn;
   border-radius: 2rem;
   padding: 4px 12px;
@@ -77,6 +76,21 @@
       background-color: $gris-01;
       color: $gris-60;
       border-color: $gris-60;
+    }
+    &.active {
+      background-color: $blanco;
+    color: $rojo;
+    border-color: $rojo;
+    }
+  }
+
+  &.btn-terciario {
+    background-color: $blanco;
+    color: $rojo;
+    border-color: $rojo;
+    &:hover {
+      background-color: $rojo;
+      color: $blanco;
     }
   }
 }
@@ -117,6 +131,10 @@
   &.active {
     background-color: $rojo;
     color: $blanco;
+  }
+  @media (max-width: $md) {
+    width: 100%;
+    border: 1px solid $rojo;
   }
 }
 
