@@ -123,10 +123,14 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+
   abrirMenuMobile(): void {
-    this.mostrarBackdropMenuMobile = true;
+    this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
   }
   
+  abrirSubmenu(): void {
+
+  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {
@@ -150,6 +154,7 @@ export class HeaderComponent implements OnInit {
     if (this.navbarToggler && !this.navbarToggler.nativeElement.classList.contains('collapsed')) {
       this.renderer.addClass(this.navbarToggler.nativeElement, 'collapsed');
     }
+    this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
   }
 
   // Cierra sesión

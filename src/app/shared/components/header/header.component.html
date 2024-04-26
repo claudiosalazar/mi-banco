@@ -1,5 +1,5 @@
 <div>
-  <header class="mi-banco-header px-3 py-0" #header [@changeDivSize]="currentState">
+  <header class="mi-banco-header ps-3 pe-0 px-md-3 py-0" #header [@changeDivSize]="currentState">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" routerLink="/mibanco/">
@@ -30,7 +30,7 @@
                   expand_more
                 </span>
               </a>
-              <ul class="dropdown-menu p-0" #listaProductos>
+              <ul class="dropdown-menu p-0 animate slideIn">
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/resumen" (click)="ocultaDropdownMobile()">Mis Productos</a></li>
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="ocultaDropdownMobile()">Cuenta Corriente</a></li>
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/linea-credito" (click)="ocultaDropdownMobile()">Línea de Crédito</a></li>
@@ -49,14 +49,16 @@
               </div>
             </li>
           </ul>
-          <div class="d-flex align-items-center menu-usuario">
+          <div class="d-flex align-items-center menu-usuario border-gradient border-gradient-green ">
+            <hr class="d-block">
             <span class="me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ segundoNombre }}</span> {{ apellidoPaterno }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellidoMaterno }}</span></span>
             <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
               <span class="material-symbols-outlined icono-datos-usuario" style="font-variation-settings: 'FILL' 1">
                 settings
               </span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuLink">
+            <hr class="d-block">
+            <ul class="dropdown-menu dropdown-menu-end p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
               <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
               <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
               <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>

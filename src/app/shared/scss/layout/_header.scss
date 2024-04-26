@@ -7,6 +7,9 @@ header.mi-banco-header {
   display: flex;
   align-items: center;
   color: $blanco;
+  @media (max-width: $md) {
+    height: 60px !important;
+  }
   .navbar {
     width: 100%;
     padding-top: inherit;
@@ -84,11 +87,21 @@ header.mi-banco-header {
   @media (max-width: $lg) {
     position: absolute;
     width: calc(100% - 34px);
-    top: 86px;
+    top: 65px;
     margin: 0 auto;
-    border-bottom: 1px solid rgb(255, 255, 255, .3);
+    //border-top: 1px solid rgb(255, 255, 255, .3);
+    //border-bottom: 1px solid rgb(255, 255, 255, .3);
     display: flex;
     justify-content: end;
+    &.border-gradient {
+      border: 10px solid;
+      border-image-slice: 1;
+      border-width: 1px;
+    }
+    &.border-gradient-green {
+      border-image-source: linear-gradient(to left, rgba(218, 166, 78, 0), rgba(218, 166, 78, .7), rgba(218, 166, 78, 0));
+      box-shadow: none !important;
+    }
     .dropdown-menu {
       background: linear-gradient(rgba(255, 23, 68, 1) 0%, #D61A3F 25%);
       z-index: 8800;
@@ -96,6 +109,9 @@ header.mi-banco-header {
       left: 0;
       top: 72px !important;
       padding: 8px !important;
+      @media (max-width: $md) {
+        background: $rojo-oscuro;
+      }
       .dropdown-item {
         background-color: transparent !important;
       }
@@ -112,6 +128,9 @@ header.mi-banco-header {
   margin-top: -36px !important;
   z-index: 7000;
   margin-left: 0 !important;
+  @media (max-width: $md) {
+    background: $rojo-oscuro;
+  }
   li {
     padding: 0;
     &:last-child {
@@ -124,6 +143,9 @@ header.mi-banco-header {
       color: $blanco;
       font-weight: 500;
       background-color: $rojo;
+      @media (max-width: $md) {
+        background-color: $rojo-oscuro;
+      }
       &:hover {
         background-color: #D61A3F;
       }
@@ -140,13 +162,10 @@ header.mi-banco-header {
 
 
 .navbar-collapse {
-  @media (max-width: $sm) {
-    max-sheight: 60px !important;   
-  }
   .navbar-nav {
     margin-top: auto !important;
     @media (max-width: $lg) {
-      margin-top: 120px !important;
+      margin-top: 95px !important;
     }
   }
   @media (max-width: $lg) {
@@ -215,3 +234,31 @@ header.mi-banco-header {
 }
 
 
+// Animacion dropdown-menu
+.animate {
+  animation-duration: 0.2s;
+  transition: height ease-in;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-1rem) ;
+    opacity: 0;
+    height: 0;
+  }
+  50% {
+    transform: translateY(-0.5rem);
+    opacity: .5;
+    height: auto;
+  }
+  100% {
+    transform: translateY(0rem);
+    opacity: 1;
+    height: fit-content;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
