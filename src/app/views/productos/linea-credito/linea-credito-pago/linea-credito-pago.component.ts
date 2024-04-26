@@ -1,6 +1,7 @@
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
@@ -19,9 +20,20 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-linea-credito-pago',
-  templateUrl: './linea-credito-pago.component.html'
+  templateUrl: './linea-credito-pago.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      state('*', style({
+        opacity: 0.5
+      })),
+      transition('void <=> *', animate('0.2s'))
+    ])
+  ]
 })
-export class LineaCreditoPagoComponent implements OnInit {
+export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalPagoLineaCredito') modalPagoLineaCredito: ElementRef | undefined;
 
@@ -41,6 +53,8 @@ export class LineaCreditoPagoComponent implements OnInit {
   montoEsCero: string | undefined;
   montoSuperiorSaldoCtaCte: string | undefined;
   montoValidoCtaCte: string | undefined;
+
+  mostrarBackdropCustomModal = false;
 
   // Variables para saldos
   error1: boolean = false;
@@ -120,8 +134,12 @@ export class LineaCreditoPagoComponent implements OnInit {
       });
     }
 
+  }
+
+  ngAfterViewInit(): void {
     if (this.modalPagoLineaCredito) {
       this.modalInstance = new bootstrap.Modal(this.modalPagoLineaCredito.nativeElement);
+      this.mostrarBackdropCustomModal = true;
     }
   }
 
@@ -386,6 +404,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         console.error('Error al enviar los datos al servidor:', error);
         this.pagoCorrecto = false;
         this.errorServer = true;
+        //this.mostrarBackdropCustomModal = false;
         modal.hide();
       });
     }

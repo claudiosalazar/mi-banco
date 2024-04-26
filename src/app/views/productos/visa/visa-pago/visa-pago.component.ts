@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
@@ -34,7 +34,7 @@ declare var bootstrap: any;
     ])
   ]
 })
-export class VisaPagoComponent implements OnInit {
+export class VisaPagoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalPagoVisa') modalPagoVisa: ElementRef | undefined;
 
@@ -54,8 +54,8 @@ export class VisaPagoComponent implements OnInit {
   montoEsCero: string | undefined;
   montoSuperiorSaldoCtaCte: string | undefined;
   montoValidoCtaCte: string | undefined;
+
   mostrarBackdropCustomModal = false;
-  modales: any[] = [];
 
   // Variables para saldos
   error1: boolean = false;
@@ -135,8 +135,13 @@ export class VisaPagoComponent implements OnInit {
       });
     }
 
+    
+  }
+
+  ngAfterViewInit(): void {
     if (this.modalPagoVisa) {
       this.modalInstance = new bootstrap.Modal(this.modalPagoVisa.nativeElement);
+      this.mostrarBackdropCustomModal = true;
     }
   }
   

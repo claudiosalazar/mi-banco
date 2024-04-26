@@ -140,7 +140,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.subscription = this.agendaService.getDatosEditadosDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
-      // console.log('Datos editados del destinatario:', this.datosCapturados);
       this.abrirModalEdicionDestinatario();
     });
   }

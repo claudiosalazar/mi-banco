@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "944365",
+      "cupo": "967000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -295,138 +295,6 @@
           "cargo": "500",
           "abono": "",
           "saldo": "967000"
-        },
-        {
-          "id": "29",
-          "fecha": "2024-04-10",
-          "destinatario": "Pedro Perez",
-          "detalle": "Transferencia a Pedro Perez",
-          "mensaje": "",
-          "cargo": "7000",
-          "abono": "",
-          "saldo": "960000"
-        },
-        {
-          "id": "30",
-          "fecha": "2024-04-10",
-          "detalle": "Pago a Visa",
-          "cargo": "10000",
-          "abono": "0",
-          "saldo": "950000"
-        },
-        {
-          "id": "31",
-          "fecha": "2024-04-10",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "949500"
-        },
-        {
-          "id": "32",
-          "fecha": "2024-04-25",
-          "destinatario": "Alado Volados",
-          "detalle": "Transferencia a Alado Volados",
-          "mensaje": "",
-          "cargo": "500",
-          "abono": "",
-          "saldo": "949000"
-        },
-        {
-          "id": "33",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "948500"
-        },
-        {
-          "id": "34",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "1000",
-          "abono": "0",
-          "saldo": "947500"
-        },
-        {
-          "id": "35",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "947000"
-        },
-        {
-          "id": "36",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "100",
-          "abono": "0",
-          "saldo": "946900"
-        },
-        {
-          "id": "37",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "100",
-          "abono": "0",
-          "saldo": "946800"
-        },
-        {
-          "id": "38",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "334",
-          "abono": "0",
-          "saldo": "946466"
-        },
-        {
-          "id": "39",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "945966"
-        },
-        {
-          "id": "40",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "945466"
-        },
-        {
-          "id": "41",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "944966"
-        },
-        {
-          "id": "42",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "100",
-          "abono": "0",
-          "saldo": "944866"
-        },
-        {
-          "id": "43",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "500",
-          "abono": "0",
-          "saldo": "944366"
-        },
-        {
-          "id": "44",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "1",
-          "abono": "0",
-          "saldo": "944365"
         }
       ]
     },
@@ -434,8 +302,8 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "346400",
-      "cupoDisponible": "4666600",
+      "cupo": "345500",
+      "cupoDisponible": "4655600",
       "transacciones": [
         {
           "id": "0",
@@ -516,30 +384,6 @@
           "cargo": "200000",
           "abono": "0",
           "saldo": "346500"
-        },
-        {
-          "id": "10",
-          "fecha": "2024-04-10",
-          "detalle": "Abono a Línea de Crédito",
-          "cargo": "0",
-          "abono": "10000",
-          "saldo": "346500"
-        },
-        {
-          "id": "11",
-          "fecha": "2024-04-10",
-          "detalle": "Abono a Línea de Crédito",
-          "cargo": "0",
-          "abono": "1000",
-          "saldo": "346500"
-        },
-        {
-          "id": "12",
-          "fecha": "2024-04-26",
-          "detalle": "Pago a Visa",
-          "cargo": "100",
-          "abono": "0",
-          "saldo": "346400"
         }
       ]
     },
@@ -547,8 +391,8 @@
       "id": "2",
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
-      "cupo": "2305000",
-      "cupoDisponible": "2752935",
+      "cupo": "2316000",
+      "cupoDisponible": "2737700",
       "transacciones": [
         {
           "id": "0",
@@ -653,142 +497,6 @@
           "cargo": "0",
           "abono": "44800",
           "saldo": "2316000"
-        },
-        {
-          "id": "13",
-          "fecha": "2024-04-10",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "10000",
-          "saldo": "2316000"
-        },
-        {
-          "id": "14",
-          "fecha": "2024-04-10",
-          "detalle": "Pago a LineaCredito",
-          "cargo": "10000",
-          "abono": "0",
-          "saldo": "2306000"
-        },
-        {
-          "id": "15",
-          "fecha": "2024-04-10",
-          "detalle": "Pago a LineaCredito",
-          "cargo": "1000",
-          "abono": "0",
-          "saldo": "2305000"
-        },
-        {
-          "id": "16",
-          "fecha": "2024-04-10",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "17",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "18",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "100",
-          "saldo": "2305000"
-        },
-        {
-          "id": "19",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "1000",
-          "saldo": "2305000"
-        },
-        {
-          "id": "20",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "21",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "100",
-          "saldo": "2305000"
-        },
-        {
-          "id": "22",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "100",
-          "saldo": "2305000"
-        },
-        {
-          "id": "23",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "334",
-          "saldo": "2305000"
-        },
-        {
-          "id": "24",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "25",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "26",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "27",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "100",
-          "saldo": "2305000"
-        },
-        {
-          "id": "28",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "500",
-          "saldo": "2305000"
-        },
-        {
-          "id": "29",
-          "fecha": "2024-04-26",
-          "detalle": "Abono a Visa",
-          "cargo": "0",
-          "abono": "1",
-          "saldo": "2305000"
         }
       ]
     }
