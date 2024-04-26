@@ -236,25 +236,18 @@ header.mi-banco-header {
 
 // Animacion dropdown-menu
 .animate {
-  animation-duration: 0.2s;
-  transition: height ease-in;
+  animation-duration: 0.3s;
+  transition: ease-out;
 }
 
 @keyframes slideIn {
   0% {
     transform: translateY(-1rem) ;
     opacity: 0;
-    height: 0;
-  }
-  50% {
-    transform: translateY(-0.5rem);
-    opacity: .5;
-    height: auto;
   }
   100% {
     transform: translateY(0rem);
     opacity: 1;
-    height: fit-content;
   }
 }
 
