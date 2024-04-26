@@ -3,7 +3,7 @@
   height: 100%;
   display: block;
   position: absolute;
-  z-index: 4000;
+  z-index: 1000;
   background-color: transparent;
 }
 
@@ -47,6 +47,7 @@
     background-color: $blanco;
     padding: 0 5px;
     border-radius: 4px;
+    //z-index: auto + 1 !important;
     span {
       &.obligatorio {
         color: $rojo;
@@ -100,7 +101,7 @@
     pointer-events: none;
     .label {
       color: $gris-40;
-      background-color: transparent;
+      background-color: $gris-01;
     }
   }
 

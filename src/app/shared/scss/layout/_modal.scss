@@ -1,7 +1,8 @@
 
 
 .modal {
-  z-index: 100 !important;
+  z-index: 4000 !important;
+  border: none !important;
   &.posicion{
     position: absolute;
   }
@@ -32,6 +33,7 @@
     }
     .modal-dialog {
       position: fixed;
+      margin: 0 !important;
     }
   }
   

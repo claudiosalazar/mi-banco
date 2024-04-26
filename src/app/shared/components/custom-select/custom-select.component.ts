@@ -25,7 +25,7 @@ export class CustomSelectComponent implements OnInit {
         const optionsList = this.el.nativeElement.querySelectorAll('.options');
         if (optionsList) {
           optionsList.forEach((options: { style: { zIndex: string; }; }, index: number) => {
-            options.style.zIndex = ((this.zIndex || 0) - index * 1000).toString();
+            options.style.zIndex = ((this.zIndex || 0) - index * 100).toString();
           });
         } else {
         }
@@ -53,7 +53,7 @@ export class CustomSelectComponent implements OnInit {
     const label = this.el.nativeElement.querySelector('.label');
 
     if (label) {
-      label.style.zIndex = ((this.zIndex || 0) + 100).toString();
+      label.style.zIndex = ((this.zIndex || 0) + 10).toString();
     }
 
     if (this.options) {
