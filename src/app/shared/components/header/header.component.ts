@@ -42,6 +42,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
+
+  public modalConsultaAbierto = false;
   
   currentState = 'initial';
 
@@ -56,13 +58,14 @@ export class HeaderComponent implements OnInit {
 
   mostrarBackdropCustomModal = false;
   modales: any[] = [];
-  public modalConsultaAbierto = false;
+  
+  mostrarBackdropMenuMobile: boolean = false;
 
   constructor(
     private authService: AuthService, 
     private router: Router,
     private datosUsuarioService: DatosUsuarioService,
-    private renderer: Renderer2,
+    private renderer: Renderer2
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -101,14 +104,13 @@ export class HeaderComponent implements OnInit {
           const backdropModal = document.querySelector('.modal-backdrop.fade.show');
           if (backdropModal && backdropModal.parentNode) {
             backdropModal.parentNode.removeChild(backdropModal);
-            // console.log('El backdrop ha sido eliminado');
           }
         }
       });
     });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
 
+    observer.observe(document.body, { childList: true, subtree: true });
+    
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
@@ -120,6 +122,11 @@ export class HeaderComponent implements OnInit {
       return modal;
     });
   }
+
+  abrirMenuMobile(): void {
+    this.mostrarBackdropMenuMobile = true;
+  }
+  
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {

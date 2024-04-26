@@ -2,7 +2,19 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2 !important;
+  z-index: 3 !important;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0;
+  
+}
+
+.backdrop-custom-menu-mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1 !important;
   width: 100vw;
   height: 100vh;
   background-color: #000;

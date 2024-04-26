@@ -5,7 +5,7 @@
         <a class="navbar-brand" routerLink="/mibanco/">
           <div class="logo-mb-blanco"></div>
         </a>
-        <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="abrirMenuMobile()">
           <!-- <span class="navbar-toggler-icon"></span> -->
           <span class="icon-bar top-bar"></span>
           <span class="icon-bar middle-bar"></span>
@@ -30,7 +30,7 @@
                   expand_more
                 </span>
               </a>
-              <ul class="dropdown-menu p-0">
+              <ul class="dropdown-menu p-0" #listaProductos>
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/resumen" (click)="ocultaDropdownMobile()">Mis Productos</a></li>
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="ocultaDropdownMobile()">Cuenta Corriente</a></li>
                 <li><a class="dropdown-item" routerLink="/mibanco/productos/linea-credito" (click)="ocultaDropdownMobile()">Línea de Crédito</a></li>
@@ -176,4 +176,5 @@
 
 
 
+<div class="backdrop-custom-menu-mobile" *ngIf="mostrarBackdropMenuMobile" [@fadeInOut]></div>
 <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
