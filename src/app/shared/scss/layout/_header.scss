@@ -3,7 +3,7 @@
 header.mi-banco-header {
   width: 100%;
   position: fixed;
-  z-index: 1;
+  z-index: 1 !important;
   display: flex;
   align-items: center;
   color: $blanco;
@@ -14,7 +14,7 @@ header.mi-banco-header {
     display: flex;
     align-items: center;
     .navbar-brand {
-      z-index: 8000;
+      z-index: 1;
       .logo-mb-blanco {
         top: 0;
         left: 0;
@@ -29,7 +29,7 @@ header.mi-banco-header {
     }
     .btn-datos-usuario {
       color: $blanco;
-      z-index: 8000;
+      z-index: 1;
       position: relative;
     }
   }
@@ -55,7 +55,7 @@ header.mi-banco-header {
       position: relative;
       color: $blanco;
       font-weight: 500;
-      z-index: 8000;
+      z-index: 1;
       padding: 14px 18px !important;
       &.show {
         color: $blanco !important;
@@ -70,14 +70,13 @@ header.mi-banco-header {
 
 .menu-usuario {
   border: 0;
-  // position: absolute;
   .nombre-usuario {
     color: $blanco;
     display: block !important;
     text-align: right;
     font-weight: 500;
     font-size: 14px;
-    z-index: 8000;
+    z-index: 1;
   }
   .icono-datos-usuario{
     line-height: 32px;
@@ -141,6 +140,9 @@ header.mi-banco-header {
 
 
 .navbar-collapse {
+  @media (max-width: $sm) {
+    max-sheight: 60px !important;   
+  }
   .navbar-nav {
     margin-top: auto !important;
     @media (max-width: $lg) {
@@ -160,8 +162,8 @@ header.mi-banco-header {
     padding: 0;
     border-radius: 0 0 12px 12px;
     padding: 16px;
-    margin-left: 12px;
-    margin-right: 12px;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 

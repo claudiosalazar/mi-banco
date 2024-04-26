@@ -1,6 +1,7 @@
 
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
@@ -20,7 +21,18 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-visa-pago',
-  templateUrl: './visa-pago.component.html'
+  templateUrl: './visa-pago.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      state('*', style({
+        opacity: 0.5
+      })),
+      transition('void <=> *', animate('0.2s'))
+    ])
+  ]
 })
 export class VisaPagoComponent implements OnInit {
 
@@ -42,6 +54,8 @@ export class VisaPagoComponent implements OnInit {
   montoEsCero: string | undefined;
   montoSuperiorSaldoCtaCte: string | undefined;
   montoValidoCtaCte: string | undefined;
+  mostrarBackdropCustomModal = false;
+  modales: any[] = [];
 
   // Variables para saldos
   error1: boolean = false;
@@ -359,23 +373,23 @@ export class VisaPagoComponent implements OnInit {
 
     // Si no hay errores, muestra el modal
     if (!this.error1 && !this.error2 && !this.error3 && !this.productoInvalido) {
-      let modal = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {
+      let modalPagoVisa = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {
         backdrop: 'static',
         keyboard: false
       });
-      modal.show();
+      modalPagoVisa.show();
     
       this.datosPagoVisa().subscribe((datosTransaccion: any) => {
         this.productosUsuarioService.getDatosPagoVisa(datosTransaccion);
         this.pagoCorrecto = true;
         setTimeout(() => {
-          modal.hide();
+          modalPagoVisa.hide();
         }, 1500);
       }, error => {
         console.error('Error al enviar los datos al servidor:', error);
         this.pagoCorrecto = false;
         this.errorServer = true;
-        modal.hide();
+        modalPagoVisa.hide();
       });
     }
   }

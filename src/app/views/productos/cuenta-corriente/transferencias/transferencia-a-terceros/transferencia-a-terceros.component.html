@@ -137,7 +137,7 @@
             <p class="m-0">Banco: <strong>{{ destinatarioATransferirSeleccionado?.banco }}</strong></p>
             <p class="m-0">{{ destinatarioATransferirSeleccionado?.tipoCuenta }}: <strong>{{ destinatarioATransferirSeleccionado?.numeroCuenta }}</strong></p>
           </div>
-          <button class="btn btn-secondary" type="button" (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');">
+          <button class="btn btn-secundario" type="button" (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');">
             Cambiar destinatario
           </button>
         </div>
@@ -196,7 +196,7 @@
             </div>
 
 
-            <button class="btn btn-primary" type="button" id="botonContinarTransferencia" (click)="botonContinuar()" [class.disabled]="!continuarTransferencia">
+            <button class="btn btn-primario" type="button" id="botonContinarTransferencia" (click)="botonContinuar()" [class.disabled]="!continuarTransferencia">
               Continuar
             </button>
           </div>
@@ -226,10 +226,10 @@
               <label for="emailDestinatario" class="form-label">Email</label>
             </div>
             <div class="d-flex">
-              <button class="btn btn-secondary me-0 me-md-3" type="button" (click)="botonValidaDatosTransferencia()">
+              <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="botonValidaDatosTransferencia()">
                 Modificar datos
               </button>
-              <button class="btn btn-primary" type="button" (click)="abrirModalTransferencia()">
+              <button class="btn btn-primario" type="button" (click)="abrirModalTransferencia()">
                 Realizar transferencia
               </button>
             </div>
@@ -366,5 +366,4 @@
   </div>
 </div>
 
-<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
 <div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div>

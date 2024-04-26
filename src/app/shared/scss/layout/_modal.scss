@@ -1,6 +1,7 @@
 
 
 .modal {
+  z-index: 100 !important;
   &.posicion{
     position: absolute;
   }

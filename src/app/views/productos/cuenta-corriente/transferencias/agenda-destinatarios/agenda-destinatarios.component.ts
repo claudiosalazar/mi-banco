@@ -24,15 +24,16 @@ declare var bootstrap: any;
 })
 export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
-  @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
-  @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas', { static: false }) crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('modalEliminarDestinatario') modalEliminarDestinatario: ElementRef | undefined;
+  @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
   //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any } | undefined;
-  destinatarioId: string | undefined;
+  destinatarioId: any | undefined;
 
   destinatarios: any[] = [];
   paginatedDestinatarios: any[] = [];
@@ -132,48 +133,16 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(_e: Event): void {
-
-    // Elmina backdrop de offcanvas y modal
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const backdropModal = document.querySelector('.modal-backdrop.fade.show');
-          if (backdropModal && backdropModal.parentNode) {
-            backdropModal.parentNode.removeChild(backdropModal);
-            // console.log('El backdrop ha sido eliminado');
-          }
-        }
-      });
-    });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
-
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
-      // Aquí puedes manejar los datos recibidos
       this.datosCapturados = datos;
-      // Abre el modal
       this.abrirModalNuevoDestinatario();
     });
 
-    // Suscríbete a getDatosEditadosDestinatario
     this.subscription = this.agendaService.getDatosEditadosDestinatario().subscribe(datos => {
-      // Aquí puedes manejar los datos recibidos
       this.datosCapturados = datos;
-      console.log('Datos editados del destinatario:', this.datosCapturados);
+      // console.log('Datos editados del destinatario:', this.datosCapturados);
       this.abrirModalEdicionDestinatario();
     });
-
-    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
-      const modal = new bootstrap.Modal(el);
-      el.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
-      });
-      el.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
-      });
-      return modal;
-    });
-    
   }
 
   datosDestinarioId(id: any): void {
@@ -222,11 +191,11 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   // Modal para eliminar destinatario
+
   abrirModalEliminar(destinatario: any): void {
     this.destinatarioId = destinatario.id;
-    console.log('ID del destinatario:', this.destinatarioId);
-    var modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
-    modalEliminar.show();
+    var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
+    modalEliminarDestinatario.show();
   }
 
   eliminarDestinatario(): void {

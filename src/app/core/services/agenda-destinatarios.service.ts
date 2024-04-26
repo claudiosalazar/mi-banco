@@ -102,7 +102,7 @@ export class AgendaDestinatariosService {
     );
   }
 
-  // Elimnia un destinatario
+  // Eliminia un destinatario
   eliminarDestinatarioServer(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}?id=${id}`, {responseType: 'text'}).pipe(
       catchError(error => {

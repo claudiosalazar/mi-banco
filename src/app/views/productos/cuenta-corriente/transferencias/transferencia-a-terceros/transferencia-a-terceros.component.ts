@@ -126,8 +126,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   datosCapturados: any;
 
-  mostrarBackdropCustomModal = false;
-  modales: any[] = [];
+  //mostrarBackdropCustomModal = false;
+  //modales: any[] = [];
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
 
@@ -235,59 +235,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   ngAfterViewInit(_e: Event): void {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const backdropModal = document.querySelector('.modal-backdrop.fade.show');
-          if (backdropModal && backdropModal.parentNode) {
-            backdropModal.parentNode.removeChild(backdropModal);
-          }
-        }
-      });
-    });
-    
-    observer.observe(document.body, { childList: true, subtree: true });
-  
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();
     });
-  
-    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
-      const modal = new bootstrap.Modal(el);
-      el.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
-      });
-      el.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
-      });
-      return modal;
-    });
-  
-    // Agrega el modal 'modalCambiosDestinatario' a la lista de modales
-    const modalCambiosDestinatario = document.getElementById('modalCambiosDestinatario');
-    if (modalCambiosDestinatario) {
-      const modal = new bootstrap.Modal(modalCambiosDestinatario);
-      modalCambiosDestinatario.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
-      });
-      modalCambiosDestinatario.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
-      });
-      this.modales.push(modal);
-    }
-
-    const modalTransferencia = document.getElementById('modalTransferencia');
-    if (modalTransferencia) {
-      this.modalTransferenciaInstance = new bootstrap.Modal(modalTransferencia);
-      modalTransferencia.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
-      });
-      modalTransferencia.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
-      });
-      this.modales.push(this.modalTransferenciaInstance);
-    }
 
     // Suscripción a getDatosNuevoDestinatario
     this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
@@ -477,11 +428,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.cdRef.detectChanges();
 
     // Cierra el modal y oculta el backdrop-custom
-    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    /*const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
     }
-    this.mostrarBackdropCustomModal = false;
+    this.mostrarBackdropCustomModal = false;*/
   }
 
   datosDestinarioId(id: any): void {

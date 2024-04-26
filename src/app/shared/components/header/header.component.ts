@@ -22,16 +22,14 @@ declare var bootstrap: any;
     ]),
     trigger('changeDivSize', [
       state('initial', style({
-        height: '102px',
+        height: '90px',
         paddingTop: '16px',
-        paddingBottom: '16px',
-        //backgroundColor: 'rgba(255, 23, 68, 1)'
+        paddingBottom: '16px'
       })),
       state('final', style({
-        height: '70px',
+        height: '60px',
         paddingTop: '12px',
-        paddingBottom: '12px',
-        //backgroundColor: 'rgba(255, 23, 68, .9)'
+        paddingBottom: '12px'
       })),
       transition('initial=>final', animate('100ms')),
       transition('final=>initial', animate('100ms'))
@@ -86,6 +84,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngAfterViewInit(_e: Event): void {
+    // Estilos para header
+    if (this.headerElement) {
+      const header: HTMLElement = this.headerElement.nativeElement;
+
+      header.style.height = '102px';
+      header.style.paddingTop = '16px';
+      header.style.paddingBottom = '16px';
+      header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+    }
+    
     // Elmina backdrop de offcanvas y modal
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -111,25 +119,15 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
-
-    // Estilos para header
-    if (this.headerElement) {
-      const header: HTMLElement = this.headerElement.nativeElement;
-
-      header.style.height = '102px';
-      header.style.paddingTop = '16px';
-      header.style.paddingBottom = '16px';
-      header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
-    }
   }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {
-    this.currentState = window.scrollY >= 102 ? 'final' : 'initial';
+    this.currentState = window.scrollY >= 1 ? 'final' : 'initial';
 
     if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
-      if (window.scrollY >= 102) {
+      if (window.scrollY >= 1) {
         header.style.backgroundColor = 'rgba(255, 23, 68, 0.92)';
       } else {
         header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
