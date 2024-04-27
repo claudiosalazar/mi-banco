@@ -15,14 +15,17 @@
         bottom: -100%;
         transition: opacity 0.3s linear, bottom 0.3s ease-out;
         &.show {
-          bottom: -8px;
+          bottom: 0;
           .modal-dialog {
-            bottom: -8px;
+            bottom: 0;
             left: 0;
             right: 0;
             display: inherit;
+            height: auto;
             align-items: inherit;
             min-height: inherit;
+            max-height: 100vh;
+            overflow-y: auto;
           }
         }
         .modal-dialog {
@@ -49,6 +52,7 @@
   .modal-content {
     border: none !important;
     border-radius: 5px 5px 0 0;
+    top: 0;
     @media (min-width: $sm) {
       border-radius: 5px;
       border: none !important;
@@ -57,6 +61,14 @@
 
 }
 
+.modal.top {
+  top: 0;
+  bottom: auto;
+}
+.modal.bottom {
+  bottom: 0;
+  top: auto;
+}
 
 
 

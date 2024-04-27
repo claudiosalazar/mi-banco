@@ -127,10 +127,6 @@ export class HeaderComponent implements OnInit {
   abrirMenuMobile(): void {
     this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
   }
-  
-  abrirSubmenu(): void {
-
-  }
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {
