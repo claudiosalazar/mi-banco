@@ -2,9 +2,10 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener, Renderer2 } fro
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
+import { BackdropService } from '../../../core/services/backdrop.service';
 import { filter } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { fromEvent } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -41,10 +42,14 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('navbarNavDropdown') navbarNavDropdown: ElementRef | undefined;
   @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
-  @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  //@ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
+  @ViewChild('modalLogOut') modalLogOut: ElementRef | undefined;
+  @ViewChild('modalEjecutivo') modalEjecutivo: ElementRef | undefined;
 
   public modalConsultaAbierto = false;
+
+  private backdropSubscription: Subscription | undefined;
   
   currentState = 'initial';
 
@@ -66,7 +71,8 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService, 
     private router: Router,
     private datosUsuarioService: DatosUsuarioService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private backdropService: BackdropService,
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -85,7 +91,17 @@ export class HeaderComponent implements OnInit {
       this.celular = datos.datosUsuario.celular;
       this.telefono = datos.datosUsuario.telefono;
     });
+
+    this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
+      mostrar => this.mostrarBackdropCustomModal = mostrar
+    );
     
+  }
+
+  ngOnDestroy(): void {
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -99,27 +115,13 @@ export class HeaderComponent implements OnInit {
       header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
     }
     
-    // Elmina backdrop de offcanvas y modal
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const backdropModal = document.querySelector('.modal-backdrop.fade.show');
-          if (backdropModal && backdropModal.parentNode) {
-            backdropModal.parentNode.removeChild(backdropModal);
-          }
-        }
-      });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-    
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
+        this.backdropService.show();  // Muestra el backdrop
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
+        this.backdropService.hide();  // Oculta el backdrop
       });
       return modal;
     });
@@ -168,8 +170,11 @@ export class HeaderComponent implements OnInit {
     this.modalConsultaAbierto = true;
     var modalConsultas = new bootstrap.Modal(document.getElementById('modalConsultas'), {});
     modalConsultas.show();
+    this.backdropService.show();
   }
 
-
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
+  }
 
 }

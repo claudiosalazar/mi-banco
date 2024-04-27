@@ -2,14 +2,16 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef,
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subscription, Observable, of, from, throwError } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+
 
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
 import { FormatoEmailService } from '../../../../../core/services/formato-email.service';
 import { PesosPipe } from '../../../../../shared/pipes/pesos.pipe';
 import { HttpClient } from '@angular/common/http';
+import { BackdropService } from '../../../../../core/services/backdrop.service';
 
 declare var bootstrap: any;
 
@@ -89,6 +91,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   paginatedDestinatarios: any[] = [];
 
   private subscription: Subscription | undefined;
+  private backdropSubscription: Subscription | undefined;
 
   private pesosPipe = new PesosPipe();
 
@@ -179,6 +182,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     private cdRef: ChangeDetectorRef,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
+    private backdropService: BackdropService,
   ) { 
     this.destinatarioSeleccionado = { id: null, nombre: '' };
   }
@@ -193,8 +197,12 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       montoATransferirOk: new FormControl({value: ''}),
       mensajeOk: new FormControl({value: ''}),
       emailDestinatarioOk: new FormControl({value: ''}),
-      
     });
+
+    this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
+      mostrar => this.mostrarBackdropCustomModal = mostrar
+    );
+
     
     // Obtén los destinatarios al inicializar el componente
     this.agendaService.getDestinatarios().subscribe(data => {
@@ -226,10 +234,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
+        this.backdropService.show();  // Muestra el backdrop
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
+        this.backdropService.hide();  // Oculta el backdrop
       });
       return modal;
     });
@@ -265,10 +273,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     }
 
     this.getDatosCuentaCorriente(0);
-  }
 
-  resetBackdrop() {
-    this.mostrarBackdropCustomModal = !this.mostrarBackdropCustomModal;
+    
   }
 
   // Captura datos de cuenta corriente
@@ -467,6 +473,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
   }
 
   // Solo permite ingresar números en los campos de texto
@@ -516,6 +526,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
+    this.backdropService.show();
   
     // Indica que se están enviando los datos
     this.enviandoNuevoDestinatario = true;
@@ -528,6 +539,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       setTimeout(() => {
         this.enviandoNuevoDestinatario = false;
         this.datosGuardadosNuevoDestinatario = true;
+        this.backdropService.hide();
       }, 2000);
 
       // Ensure destinatarios is an array before pushing
@@ -604,11 +616,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
   
   realizarTransferencia(): Observable<any> {
-
+    
     // Obtén los datos del destinatario
     this.agendaService.getDestinatarioPorId(this.destinatarioId).subscribe(destinatario => {
-      // Utiliza el método setDestinatario de AgendaDestinatariosService para guardar los datos
-      // console.log('Destinatario:', destinatario);
       this.agendaService.getDestinatarios();
     });
   
@@ -663,8 +673,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
         // Imprimir la estructura de datos enviadas en la consola
         console.log('Datos de transferencia desde componente:', datosTransferencia);
-        
         return JSON.stringify(datosTransferencia);
+
+        
       }),
       catchError(error => {
         console.error('Ha ocurrido un error:', error);
@@ -681,6 +692,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     modalTransferencia.show();
     this.realizarTransferencia().subscribe(datosTransferencia => {
       this.productosUsuarioService.getDatosTransferencia(datosTransferencia);
+      of(null).pipe(
+        delay(1500)
+      ).subscribe(() => this.backdropService.hide());
     });
   }
 
@@ -712,5 +726,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
     this.cdr.detectChanges();
 
+  }
+
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
   }
 }

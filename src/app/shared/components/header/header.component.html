@@ -128,7 +128,7 @@
     
           <div class="d-flex justify-content-between align-items-center">
             <h3>Tu ejecutivo</h3>
-            <a href="javascript:void(0);" data-bs-dismiss="modal"aria-label="Close">
+            <a href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close" (click)="ocultaBackDrop()">
               <span class="material-symbols-outlined">
                 close
               </span>
@@ -169,7 +169,7 @@
       
           <!-- Botones -->
           <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
+import { BackdropService } from '../../../../../core/services/backdrop.service';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -39,6 +40,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   paginatedDestinatarios: any[] = [];
 
   private subscription: Subscription | undefined;
+
+  private backdropSubscription: Subscription | undefined;
 
   // Variables para paginador
   paginatedData: any[] | undefined;
@@ -84,7 +87,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   constructor(
     private agendaService: AgendaDestinatariosService,
     private cdr: ChangeDetectorRef,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private backdropService: BackdropService,
   ) { }
 
   ngOnInit(): void {
@@ -130,19 +134,20 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
       this.cdRef.detectChanges();
     });
+
+    this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
+      mostrar => this.mostrarBackdropCustomModal = mostrar
+    );
   }
 
   ngAfterViewInit(_e: Event): void {
-    // Elmina backdrop de offcanvas y modal
-    
-    
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.mostrarBackdropCustomModal = true;
+        this.backdropService.show();  // Muestra el backdrop
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.mostrarBackdropCustomModal = false;
+        this.backdropService.hide();  // Oculta el backdrop
       });
       return modal;
     });
@@ -168,6 +173,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     // Es importante cancelar la suscripción para evitar fugas de memoria
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
     }
   }
 
@@ -209,6 +217,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.destinatarioId = destinatario.id;
     var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
     modalEliminarDestinatario.show();
+    this.backdropService.show();
   }
 
   eliminarDestinatario(): void {
@@ -229,6 +238,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
+    this.backdropService.show();
   
     // Indica que se están enviando los datos
     this.enviandoNuevoDestinatario = true;
@@ -282,6 +292,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirModalEdicionDestinatario(): void {
     var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
     modalEdicionDestinatario.show();
+    this.backdropService.show();
   
     // Indica que se están enviando los datos
     this.enviandoDestinatarioEditado = true;
@@ -339,4 +350,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       });
     }
   }    
+
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
+  }
 }

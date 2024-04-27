@@ -274,8 +274,8 @@
           </div>
           <hr class="mt-2">
           <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secundario me-3 me-md-3" data-bs-dismiss="modal" (click)="resetBackdrop()">Cancelar</button>
-            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="cambiarDestinatario(); resetBackdrop()">Cambiar destinatario</button>
+            <button type="button" class="btn btn-secundario me-3 me-md-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button>
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button>
           </div>
       </div>
     </div>
@@ -308,7 +308,7 @@
             <h4 class="mb-3 text-starts">El nuevo destinatario se guardo con éxito.</h4>
           </div>
           <div class="w-100">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarANuevoDestinatarios()">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarANuevoDestinatarios(); ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
 
@@ -323,7 +323,7 @@
             </div>
           </div>
           <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
       </div>
@@ -358,7 +358,7 @@
           </div>
           <p>Intentalo más tarde.</p>
           <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="resetearFormulario()">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="resetearFormulario(); ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
 

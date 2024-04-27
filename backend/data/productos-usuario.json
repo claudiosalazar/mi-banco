@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "954000",
+      "cupo": "884000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -401,6 +401,106 @@
           "cargo": "1000",
           "abono": "",
           "saldo": "954000"
+        },
+        {
+          "id": "40",
+          "fecha": "2024-04-27",
+          "destinatario": "Alado Volados",
+          "detalle": "Transferencia a Alado Volados",
+          "mensaje": "",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "953000"
+        },
+        {
+          "id": "41",
+          "fecha": "2024-04-27",
+          "destinatario": "Boric Presi",
+          "detalle": "Transferencia a Boric Presi",
+          "mensaje": "",
+          "cargo": "50000",
+          "abono": "",
+          "saldo": "903000"
+        },
+        {
+          "id": "42",
+          "fecha": "2024-04-27",
+          "destinatario": "Arturo Arido",
+          "detalle": "Transferencia a Arturo Arido",
+          "mensaje": "",
+          "cargo": "5000",
+          "abono": "",
+          "saldo": "898000"
+        },
+        {
+          "id": "43",
+          "fecha": "2024-04-27",
+          "destinatario": "Alado Volados",
+          "detalle": "Transferencia a Alado Volados",
+          "mensaje": "",
+          "cargo": "10000",
+          "abono": "",
+          "saldo": "888000"
+        },
+        {
+          "id": "44",
+          "fecha": "2024-04-27",
+          "destinatario": "Ariana Gomez",
+          "detalle": "Transferencia a Ariana Gomez",
+          "mensaje": "",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "887500"
+        },
+        {
+          "id": "45",
+          "fecha": "2024-04-27",
+          "destinatario": "Alado Volados",
+          "detalle": "Transferencia a Alado Volados",
+          "mensaje": "",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "886500"
+        },
+        {
+          "id": "46",
+          "fecha": "2024-04-27",
+          "destinatario": "Ariana Gomez",
+          "detalle": "Transferencia a Ariana Gomez",
+          "mensaje": "",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "886000"
+        },
+        {
+          "id": "47",
+          "fecha": "2024-04-27",
+          "destinatario": "Alexis Sanchez",
+          "detalle": "Transferencia a Alexis Sanchez",
+          "mensaje": "",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "885000"
+        },
+        {
+          "id": "48",
+          "fecha": "2024-04-27",
+          "destinatario": "Alexis Sanchez",
+          "detalle": "Transferencia a Alexis Sanchez",
+          "mensaje": "",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "884500"
+        },
+        {
+          "id": "49",
+          "fecha": "2024-04-27",
+          "destinatario": "Alexis Sanchez",
+          "detalle": "Transferencia a Alexis Sanchez",
+          "mensaje": "",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "884000"
         }
       ]
     },
