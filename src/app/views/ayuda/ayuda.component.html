@@ -1,9 +1,11 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-12" id="centro-de-ayuda" *ngIf="title === 'centro-de-ayuda'">
-      <h1>Centro de Ayuda</h1>
-      <p>Si tienes dudas </p>
+    <div class="col-12" id="centro-de-ayuda" *ngIf="titulos === 'centro-de-ayuda'">
+      <h1>
+        Centro de Ayuda
+        <span>Acá podrás encontrar respuesta a alguna de tus dudas. Si no encuentras lo que necesitas puedes contactarnos dando click en el botón <strong>Consultas</strong> del menu.</span>
+      </h1>
       <div class="accordion" id="accordionPreguntasFrecuentes">
         <div class="accordion-item">
           <h2 class="accordion-header p-3">
@@ -68,7 +70,7 @@
       </div>
     </div>
 
-    <div class="col-12" id="emergencias-bancarias" *ngIf="title === 'emergencias-bancarias'">
+    <div class="col-12" id="emergencias-bancarias" *ngIf="titulos === 'emergencias-bancarias'">
       <h1>Emergencias Bancarias</h1>
       <div class="accordion" id="accordionEmergencias">
         <div class="accordion-item">
@@ -134,8 +136,8 @@
       </div>
     </div>
 
-    <div class="col-12 mt-3 mt-md-5" id="bloqueo-tarjeta-debito" *ngIf="title === 'bloqueo-tarjeta-debito'">
-      <h1 class="mb-3 mb-md-5">Bloqueo de Tarjeta de Débito</h1>
+    <div class="col-12" id="bloqueo-tarjeta-debito" *ngIf="titulos === 'bloqueo-tarjeta-debito'">
+      <h1>Bloqueo de Tarjeta de Débito</h1>
       <h3>Necesito bloquear mi Tarjeta de Débito</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse laoreet pellentesque augue elementum varius. Praesent velit est, fringilla vitae velit vitae, bibendum scelerisque diam. Duis hendrerit erat sit amet mi sodales porttitor. Donec laoreet tincidunt luctus. Integer ultrices at velit quis lobortis. Donec id tristique elit. Nulla aliquet in elit non tincidunt. Nam rhoncus vel augue non fermentum.</p>
       <p>Etiam in accumsan ante, quis viverra nulla. Fusce nec sem libero. Curabitur id dui eu justo egestas hendrerit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel odio pretium, tincidunt ligula et, venenatis dui.</p>
@@ -170,8 +172,8 @@
       </div>
     </div>
 
-    <div class="col-12 mt-3 mt-md-5" id="bloqueo-tarjeta-credito" *ngIf="title === 'bloqueo-tarjeta-credito'">
-      <h1 class="mb-3 mb-md-5">Bloqueo de Tarjeta de Crédito</h1>
+    <div class="col-12" id="bloqueo-tarjeta-credito" *ngIf="titulos === 'bloqueo-tarjeta-credito'">
+      <h1>Bloqueo de Tarjeta de Crédito</h1>
       <h3>Necesito bloquear mi Tarjeta de Crédito</h3>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse laoreet pellentesque augue elementum varius. Praesent velit est, fringilla vitae velit vitae, bibendum scelerisque diam. Duis hendrerit erat sit amet mi sodales porttitor. Donec laoreet tincidunt luctus. Integer ultrices at velit quis lobortis. Donec id tristique elit. Nulla aliquet in elit non tincidunt. Nam rhoncus vel augue non fermentum.</p>
       <p>Etiam in accumsan ante, quis viverra nulla. Fusce nec sem libero. Curabitur id dui eu justo egestas hendrerit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus vel odio pretium, tincidunt ligula et, venenatis dui.</p>
@@ -206,8 +208,8 @@
       </div>
     </div>
 
-    <div class="col-12 mt-3 mt-md-5" id="canales-de-atencion" *ngIf="title === 'canales-de-atencion'">
-      <h1 class="mb-3 mb-md-5">Canales de Atención</h1>
+    <div class="col-12" id="canales-de-atencion" *ngIf="titulos === 'canales-de-atencion'">
+      <h1>Canales de Atención</h1>
       <div class="card p-4">
         <div class="row">
           <div class="col-6 col-md-3 mb-5 mb-md-0">

@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FooterLinkService } from '../../core/services/footerLink.service';
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-ayuda',
   templateUrl: './ayuda.component.html'
 })
 export class AyudaComponent {
-  title: string | undefined;
+
+  @Output() openModalEvent = new EventEmitter<void>();
+
+  titulos: string | undefined;
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -16,10 +21,13 @@ export class AyudaComponent {
 
   ngOnInit() {
     this.route.params.subscribe((params: { [x: string]: string | undefined; }) => {
-      this.title = params['id'];
-      if (this.title !== undefined) {
-        this.footerLinkService.changeTitle(this.title);
+      this.titulos = params['id'];
+      if (this.titulos !== undefined) {
+        this.footerLinkService.changeTitle(this.titulos);
       }
     });
   }
+
+  
+  
 }

@@ -128,6 +128,7 @@ export class HeaderComponent implements OnInit {
     this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
   }
 
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {
     this.currentState = window.scrollY >= 1 ? 'final' : 'initial';
