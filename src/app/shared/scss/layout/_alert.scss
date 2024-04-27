@@ -1,10 +1,13 @@
 
 .alert-primary {
   background-color: $aviso;
-  color: $blanco;
+  color: $blanco ;
   border-color: $aviso-borde;
   font-weight: 600;
   color: $blanco;
   padding: 18px 22px !important;
   margin: 0 !important;
+  h5 {
+    color: $blanco !important;
+  }
 }

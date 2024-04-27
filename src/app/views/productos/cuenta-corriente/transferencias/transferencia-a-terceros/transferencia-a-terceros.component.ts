@@ -32,6 +32,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('modalTransferencia') modalTransferencia: ElementRef | undefined;
+  @ViewChild('modalCambiosDestinatario') modalCambiosDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
@@ -103,7 +104,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   totalPages: number | undefined;
   mostrarPaginador: boolean = true;
 
-
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string = '';
@@ -126,8 +126,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   datosCapturados: any;
 
-  //mostrarBackdropCustomModal = false;
-  //modales: any[] = [];
+  mostrarBackdropCustomModal = false;
+  modales: any[] = [];
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
 
@@ -189,10 +189,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       destinatarioSeleccionado: new FormControl({value: ''}),
       montoATransferir: new FormControl('', [Validators.required]),
       mensaje: new FormControl({value: ''}),
-      emailDestinatario: new FormControl({value: ''}),
+      emailDestinatario: new FormControl({value: '', disabled: true}, [Validators.required]),
       montoATransferirOk: new FormControl({value: ''}),
       mensajeOk: new FormControl({value: ''}),
       emailDestinatarioOk: new FormControl({value: ''}),
+      
     });
     
     // Obtén los destinatarios al inicializar el componente
@@ -218,27 +219,30 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
     });
-
-    
-
-  }
-
-  // Captura datos de cuenta corriente
-  getDatosCuentaCorriente(_id: any): void {
-    this.productosUsuarioService.getProductosUsuarioResumen(_id).subscribe(
-      data => {
-        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
-        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
-        console.log('Cupo cuenta corriente:', this.cupoCtaCte);
-      }
-    );
   }
 
   ngAfterViewInit(_e: Event): void {
+
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.mostrarBackdropCustomModal = true;
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.mostrarBackdropCustomModal = false;
+      });
+      return modal;
+    });
+
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();
     });
+
+    /*if (this.modalTransferencia) {
+      this.modalTransferencia = new bootstrap.Modal(this.modalTransferencia.nativeElement);
+      this.mostrarBackdropCustomModal = true;
+    }*/
 
     // Suscripción a getDatosNuevoDestinatario
     this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
@@ -261,6 +265,21 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     }
 
     this.getDatosCuentaCorriente(0);
+  }
+
+  resetBackdrop() {
+    this.mostrarBackdropCustomModal = !this.mostrarBackdropCustomModal;
+  }
+
+  // Captura datos de cuenta corriente
+  getDatosCuentaCorriente(_id: any): void {
+    this.productosUsuarioService.getProductosUsuarioResumen(_id).subscribe(
+      data => {
+        this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
+        this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
+        console.log('Cupo cuenta corriente:', this.cupoCtaCte);
+      }
+    );
   }
 
   seleccionarDestinatario(id: any): void {
@@ -309,7 +328,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   vaciarEmailDestinatario() {
-    this.transferenciaATercerosForm.controls['emailDestinatario'].setValue('');
+    let control = this.transferenciaATercerosForm.controls['emailDestinatario'];
+    control.enable(); // Habilita el control
+    control.setValue(''); // Establece el valor del control en vacío
     this.inputValidoEmail = false; // Establece inputValidoEmail en false
     this.validaEmail('emailDestinatario'); // Valida el email después de vaciarlo
     this.validaDatosTransferencia(); // Verifica las condiciones después de vaciar el email
@@ -428,11 +449,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.cdRef.detectChanges();
 
     // Cierra el modal y oculta el backdrop-custom
-    /*const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
     }
-    this.mostrarBackdropCustomModal = false;*/
+    this.mostrarBackdropCustomModal = false;
   }
 
   datosDestinarioId(id: any): void {
@@ -642,6 +663,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
         // Imprimir la estructura de datos enviadas en la consola
         console.log('Datos de transferencia desde componente:', datosTransferencia);
+        
         return JSON.stringify(datosTransferencia);
       }),
       catchError(error => {

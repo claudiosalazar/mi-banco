@@ -1,0 +1,14 @@
+
+.info-destinatario-transferencia {
+  border: 1px solid $dorado;
+  border-radius: 5px;
+  background-color: $dorado-claro;
+
+  small {
+    font-size: 15px;
+  }
+}
+
+.monto-a-transferir {
+  color: $blanco !important;
+}

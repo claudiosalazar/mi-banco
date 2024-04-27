@@ -133,6 +133,20 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(_e: Event): void {
+    // Elmina backdrop de offcanvas y modal
+    
+    
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.mostrarBackdropCustomModal = true;
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.mostrarBackdropCustomModal = false;
+      });
+      return modal;
+    });
+
     this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();

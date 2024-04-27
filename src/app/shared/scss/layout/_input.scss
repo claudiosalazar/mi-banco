@@ -17,6 +17,16 @@
     }
   }
 
+  textarea {
+    resize: none;
+    border-color: $gris-10 !important;
+    &:disabled {
+      background-color: $gris-01 !important;
+      border-color: $gris-01 !important;
+      color: $gris-40 !important;
+    }
+  }
+
   .form-control {
     &:disabled~label::after {
       background-color: $gris-01;

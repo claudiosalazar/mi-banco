@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { DatosUsuarioService } from '../../../core/services/datos-usuario.service';
 import { filter } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { fromEvent } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -84,6 +85,7 @@ export class HeaderComponent implements OnInit {
       this.celular = datos.datosUsuario.celular;
       this.telefono = datos.datosUsuario.telefono;
     });
+    
   }
 
   ngAfterViewInit(_e: Event): void {
@@ -121,6 +123,8 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
+
+    
   }
 
 
@@ -165,5 +169,7 @@ export class HeaderComponent implements OnInit {
     var modalConsultas = new bootstrap.Modal(document.getElementById('modalConsultas'), {});
     modalConsultas.show();
   }
+
+
 
 }
