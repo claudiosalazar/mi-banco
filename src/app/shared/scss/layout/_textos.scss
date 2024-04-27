@@ -34,6 +34,19 @@ h1 {
     margin: 24px 0;
     background-size: 24px auto;
     background-position: left 4px;
+    span {
+      display: none;
+    }
+  }
+  &.comprobante {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E");
+    background-size: 38px 38px;
+    background-position: left center;
+    padding-left: 60px;
+    @media (max-width: $md) {
+      background-size: 24px 24px;
+      padding-left: 40px;
+    }
   }
 }
 
@@ -64,9 +77,14 @@ span.caracteres-textarea {
 
 .titulo-ofertas {
   font-size: 32px;
+  line-height: 32px;
   font-weight: 500;
   display: block;
   text-transform: uppercase;
   color: $gris-80;
+  @media (max-width: $sm) {
+    font-size: 24px;
+    line-height: 26px;
+  }
 }
 

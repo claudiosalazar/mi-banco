@@ -1,87 +1,91 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 px-4 px-md-auto">
       <h1>
         Últimos movimientos
         <span>Elije uno de tus productos para ver todos los movimientos que haz realizado.</span>
       </h1>
-    </div>
 
-    <!-- Cuenta corriente -->
-    <div class="col-md-4 mb-3 mb-md-0">
-      <div class="card card-productos my-4">
-        <span class="nombre-producto">Cuenta Corriente</span>
-        <small class="numero-producto">N° {{ numeroCtaCte }}</small>
-        <hr>
-        <div class="d-flex justify-content-between">
-          <span class="texto-montos">Disponible:</span>
-          <span class="texto-montos monto">{{ cupoCtaCte | pesos }}</span>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button class="btn-small btn-secundario me-0" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Linea de credito -->
-    <div class="col-md-4 mb-3 mb-md-0">
-      <div class="card card-productos my-4">
-        <span class="nombre-producto">Línea de Crédito</span>
-        <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
-        <hr>
-        <div class="d-flex justify-content-between">
-          <span class="texto-montos">Disponible:</span>
-          <span class="texto-montos monto">{{ cupoLineaCredito | pesos }}</span>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
-          <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Visa -->
-    <div class="col-md-4">
-      <div class="card card-productos my-4">
-        <span class="nombre-producto">Visa</span>
-        <small class="numero-producto">N° {{ numeroVisa }}</small>
-        <hr>
-        <div class="d-flex justify-content-between">
-          <span class="texto-montos">Disponible:</span>
-          <span class="texto-montos monto">{{ cupoVisa | pesos }}</span>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/visa">Ver movimientos</button>
-          <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/visa/pago">Pagar</button>
-        </div>
-      </div>
-    </div>
-
-    <hr class="mt-4 mb-5">
-
-    <!-- Banner credito consumo -->
-    <div class="col-12">
-      <div class="card card-banner">
-        <div class="row d-flex justify-content-between">
-          <div class="col-md-6 info-banner d-flex justify-content-around flex-column">
-            <span class="texto-secundario text-start">
-              Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
-            </span>
-            <span class="monto text-start rojo">
-              {{ montoPreAprobadoCreditoConsumo | pesos }}
-            </span>
-            <span class="texto-legal">
-              * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
-            </span>
-          </div>
-          <div class="col-md-6 contenido-imagen">
-            <div class="contenedor-boton">
-              <button class="btn-banner" type="button">Solicitar Crédito</button>
+      <div class="row align-items-md-stretch">
+        <!-- Cuenta corriente -->
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="card card-productos my-md-4">
+            <span class="nombre-producto">Cuenta Corriente</span>
+            <small class="numero-producto">N° {{ numeroCtaCte }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto">{{ cupoCtaCte | pesos }}</span>
             </div>
-            <img src="../../../assets/images/banner-home-credito-consumo.jpg" alt="Crédito de Consumo" class="img-fluid imagen-banner">
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Linea de credito -->
+        <div class="col-md-4 mb-3 mb-md-0">
+          <div class="card card-productos my-md-4">
+            <span class="nombre-producto">Línea de Crédito</span>
+            <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto">{{ cupoLineaCredito | pesos }}</span>
+            </div>
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visa -->
+        <div class="col-md-4">
+          <div class="card card-productos my-md-4">
+            <span class="nombre-producto">Visa</span>
+            <small class="numero-producto">N° {{ numeroVisa }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto">{{ cupoVisa | pesos }}</span>
+            </div>
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/visa">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/visa/pago">Pagar</button>
+            </div>
+          </div>
+        </div>
+        <hr class="mt-4 mb-5">
+
+        <!-- Banner credito consumo -->
+        <div class="col-12">
+          <div class="card card-banner">
+            <div class="row d-flex justify-content-between">
+              <div class="col-md-6 info-banner d-flex justify-content-around flex-column">
+                <span class="texto-secundario text-start">
+                  Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
+                </span>
+                <span class="monto text-start rojo">
+                  {{ montoPreAprobadoCreditoConsumo | pesos }}
+                </span>
+                <span class="texto-legal">
+                  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                </span>
+              </div>
+              <div class="col-md-6 contenido-imagen">
+                <div class="contenedor-boton">
+                  <button class="btn-banner" type="button">Solicitar Crédito</button>
+                </div>
+                <img src="../../../assets/images/banner-home-credito-consumo.jpg" alt="Crédito de Consumo" class="img-fluid imagen-banner">
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+
+    
   </div>
 </div>

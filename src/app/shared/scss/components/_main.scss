@@ -7,7 +7,7 @@
 
   #informacion {
     position: relative;
-    padding-top: 90px;
+    padding-top: 60px;
     flex-grow:1;
     align-self:auto;
     background-image: none;
@@ -16,6 +16,7 @@
       background-position: bottom left;
       background-repeat: no-repeat;
       background-size: 50% auto;
+      padding-top: 90px;
     }
   }
 

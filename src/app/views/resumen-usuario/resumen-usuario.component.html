@@ -2,12 +2,13 @@
 
 <div class="container pb-5" *ngIf="datosUsuarioActual && productosUsuario && ofertasProductos">
   <div class="row">
-    <div class="col-12">
-      <h1 class="mb-3">Tus productos</h1>
-      <!-- Cuenta corriente -->
+    <div class="col-12 px-4 px-md-auto">
+      <h1>Tus productos</h1>
+
       <div class="row align-items-md-stretch">
+        <!-- Cuenta corriente -->
         <div class="col-md-4 mb-3 mb-md-0">
-          <div class="card card-productos my-4">
+          <div class="card card-productos my-md-4">
             <span class="nombre-producto">Cuenta Corriente</span>
             <small class="numero-producto">N° {{ numeroCtaCte }}</small>
             <hr>
@@ -23,7 +24,7 @@
 
         <!-- Linea de credito -->
         <div class="col-md-4 mb-3 mb-md-0">
-          <div class="card card-productos my-4">
+          <div class="card card-productos my-md-4">
             <span class="nombre-producto">Línea de Crédito</span>
             <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
             <hr>
@@ -40,7 +41,7 @@
 
         <!-- Visa -->
         <div class="col-md-4">
-          <div class="card card-productos my-4">
+          <div class="card card-productos my-md-4">
             <span class="nombre-producto">Visa</span>
             <small class="numero-producto">N° {{ numeroVisa }}</small>
             <hr>
@@ -56,7 +57,7 @@
         </div>
 
         <div class="col-12 text-center my-5">
-          <span class="titulo-ofertas">Aprovechas las ofertas especiales que tenemos para ti</span>
+          <span class="titulo-ofertas">Aprovechas<br class="d-md-none"> las ofertas especiales<br> que tenemos para ti</span>
         </div>
 
         <!-- Banner credito consumo -->

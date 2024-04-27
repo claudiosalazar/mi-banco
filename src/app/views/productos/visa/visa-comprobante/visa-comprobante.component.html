@@ -1,37 +1,41 @@
-<div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="mt-5">
-          <div class="card text-center p-5">
-            <h1 class="mb-5">Tu pago se realizo con exito</h1>
-            <p class="mb-4">
-              Se abono un monto de  <strong>{{ abono | pesos }}</strong> en tu tarjeta de credito Visa <strong>{{ numeroVisa }}</strong>.
+<div class="container pb-5">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-8 px-4 px-md-auto mx-auto">
+      <div class="card p-4 p-md-5 mt-4 mt-md-5">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="mb-4 mb-md-5 mt-0 comprobante">Tu pago se realizo con exito</h1>
+            <p class="mb-3 text-center">
+              Se abono un monto de <strong class="rojo">{{ abono | pesos }}</strong> en tu tarjeta de credito <strong class="d-block">Visa {{ numeroVisa }}.</strong>
             </p>
-            <p>Enviamos el comprobante de pago a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
-            <br>
+            <p class="text-center">Enviamos el comprobante de pago a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
+          </div>
 
-            <!-- Botones -->
-            <div class="col-12 px-3">
-              <div class="row d-flex justify-content-md-center flex-md-row">
-                <a class="btn btn-primary col-12 col-md me-md-3 mb-3 mb-md-0">
-                  <span class="material-symbols-outlined">
-                    picture_as_pdf
-                  </span>
-                  <span class="ms-2">
-                    Descargo comprobante
-                  </span>
-                </a>
-                <a class="btn btn-secondary col-12 col-md" routerLink="/mibanco/productos/visa">
-                  <span class="material-symbols-outlined">
-                    chevron_left
-                  </span>
-                  <span class="ms-2">
-                    Volver
-                  </span>
-                </a>
+          <hr class="mb-4 mt-2 mb-md-5 mt-md-4">
+
+          <div class="col-12 d-flex justify-content-end flex-column flex-md-row justify-content-center">
+            <button type="button" class="btn btn-secundario me-0 me-md-3 mb-3 mb-md-0" routerLink="/mibanco/productos/visa">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  chevron_left
+                </div>
+                <div>
+                  Volver
+                </div>
               </div>
-            </div>
+            </button>
+            <button type="button" class="btn btn-primario" >
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  picture_as_pdf
+                </div>
+                <div>
+                  Descargo comprobante
+                </div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+  </div>
 </div>

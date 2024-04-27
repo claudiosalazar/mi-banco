@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row">
-    <div class="col-12 col-lg-7">
+    <div class="col-12 col-lg-7 px-4 px-md-auto">
+      <h1>Pago Visa</h1>
       <div class="row">
         <div class="col-12">
-          <h1>Pago Visa</h1>
+          
           <div class="card p-4">
 
             <h5>Datos de pago</h5>
@@ -29,7 +30,7 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="myOptions" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
+                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="myOptions" [zIndex]="100" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoLineaCredito | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
