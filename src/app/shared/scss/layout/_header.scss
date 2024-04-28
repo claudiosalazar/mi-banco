@@ -46,13 +46,15 @@ header.mi-banco-header {
     text-transform: uppercase;
     transition: background-color 0.3s ease-in-out;
     &:hover {
-      background-color: $tinto-oscuro;
       background-color: $dorado;
     }
     &.menu-productos {
       height: fit-content !important;
-      @media (min-width: $md) {
-        position: relative;
+      position: relative;
+      @media (max-width: $md) {
+        &:hover {
+          background-color: $tinto;
+        }
       }
     }
     .nav-link {
@@ -68,11 +70,14 @@ header.mi-banco-header {
           height: 12px;
         }
       }
-      &:hover, &.active {
+      &:hover {
         color: $blanco;
         span {
           &.icono-dropdown {
             color: $tinto;
+            @media (max-width: $md) {
+              color: $dorado;
+            }
           }
         }
       }
@@ -84,16 +89,19 @@ header.mi-banco-header {
 }
 
 .dropdown-menu {
-  background-color: rgba(116, 45, 72, .92);
+  background: $tinto-oscuro;
   border: none;
   font-size: 12px;
-  padding: 7px 10px !important;
-  border-radius: 0 0 8px 8px;
-  margin-top: 5px !important;
+  padding: 49px 17px 17px 17px !important;
+  border-radius: 8px;
+  margin-top: -49px !important;
   z-index: 7000;
   margin-left: 0 !important;
-  @media (max-width: $md) {
-    background: $tinto-oscuro;
+  @media (min-width: $md) {
+    background-color: rgba(116, 45, 72, .92);
+    margin-top: 5px !important;
+    padding: 7px 10px !important;
+    border-radius: 0 0 8px 8px;
   }
   &.dropdown-usuario {
     margin-top: 3px !important;
@@ -113,6 +121,9 @@ header.mi-banco-header {
       background-color: $dorado-oscuro;
       @media (max-width: $md) {
         background-color: $dorado;
+        .menu-productos {
+          background-color: $dorado-oscuro;
+        }
       }
       &:hover {
         background-color: $dorado;
@@ -152,6 +163,9 @@ header.mi-banco-header {
   }
   .icono-datos-usuario{
     line-height: 32px;
+  }
+  .dropdown-menu {
+    padding: 7px 10px !important;
   }
   @media (max-width: $lg) {
     position: absolute;
@@ -214,12 +228,15 @@ header.mi-banco-header {
 
   &:not(.collapsed) span:nth-child(1) {
     transform: translate(15%, -33%) rotate(45deg);
+    background-color: $dorado;
   }
   &:not(.collapsed) span:nth-child(2) {
     opacity: 0;
+    background-color: $dorado;
   }
   &:not(.collapsed) span:nth-child(3) {
     transform: translate(15%, 33%) rotate(-45deg);
+    background-color: $dorado;
   }
 
   span {
@@ -237,6 +254,7 @@ header.mi-banco-header {
     &:nth-child(1) {
       transform: translate(0%, 0%) rotate(0deg);
       margin-top: 0.3em;
+      
     }
     &:nth-child(2) {
       opacity: 1;
