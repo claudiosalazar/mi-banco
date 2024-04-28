@@ -19,12 +19,12 @@
     font-weight: 500;
     &:hover {
       background-color: $gris-02;
-      color: $rojo;
+      color: $tinto;
     }
     &.active {
-      background-color: $rojo;
+      background-color: $tinto;
       color: $blanco;
-      border-color: $rojo;
+      border-color: $tinto;
       font-weight: 600;
       &:hover {
         color: $blanco;

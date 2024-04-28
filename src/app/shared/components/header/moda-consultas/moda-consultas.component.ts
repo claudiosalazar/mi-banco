@@ -58,7 +58,6 @@ export class ModaConsultasComponent implements OnInit {
 
   ngOnInit(): void {
     this.observarCambiosConsulta();
-    this.observarCambiosConsulta();
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
       this.primerNombre = datos.datosUsuario.primerNombre;
       this.segundoNombre = datos.datosUsuario.segundoNombre;

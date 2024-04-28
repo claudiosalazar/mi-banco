@@ -3,6 +3,12 @@
   border-radius: 5px;
   border: none;
 
+  &.card-transferencia {
+    @media (max-width: $sm) {
+      box-shadow: none !important;
+    }
+  }
+
   // Card de productos home
   &.card-productos {
     padding: 24px;

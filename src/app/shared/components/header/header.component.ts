@@ -112,7 +112,7 @@ export class HeaderComponent implements OnInit {
       header.style.height = '102px';
       header.style.paddingTop = '16px';
       header.style.paddingBottom = '16px';
-      header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+      header.style.backgroundColor = 'rgba(116, 45, 72, 1)';
     }
     
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
@@ -142,9 +142,9 @@ export class HeaderComponent implements OnInit {
     if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
       if (window.scrollY >= 1) {
-        header.style.backgroundColor = 'rgba(255, 23, 68, 0.92)';
+        header.style.backgroundColor = 'rgba(116, 45, 72, 0.92)';
       } else {
-        header.style.backgroundColor = 'rgba(255, 23, 68, 1)';
+        header.style.backgroundColor = 'rgba(116, 45, 72, 1)';
       }
     }
   }
@@ -157,7 +157,7 @@ export class HeaderComponent implements OnInit {
     if (this.navbarToggler && !this.navbarToggler.nativeElement.classList.contains('collapsed')) {
       this.renderer.addClass(this.navbarToggler.nativeElement, 'collapsed');
     }
-    this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
+    this.mostrarBackdropMenuMobile = false;
   }
 
   // Cierra sesión

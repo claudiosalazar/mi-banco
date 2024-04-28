@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "884000",
+      "cupo": "874000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -501,6 +501,24 @@
           "cargo": "500",
           "abono": "",
           "saldo": "884000"
+        },
+        {
+          "id": "50",
+          "fecha": "2024-04-27",
+          "destinatario": "Ariana Gomez",
+          "detalle": "Transferencia a Ariana Gomez",
+          "mensaje": "",
+          "cargo": "5000",
+          "abono": "",
+          "saldo": "879000"
+        },
+        {
+          "id": "51",
+          "fecha": "2024-04-27",
+          "detalle": "Pago a Visa",
+          "cargo": "5000",
+          "abono": "0",
+          "saldo": "874000"
         }
       ]
     },
@@ -606,7 +624,7 @@
       "productoNombre": "Visa",
       "productoNumero": "****-****-****-5555",
       "cupo": "2316000",
-      "cupoDisponible": "2742700",
+      "cupoDisponible": "2747700",
       "transacciones": [
         {
           "id": "0",
@@ -715,6 +733,14 @@
         {
           "id": "13",
           "fecha": "2024-04-26",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "5000",
+          "saldo": "2316000"
+        },
+        {
+          "id": "14",
+          "fecha": "2024-04-27",
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "5000",

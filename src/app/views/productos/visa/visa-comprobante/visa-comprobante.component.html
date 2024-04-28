@@ -6,7 +6,13 @@
           <div class="col-12">
             <h1 class="mb-4 mb-md-5 mt-0 comprobante">Tu pago se realizo con exito</h1>
             <p class="mb-3 text-center">
-              Se abono un monto de <strong class="rojo">{{ abono | pesos }}</strong> en tu tarjeta de credito <strong class="d-block">Visa {{ numeroVisa }}.</strong>
+              Se abono un monto de:
+            </p>
+            <h3 class="mb-3 p-4 text-center monto-transaccion border-gradient border-dorado">
+              <strong class="rojo">{{ abono | pesos }}</strong>
+            </h3>
+            <p class="mb-3 text-center">
+              en tu tarjeta de credito <strong>Visa {{ numeroVisa }}.</strong>
             </p>
             <p class="text-center">Enviamos el comprobante de pago a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
           </div>

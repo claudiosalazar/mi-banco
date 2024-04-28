@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" routerLink="/mibanco/">
-          <div class="logo-mb-blanco"></div>
+          <div class="logo-mi-banco"></div>
         </a>
         <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="abrirMenuMobile()">
           <!-- <span class="navbar-toggler-icon"></span> -->
@@ -20,7 +20,7 @@
             </li>
             <li class="nav-item color-fondo-boton">
               <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="ocultaDropdownMobile()">
-                <span>Transferencias</span>
+                Transferencias
               </a>
             </li>
             <li class="nav-item menu-productos">
@@ -53,20 +53,18 @@
             <hr class="d-block">
             <span class="me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ segundoNombre }}</span> {{ apellidoPaterno }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellidoMaterno }}</span></span>
             <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
-              <span class="material-symbols-outlined icono-datos-usuario" style="font-variation-settings: 'FILL' 1">
+              <span class="material-symbols-outlined icono-datos-usuario dorado" style="font-variation-settings: 'FILL' 1">
                 settings
               </span>
             </a>
             <hr class="d-block">
-            <ul class="dropdown-menu dropdown-menu-end p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
+            <ul class="dropdown-menu dropdown-menu-end dropdown-usuario p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
               <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
               <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
               <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>
               <li>
                 <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
-                  <span class="material-symbols-outlined icono-dropdown">
-                    close
-                  </span>
+                  <span class="ico-cerrar-sesion"></span>
                   <span>
                     Cerrar sesión
                   </span>

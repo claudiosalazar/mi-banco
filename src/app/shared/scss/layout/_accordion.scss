@@ -1,0 +1,28 @@
+.accordion {
+  .accordion-item {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color: $blanco;
+    border-radius: 5px !important;
+    border: 1px solid $gris-02 !important;
+    &:hover {
+      background-color: $gris-01;
+    }
+    .show {
+      background-color: $gris-01;
+    }
+
+    .accordion-button {
+      background-color: transparent !important;
+      font-weight: 500;
+      box-shadow: none !important;
+      font-size: 18px;
+    }
+
+    .accordion-body {
+      padding: 2rem;
+      border-top: 1px solid $gris-02;
+      background-color: $blanco;
+    }
+  }
+}

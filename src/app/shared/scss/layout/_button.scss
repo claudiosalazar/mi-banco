@@ -7,11 +7,11 @@
   font-weight: 500;
 
   &.btn-primario {
-    background-color: $rojo;
+    background-color: $tinto;
     color: $blanco;
-    border-color: $rojo;
+    border-color: $tinto;
     &:hover {
-      color: $rojo;
+      color: $tinto;
       background-color: $blanco;
       box-shadow: $shadow-btn-hover;
     }
@@ -27,16 +27,16 @@
     }
     &.active {
       background-color: $blanco;
-    color: $rojo;
-    border-color: $rojo;
+    color: $tinto;
+    border-color: $tinto;
     }
   }
   &.btn-terciario {
     background-color: $blanco;
-    color: $rojo;
-    border-color: $rojo;
+    color: $tinto;
+    border-color: $tinto;
     &:hover {
-      background-color: $rojo;
+      background-color: $tinto;
       color: $blanco;
     }
   }
@@ -58,11 +58,11 @@
   }
 
   &.btn-primario {
-    background-color: $rojo;
+    background-color: $tinto;
     color: $blanco;
-    border-color: $rojo;
+    border-color: $tinto;
     &:hover {
-      color: $rojo;
+      color: $tinto;
       background-color: $blanco;
       box-shadow: $shadow-btn-hover;
     }
@@ -79,17 +79,17 @@
     }
     &.active {
       background-color: $blanco;
-    color: $rojo;
-    border-color: $rojo;
+    color: $tinto;
+    border-color: $tinto;
     }
   }
 
   &.btn-terciario {
     background-color: $blanco;
-    color: $rojo;
-    border-color: $rojo;
+    color: $tinto;
+    border-color: $tinto;
     &:hover {
-      background-color: $rojo;
+      background-color: $tinto;
       color: $blanco;
     }
   }
@@ -117,24 +117,24 @@
 .btn-tab {
   @include animacion-btn;
   background-color: transparent;
-  color: $rojo;
+  color: $tinto;
   margin-right: 24px;
   padding: 10px 15px;
   border-radius: 4px;
   border: 1px solid transparent;
   font-weight: 600;
   &:hover {
-    color: $rojo;
-    border: 1px solid $rojo;
+    color: $tinto;
+    border: 1px solid $tinto;
     background-color: $blanco;
   }
   &.active {
-    background-color: $rojo;
+    background-color: $tinto;
     color: $blanco;
   }
   @media (max-width: $md) {
     width: 100%;
-    border: 1px solid $rojo;
+    border: 1px solid $tinto;
   }
 }
 

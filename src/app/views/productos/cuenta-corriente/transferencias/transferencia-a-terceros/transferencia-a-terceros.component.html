@@ -131,11 +131,12 @@
 
       <div class="col-12" *ngIf="pasosTransferencia">
         <form [formGroup]="transferenciaATercerosForm">
-          <div class="card p-4">
+          <div class="card card-transferencia p-3 p-md-4">
             <div class="row">
-              <div class="col-9">
-                <div class="info-destinatario-transferencia p-3 d-flex">
-                  <div class="w-50">
+              <div class="col-12 col-md-9">
+                <!-- <hr class="mb-5 d-md-none"> -->
+                <div class="info-destinatario-transferencia p-3 d-flex flex-column flex-md-row">
+                  <div>
                     <p class="mb-1 dorado-oscuro">La transferencia se realizara a:</p>
                     <h4 class="m-0" *ngIf="destinatarioATransferirSeleccionado?.apodo">
                       <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> 
@@ -145,22 +146,22 @@
                       <strong>{{destinatarioATransferirSeleccionado?.nombre}}</strong>
                     </h4>
                   </div>
-                  <div class="w-50">
+                  <div class="d-none d-md-block">
                     <small class="m-0 d-block dorado-oscuro">Rut: <strong>{{ destinatarioATransferirSeleccionado?.rut | rut }}</strong></small>
                     <small class="m-0 d-block dorado-oscuro">Banco: <strong>{{ destinatarioATransferirSeleccionado?.banco }}</strong></small>
                     <small class="m-0 d-block dorado-oscuro">{{ destinatarioATransferirSeleccionado?.tipoCuenta }}: <strong>{{ destinatarioATransferirSeleccionado?.numeroCuenta }}</strong></small>
                   </div>
                 </div>
-              </div>
-              <div class="col-3 d-flex align-items-center justify-content-end">
-                <button class="btn btn-secundario" type="button" (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');">
-                  Cambiar destinatario
-                </button>
+                <div class="d-flex flex-column mt-3">
+                  <button class="btn btn-secundario" type="button" (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');">
+                    Cambiar destinatario
+                  </button>
+                </div>
               </div>
 
               <hr class="my-4">
 
-              <div class="col-6" *ngIf="ingresarDatos">
+              <div class="col-12 col-md-6" *ngIf="ingresarDatos">
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()">
                   <label for="montoATransferir" class="form-label">Monto <span class="obligatorio">*</span></label>
@@ -202,11 +203,13 @@
                     El email es valido.
                   </div>
                 </div>
-                <button class="btn btn-primario my-3" type="button" id="botonContinarTransferencia" (click)="botonContinuar()" [class.disabled]="!continuarTransferencia">
-                  Continuar
-                </button>
+                <div class="d-flex flex-column-reverse flex-md-row">
+                  <button class="btn btn-primario my-3 mx-0" type="button" id="botonContinarTransferencia" (click)="botonContinuar()" [class.disabled]="!continuarTransferencia">
+                    Continuar
+                  </button>
+                </div>
               </div>
-              <div class="col-6" *ngIf="ingresarDatos">
+              <div class="col-6 d-none d-md-block"  *ngIf="ingresarDatos">
                 <div class="alert alert-primary" role="alert">
                   <h5>Ingresa el monto a transferir</h5>
                   <p class="mb-0">
@@ -215,7 +218,7 @@
                 </div>
               </div>
 
-              <div class="col-6" *ngIf="confirmarDatos">
+              <div class="col-12 col-md-6" *ngIf="confirmarDatos">
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="montoATransferirConfirmacion" [value]="transferenciaATercerosForm.get('montoATransferir')?.value" disabled>
                   <label for="montoATransferir" class="form-label">Monto</label>
@@ -228,16 +231,16 @@
                   <input type="email" class="form-control" id="emailDestinatarioConfirmacion" [value]="transferenciaATercerosForm.get('emailDestinatario')?.value" disabled>
                   <label for="emailDestinatario" class="form-label">Email</label>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex flex-column-reverse flex-md-row">
                   <button class="btn btn-secundario me-0 me-md-3 my-3" type="button" (click)="botonValidaDatosTransferencia()">
                     Modificar datos
                   </button>
-                  <button class="btn btn-primario my-3" type="button" (click)="abrirModalTransferencia()">
+                  <button class="btn btn-primario my-md-3" type="button" (click)="abrirModalTransferencia()">
                     Realizar transferencia
                   </button>
                 </div>
               </div>
-              <div class="col-6" *ngIf="confirmarDatos">
+              <div class="d-none d-md-auto col-md-6" *ngIf="confirmarDatos">
                 <div class="alert alert-primary" role="alert">
                   <h5>
                     Se realizara la transferencia a:
@@ -274,8 +277,8 @@
           </div>
           <hr class="mt-2">
           <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secundario me-3 me-md-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button>
-            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button>
+            <button type="button" class="btn btn-secundario me-md-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button>
+            <button type="button" class="btn btn-primario mb-3 mb-md-0" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button>
           </div>
       </div>
     </div>
