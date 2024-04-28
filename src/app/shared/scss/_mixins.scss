@@ -48,6 +48,22 @@
   animation: spin 1s infinite linear;
 }
 
+// Animacion icono boton link
+@keyframes movimiento {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(6px);
+    opacity: 0;
+  }
+}
+
+@mixin movimiento-icono {
+  animation: movimiento .35s linear infinite;
+}
+
 // Ellipsis
 @mixin ellipse {
   $font-size: 1;

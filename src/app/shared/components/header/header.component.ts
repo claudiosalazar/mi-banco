@@ -137,11 +137,11 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {
-    this.currentState = window.scrollY >= 1 ? 'final' : 'initial';
+    this.currentState = window.scrollY >= 60 ? 'final' : 'initial';
 
     if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
-      if (window.scrollY >= 1) {
+      if (window.scrollY >= 60) {
         header.style.backgroundColor = 'rgba(116, 45, 72, 0.92)';
       } else {
         header.style.backgroundColor = 'rgba(116, 45, 72, 1)';

@@ -5,15 +5,15 @@
   padding: 8px 20px;
   font-size: 16px;
   font-weight: 500;
-
+  white-space: nowrap;
   &.btn-primario {
-    background-color: $tinto;
+    background-color: $rojo;
     color: $blanco;
-    border-color: $tinto;
+    border-color: $rojo;
     &:hover {
-      color: $tinto;
-      background-color: $blanco;
-      box-shadow: $shadow-btn-hover;
+      color: $blanco;
+      background-color: $dorado;
+      border-color: $dorado;
     }
   }
   &.btn-secundario {
@@ -58,13 +58,14 @@
   }
 
   &.btn-primario {
-    background-color: $tinto;
+    background-color: $rojo;
     color: $blanco;
-    border-color: $tinto;
+    border-color: $rojo;
     &:hover {
-      color: $tinto;
-      background-color: $blanco;
-      box-shadow: $shadow-btn-hover;
+      color: $blanco;
+      border-color: $dorado;
+      background-color: $dorado;
+      //box-shadow: $shadow-btn-hover;
     }
   }
 
@@ -95,6 +96,29 @@
   }
 }
 
+
+
+
+.btn-link {
+  color: $rojo;
+  text-decoration: none;
+  padding: 0 0 0 16px;
+  font-size: 15px;
+  white-space: nowrap;
+  font-weight: 500;
+  span.icono-link {
+    padding-right: 6px;
+  }
+  &:hover {
+    color: $dorado;
+    span.icono-link {
+      @include movimiento-icono;
+    }
+  }
+
+  
+}
+
 // Botones banner
 .btn-banner {
   @include animacion-btn;
@@ -105,6 +129,7 @@
   border: 1px solid $dorado;
   border-radius: 2rem;
   font-weight: 600;
+  white-space: nowrap;
   &:hover {
     background-color: $dorado-oscuro;
     color: $blanco;

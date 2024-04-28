@@ -42,60 +42,6 @@
 
   // Card banner grande
   &.card-banner {
-    .info-banner {
-      padding: 24px 24px 24px 48px;
-      .titulo-banner {
-        font-size: 25px;
-        display: block;
-        font-weight: 800;
-        line-height: 2rem;
-      }
-      .texto-secundario {
-        font-size: 22px;
-        display: block;
-        font-weight: 600;
-        line-height: 2rem;
-      }
-      .texto-explicativo {
-        font-size: 12px;
-        display: block;
-        font-weight: 500;
-      }
-      .monto {
-        font-size: 38px;
-        display: block;
-        font-weight: 700;
-      }
-      .monto-cuota {
-        font-size: 18px;
-        display: block;
-        font-weight: 700;
-      }
-      .texto-legal {
-        font-size: 10px;
-        font-weight: 500;
-        line-height: 1rem;
-        display: block;
-      }
-      .logo-seguro {
-        width: 53px;
-        height: 30px;
-      }
-    }
-    .contenido-imagen {
-      position: relative;
-      .contenedor-boton {
-        position: absolute;
-        z-index: 3;
-        bottom: 24px;
-        right: 24px;
-      }
-      .imagen-banner {
-        position: relative;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-    }
     &:hover {
       box-shadow: 0 2px 8px rgba(84, 84, 84, 0.4);
     }
