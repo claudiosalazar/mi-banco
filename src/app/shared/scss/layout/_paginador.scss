@@ -21,6 +21,9 @@
       background-color: $gris-02;
       color: $tinto;
     }
+    &:focus {
+      box-shadow: none;
+    }
     &.active {
       background-color: $tinto;
       color: $blanco;
@@ -33,3 +36,9 @@
   }
 }
 
+.hidden {
+  display: none;
+  @media (min-width: $md) {
+    display: inline;
+  }
+}

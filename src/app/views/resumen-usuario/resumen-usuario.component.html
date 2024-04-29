@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <div class="col-6">
+        <!-- <div class="col-6">
           <div class="card card-productos p-4">
             <span class="nombre-producto">Ultimas transacciones</span>
             <hr>
@@ -69,7 +69,7 @@
             <hr>
             <p>asdasd</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -97,12 +97,12 @@
                 <span class="monto text-start">
                   {{ montoPreAprobadoCreditoConsumo | pesos }}
                 </span>
-                <div class="d-flex align-items-end mt-3">
+                <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
                   <span class="texto-legal me-3">
                     * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
                   </span>
-                  <div class="text-end">
-                    <button class="btn-banner" type="button">Solicitar Crédito</button>
+                  <div>
+                    <button class="btn-banner mb-3 mb-md-auto" type="button">Solicitar Crédito</button>
                   </div>
                 </div>
               </div>
@@ -118,14 +118,14 @@
   <div class="row">
     <div class="col-12">
       <div class="container my-5">
-        <div class="row d-flex align-items-stretch">
+        <div class="row d-flex align-content-around justify-content-between">
 
           <!-- Banner seguro -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
             <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-seguro-auto.jpg');">
-              <div class="info-banner">
-                <div class="info-medio d-flex flex-column justify-content-around">
-                  <div>
+              <div class="info-banner d-flex justify-content-around align-content-stretch">
+                <div class="info-medio">
+                  <div class="d-flex flex-column ">
                     <span class="titulo-banner text-start">
                       Contrata tu Seguro Auto
                     </span>
@@ -140,12 +140,12 @@
                     </span>
                     <img src="../../../assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
                   </div>
-                  <div class="d-flex align-items-end mt-3">
+                  <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
                     <span class="texto-legal me-3">
                       * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
                     </span>
                     <div>
-                      <a class="btn-link d-flex align-items-center justify-content-end" type="button">
+                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" type="button">
                         <div>
                           Más información
                         </div>
@@ -163,9 +163,9 @@
           <!-- Banner visa -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
             <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-visa.jpg');">
-              <div class="info-banner">
-                <div class="info-medio d-flex flex-column justify-content-around">
-                  <div>
+              <div class="info-banner d-flex justify-content-around align-content-stretch">
+                <div class="info-medio">
+                  <div class="d-flex flex-column">
                     <span class="titulo-banner text-start">
                       Paga con tu Tarjeta de Crédito Visa este mes y
                     </span>
@@ -176,12 +176,12 @@
                       50%
                     </span>
                   </div>
-                  <div class="d-flex align-items-end mt-3">
+                  <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-1 mt-md-auto">
                     <span class="texto-legal me-3">
                       * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
                     </span>
                     <div>
-                      <a class="btn-link d-flex align-items-center justify-content-end" type="button">
+                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" type="button">
                         <div>
                           Más información
                         </div>

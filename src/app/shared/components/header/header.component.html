@@ -83,23 +83,30 @@
 <div class="modal posicion fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div>
+          <span class="titulo-modal">Cerrar sesión</span>
+        </div>
+      </div>
       <div class="modal-body">
         <div id="usuarioAEliminar">
-          <div class="d-flex align-items-center mb-2">
-            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
+          <div class="d-flex align-items-center">
+            <div class="icono material-symbols-outlined d-block me-3 mensajes error">
               warning
-            </span>
-            <h4 class="d-block">
-              Estas cerrando tu sesión
-            </h4>
+            </div>
+            <div>
+              <p class="mb-0">
+                <strong>Estas cerrando tu sesión.</strong>
+              </p>
+              <p class="mb-0">Para confirmar da click en el botón.</p>
+            </div>
           </div>
-          <div class="w-100 text-center">
-            <p>Para confirmar da click en el boton</p>
-          </div>
-          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" (click)="ocultaDropdownMobile()">Cancelar</button>
-            <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
-          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row">
+          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" (click)="ocultaDropdownMobile()">Cancelar</button>
+          <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
         </div>
       </div>
     </div>
@@ -110,9 +117,18 @@
 <div class="modal posicion fade" id="modalConsultas" tabindex="-2"  aria-labelledby="modalConsultas" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-body">
-        <app-moda-consultas *ngIf="modalConsultaAbierto" (consultaCancelada)="modalConsultaAbierto = false"></app-moda-consultas>
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div>
+          <span class="titulo-modal">Consultas</span>
+        </div>
+        <!-- <a href="javascript:void(0);" aria-label="Close" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()"> -->
+        <button href="javascript:void(0);" aria-label="Close" data-bs-dismiss="modal">
+          <span class="material-symbols-outlined dorado m-0 p-0">
+            close
+          </span>
+        </button>
       </div>
+      <app-moda-consultas *ngIf="modalConsultaAbierto" (consultaCancelada)="modalConsultaAbierto = false"></app-moda-consultas>
     </div>
   </div>
 </div>
@@ -121,54 +137,54 @@
 <div class="modal posicion fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div>
+          <span class="titulo-modal">Tu ejecutivo</span>
+        </div>
+        <button href="javascript:void(0);" aria-label="Close" data-bs-dismiss="modal">
+          <span class="material-symbols-outlined dorado m-0 p-0">
+            close
+          </span>
+        </button>
+      </div>
       <div class="modal-body">
-
-    
-          <div class="d-flex justify-content-between align-items-center">
-            <h3>Tu ejecutivo</h3>
-            <a href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close" (click)="ocultaBackDrop()">
-              <span class="material-symbols-outlined">
-                close
-              </span>
-            </a>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col-12">
-              <div class="card py-3 px-4">
-                <div class="row">
-                  <div class="col-12">
-                    <p>Datos de tu ejecutivo</p>
-                    <h5>Jose Andres Gonzalez Herrara</h5>
-                    <br>
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="material-symbols-outlined me-3 dorado">
-                        mail
-                      </span>
-                      <p class="m-0">jose@mibanco.cl</p>
-                    </div>
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="material-symbols-outlined me-3 dorado">
-                        person_pin_circle
-                      </span>
-                      <p class="m-0">Sucursal Manuel Montt, Temuco</p>
-                    </div>
-                    <div class="d-flex align-items-center mb-3">
-                      <span class="material-symbols-outlined me-3 dorado">
-                        phone_in_talk
-                      </span>
-                      <p class="m-0">+56 85 245 6987</p>
-                    </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card p-4">
+              <div class="row">
+                <div class="col-12">
+                  <p>Datos de tu ejecutivo</p>
+                  <h5>Jose Andres Gonzalez Herrara</h5>
+                  <br>
+                  <div class="d-flex align-items-center mb-3">
+                    <span class="material-symbols-outlined me-3 dorado">
+                      mail
+                    </span>
+                    <p class="m-0">jose@mibanco.cl</p>
+                  </div>
+                  <div class="d-flex align-items-center mb-3">
+                    <span class="material-symbols-outlined me-3 dorado">
+                      person_pin_circle
+                    </span>
+                    <p class="m-0">Sucursal Manuel Montt, Temuco</p>
+                  </div>
+                  <div class="d-flex align-items-center mb-3">
+                    <span class="material-symbols-outlined me-3 dorado">
+                      phone_in_talk
+                    </span>
+                    <p class="m-0">+56 85 245 6987</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-      
-          <!-- Botones -->
-          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
-          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+         <!-- Botones -->
+         <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row">
+          <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>

@@ -13,6 +13,8 @@ export class PaginadorComponent implements OnInit {
   }
   @Input() itemsPerPage: number = 0;
   @Input() currentPage: number = 0;
+  @Input() displayedPages: number = 6;
+  @Input() startPage: number = 1;
   @Input() datosOrdenados!: EventEmitter<void>;
   @Output() paginatedData = new EventEmitter<any[]>();
 
@@ -46,6 +48,9 @@ export class PaginadorComponent implements OnInit {
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      if (this.currentPage < this.startPage) {
+        this.startPage--;
+      }
       this.paginacionDatos();
     }
   }
@@ -53,6 +58,9 @@ export class PaginadorComponent implements OnInit {
   nextPage(): void {
     if (this.totalPages && this.currentPage < this.totalPages) {
       this.currentPage++;
+      if (this.currentPage > this.startPage + this.displayedPages - 1) {
+        this.startPage++;
+      }
       this.paginacionDatos();
     }
   }

@@ -418,13 +418,21 @@
 
   .contenedor-acciones {
     margin-left: 0 !important;
-    a {
+    button {
       margin-top: 10px;
       margin-right: 14px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: transparent;
+      color: $gris-60;
+      &:hover {
+        color: $dorado;
+      }
     }
     @media (max-width: $lg) {
       margin-left: 35%;
-      a {
+      button {
         margin-top: 10px;
       }
     }

@@ -7,6 +7,29 @@
     position: absolute;
   }
 
+  .modal-header {
+    padding: 18px 24px;
+    background-color: $gris-01;
+    .titulo-modal {
+      font-size: 20px;
+      font-weight: 700;
+      color: $dorado-oscuro;
+      display: block;
+    }
+    button {
+      width: 24px !important;
+      height: 24px !important;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .modal-footer {
+    padding: 18px 24px;
+    background-color: $gris-01;
+  }
+
   // Estilos para modal en mobile
   @media (max-width: $sm) {
     &.posicion {

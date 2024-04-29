@@ -77,7 +77,10 @@
     font-weight: 700;
     color: $dorado-oscuro;
     margin-top: 18px;
-    margin-bottom: 18px;
+    margin-bottom: 0;
+    @media (min-width: $md) {
+      margin-bottom: 18px;
+    }
   }
   .monto-cuota {
     font-size: 24px;
@@ -85,7 +88,10 @@
     font-weight: 700;
     color: $dorado-oscuro;
     margin-top: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 0;
+    @media (min-width: $md) {
+      margin-bottom: 18px;
+    }
   }
   .texto-legal {
     font-size: 9px;
