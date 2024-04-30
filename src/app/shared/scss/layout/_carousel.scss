@@ -1,11 +1,12 @@
 .carousel {
-  // position: relative;
+  padding: 0 4px 4px 4px;
+  border-radius: 5px;
   z-index: 0;
   min-height: fit-content !important;
-
   .carousel-inner {
     margin: 0 auto !important;
     width: 100%;
+    border-radius: 5px;
     .imagen-der {
       background-position: left top;
       background-size: cover;
