@@ -142,7 +142,7 @@ export class HeaderComponent implements OnInit {
     if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
       if (window.scrollY >= 60) {
-        header.style.backgroundColor = 'rgba(116, 45, 72, 0.92)';
+        header.style.backgroundColor = 'rgba(116, 45, 72, .85)';
       } else {
         header.style.backgroundColor = 'rgba(116, 45, 72, 1)';
       }
