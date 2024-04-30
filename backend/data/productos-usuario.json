@@ -622,7 +622,7 @@
     {
       "id": "2",
       "productoNombre": "Visa",
-      "productoNumero": "****-****-****-5555",
+      "productoNumero": "5555-5555-5555-5555",
       "cupo": "2316000",
       "cupoDisponible": "2747700",
       "transacciones": [

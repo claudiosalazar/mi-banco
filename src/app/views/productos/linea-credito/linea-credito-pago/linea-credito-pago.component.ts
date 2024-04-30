@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
+import { NumeroTarjetaPipe } from '../../../../shared/pipes/numero-tarjeta.pipe';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Observable, from } from 'rxjs';
@@ -74,6 +75,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
   cupoLineaCredito: any;
   numeroLineaCredito: any;
   numeroVisa: any = '';
+  numeroVisaOculto: any;
   cupoInicialLineaCredito: any;
   cupoDisponibleLineaCredito: any;
   montoPagado: any;
@@ -89,7 +91,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
   errorServer: boolean = false;
 
   // Variable para custom select
-  myOptions = [
+  opcionesDePago = [
     { value: '0', label: '-' },
     { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
     { value: '2', label: 'Visa N° ' + this.numeroVisa }
@@ -174,11 +176,11 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
         this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
         this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
         this.numeroVisa = this.productosUsuario.productos[2]?.productoNumero;
-  
-        this.myOptions = [
+        const numeroTarjetaPipe = new NumeroTarjetaPipe();
+        this.opcionesDePago = [
           { value: '0', label: '-' },
           { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
-          { value: '2', label: 'Visa N° ' + this.numeroVisa }
+          { value: '2', label: 'Visa N° ' + numeroTarjetaPipe.transform(this.numeroVisa) }
         ];
       }
     );

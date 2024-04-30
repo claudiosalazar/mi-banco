@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // Datos usuario
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
-import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 // Productos usuario
 import { ProductosUsuarioService } from '../../core/services/productos-usuario.service';
 // Datos ofertas

@@ -89,8 +89,10 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   pagoCorrecto: boolean = true;
   errorServer: boolean = false;
 
+  mostrarNumeroTarjeta = false;
+
   // Variable para custom select
-  myOptions = [
+  opcionesDePago = [
     { value: '0', label: '-' },
     { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
     { value: '2', label: 'Línea de Crédito N° ' + this.numeroLineaCredito }
@@ -134,8 +136,10 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
 
-    
+  mostrarNumeroVisa() {
+    this.mostrarNumeroTarjeta = true;
   }
 
   ngAfterViewInit(): void {
@@ -177,7 +181,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
         this.numeroCtaCte = this.productosUsuario.productos[0]?.productoNumero;
         this.numeroLineaCredito = this.productosUsuario.productos[1]?.productoNumero;
   
-        this.myOptions = [
+        this.opcionesDePago = [
           { value: '0', label: '-' },
           { value: '1', label: 'Cuenta Corriente N° ' + this.numeroCtaCte },
           { value: '2', label: 'Línea de Crédito N° ' + this.numeroLineaCredito }

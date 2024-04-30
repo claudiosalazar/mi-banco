@@ -14,6 +14,7 @@ import { PesosPipe } from './shared/pipes/pesos.pipe';
 import { RutPipe } from './shared/pipes/rut.pipe';
 import { CelularPipe } from './shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
+import { NumeroTarjetaPipe } from './shared/pipes/numero-tarjeta.pipe';
 
 // Services
 import { DatosUsuarioService, ListaGeograficaService, ListaGeograficaComercialService } from './core/services/datos-usuario.service';
@@ -80,6 +81,7 @@ import { CarouselComponent } from './views/resumen-usuario/carousel/carousel.com
     RutPipe,
     CelularPipe,
     TelefonoFijoPipe,
+    NumeroTarjetaPipe,
     DatosUsuarioComponent,
     CuentaCorrienteComponent,
     LineaCreditoComponent,

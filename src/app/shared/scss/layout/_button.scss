@@ -196,4 +196,19 @@
   }
 }
 
+.btn-mostrar-numero-tarjeta {
+  @include animacion-btn;
+  border-radius: 2rem;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background-color: $gris-02; 
+  margin-left: 6px;
+  color: $gris-40;
+  &:hover {
+    background-color: $gris-40;
+    color: $blanco;
+  }
+}
 
