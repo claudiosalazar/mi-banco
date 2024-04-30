@@ -1,12 +1,11 @@
 .carousel {
   padding: 0 4px 4px 4px;
-  border-radius: 5px;
   z-index: 0;
   min-height: fit-content !important;
   .carousel-inner {
     margin: 0 auto !important;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 10px;
     .imagen-der {
       background-position: left top;
       background-size: cover;
@@ -18,7 +17,7 @@
   }
 
   .carousel-item {
-    height: fit-content;
+    //height: fit-content;
     padding: 12px;
     .ancho-info {
       margin: 0 auto 32px auto;
@@ -26,133 +25,131 @@
       max-width: 1272px;
       @media (min-width: $md) {
         margin: 24px auto 32px auto;
+        height: 400px;
       }
     }
 
-
     .info-slide-izq {
-      background-color: rgb(255, 255, 255, .85);
+      background: rgb(255,255,255);
+      background: linear-gradient(-270deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
       z-index: 1;
       width: 100%;
       min-height: fit-content !important;
-      border-radius: 9px;
-      padding: 18px;
+      border-radius: 16px;
       @media (min-width: $sm) and (max-width: $md) {
         width: 60%;
-        padding: 24px;
       }
       @media (min-width: $md) {
         width: 50%;
-        //height: 350px;
-        padding: 32px;
       }
       @media (min-width: $lg) {
-        height: 320px;
+        padding: 32px;
       }
       
     }
     .info-slide-der {
-      background-color: rgb(255, 255, 255, .85);
+      background: rgb(255,255,255);
+      background: linear-gradient(-90deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
       z-index: 1;
       width: 100%;
       min-height: fit-content !important;
-      border-radius: 9px;
-      padding: 18px;
+      border-radius: 16px;
       @media (min-width: $sm) and (max-width: $md) {
         margin-left: 40%;
         width: 60%;
-        padding: 24px;
       }
       @media (min-width: $md) {
         width: 50%;
         margin-left: 50%;
-        //height: 350px;
-        padding: 32px;
       }
       @media (min-width: $lg) {
-        height: 320px;
+        padding: 32px;
       }
     }
 
     .contenido-slide {
       height: fit-content;
       .pre-titulo {
-        font-size: 16px;
-        line-height: 16px;
-        color: $tinto;
         text-transform: uppercase;
+        line-height: 90%;
+        color: $tinto;
         display: block;
-        font-weight: 600;
-        &.dorado {
-          color: $dorado;
-          font-weight: 700;
-        }
+        font-weight: 900;
         @media (min-width: $md) {
-          font-size: 22px;
+          font-size: 24px;
         }
       }
       .titulo {
-        font-family: "Playfair Display", serif;
+        font-family: "Noto Serif", serif;
+        font-style: italic;
         font-size: 24px;
-        line-height: 26px;
-        font-weight: 900;
-        color: $tinto;
+        line-height: 100%;
+        color: $blanco;
         text-transform: uppercase;
         display: block;
         padding: 4px 0 8px 0;
-        @media (min-width: $md) {
-          font-size: 34px;
-          line-height: 36px;
+        text-shadow: 0 0 8px rgba(116, 45, 72, .9), 0 0 2px rgba(116, 45, 72, .6);
+        @media (min-width: $lg) {
+          font-size: 44px;
+        }
+      }
+      .separador-slide {
+        background: $blanco !important;
+        height: 2px !important;
+        border: none !important;
+        opacity: .6;
+        margin-top: 12px;
+        margin-bottom: 18px;
+        &.izq {
+          background: linear-gradient(-270deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 80%) !important;
+        }
+        &.der {
+          background: linear-gradient(-90deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 80%) !important;
         }
       }
       .bajada {
-        font-size: 14px;
-        line-height: 18px;
-        color: $negro;
+        line-height: 95%;
+        color: $tinto;
         display: block;
-        font-weight: 500;
-        @media (min-width: $md) {
-          font-size: 18px;
-          line-height: 18px;
+        font-weight: 600;
+        @media (min-width: $lg) {
+          font-size: 20px;
         }
       }
       .monto-slide {
-        font-size: 28px;
-        font-weight: 800;
-        color: $dorado;
+        font-weight: 900;
+        color: $dorado-oscuro-50;
         display: block;
-        margin-top: 10px;
-        @media (min-width: $md) {
-          font-size: 30px;
-          line-height: 28px;
+        @media (min-width: $lg) {
+          font-size: 40px;
         }
       }
     }
-
-    .call-to-action {
-      margin-top: 24px;
-      .texto-legal {
-        margin-top: 12px;
-        font-size: 10px;
-        color: $tinto;
-        display: block;
-      }
-    }
   }
+
+  // Texto legal
+  .texto-legal {
+    width: 100%;
+    margin-top: 12px;
+    font-size: 11px;
+    color: $blanco;
+    display: block;
+  }
+  
   .carousel-indicators {
     height: 10px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 10px;
+    padding-bottom: 16px;
     button {
-      border-radius: 5px;
+      border-radius: 6px;
       border: none;
       width: 30px;
       height: 10px;
-      background-color: $blanco;
+      background-color: rgb(255, 255, 255, .5);
+      border:1px solid $tinto;
       &.active {
-        background-color: $dorado;
+        background-color: $tinto;
       }
     }
-    //bottom: -10px;
   }
 }

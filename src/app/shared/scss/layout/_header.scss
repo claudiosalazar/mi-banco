@@ -8,10 +8,11 @@ header.mi-banco-header {
   padding: 4px !important;
   .navbar {
     max-height: 60px !important;
-    padding: 0 !important;
-    border-radius: 5px;
+    padding: 0  !important;
+    border-radius: 10px;
     @media (min-width: $md) {
       max-height: inherit !important;
+      padding: 0 12px !important;
     }
     .navbar-brand {
       z-index: 1;
@@ -119,11 +120,11 @@ header.mi-banco-header {
       margin-bottom: 3px;
       color: $blanco;
       font-weight: 500;
-      background-color: $dorado-oscuro;
+      background-color: $dorado-oscuro-50;
       @media (max-width: $md) {
         background-color: $dorado;
         .menu-productos {
-          background-color: $dorado-oscuro;
+          background-color: $dorado-oscuro-50;
         }
       }
       &:hover {

@@ -1,13 +1,10 @@
 
-strong {
-  font-weight: 700;
-}
 
 // Encabe
 h1, h2, h3 {
   color: $tinto;
   margin: 0 0 16px 0;
-  font-family: "Playfair Display", serif;
+  font-family: "Noto Serif", serif;
   font-weight: 500;
 }
 
@@ -75,6 +72,10 @@ h3 {
 p {
   font-weight: 400;
   font-family: 'Montserrat', sans-serif;
+}
+
+strong {
+  font-weight: 700;
 }
 
 .pasos-transferencia {

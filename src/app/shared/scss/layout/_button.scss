@@ -133,9 +133,9 @@
   width: 100%;
   &:hover {
     width: inherit;
-    background-color: $dorado-oscuro;
+    background-color: $dorado-oscuro-50;
     color: $blanco;
-    border-color: $dorado-oscuro;
+    border-color: $dorado-oscuro-50;
     box-shadow: $shadow-btn-banner-hover;
   }
   @media (min-width: $md) {
