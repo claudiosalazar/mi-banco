@@ -11,6 +11,7 @@ export class SegurosComponent implements OnInit {
   productoOferta: string | undefined;
   montoPreAprobado: number | undefined;
   ofertasProductos: { ofertas: any[] } = { ofertas: [''] };
+  montoPreAprobadoCreditoConsumo: any;
 
   constructor(
     private segurosUsuarioService: SegurosUsuarioService,
@@ -23,14 +24,13 @@ export class SegurosComponent implements OnInit {
       this.seguros = data;
     });
     
-    this.getOfertaParaBanner('');
+    this.getOfertasProductos('');
   }
 
-  getOfertaParaBanner(id: string): void {
+  getOfertasProductos(id: string): void {
     this.ofertasProductosService.getOfertasProductos(id).subscribe(data => {
       this.ofertasProductos = data.ofertas ? { ofertas: data.ofertas } : { ofertas: [] };
-      this.productoOferta = this.ofertasProductos.ofertas[3].productoOferta;
-      this.montoPreAprobado = this.ofertasProductos.ofertas[3].montoPreAprobado;
+      this.montoPreAprobadoCreditoConsumo = this.ofertasProductos.ofertas[0].montoPreAprobado;
     });
   }
 }

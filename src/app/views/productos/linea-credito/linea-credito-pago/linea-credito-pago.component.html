@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-xxl-5">
   <div class="row">
     <div class="col-12 col-lg-7">
       <div class="row">
@@ -6,28 +6,32 @@
           <h1>Pago Línea de Crédito</h1>
           <div class="card p-4">
 
-            <h5>Datos de pago</h5>
+            <h5>Datos del producto</h5>
             <div class="row">
 
               <!-- Datos del productos -->
-              <div class="col-12">
-                <div class="row">
-                  <p class="mb-0 col-12 col-md-6 pt-3 pt-md-3"><small>Linea de Credito N°: <strong>{{ numeroLineaCredito }}</strong></small></p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong>{{ cupoLineaCredito | pesos }}</strong></small></p>
-                </div>
-                <div class="row">
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong>{{ cupoInicialLineaCredito | pesos }}</strong></small></p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong>{{ cupoDisponibleLineaCredito | pesos }}</strong></small></p>
-                </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0"><small class="d-block">Linea de Credito N°: <strong class="tinto">{{ numeroLineaCredito }}</strong></small></p>
+                <p class="mb-0"><small>Cupo Utilizado: <strong class="tinto">{{ cupoLineaCredito | pesos }}</strong></small></p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0"><small>Cupo Total: <strong class="tinto">{{ cupoInicialLineaCredito | pesos }}</strong></small></p>
+                <p class="mb-0"><small>Cupo Disponible: <strong class="tinto">{{ cupoDisponibleLineaCredito | pesos }}</strong></small></p>
               </div>
 
-              <hr>
+              <div class="col-12">
+                <hr class="my-3">
+                <h4 class="tinto">Datos de pago</h4>
+              </div>
+
+              
+              
 
               <!-- Inicio formulario -->
               <form [formGroup]="pagoLineaCreditoForm">
                 <!-- Producto para pago -->
                 <div class="col-12 mb-4">
-                  <h6>Seleccione un producto para realizar el pago</h6>
+                  <p><strong>Seleccione un producto para realizar el pago</strong></p>
                   <div class="form-floating">
                     <custom-select [control]="pagoLineaCreditoForm.get('productoParaPago')" [options]="myOptions" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
@@ -135,38 +139,38 @@
     </div>
 
     <div class="col-5 d-none d-lg-block mt-5">
-        <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-visa.jpg');">
-          <div class="info-banner d-flex justify-content-around align-content-stretch">
-            <div class="info-medio">
-              <div class="d-flex flex-column">
-                <span class="titulo-banner text-start">
-                  Paga con tu Tarjeta de Crédito Visa este mes y
-                </span>
-                <span class="texto-secundario">
-                  Disfruta un descuento de
-                </span>
-                <span class="monto text-start rojo">
-                  50%
-                </span>
+      <div class="card card-banner banner-mibanco medio ms-2" style="background-image: url('/assets/images/banner-visa.jpg');">
+        <div class="info-banner d-flex justify-content-around align-content-stretch">
+          <div class="info-medio">
+            <div class="d-flex flex-column">
+              <span class="titulo-banner text-start">
+                Paga con tu Tarjeta de Crédito Visa este mes y
+              </span>
+              <span class="texto-secundario">
+                Disfruta un descuento de
+              </span>
+              <span class="monto text-start rojo">
+                50%
+              </span>
+            </div>
+            <div class="d-flex flex-column justify-content-start mt-4">
+              <div>
+                <a class="btn-link d-flex align-items-center mb-3" type="button">
+                  <div>
+                    Más información
+                  </div>
+                  <span class="material-symbols-outlined icono-link">
+                    chevron_right
+                  </span>
+                </a>
               </div>
-              <div class="d-flex flex-column justify-content-start mt-4">
-                <div>
-                  <a class="btn-link d-flex align-items-center mb-3" type="button">
-                    <div>
-                      Más información
-                    </div>
-                    <span class="material-symbols-outlined icono-link">
-                      chevron_right
-                    </span>
-                  </a>
-                </div>
-                <span class="texto-legal me-3">
-                  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
-                </span>
-              </div>
+              <span class="texto-legal me-3">
+                * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+              </span>
             </div>
           </div>
         </div>
+      </div>
     </div>
 
   </div>

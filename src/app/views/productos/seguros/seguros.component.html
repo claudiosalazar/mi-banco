@@ -1,122 +1,111 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <div class="my-3 my-md-5">
-        <h1>Mis Seguros</h1>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <!-- Seguro hogar -->
-      <div class="card mb-3 mb-md-4 p-4 p-md-4">
-        <div class="row">
-          <div class="col-12 d-flex align-items-center mb-4">
-            <div class="pe-4">
-              <span class="material-symbols-outlined fs-2">home</span>
+      <h1>Mis Seguros</h1>
+
+      <div class="row">
+        <div class="col-12 col-lg-8">
+          <div class="row">
+            <div class="col-12">
+              <!-- Seguro hogar -->
+              <div class="card mb-3 mb-md-4 p-4 p-md-4">
+                <div class="row">
+                  <div class="col-12 d-flex align-items-center mb-4">
+                    <div class="pe-4">
+                      <span class="material-symbols-outlined fs-2 dorado">home</span>
+                    </div>
+                    <h4 class="mb-0">Seguro Hogar</h4>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Plan: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.plan }}</strong></p>
+                    <p class="mb-3">Cuota Mensual: <br class="d-none d-md-block"><strong class="tinto">UF {{ seguros?.[0]?.cuotaMensual }}</strong></p>
+                    <p class="mb-3">Cuotas: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.cuotas }}</strong></p>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Compañia: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.compania }}</strong></p>
+                    <p class="mb-3">N° Seguro: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.nSeguro }}</strong></p>
+                    <p class="mb-3">Vigencia: <br class="d-none d-md-block"></p>
+                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros?.[0]?.fechaInicio }}</strong></p>
+                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros?.[0]?.fechaTermino }}</strong></p>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Póliza:  <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.poliza }}</strong></p>
+                    <p class="mb-3">Forma de pago:  <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.nSeguro }}</strong></p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h4>Seguro Hogar</h4>
-          </div>
-          <div class="col-5">
-            <div class="d-flex">
-              <div>
-                <p class="mb-0">Plan</p>
-                <p><strong>{{ seguros?.[0]?.plan }}</strong></p>
-                <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ seguros?.[0]?.cuotaMensual }}</strong></p>
-                <p class="mb-0">Cuotas</p>
-                <p><strong>{{ seguros?.[0]?.cuotas }}</strong></p>
+        
+            <!-- Seguro vida -->
+            <div class="col-12">
+              <div class="card mb-3 mb-md-4 p-4 p-md-4">
+                <div class="row">
+                  <div class="col-12 d-flex align-items-center mb-4">
+                    <div class="pe-4">
+                      <span class="material-symbols-outlined fs-2 dorado">favorite</span>
+                    </div>
+                    <h4 class="mb-0">Seguro Vida</h4>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Plan: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.plan }}</strong></p>
+                    <p class="mb-3">Cuota Mensual: <br class="d-none d-md-block"><strong class="tinto">UF {{ seguros?.[0]?.cuotaMensual }}</strong></p>
+                    <p class="mb-3">Cuotas: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.cuotas }}</strong></p>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Compañia: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.compania }}</strong></p>
+                    <p class="mb-3">N° Seguro: <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.nSeguro }}</strong></p>
+                    <p class="mb-3">Vigencia: <br class="d-none d-md-block"></p>
+                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros?.[0]?.fechaInicio }}</strong></p>
+                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros?.[0]?.fechaTermino }}</strong></p>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <p class="mb-3">Póliza:  <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.poliza }}</strong></p>
+                    <p class="mb-3">Forma de pago:  <br class="d-none d-md-block"><strong class="tinto">{{ seguros?.[0]?.nSeguro }}</strong></p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col">
-            <p class="mb-0">Compañia</p>
-            <p><strong>{{ seguros?.[0]?.compania }}</strong></p>
-            <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ seguros?.[0]?.nSeguro }}</strong></p>
-            <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ seguros?.[0]?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ seguros?.[0]?.fechaTermino }}</strong></p>
-          </div>
-          <div class="col">
-            <p class="mb-0">Póliza</p>
-            <p><strong>{{ seguros?.[0]?.poliza }}</strong></p>
-            <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ seguros?.[0]?.nSeguro }}</strong></p>
-          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Seguro vida -->
-    <div class="col-md-12">
-      <div class="card mb-3 mb-md-4 p-4 p-md-4">
-        <div class="row">
-          <div class="col-12 d-flex align-items-center mb-4">
-            <div class="pe-4">
-              <span class="material-symbols-outlined fs-2">favorite</span>
-            </div>
-            <h4>Seguro Vida</h4>
-          </div>
-          <div class="col-5">
-            <div class="d-flex">
-              <div>
-                <p class="mb-0">Plan</p>
-                <p><strong>{{ seguros?.[1]?.plan }}</strong></p>
-                <p class="mb-0">Cuota Mensual</p>
-                <p><strong>UF {{ seguros?.[1]?.cuotaMensual }}</strong></p>
-                <p class="mb-0">Cuotas</p>
-                <p><strong>{{ seguros?.[1]?.cuotas }}</strong></p>
+        <!-- Banner -->
+        <div class="d-none d-lg-block col-md-4">
+          <div class="card card-banner banner-mibanco medio ms-2" style="background-image: url('/assets/images/banner-visa.jpg');">
+            <div class="info-banner d-flex justify-content-around align-content-stretch">
+              <div class="info-medio">
+                <div class="d-flex flex-column">
+                  <span class="titulo-banner text-start">
+                    Paga con tu Tarjeta de Crédito Visa este mes y
+                  </span>
+                  <span class="texto-secundario">
+                    Disfruta un descuento de
+                  </span>
+                  <span class="monto text-start rojo">
+                    50%
+                  </span>
+                </div>
+                <div class="d-flex flex-column justify-content-start mt-4">
+                  <div>
+                    <a class="btn-link d-flex align-items-center mb-3" type="button">
+                      <div>
+                        Más información
+                      </div>
+                      <span class="material-symbols-outlined icono-link">
+                        chevron_right
+                      </span>
+                    </a>
+                  </div>
+                  <span class="texto-legal me-3">
+                    * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col">
-            <p class="mb-0">Compañia</p>
-            <p><strong>{{ seguros?.[1]?.compania }}</strong></p>
-            <p class="mb-0">N° Seguro</p>
-            <p><strong>{{ seguros?.[1]?.nSeguro }}</strong></p>
-            <p class="mb-0">Vigencia</p>
-            <p class="mb-0">Inicio <strong>{{ seguros?.[1]?.fechaInicio }}</strong></p>
-            <p>Termino <strong>{{ seguros?.[1]?.fechaTermino }}</strong></p>
-          </div>
-          <div class="col">
-            <p class="mb-0">Póliza</p>
-            <p><strong>{{ seguros?.[1]?.poliza }}</strong></p>
-            <p class="mb-0">Forma de pago</p>
-            <p><strong>{{ seguros?.[1]?.nSeguro }}</strong></p>
-          </div>
         </div>
       </div>
     </div>
+    
 
-    <!-- Banner -->
-    <div class="col-12">
-      <div class="card card-banner">
-        <div class="row d-flex justify-content-between">
-          <div class="col-md-6 info-banner d-flex justify-content-around flex-column">
-            <span class="titulo-banner text-start">
-              Contrata tu Seguro Auto
-            </span>
-            <span class="texto-secundario">
-              oferta exclusiva para solo por este mes 
-            </span>
-            <span class="texto-explicativo">
-              Valor mensual por el primer año.
-            </span>
-            <span class="monto-cuota text-start rojo">
-              <!-- UF {{ montoPreAprobadoSeguroAuto}} -->
-            </span>
-            <img src="../../../../assets/images/aseguradora.jpg" alt="Aseguradora" class="logo-seguro mt-3">
-            <span class="texto-legal">
-              * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
-            </span>
-          </div>
-          <div class="col-md-6 contenido-imagen">
-            <div class="contenedor-boton">
-              <button class="btn btn-call-to-action" type="button">Solicitar Crédito</button>
-            </div>
-            <img src="../../../../assets/images/banner-home-credito-consumo.jpg" alt="Seguro" class="img-fluid imagen-banner">
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

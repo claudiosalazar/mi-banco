@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
     if (this.headerElement) {
       const header: HTMLElement = this.headerElement.nativeElement;
 
-      header.style.height = '102px';
+      //header.style.height = '98px';
       header.style.paddingTop = '16px';
       header.style.paddingBottom = '16px';
       header.style.backgroundColor = 'rgba(116, 45, 72, 1)';

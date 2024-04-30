@@ -1,6 +1,7 @@
 // Hoja de estilos par header
 
 header.mi-banco-header {
+  font-family: 'Montserrat', sans-serif;
   width: 100%;
   position: fixed;
   z-index: 2000 !important;
@@ -16,6 +17,7 @@ header.mi-banco-header {
     padding-bottom: inherit;
     display: flex;
     align-items: center;
+    padding: 4px 8px;
     .navbar-brand {
       z-index: 1;
       .logo-mi-banco {

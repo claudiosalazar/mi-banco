@@ -132,10 +132,14 @@
   white-space: nowrap;
   width: 100%;
   &:hover {
+    width: inherit;
     background-color: $dorado-oscuro;
     color: $blanco;
     border-color: $dorado-oscuro;
     box-shadow: $shadow-btn-banner-hover;
+  }
+  @media (min-width: $md) {
+    width: inherit;
   }
 }
 
@@ -155,7 +159,7 @@
     background-color: $blanco;
   }
   &.active {
-    background-color: $tinto;
+    background-color: $dorado;
     color: $blanco;
   }
   @media (max-width: $md) {

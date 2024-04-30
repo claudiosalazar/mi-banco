@@ -60,24 +60,24 @@
 
         <!-- Banner credito consumo -->
         <div class="col-12">
-          <div class="card card-banner">
-            <div class="row d-flex justify-content-between">
-              <div class="col-md-6 info-banner d-flex justify-content-around flex-column">
-                <span class="texto-secundario text-start">
-                  Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
-                </span>
-                <span class="monto text-start rojo">
-                  {{ montoPreAprobadoCreditoConsumo | pesos }}
-                </span>
-                <span class="texto-legal">
+          <div class="card card-banner banner-mibanco grande d-flex justify-content-end" style="background-image: url('/assets/images/banner-home-credito-consumo.jpg');">
+            <div class="info-banner info-grande">
+              <span class="titulo-banner text-start">
+                Crédito de Consumo
+              </span>
+              <span class="texto-explicativo text-start">
+                Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
+              </span>
+              <span class="monto text-start">
+                {{ montoPreAprobadoCreditoConsumo | pesos }}
+              </span>
+              <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
+                <span class="texto-legal me-3">
                   * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
                 </span>
-              </div>
-              <div class="col-md-6 contenido-imagen">
-                <div class="contenedor-boton">
-                  <button class="btn-banner" type="button">Solicitar Crédito</button>
+                <div>
+                  <button class="btn-banner mb-3 mb-md-auto" type="button">Solicitar Crédito</button>
                 </div>
-                <img src="../../../assets/images/banner-home-credito-consumo.jpg" alt="Crédito de Consumo" class="img-fluid imagen-banner">
               </div>
             </div>
           </div>
