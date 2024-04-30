@@ -7,8 +7,8 @@
 
       <div class="row align-items-md-stretch">
         <!-- Cuenta corriente -->
-        <div class="col-md-4 mb-3 mb-md-0">
-          <div class="card card-productos mbs-md-4">
+        <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()">
+          <div class="card card-productos hover-productos-inicio mbs-md-4">
             <span class="nombre-producto">Cuenta Corriente</span>
             <small class="numero-producto">N° {{ numeroCtaCte }}</small>
             <hr>
@@ -23,8 +23,8 @@
         </div>
 
         <!-- Linea de credito -->
-        <div class="col-md-4 mb-3 mb-md-0">
-          <div class="card card-productos mb-md-4">
+        <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()">
+          <div class="card card-productos hover-productos-inicio mb-md-4">
             <span class="nombre-producto">Línea de Crédito</span>
             <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
             <hr>
@@ -40,8 +40,8 @@
         </div>
 
         <!-- Visa -->
-        <div class="col-md-4">
-          <div class="card card-productos mb-md-4">
+        <div class="col-md-4" (mouseover)="mostrarTransaccionesVisa()">
+          <div class="card card-productos hover-productos-inicio mb-md-4">
             <span class="nombre-producto">Visa</span>
             <small class="numero-producto">N° {{ numeroVisa | numeroTarjeta }}</small>
             <hr>
@@ -56,20 +56,110 @@
           </div>
         </div>
 
-        <!-- <div class="col-6">
-          <div class="card card-productos p-4">
-            <span class="nombre-producto">Ultimas transacciones</span>
-            <hr>
-            <p>asdasd</p>
+        <div class="col-12 contenedor-ultimas-transacciones d-none d-md-block ">
+          <!-- Ultimas transacciones cta cte -->
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
+            <p class="mb-1 tinto">
+              <strong>Últimos movimientos de Cuenta Corriente</strong>
+            </p>
+            <hr class="my-2">
+            <table class="tabla-movimientos-home">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Texto detalle</th>
+                  <th>Cargo</th>
+                  <th>Abono</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaccion of transaccionesCuentaCorriente">
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.detalle }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Ultimas transacciones linea crédito -->
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
+            <p class="mb-1 text-center tinto">
+              <strong>Últimos movimientos de Línea de Crédito</strong>
+            </p>
+            <hr class="my-2">
+            <table class="tabla-movimientos-home" #lineaDeCredito>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Texto detalle</th>
+                  <th>Cargo</th>
+                  <th>Abono</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaccion of transaccionesLineaDeCredito">
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.detalle }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Ultimas transacciones visa -->
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
+            <p class="mb-1 text-end tinto">
+              <strong>Últimos movimientos de Visa</strong>
+            </p>
+            <hr class="my-2">
+            <table class="tabla-movimientos-home" #visa>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Texto detalle</th>
+                  <th>Cargo</th>
+                  <th>Abono</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaccion of transaccionesVisa">
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.detalle }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                  </td>
+                  <td>
+                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="col-6">
-          <div class="card card-productos p-4">
-            <span class="nombre-producto">Últimas compras</span>
-            <hr>
-            <p>asdasd</p>
-          </div>
-        </div> -->
+
       </div>
     </div>
   </div>

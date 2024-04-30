@@ -13,21 +13,25 @@
   // Card de productos home
   &.card-productos {
     padding: 24px;
+    @include animacion-card-producto;
     .nombre-producto {
       font-weight: bold;
       font-size: 18px;
-      color:  $negro;
+      color:  $tinto;
     }
     .numero-producto {
       font-size: 14px;
       font-weight: 600;
+      color: $gris-40;
     }
     .texto-montos {
       font-size: 18px;
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 20px;
+      color: $gris-60;
       &.monto {
         font-weight: 800;
+        color: $dorado;
         @media (min-width: $md) {
           margin-bottom: 20px;
         }
@@ -38,6 +42,10 @@
       @media (min-width: $lg) {
         margin-bottom: 20px;
       }
+    }
+    &.hover-productos-inicio:hover {
+      background-color: $gris-00;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
     }
   }
 

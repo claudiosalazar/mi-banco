@@ -31,3 +31,22 @@
   border-radius: 5px;
   backdrop-filter: blur(3px); 
 }
+
+.contenedor-ultimas-transacciones {
+  position: relative; // Asegúrate de que el contenedor tiene position: relative
+  width: calc(100% - 24px);
+  height: 230px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.184);
+  border-radius: 0 0 5px 5px;
+  margin: 0 auto;
+  top: 0;
+  z-index: 100;
+  .ultimas-transacciones {
+    position: absolute;
+    padding: 12px 18px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: $blanco;
+  }
+}

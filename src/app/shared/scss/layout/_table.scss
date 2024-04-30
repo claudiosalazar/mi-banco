@@ -439,6 +439,45 @@
   }
 }
 
+.tabla-movimientos-home {
+  font-size: 14px;
+  width: 100%;
+  th {
+    padding: 10px 0;
+    color: $gris-60 !important;
+    font-weight: 700 !important;
+  }
+  td {
+    color: $gris-60 !important;
+    font-weight: 500 !important;
+    padding: 10px 0;
+  }
+  tbody {
+    tr {
+      padding: 10px 0 !important;
+      border-top: 1px solid $gris-01;
+      &:last-child td {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  th, td {
+    &:nth-child(1) {
+      width: 20%
+    }
+    &:nth-child(2) {
+      width: 40%;
+    }
+    &:nth-child(3) {
+      width: 20%;
+    }
+    &:nth-child(4) {
+      width: 20%;
+    }
+  }
+}
+
 
 // Pinta las filas de la tabla de forma alterna 
 .table-striped {

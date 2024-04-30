@@ -3,7 +3,7 @@ $blanco: #ffffff;
 $negro: #0D0E0F;
 
 // Escala de tinto
-$tinto: rgb(116, 45, 72);
+$tinto: #742d48;
 $tinto-claro: #A05D6E;
 $tinto-oscuro: #5F2E3A;
 
@@ -25,6 +25,7 @@ $gris-10: #c8c9cf;
 $gris-05: #d1d0d9;
 $gris-02: #e5e4ef;
 $gris-01: #f1f1f6;
+$gris-00: #f9f9fb;
 
 // Menjajes
 $aviso: #83ace1;
@@ -40,7 +41,7 @@ $shadow-heavy: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 $shadow-card: 0px 0px 24px -4px rgba(0,0,0,0.4);
 //$shadow-btn-hover: 0 0 6px $dorado-claro;
 $shadow-btn-banner-hover: 0 0 6px $adventencia;
-$shadow-focus-input: 0 0 12px rgba(167, 113, 17, 0.5);
+$shadow-focus-input: 0 0 12px rgba(167, 113, 17, 0.2);
 
 // Media breakpoints
 $sm: 575.98px;
