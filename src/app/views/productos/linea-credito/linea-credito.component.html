@@ -11,7 +11,7 @@
           <div class="d-flex justify-content-between flex-column flex-md-row">
             <div class="d-flex align-items-center">
               <p class="mb-0">
-                Último pago realizado el <br class="d-md-none"><strong>{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong>{{ ultimoMontoAbono | pesos }}</strong>.
+                Último pago realizado el <br class="d-md-none"><strong class="tinto">{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">{{ ultimoMontoAbono | pesos }}</strong>.
               </p>
             </div>
             <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoLineaDeCredito()">Pagar Línea de Crédito</button>
