@@ -15,10 +15,10 @@ declare var bootstrap: any;
   animations: [
     trigger('fadeInOut', [
       state('void', style({
-        opacity: 0
+        opacity: 0,
       })),
       state('*', style({
-        opacity: 0.5
+        opacity: 0.6,
       })),
       transition('void <=> *', animate('0.2s'))
     ]),

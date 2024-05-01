@@ -6,7 +6,6 @@
   width: 100vw;
   height: 100vh;
   background-color: #000;
-  opacity: 0;
 }
 
 .backdrop-custom-menu-mobile {
@@ -17,7 +16,6 @@
   width: 100vw;
   height: 100vh;
   background-color: #000;
-  opacity: 0;
   @media (min-width: $md) {
     display: none;
   }
