@@ -1,19 +1,11 @@
-nav.migas {
-    // background-color: $gris-claro-uno;
-    ol {
-      display: flex;
-      li {
-        list-style: none;
-        margin-right: 10px;
-        &::after {
-          content: "> ";
-          margin-left: 10px;
-        }
-        &:last-child {
-          &::after {
-            content: "";
-          }
-        }
-      }
-    }
+.contenedor-breadcrumb {
+  margin: 0 4px 4px 4px;
+  background-color: $gris-02;
+  border-radius: 10px;
+  
+  .breadcrumb {
+    padding: 12px 18px;
+    margin: 0;
+    font-size: 12px;
+  }
 }

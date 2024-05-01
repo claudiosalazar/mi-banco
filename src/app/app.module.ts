@@ -65,6 +65,7 @@ import { TransferenciaATercerosComponent } from './views/productos/cuenta-corrie
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 import { ModaConsultasComponent } from './shared/components/header/moda-consultas/moda-consultas.component';
 import { CarouselComponent } from './views/resumen-usuario/carousel/carousel.component';
+import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
 
 
 
@@ -109,6 +110,7 @@ import { CarouselComponent } from './views/resumen-usuario/carousel/carousel.com
     CustomSelectReactivoComponent,
     ModaConsultasComponent,
     CarouselComponent,
+    BreadcrumbComponent,
 
   ],
   imports: [

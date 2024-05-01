@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 // Datos usuario
 import { DatosUsuarioService } from '../../core/services/datos-usuario.service';
+import { MostrarBreadcrumbService } from '../../core/services/mostrar-breadcrumb.service';
 // Productos usuario
 import { ProductosUsuarioService } from '../../core/services/productos-usuario.service';
 // Datos ofertas
@@ -54,7 +55,8 @@ export class ResumenUsuarioComponent implements OnInit {
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
-    private ofertasProductosService: OfertasProductosService
+    private ofertasProductosService: OfertasProductosService,
+    private mostrarBreadcrumbService: MostrarBreadcrumbService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +64,11 @@ export class ResumenUsuarioComponent implements OnInit {
     this.getProductosUsuarioResumen('');
     this.getOfertasProductos('');
     this.getMovimientos();
+    this.mostrarBreadcrumbService.cambiarEstado(true);
+  }
+
+  ngOnDestroy() {
+    this.mostrarBreadcrumbService.cambiarEstado(false);
   }
   
   getDatosUsuario(): void {
