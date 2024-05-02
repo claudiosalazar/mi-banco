@@ -34,8 +34,14 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('modalTransferencia') modalTransferencia: ElementRef | undefined;
+  @ViewChild('modalCancelarTransferencia') modalCancelarTransferencia: ElementRef | undefined;
   @ViewChild('modalCambiosDestinatario') modalCambiosDestinatario: ElementRef | undefined;
   @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('cambiaDestinatario') cambiaDestinatario: ElementRef | undefined;
+  @ViewChild('inputMontoATransferir') inputMontoATransferir: ElementRef | undefined;
+  @ViewChild('mensaje') mensaje: ElementRef | undefined;
+  @ViewChild('paso1') paso1: ElementRef | undefined;
+  @ViewChild('paso2') paso2: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
    // Array bancos
@@ -139,9 +145,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   // Variables proceso de transferencia
   pasosTransferencia = false;
-  ingresarDatos = true;
+  ingresarDatos = false;
   confirmarDatos = false;
-  //realizarTransferencia = false;
+  transferenciaARealizar = false;
+  btnContinuar = true;
+  btnConfirmar = true;
+
+
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
   selectedId: any = null;
@@ -293,6 +303,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.destinatarioId = id;
     this.selectedId = id;
     this.pasosTransferencia = true;
+    this.ingresarDatos = true;
     this.mostrarPaginador = false;
     this.tablaDestinatarios = false;
     this.buscadorDestinatarios = false;
@@ -309,8 +320,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.getClassForDestinatario(this.destinatarioATransferirSeleccionado.id);
   
     // Imprime los datos del destinatario seleccionado en la consola
-    // console.log('Selecionado:', this.destinatarioATransferirSeleccionado);
-    // Encuentra el destinatario seleccionado en la lista de destinatarios
     this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
 
     // Asigna el nombre del destinatario seleccionado a nombreDestinatario
@@ -417,13 +426,65 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   botonContinuar(){
-    this.ingresarDatos = false;
+    if (this.paso1 && this.paso1.nativeElement) {
+      this.paso1.nativeElement.classList.add('paso-ok');
+    }
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = true;
+    }
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = true;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = true;
+    }
+    this.montoValido = false;
     this.confirmarDatos = true;
+    this.btnContinuar = false;
+  }
+
+  botonConfirmarDatos(){
+    if (this.paso2 && this.paso2.nativeElement) {
+      this.paso2.nativeElement.classList.add('paso-ok');
+    }
+    this.transferenciaARealizar = true;
+    this.btnConfirmar = false;
   }
 
   botonValidaDatosTransferencia(){
     this.ingresarDatos = true;
     this.confirmarDatos = false;
+  }
+
+  botonCancelarTransferencia(){
+    this.pasosTransferencia = false;
+    this.ingresarDatos = false;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.btnContinuar = true;
+    this.btnConfirmar = true;
+    this.agendaService.getDestinatarios().subscribe(data => {
+      // Hacer una copia de los datos
+      this.destinatarios = [...data];
+      this.ordenarDatos('nombre');
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+        selected: false
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.cdRef.detectChanges();
+    });
+    this.selectedId = null;
+    this.tablaDestinatarios = true;
+    this.buscadorDestinatarios = true;
+    this.cdRef.detectChanges();
+
+    // Cierra el modal y oculta el backdrop-custom
+    const modalCancelarTransferencia = this.modales.find(modal => modal._element.id === 'modalCancelarTransferencia');
+    if (modalCancelarTransferencia) {
+      modalCancelarTransferencia.hide();
+    }
+    this.mostrarBackdropCustomModal = false;
   }
 
   getClassForDestinatario(destinatarioId: number): string {
@@ -577,6 +638,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   abrirModalCambioDestinatario(): void {
     var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
     modalCambiosDestinatario.show();
+  }
+
+  abrirModalCancelarTransferencia(): void {
+    var modalCancelarTransferencia = new bootstrap.Modal(document.getElementById('modalCancelarTransferencia'), {});
+    modalCancelarTransferencia.show();
   }
 
   // Nueva función para cerrar el modal y seleccionar el nuevo destinatario

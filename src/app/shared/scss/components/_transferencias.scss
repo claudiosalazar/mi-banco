@@ -6,14 +6,51 @@
 
 .info-destinatario-transferencia {
   border: 1px solid $dorado;
+  padding: 18px 22px;
   border-radius: 5px;
-  background-color: $dorado-claro;
-
+  background-color: $gris-00;
+  margin-bottom: 24px;
   small {
     font-size: 15px;
+  }
+  .titulo-datos {
+    font-size: 18px;
+    display: block;
+    font-weight: 500;
+    color: $gris-60;
+    .datos-ingresados {
+      font-weight: 600 !important;
+      color: $tinto;
+    }
+  }
+  .contenedor-nombre-destinatario {
+    width: 50%;
+    .nombre-destinatario-transferencia {
+      display: block;
+      font-size: 22px;
+    }
+  }
+  .datos-destinatario {
+    width: 50%;
+    border-left: 1px solid $gris-10;
+    padding-left: 20px;
   }
 }
 
 .monto-a-transferir {
   color: $blanco !important;
+}
+
+.paso-ok {
+  opacity: .5;
+  cursor: default;
+  .info-destinatario-transferencia {
+    border: 1px solid $gris-10;
+    .datos-ingresados {
+      color: $gris-60;
+    }
+  }
+  .rounded-circle {
+    background-color: $gris-10 !important;
+  }
 }
