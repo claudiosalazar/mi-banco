@@ -128,3 +128,37 @@
     color: $gris-40;
   }
 }
+
+// Componente check
+.form-switch {
+  display: flex !important;
+  align-items: center !important;
+  input, label {
+    display: block;
+  }
+  .form-check-input {
+    width: 40px !important;
+    height: 24px !important;
+    border-color: $gris-10 !important;
+    background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg id='Capa_1' data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 8 8'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 { fill: %23c8c9cf; stroke-width: 0px; } %3C/style%3E%3C/defs%3E%3Ccircle class='cls-1' cx='4' cy='4' r='3'/%3E%3C/svg%3E");
+    &:checked {
+      background-color: $dorado !important;
+      border-color: $dorado !important;
+      background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg id='Capa_1' data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 8 8'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 { fill: %23fff; stroke-width: 0px; } %3C/style%3E%3C/defs%3E%3Ccircle class='cls-1' cx='4' cy='4' r='3'/%3E%3C/svg%3E");
+    }
+    &:checked:focus {
+      border-color: $dorado !important;
+    }
+    &:focus {
+      border-color: $gris-10 !important;
+      box-shadow: none !important;
+    }
+  }
+  .form-check-label {
+    font-size: 14px !important;
+    font-weight: 500;
+    margin-left: 10px;
+    color: $gris-60 !important;
+  }
+}
+
