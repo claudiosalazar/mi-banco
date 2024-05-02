@@ -96,10 +96,9 @@
   }
 }
 
-
-
-
+// Link texto
 .btn-link {
+  @include animacion-btn;
   color: $rojo;
   text-decoration: none;
   padding: 0;
@@ -110,13 +109,33 @@
     padding-right: 6px;
   }
   &:hover {
+    @include animacion-btn;
     color: $dorado;
     span.icono-link {
       @include movimiento-icono;
     }
   }
+}
 
-  
+// Boton cerrar modal
+.btn-cerrar-modal {
+  @include animacion-btn;
+  width: 24px !important;
+  height: 24px !important;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  color: $gris-40;
+  background-color: $gris-00;
+  span {
+    font-size: 20px;
+  }
+  &:hover {
+    @include animacion-btn;
+    background-color: $dorado;
+    color: $blanco;
+  }
 }
 
 // Botones banner

@@ -69,6 +69,8 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
 
 
 
+
+
 @NgModule({
   declarations: [
     MiBancoComponent,
@@ -119,7 +121,7 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     DatosUsuarioService,

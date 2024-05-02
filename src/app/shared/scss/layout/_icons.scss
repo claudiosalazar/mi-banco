@@ -4,8 +4,6 @@
   &.material-symbols-outlined {
     font-size: 40px;
     &.mensajes {
-  
-      // Colores iconos
       &.valido {
         color: $valido;
       }
@@ -14,6 +12,9 @@
       }
       &.aviso {
         color: $aviso;
+      }
+      &.advertencia {
+        color: $advertencia;
       }
       &.cargando {
         color: $dorado;

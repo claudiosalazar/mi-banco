@@ -1,21 +1,24 @@
 // Colores para tipografia
 .tinto {
-  color: $tinto;
+  color: $tinto !important;
 }
 
 .dorado {
-  color: $dorado;
+  color: $dorado !important;
 }
 
 .dorado-oscuro {
-  color: $dorado-oscuro-50;
+  color: $dorado-oscuro-50 !important;
+}
+
+.advertencia {
+  color: $advertencia !important;
 }
 
 // Color de fondo
 .fondo-dorado {
-  background-color: $dorado-claro;
+  background-color: $dorado-claro !important;
 }
 .fondo-gris-01 {
-  background-color: $gris-01;
-  //background-image: linear-gradient(0.122turn, rgb(237, 237, 237) 1%, rgb(155, 49, 49) 100%);
+  background-color: $gris-01 !important;
 }

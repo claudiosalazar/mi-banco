@@ -36,6 +36,8 @@
     background-repeat: no-repeat;
     padding: 20px 10px 0 0;
     cursor: pointer;
+    font-weight: 400;
+    color: $gris-40;
   }
 
   .label {
@@ -50,7 +52,7 @@
     //z-index: auto + 1 !important;
     span {
       &.obligatorio {
-        color: $tinto;
+        color: $rojo;
         font-size: 18px !important;
         margin-top: 1px;
         position: absolute;
@@ -66,20 +68,21 @@
     padding: 2px 0 0 2px;
     background-color: $blanco;
     width: calc(100% + 2px);
-    border: 1px solid var(--bs-border-color);
+    border: 1px solid $dorado;
     border-radius: var(--bs-border-radius);
     overflow: auto;
     cursor: pointer;
-    box-shadow: $shadow-light;
+    box-shadow: $shadow-focus-input !important;
     max-height: 300px;
-
     .option {
       padding: 18px 10px 18px 12px;
       margin-left: -2px;
       margin-top: -2px;
       font-size: 1rem;
+      color: $gris-40;
       &:hover {
         background-color: $gris-01;
+        color: $gris-80;
       }
       &:first-child {
         padding-top: 26px;
@@ -102,6 +105,9 @@
     .label {
       color: $gris-40;
       background-color: $gris-01;
+    }
+    .selected-option {
+      color: $gris-40
     }
   }
 

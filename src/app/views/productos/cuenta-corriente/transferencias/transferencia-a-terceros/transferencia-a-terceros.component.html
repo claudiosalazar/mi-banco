@@ -269,17 +269,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-          <div class="d-flex">
-            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
-              warning
-            </span>
-            <h4 class="mb-3 text-starts">¿Estás seguro de que quieres cambiar el actual destinatario?</h4>
-          </div>
-          <hr class="mt-2">
-          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="button" class="btn btn-secundario me-md-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button>
-            <button type="button" class="btn btn-primario mb-3 mb-md-0" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button>
-          </div>
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
+            warning
+          </span>
+          <p class="text-start">¿Estás seguro de que quieres cambiar el actual destinatario?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-end flex-row">
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button>
+        </div>
       </div>
     </div>
   </div>

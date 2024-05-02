@@ -12,14 +12,14 @@
     "callePersonal": "Calle",
     "numeroPersonal": "5865",
     "deptoVillaBlockPersonal": "12010",
-    "regionPersonal": "Región Metropolitana de Santiago",
-    "ciudadPersonal": "Santiago",
-    "comunaPersonal": "Buin",
+    "regionPersonal": "Antofagasta",
+    "ciudadPersonal": "Valparaíso",
+    "comunaPersonal": "Alto Bio Bio",
     "calleComercial": "Manuel Montt",
-    "numeroComercial": "400",
+    "numeroComercial": "4004",
     "oficina": "101",
     "regionComercial": "Región Metropolitana de Santiago",
-    "ciudadComercial": "Santiago",
-    "comunaComercial": "Buin"
+    "ciudadComercial": "Valparaíso",
+    "comunaComercial": "Alto Bio Bio"
   }
 }

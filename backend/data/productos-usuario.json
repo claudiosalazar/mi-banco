@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "874000",
+      "cupo": "869000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -519,6 +519,16 @@
           "cargo": "5000",
           "abono": "0",
           "saldo": "874000"
+        },
+        {
+          "id": "52",
+          "fecha": "2024-05-02",
+          "destinatario": "Alado Volados",
+          "detalle": "Transferencia a Alado Volados",
+          "mensaje": "",
+          "cargo": "5000",
+          "abono": "",
+          "saldo": "869000"
         }
       ]
     },

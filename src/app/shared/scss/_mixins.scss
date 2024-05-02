@@ -83,7 +83,7 @@
 }
 
 @mixin animacion-btn {
-  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition: color .2s ease-in, background-color .2s ease-in, border-color .2s ease-in, box-shadow .2s ease-in;
 }
 
 @mixin animacion-card-producto {

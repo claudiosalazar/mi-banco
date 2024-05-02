@@ -4,11 +4,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 // Services
 import { DatosUsuarioService, ListaGeograficaService, ListaGeograficaComercialService } from '../../core/services/datos-usuario.service';
 import { FormatoEmailService } from '../../core/services/formato-email.service';
+import { BackdropService } from '../../core/services/backdrop.service';
 
 // Pipe
 import { RutPipe } from '../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../shared/pipes/telefono-fijo.pipe';
+
+declare var bootstrap: any;
+
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -38,6 +42,9 @@ export class DatosUsuarioComponent implements OnInit{
   ciudadSeleccionadaComercial: any | undefined;
   comunaSeleccionadaComercialInicial: any | undefined;
   comunaSeleccionadaComercial: any | undefined;
+
+  mostrarBackdropCustomModal = false;
+  modales: any[] = [];
 
   misDatosForm: FormGroup = new FormGroup({});
   submitted: boolean = false;
@@ -100,12 +107,12 @@ export class DatosUsuarioComponent implements OnInit{
   customComunaComercialInvalido: boolean | null = null;
   customComunaComercialInvalidoMensaje: boolean | null = null;
 
-  nuevoValorRegionPersonal: string | null = null;
-  nuevoValorCiudadPersonal: string | null = null;
-  nuevoValorComunaPersonal: string | null = null;
-  nuevoValorRegionComercial: string | null = null;
-  nuevoValorCiudadComercial: string | null = null;
-  nuevoValorComunaComercial: string | null = null;
+  nuevoValorRegionPersonal: any;
+  nuevoValorCiudadPersonal: any;
+  nuevoValorComunaPersonal: any;
+  nuevoValorRegionComercial: any;
+  nuevoValorCiudadComercial: any;
+  nuevoValorComunaComercial: any;
 
   inputValido: any;
   inputVacio: any;
@@ -128,6 +135,7 @@ export class DatosUsuarioComponent implements OnInit{
   private cambiosDetectados = false;
 
   datosUsuarioEditado: any;
+  botonEditar = false;
 
   // Variables modal
   actualizarDatosUsuario = true;
@@ -142,11 +150,11 @@ export class DatosUsuarioComponent implements OnInit{
     private formatoEmailService: FormatoEmailService,
     private celularPipe: CelularPipe,
     private telefonoFijoPipe: TelefonoFijoPipe,
+    private backdropService: BackdropService,
   ) { }
 
   ngOnInit() {
-    this.listasGeograficas();
-    this.listasGeograficasComercial();
+    this.getDatosActuales();
     this.misDatosForm = new FormGroup({
       primerNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
       segundoNombre: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -175,8 +183,20 @@ export class DatosUsuarioComponent implements OnInit{
     for (const controlName in this.misDatosForm.controls) {
       this.valoresIniciales[controlName] = this.misDatosForm.get(controlName)?.value;
     }
+  }
 
+  getDatosActuales() {
+    this.listasGeograficas();
+    this.listasGeograficasComercial();
     this.datosUsuarioService.getDatosUsuario().subscribe(datos => {
+
+      this.nuevoValorRegionPersonal = datos.datosUsuario.regionPersonal.label;
+      this.nuevoValorCiudadPersonal = datos.datosUsuario.ciudadPersonal.label;
+      this.nuevoValorComunaPersonal = datos.datosUsuario.comunaPersonal.label;
+      this.nuevoValorRegionComercial = datos.datosUsuario.regionComercial.label;
+      this.nuevoValorCiudadComercial = datos.datosUsuario.ciudadComercial.label;
+      this.nuevoValorComunaComercial = datos.datosUsuario.comunaComercial.label;
+
       this.misDatosForm.setValue({
         primerNombre: datos.datosUsuario.primerNombre,
         segundoNombre: datos.datosUsuario.segundoNombre,
@@ -231,6 +251,21 @@ export class DatosUsuarioComponent implements OnInit{
       this.comunaSeleccionadaComercialInicial = comunaComercial?.value && comunaComercial?.label;
       this.comunaSeleccionadaComercial = this.comunaSeleccionadaComercialInicial;
     });
+  }
+
+  ngAfterViewInit(_e: Event): void {
+    this.getDatosActuales();
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.backdropService.show();  // Muestra el backdrop
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.backdropService.hide();  // Oculta el backdrop
+      });
+      return modal;
+    });
+
     
   }
   
@@ -279,6 +314,7 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Boton editar datos
   editarDatos() {
+    this.botonEditar = true;
     this.misDatosForm.enable();
     this.misDatosForm.get('rut')?.disable();
     this.mensajeInformativo = true;
@@ -291,20 +327,28 @@ export class DatosUsuarioComponent implements OnInit{
     this.activarSeleccionRegionComercial();
     this.activarSeleccionCiudadComercial();
     this.activarSeleccionComunaComercial();
-
     this.observarCambiosRegionPersonal();
     this.observarCambiosCiudadPersonal();
     this.observarCambiosComunaPersonal();
     this.observarCambiosRegionComercial();
     this.observarCambiosCiudadComercial();
     this.observarCambiosComunaComercial();
-
     this.detectarCambios();
+  }
+
+  cancelarEdicion(): void {
+    location.reload();
+    this.ocultaBackDrop();
   }
 
   // Vuelve el formulario a su estado inicial
   datosGuardados() {
     location.reload();
+    this.ocultaBackDrop();
+  }
+
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
   }
 
   // Solo permite ingresar números en los campos de texto
@@ -467,8 +511,10 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('regionPersonal');
     control?.valueChanges.subscribe(value => {
       const regionPersonal = this.listaRegiones.find(region => region.value === value);
-      this.nuevoValorRegionPersonal = regionPersonal ? regionPersonal.label : null;
-      this.validaRegionPersonal();
+      this.nuevoValorRegionPersonal = regionPersonal ? regionPersonal.label : toString();
+      if (this.nuevoValorRegionPersonal !== this.regionSeleccionadaPersonalInicial) {
+        this.validaRegionPersonal();
+      }
     });
   }
 
@@ -476,7 +522,7 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('ciudadPersonal');
     control?.valueChanges.subscribe(value => {
       const ciudadPersonal = this.listaCiudad.find(ciudad => ciudad.value === value);
-      this.nuevoValorCiudadPersonal = ciudadPersonal ? ciudadPersonal.label : null;
+      this.nuevoValorCiudadPersonal = ciudadPersonal ? ciudadPersonal.label : toString();
       this.validaCiudadPersonal();
     });
   }
@@ -485,7 +531,7 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('comunaPersonal');
     control?.valueChanges.subscribe(value => {
       const comunaPersonal = this.listaComuna.find(comuna => comuna.value === value);
-      this.nuevoValorComunaPersonal = comunaPersonal ? comunaPersonal.label : null;
+      this.nuevoValorComunaPersonal = comunaPersonal ? comunaPersonal.label : toString();
       this.validaComunaPersonal();
     });
   }
@@ -494,7 +540,7 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('regionComercial');
     control?.valueChanges.subscribe(value => {
       const regionComercial = this.listaRegionesComercial.find(region => region.value === value);
-      this.nuevoValorRegionComercial = regionComercial ? regionComercial.label : null;
+      this.nuevoValorRegionComercial = regionComercial ? regionComercial.label : toString();
       this.validaRegionComercial();
     });
   }
@@ -503,7 +549,7 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('ciudadComercial');
     control?.valueChanges.subscribe(value => {
       const ciudadComercial = this.listaCiudadComercial.find(ciudad => ciudad.value === value);
-      this.nuevoValorCiudadComercial = ciudadComercial ? ciudadComercial.label : null;
+      this.nuevoValorCiudadComercial = ciudadComercial ? ciudadComercial.label : toString();
       this.validaCiudadComercial();
     });
   }
@@ -512,14 +558,20 @@ export class DatosUsuarioComponent implements OnInit{
     const control = this.misDatosForm.get('comunaComercial');
     control?.valueChanges.subscribe(value => {
       const comunaComercial = this.listaComunaComercial.find(comuna => comuna.value === value);
-      this.nuevoValorComunaComercial = comunaComercial ? comunaComercial.label : null;
+      this.nuevoValorComunaComercial = comunaComercial ? comunaComercial.label : toString();
       this.validaComunaComercial();
     });
   }
   
   // Valida region personal
   validaRegionPersonal(): void {
-    if (this.nuevoValorRegionPersonal === '0') {
+    if (this.nuevoValorRegionPersonal === this.regionSeleccionadaPersonalInicial) {
+      this.customRegionPersonalValido = null;
+      this.customRegionPersonalInvalido = null;
+      this.customRegionPersonalInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorRegionPersonal === '-') {
       this.customRegionPersonalValido = false;
       this.customRegionPersonalInvalido = true;
       this.customRegionPersonalInvalidoMensaje = true;
@@ -532,10 +584,16 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Valida ciudad personal
   validaCiudadPersonal(): void {
-    if (this.nuevoValorCiudadPersonal === '00') {
-      this.customCiudadPersonalValido = false;
-      this.customCiudadPersonalInvalido = true;
-      this.customCiudadPersonalInvalidoMensaje = true;
+    if (this.nuevoValorCiudadPersonal === this.ciudadSeleccionadaPersonalInicial) {
+      this.customCiudadPersonalValido = null;
+      this.customCiudadPersonalInvalido = null;
+      this.customCiudadPersonalInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorCiudadPersonal === '-') {
+      this.customCiudadPersonalValido = null;
+      this.customCiudadPersonalInvalido = null;
+      this.customCiudadPersonalInvalidoMensaje = null;
     } else {
       this.customCiudadPersonalValido = true;
       this.customCiudadPersonalInvalido = false;
@@ -545,7 +603,13 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Valida comuna personal
   validaComunaPersonal(): void {
-    if (this.nuevoValorComunaPersonal === '000') {
+    if (this.nuevoValorComunaPersonal === this.comunaSeleccionadaPersonalInicial) {
+      this.customComunaPersonalValido = null;
+      this.customComunaPersonalInvalido = null;
+      this.customComunaPersonalInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorComunaPersonal === '-') {
       this.customComunaPersonalValido = false;
       this.customComunaPersonalInvalido = true;
       this.customComunaPersonalInvalidoMensaje = true;
@@ -558,7 +622,13 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Valida region comercial
   validaRegionComercial(): void {
-    if (this.nuevoValorRegionComercial === '0000') {
+    if (this.nuevoValorRegionComercial === this.regionSeleccionadaComercialInicial) {
+      this.customRegionComercialValido = null;
+      this.customRegionComercialInvalido = null;
+      this.customRegionComercialInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorRegionComercial === '-') {
       this.customRegionComercialValido = false;
       this.customRegionComercialInvalido = true;
       this.customRegionComercialInvalidoMensaje = true;
@@ -571,7 +641,13 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Valida ciudad comercial
   validaCiudadComercial(): void {
-    if (this.nuevoValorCiudadComercial === '00000') {
+    if (this.nuevoValorCiudadComercial === this.ciudadSeleccionadaComercialInicial) {
+      this.customCiudadComercialValido = null;
+      this.customCiudadComercialInvalido = null;
+      this.customCiudadComercialInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorCiudadComercial === '-') {
       this.customCiudadComercialValido = false;
       this.customCiudadComercialInvalido = true;
       this.customCiudadComercialInvalidoMensaje = true;
@@ -584,7 +660,13 @@ export class DatosUsuarioComponent implements OnInit{
 
   // Valida comuna comercial
   validaComunaComercial(): void {
-    if (this.nuevoValorComunaComercial === '000000') {
+    if (this.nuevoValorComunaComercial === this.comunaSeleccionadaComercialInicial) {
+      this.customComunaComercialValido = null;
+      this.customComunaComercialInvalido = null;
+      this.customComunaComercialInvalidoMensaje = null;
+      return;
+    }
+    if (this.nuevoValorComunaComercial === '-') {
       this.customComunaComercialValido = false;
       this.customComunaComercialInvalido = true;
       this.customComunaComercialInvalidoMensaje = true;
@@ -596,6 +678,8 @@ export class DatosUsuarioComponent implements OnInit{
   }
 
   guardarDatosUsuario(): Observable<any> {
+
+    this.backdropService.show();
     this.submitted = true;
   
     // Verifica que misDatosForm y datosUsuario estén definidos
@@ -659,6 +743,5 @@ export class DatosUsuarioComponent implements OnInit{
     return of(null);
   }
   
-
 }
 

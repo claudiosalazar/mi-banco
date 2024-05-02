@@ -7,7 +7,7 @@
           <h1>Mis Datos</h1>
         </div>
         <div>
-          <button class="btn btn-primario" (click)="editarDatos()">Editar mis datos</button>
+          <button class="btn btn-primario" (click)="editarDatos()" [disabled]="botonEditar">Editar mis datos</button>
         </div>
       </div>
     </div>
@@ -155,21 +155,21 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaPersonal" [zIndex]="600" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionPersonalValido" [isInvalid]="customRegionPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('regionPersonal')" [options]="listaRegiones" [selectedValue]="regionSeleccionadaPersonal" [zIndex]="600" [submitted]="submitted" [labelSelect]="'Región Personal'" [isValid]="customRegionPersonalValido" [isInvalid]="customRegionPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customRegionPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una región.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="500" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadPersonalValido" [isInvalid]="customCiudadPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('ciudadPersonal')" [options]="listaCiudad" [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="500" [submitted]="submitted" [labelSelect]="'Ciudad Personal'" [isValid]="customCiudadPersonalValido" [isInvalid]="customCiudadPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customCiudadPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una ciudad.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('comunaPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="400" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaPersonalValido" [isInvalid]="customComunaPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('comunaPersonal')" [options]="listaComuna" [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="400" [submitted]="submitted" [labelSelect]="'Comuna Personal'" [isValid]="customComunaPersonalValido" [isInvalid]="customComunaPersonalInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customComunaPersonalInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una comuna.
               </div>
@@ -191,8 +191,8 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="numeroComercial" [class.is-invalid]="misDatosForm.get('numeroComercial')?.invalid && misDatosForm.get('numeroComercial')?.dirty" [class.is-valid]="misDatosForm.get('numeroComercial')?.valid && misDatosForm.get('numeroComercial')?.dirty" (blur)="validaInput('numeroComercial');">
-              <label for="numeroComercial" (keypress)="soloNumeros($event)">Número</label>
+              <input type="text" class="form-control" formControlName="numeroComercial" [class.is-invalid]="misDatosForm.get('numeroComercial')?.invalid && misDatosForm.get('numeroComercial')?.dirty" [class.is-valid]="misDatosForm.get('numeroComercial')?.valid && misDatosForm.get('numeroComercial')?.dirty" (blur)="validaInput('numeroComercial');" (keypress)="soloNumeros($event)">
+              <label for="numeroComercial">Número</label>
               <div *ngIf="misDatosForm.get('numeroComercial')?.errors?.required && misDatosForm.get('numeroComercial')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
               </div>
@@ -208,21 +208,21 @@
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('regionComercial')" [options]="listaRegionesComercial" [selectedValue]="regionSeleccionadaComercial" [zIndex]="300" [submitted]="submitted" [labelSelect]="'Región'" [isValid]="customRegionComercialValido" [isInvalid]="customRegionComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('regionComercial')" [options]="listaRegionesComercial" [selectedValue]="regionSeleccionadaComercial" [zIndex]="300" [submitted]="submitted" [labelSelect]="'Región Comercial'" [isValid]="customRegionComercialValido" [isInvalid]="customRegionComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customRegionComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una región.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudadComercial" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="200" [submitted]="submitted" [labelSelect]="'Ciudad'" [isValid]="customCiudadComercialValido" [isInvalid]="customCiudadComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('ciudadComercial')" [options]="listaCiudadComercial" [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="200" [submitted]="submitted" [labelSelect]="'Ciudad Comercial'" [isValid]="customCiudadComercialValido" [isInvalid]="customCiudadComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customCiudadComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una ciudad.
               </div>
             </div>
 
             <div class="form-floating mb-4">
-              <custom-select-reactivo [control]="misDatosForm.get('comunaComercial')" [options]="listaComunaComercial" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="100" [submitted]="submitted" [labelSelect]="'Comuna'" [isValid]="customComunaComercialValido" [isInvalid]="customComunaComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
+              <custom-select-reactivo [control]="misDatosForm.get('comunaComercial')" [options]="listaComunaComercial" [selectedValue]="comunaSeleccionadaComercial" [zIndex]="100" [submitted]="submitted" [labelSelect]="'Comuna Comercial'" [isValid]="customComunaComercialValido" [isInvalid]="customComunaComercialInvalido" [customDisabled]="customSelectDisabled"></custom-select-reactivo>
               <div *ngIf="customComunaComercialInvalidoMensaje" class="invalid-feedback d-block">
                 Debes seleccionar una comuna.
               </div>
@@ -255,7 +255,7 @@
           <hr class="mt-5 mb-5" *ngIf="separadorBotonGuardar">
 
           <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar">
-            <button type="button" class="btn btn-secundario me-0 me-md-3" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-secundario me-0 me-md-3" (click)="cancelarEdicion()">Cancelar</button>
             <button type="button" class="btn btn-primario" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" [class.disabled]="!botonGuardarDisabled">Guardar datos</button>
           </div>
         </div>
@@ -273,16 +273,12 @@
 
         <div *ngIf="actualizarDatosUsuario">
           <div class="d-flex align-items-center mb-2">
-            <span class="icono material-symbols-outlined d-block me-3 mensajes aviso">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
               warning
             </span>
-            <h4 class="d-block">
+            <p class="d-block">
               ¿Deseas guardar los cambios hechos?
-            </h4>
-          </div>
-          <div class="d-flex justify-content-md-end flex-column-reverse flex-md-row mt-4">
-            <button type="submit" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" (click)="guardarDatosUsuario()">Confirmar cambios</button>
+            </p>
           </div>
         </div>
 
@@ -291,10 +287,7 @@
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
               done
             </span>
-            <h4 class="mb-3 text-starts">Tus nuevos datos se guardaron con éxito.</h4>
-          </div>
-          <div class="w-100">
-            <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
+            <p>Tus nuevos datos se guardaron con éxito.</p>
           </div>
         </div>
 
@@ -309,11 +302,30 @@
             </div>
           </div>
           <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
+            <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados();">Cerrar</button>
           </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <div class="d-flex justify-content-end flex-row" *ngIf="actualizarDatosUsuario">
+          <button type="submit" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" (click)="guardarDatosUsuario()">Confirmar cambios</button>
+        </div>
+
+        <div class="d-flex justify-content-end" *ngIf="datosGuardadosUsuarioEditado">
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
+        </div>
+
+        <div class="d-flex justify-content-end" *ngIf="errorServerAlGuardarDatos">
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button>
         </div>
 
       </div>
     </div>
   </div>
 </div>
+
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
