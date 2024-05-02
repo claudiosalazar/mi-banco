@@ -231,3 +231,39 @@
   }
 }
 
+
+.btn-rrss {
+  @include animacion-btn-rrss;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  display: block;
+  &.instagram {
+    @include animacion-btn-rrss;
+    background-image: $instagram;
+    &:hover {
+      background-image: $instagram-hover;
+    }
+  }
+  &.x {
+    @include animacion-btn-rrss;
+    background-image: $x;
+    &:hover {
+      background-image: $x-hover;
+    }
+  }
+  &.facebook {
+    @include animacion-btn-rrss;
+    background-image: $facebook;
+    &:hover {
+      background-image: $facebook-hover;
+    }
+  }
+  &.tiktok {
+    @include animacion-btn-rrss;
+    background-image: $tiktok;
+    &:hover {
+      background-image: $tiktok-hover;
+    }
+  }
+}

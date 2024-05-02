@@ -86,6 +86,10 @@
   transition: color .2s ease-in, background-color .2s ease-in, border-color .2s ease-in, box-shadow .2s ease-in;
 }
 
+@mixin animacion-btn-rrss {
+  transition: background-image .2s ease-in;
+}
+
 @mixin animacion-card-producto {
   transition: background-color .2s ease-in-out, box-shadow .2s ease-in-out;
 }
