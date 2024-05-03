@@ -209,34 +209,33 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-
         <div *ngIf="pagoCorrecto">
-          <div class="d-flex">
-            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+          <div class="d-flex align-items-center mb-2">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes cargando">
               sync
             </span>
-            <h4 class="mb-3 ms-3 text-starts">Se esta confirmando el pago.</h4>
-          </div>
-          <div class="w-100 text-center">
-            <span>Espera un momento por favor.</span>
+            <div>
+              <p class="mb-1"><strong>Se esta confirmando el pago.</strong></p>
+              <p class="mb-0">Espera un momento por favor.</p>
+            </div>
           </div>
         </div>
-
         <div *ngIf="errorServer">
           <div class="d-flex">
             <span class="icono material-symbols-outlined d-block me-3 mensajes error">
               Error
             </span>
             <div>
-              <h4 class="mb-2 text-starts">Hubo un error al realizar el pago.</h4>
-              <span>Intento mas tarde.</span>
+              <span class="titulo-modal d-block">Hubo un error al realizar el pago.</span>
+              <span class="d-block">Intento mas tarde.</span>
             </div>
           </div>
-          <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
-          </div>
         </div>
-
+      </div>
+      <div class="modal-footer" *ngIf="errorServer">
+        <div class="text-end mt-3">
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>

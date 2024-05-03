@@ -448,18 +448,18 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
         keyboard: false
       });
       modalPagoVisa.show();
+      this.backdropService.show();
     
       this.datosPagoVisa().subscribe((datosTransaccion: any) => {
         this.productosUsuarioService.getDatosPagoVisa(datosTransaccion);
         this.pagoCorrecto = true;
         setTimeout(() => {
           this.backdropService.hide();
-        }, 1500);
+        }, 9900);
       }, error => {
         console.error('Error al enviar los datos al servidor:', error);
         this.pagoCorrecto = false;
         this.errorServer = true;
-        this.backdropService.hide();
       });
     }
   }
