@@ -62,7 +62,17 @@
       box-shadow: 0 2px 8px rgba(84, 84, 84, 0.4);
     }
   }
+
+  &.card-datos-visa {
+    border: 1px solid $dorado;
+    padding: 18px 22px;
+    border-radius: 5px;
+    background-color: $gris-00;
+    margin-bottom: 24px;
+  }
 }
+
+
 
 .columna-transferencia-realizada {
   width: calc(100% - 22px);

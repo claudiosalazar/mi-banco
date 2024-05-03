@@ -8,23 +8,36 @@
           <div class="card p-4">
 
             <h5>Datos de pago</h5>
+            
             <div class="row">
 
               <!-- Datos del productos -->
               <div class="col-12">
                 <div class="row">
+                  <div class="col-12">
+                    <div class="card card-datos-visa">
+                      <h5>
+                        Monto Facturado: <strong class="dorado">{{ montoFacturado | pesos }}</strong>
+                      </h5>
+                      <hr class="my-0">
+                      <p class="mb-0 mt-3">
+                        Pago mínimo: <strong class="tinto">{{ montoPagoMinimo | pesos }}</strong>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
                   <p class="mb-0 col-12 col-md-6 pt-3 pt-md-3">
                     <span class="d-flex">
-                      <small *ngIf="!mostrarNumeroTarjeta">Visa N°: <strong>{{ numeroVisa | numeroTarjeta }}</strong></small>
-                      <small *ngIf="mostrarNumeroTarjeta">Visa N°: <strong>{{ numeroVisa }}</strong></small>
+                      <small *ngIf="!mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa | numeroTarjeta }}</strong></small>
+                      <small *ngIf="mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa }}</strong></small>
                       <button class="btn-mostrar-numero-tarjeta" *ngIf="!mostrarNumeroTarjeta" (click)="mostrarNumeroVisa()">Mostrar</button>
                     </span>
                   </p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong>{{ cupoVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong class="tinto">{{ cupoVisa | pesos }}</strong></small></p>
                 </div>
                 <div class="row">
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong>{{ cupoInicialVisa | pesos }}</strong></small></p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong>{{ cupoDisponibleVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong class="tinto">{{ cupoInicialVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong class="tinto">{{ cupoDisponibleVisa | pesos }}</strong></small></p>
                 </div>
               </div>
 
@@ -53,7 +66,14 @@
                     <div class="form-check me-3">
                       <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal">
                       <label class="form-check-label" for="montoPago">
-                        Pago Total
+                        Monto Facturado
+                      </label>
+                    </div>
+                    <!-- Pago minimo -->
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoMinimo">
+                      <label class="form-check-label" for="montoPago">
+                        Pago Mínimo
                       </label>
                     </div>
                     <!-- Otro monto -->
@@ -69,11 +89,39 @@
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'">
                     <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal"
                     [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
-                    <label for="inputMontoPagoTotal">Pago Total</label>
+                    <label for="inputMontoPagoTotal">Monto Facturado</label>
                     <div *ngIf="error3" class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
                     </div>
                     <div *ngIf="pagoTotalValido" class="valid-feedback">
+                      <span>El monto es correcto.</span>
+                    </div>
+                  </div>
+
+                  <!-- Input pago minimo -->
+                  <!-- <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
+                    <input type="text" class="form-control" id="inputMontoPagoMinimo" formControlName="inputMontoPagoMinimo"
+                    [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (blur)="validaMontoPagoMinimo()">
+                    <label for="inputMontoPagoMinimo">Pago Mínimo</label>
+                    <div *ngIf="error1" class="invalid-feedback">
+                      <span>El valor no puede ser vacío.</span>
+                    </div>
+                    <div *ngIf="error2" class="invalid-feedback">
+                      <span>El monto para el pago es inferior al monto mínimo.</span>
+                    </div>
+                    <div *ngIf="montoValido" class="valid-feedback">
+                      <span>El monto es correcto.</span>
+                    </div>
+                  </div> -->
+
+                  <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
+                    <input type="text" class="form-control" id="inputMontoPagoMinimo" formControlName="inputMontoPagoMinimo"
+                    [class.is-invalid]="error3" [class.is-valid]="pagoMinimoValido">
+                    <label for="inputMontoPagoMinimo">Monto Pago Mínimo</label>
+                    <div *ngIf="error3" class="invalid-feedback">
+                      <span>El monto para el pago es superior al saldo.</span>
+                    </div>
+                    <div *ngIf="pagoMinimoValido" class="valid-feedback">
                       <span>El monto es correcto.</span>
                     </div>
                   </div>
@@ -100,11 +148,11 @@
                   <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="emailValido('inputEmail')">
                     <label for="inputEmail">Email</label>
-                    <!-- Mensaje valido -->
+
                     <div *ngIf="pagoVisaForm.controls['inputEmail'].valid" class="valid-feedback">
                       El email es correcto.
                     </div>
-                    <!-- Mensajes de error -->
+
                     <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)" class="invalid-feedback">
                       Este campo es requerido.
                     </div>

@@ -9,7 +9,6 @@ export class NumeroTarjetaPipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    console.log('Valor recibido por el pipe:', value);
     if (typeof value === 'string') {
       return value.replace(/\d(?=(?:\D*\d){4})/g, "*");
     }

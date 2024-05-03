@@ -54,6 +54,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   elementosHabilitados = false;
   inputOtroMonto: any;
   inputMontoPagoTotal: any;
+  inputMontoPagoMinimo: any;
   montoEsCero: string | undefined;
   montoSuperiorSaldoCtaCte: string | undefined;
   montoValidoCtaCte: string | undefined;
@@ -65,10 +66,12 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   error2: boolean = false;
   error3: boolean = false;
   pagoTotalValido: boolean = false;
+  pagoMinimoValido: boolean = false;
   montoValido: boolean = false;
   modalInstance: any;
 
   montoNumberTotal: number | undefined;
+  montoNumberMinimo: number | undefined;
   montoNumberOtro: number | undefined;
 
   productosUsuario: { productos: any[] } = { productos: [] };
@@ -94,6 +97,9 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
 
   mostrarNumeroTarjeta = false;
 
+  montoFacturado = '50000';
+  montoPagoMinimo = '10000';
+
   // Variable para custom select
   opcionesDePago = [
     { value: '0', label: '-' },
@@ -118,8 +124,10 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     this.getDatosSelect('');
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),
-      montoPago: new FormControl({value: 'otroMonto', disabled: true}, [Validators.required]),
-      inputMontoPagoTotal: new FormControl({value: '', disabled: true}, [Validators.required, ]),
+      montoPago: new FormControl({value: 'pagoTotal', disabled: true}, [Validators.required]),
+      //montoPagoMinimo: new FormControl({value: 'pagoPagoMinimo', disabled: true}, [Validators.required]),
+      inputMontoPagoTotal: new FormControl({value: this.montoFacturado, disabled: true}, [Validators.required, ]),
+      inputMontoPagoMinimo: new FormControl({value: this.montoPagoMinimo, disabled: true}, [Validators.required, ]),
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl('', [Validators.required, this.formatoEmailService.formatoEmail]),
     });
@@ -166,7 +174,8 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     this.datosUsuarioService.getDatosUsuario().subscribe(data => {
       this.datosUsuarioActual = data;
       this.pagoVisaForm.controls['inputEmail'].setValue(this.datosUsuarioActual?.datosUsuario?.email || '');
-      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.cupoVisa));
+      this.pagoVisaForm.controls['inputMontoPagoMinimo'].setValue(this.pesosPipe.transform(this.montoPagoMinimo));
+      this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.pesosPipe.transform(this.montoFacturado));
     });
   }
 
@@ -263,11 +272,14 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   detectaCambioRadio() {
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+    const inputMontoPagoMinimoControl = this.pagoVisaForm.get('inputMontoPagoMinimo');
   
     if (montoPagoControl) {
       montoPagoControl.valueChanges.subscribe(value => {
         if (value === 'primerRadio' && inputMontoPagoTotalControl) {
           inputMontoPagoTotalControl.updateValueAndValidity();
+        } else if (value === 'pagoMinimo' && inputMontoPagoMinimoControl) {
+          inputMontoPagoMinimoControl.updateValueAndValidity();
         }
       });
     }
@@ -276,34 +288,55 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   validaMontoPagoTotal() {
     const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
     const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
-    const inputMontoControl2 = this.pagoVisaForm.get('inputMontoPagoTotal');
   
     if (productoParaPago === '1' || productoParaPago === '2') {
-      if (inputMontoControl2) {
-        let inputMontoValue2 = inputMontoControl2.value;
+      // Convertir el valor del montoFacturado a número
+      const numericMontoFacturado = Number(this.montoFacturado.replace(/\$|\.| /g, ''));
   
-        // Convertir el valor del input a número
-        inputMontoValue2 = inputMontoValue2.replace(/\$|\.| /g, '');
-        const numericInputMonto = Number(inputMontoValue2);
-  
-        // Validación 1
-        if (productoParaPago === '1' && numericInputMonto <= this.cupoCtaCte) {
-          this.pagoTotalValido = true;
-          console.log('valido');
-        } 
-        // Validación 2
-        else if (productoParaPago === '2' && numericInputMonto <= this.cupoLineaCredito) {
-          this.pagoTotalValido = true;
-          console.log('valido');
-        } 
-        else {
-          this.error3 = true;
-          console.log('valor superior');
-        }
+      // Validación 1
+      if (productoParaPago === '1' && numericMontoFacturado <= this.cupoCtaCte) {
+        this.pagoTotalValido = true;
+        this.pagoMinimoValido = true;
+        console.log('valido');
+      } 
+      // Validación 2
+      else if (productoParaPago === '2' && numericMontoFacturado <= this.cupoLineaCredito) {
+        this.pagoTotalValido = true;
+        this.pagoMinimoValido = true;
+        console.log('valido');
+      } 
+      else {
+        this.error3 = true;
+        console.log('valor superior');
       }
     }
   }
+
+  validaMontoPagoMinimo() {
+    const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
+    const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
   
+    if (productoParaPago === '1' || productoParaPago === '2') {
+      // Convertir el valor del montoFacturado a número
+      const numericMontoFacturado = Number(this.montoFacturado.replace(/\$|\.| /g, ''));
+  
+      // Validación 1
+      if (productoParaPago === '1' && numericMontoFacturado <= this.cupoCtaCte) {
+        this.pagoMinimoValido = true;
+        console.log('valido');
+      } 
+      // Validación 2
+      else if (productoParaPago === '2' && numericMontoFacturado <= this.cupoLineaCredito) {
+        this.pagoMinimoValido = true;
+        console.log('valido');
+      } 
+      else {
+        this.error3 = true;
+        console.log('valor superior');
+      }
+    }
+  }
+    
   validaMontoOtroMonto() {
     const productoParaPagoControl = this.pagoVisaForm.get('productoParaPago');
     const productoParaPago = productoParaPagoControl ? productoParaPagoControl.value : null;
@@ -350,6 +383,13 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     this.montoValido = false;
   }
 
+  resetValidacionesInputPagoMinimo() {
+    // Limpia el valor ingresado en inputOtroMonto
+    this.error1 = false;
+    this.error2 = false;
+    this.pagoMinimoValido = false;
+  }
+
   resetValidacionesInputPagoTotal() {
     // Limpia el valor ingresado en inputOtroMonto
     this.error3 = false;
@@ -361,6 +401,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     this.backdropService.show();
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
+    const inputMontoPagoMinimoControl = this.pagoVisaForm.get('inputMontoPagoMinimo');
     const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
     const productoParaPago = this.pagoVisaForm.get('productoParaPago');
   
@@ -371,7 +412,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
       // Si el producto seleccionado es '0', establece el error de producto inválido en true
       this.productoInvalido = true;
       return;
-    } else if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl && productoParaPago) {
+    } else if (montoPagoControl && inputMontoPagoTotalControl && inputOtroMontoControl && inputMontoPagoMinimoControl && productoParaPago) {
       // Continúa con la validación del formulario si el producto seleccionado no es '0'
       if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoTotal') {
         this.validaMontoPagoTotal();
@@ -380,6 +421,14 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
           montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
           this.montoNumberTotal = Number(montoPagoTotal);
           console.log('montoNumberTotal:', this.montoNumberTotal);
+        }
+      } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoMinimo') {
+        this.validaMontoPagoMinimo();
+        if (!this.error3 && montoPagoControl.value) {
+          let montoNumberMinimo = inputMontoPagoMinimoControl.value;
+          montoNumberMinimo = montoNumberMinimo.replace(/\$|\.| /g, '');
+          this.montoNumberMinimo = Number(montoNumberMinimo);
+          console.log('montoNumberMinimo:', this.montoNumberMinimo);
         }
       } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
@@ -416,27 +465,27 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   }
 
   calculoPagoFormulario(): any {
-    const montoPagado: any = this.montoNumberTotal || this.montoNumberOtro;
+    const montoPagado: any = this.montoNumberTotal || this.montoNumberMinimo || this.montoNumberOtro;
     let productoParaPagoValue = this.pagoVisaForm.get('productoParaPago')?.value;
   
     if (productoParaPagoValue === '1') {
       this.cupoCtaCte -= montoPagado;
-      this.cupoDisponibleVisa += montoPagado;
+      this.cupoVisa += montoPagado;
     } else if (productoParaPagoValue === '2') {
       this.cupoLineaCredito -= montoPagado;
-      this.cupoDisponibleVisa += montoPagado;
+      this.cupoVisa += montoPagado;
     }
 
     // Convertir 'montoPagado' a un string
     const montoPagadoString = montoPagado.toString();
-  
+    console.log('montoPagado:', montoPagadoString);
     return {
       montoPagado: montoPagadoString,
       cupoVisa: this.cupoVisa,
-      cupoDisponibleVisa: this.cupoDisponibleVisa,
+      //cupoDisponibleVisa: this.cupoDisponibleVisa,
       cupoCtaCte: this.cupoCtaCte,
       cupoLineaCredito: this.cupoLineaCredito,
-      productoParaPagoValue: productoParaPagoValue
+      productoParaPagoValue: productoParaPagoValue,
     };
   }
 
@@ -454,7 +503,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     let cupoCtaCte = result.cupoCtaCte;
     let cupoLineaCredito = result.cupoLineaCredito;
     let cupoVisa = result.cupoVisa;
-    let cupoDisponibleVisa = result.cupoDisponibleVisa;
+    // let cupoDisponibleVisa = result.cupoDisponibleVisa;
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
     return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
@@ -525,11 +574,11 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
       if (productoVisa && productoVisa.id === '2') {
         // Convertir 'montoPagado', 'cupoVisa' y 'cupoDisponibleVisa' a strings
         const cupoVisaString = cupoVisa.toString();
-        const cupoDisponibleVisaString = cupoDisponibleVisa.toString();
+        //const cupoDisponibleVisaString = cupoDisponibleVisa.toString();
       
         // Si el producto existe, agregar las variables y la nueva transacción
         productoVisa.cupo = cupoVisaString;
-        productoVisa.cupoDisponible = cupoDisponibleVisaString;
+        //productoVisa.cupoDisponible = cupoDisponibleVisaString;
       
         // Obtener el último ID en el array de transacciones
         const ultimoIdTransaccion = Math.max(...productoVisa.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
@@ -544,7 +593,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
           detalle: 'Abono a Visa',
           cargo: '0',
           abono: montoPagado,
-          saldo: '' // Reemplaza con el valor real
+          saldo: cupoVisa.toString() // Reemplaza con el valor real
         });
       }
       // Imprimir la estructura de datos enviadas en la consola
