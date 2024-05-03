@@ -8,8 +8,8 @@
       <div class="row align-items-md-stretch">
         <!-- Cuenta corriente -->
         <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()">
-          <div class="card card-productos hover-productos-inicio mbs-md-4">
-            <span class="nombre-producto">Cuenta Corriente</span>
+          <div class="card card-productos cuenta-corriente hover-productos-inicio mbs-md-4">
+            <span class="nombre-producto dorado">Cuenta Corriente</span>
             <small class="numero-producto">N° {{ numeroCtaCte }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
@@ -24,8 +24,8 @@
 
         <!-- Linea de credito -->
         <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()">
-          <div class="card card-productos hover-productos-inicio mb-md-4">
-            <span class="nombre-producto">Línea de Crédito</span>
+          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
+            <span class="nombre-producto tinto">Línea de Crédito</span>
             <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
@@ -41,8 +41,8 @@
 
         <!-- Visa -->
         <div class="col-md-4" (mouseover)="mostrarTransaccionesVisa()">
-          <div class="card card-productos hover-productos-inicio mb-md-4">
-            <span class="nombre-producto">Visa</span>
+          <div class="card card-productos visa hover-productos-inicio mb-md-4">
+            <span class="nombre-producto azul-visa">Visa</span>
             <small class="numero-producto">N° {{ numeroVisa | numeroTarjeta }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
@@ -58,8 +58,8 @@
 
         <div class="col-12 contenedor-ultimas-transacciones d-none d-md-block ">
           <!-- Ultimas transacciones cta cte -->
-          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
-            <p class="mb-1 tinto">
+          <div class="ultimas-transacciones cuenta-corriente" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
+            <p class="mb-1 dorado">
               <strong>Últimos movimientos de Cuenta Corriente</strong>
             </p>
             <hr class="my-2">
@@ -81,10 +81,10 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -92,8 +92,8 @@
           </div>
 
           <!-- Ultimas transacciones linea crédito -->
-          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
-            <p class="mb-1 text-center tinto">
+          <div class="ultimas-transacciones linea-de-credito" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
+            <p class="mb-1 tinto">
               <strong>Últimos movimientos de Línea de Crédito</strong>
             </p>
             <hr class="my-2">
@@ -115,10 +115,10 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -126,8 +126,8 @@
           </div>
 
           <!-- Ultimas transacciones visa -->
-          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
-            <p class="mb-1 text-end tinto">
+          <div class="ultimas-transacciones visa" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
+            <p class="mb-1 azul-visa">
               <strong>Últimos movimientos de Visa</strong>
             </p>
             <hr class="my-2">
@@ -149,10 +149,10 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
                   </td>
                 </tr>
               </tbody>

@@ -54,6 +54,16 @@
       background-color: $gris-00;
       box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
     }
+
+    &.cuenta-corriente {
+      border-top: 2px solid $dorado;
+    }
+    &.linea-de-credito {
+      border-top: 2px solid $tinto;
+    }
+    &.visa {
+      border-top: 2px solid $azul-visa;
+    }
   }
 
   // Card banner grande

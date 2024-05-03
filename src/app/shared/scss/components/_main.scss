@@ -37,7 +37,6 @@
   width: calc(100% - 24px);
   height: 230px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.184);
-  border-radius: 0 0 5px 5px;
   margin: 0 auto;
   top: 0;
   z-index: 100;
@@ -48,5 +47,15 @@
     top: 0;
     width: 100%;
     background-color: $blanco;
+    border-radius: 5px;
+    &.cuenta-corriente {
+      border-top: 2px solid $dorado;
+    }
+    &.linea-de-credito {
+      border-top: 2px solid $tinto;
+    }
+    &.visa {
+      border-top: 2px solid $azul-visa;
+    }
   }
 }
