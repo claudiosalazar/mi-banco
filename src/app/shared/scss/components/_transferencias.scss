@@ -54,3 +54,14 @@
     background-color: $gris-10 !important;
   }
 }
+
+.guia-transferencia {
+  list-style-type: square;
+  font-size: 14px;
+  color: $gris-40;
+  padding-left: 18px;
+  margin-top: 12px;
+  strong {
+    font-weight: 600 !important;
+  }
+}

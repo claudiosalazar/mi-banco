@@ -162,3 +162,10 @@
   }
 }
 
+.form-check-input:checked {
+  background-color: $dorado !important;
+  border-color: $dorado-oscuro-50 !important;
+  &:focus {
+    box-shadow: none !important;
+  }
+}

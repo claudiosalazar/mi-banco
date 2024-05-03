@@ -125,15 +125,11 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
-
-    
   }
-
 
   abrirMenuMobile(): void {
     this.mostrarBackdropMenuMobile = !this.mostrarBackdropMenuMobile;
   }
-
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(_event: any) {

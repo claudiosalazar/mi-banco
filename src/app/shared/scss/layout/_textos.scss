@@ -38,35 +38,24 @@ h1 {
       display: none;
     }
   }
-  &.comprobante {
+  /*&.comprobante {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E");
     background-size: 38px 38px;
-    background-position: left center;
-    padding-left: 60px;
+    background-position: top center;
+    padding-top: 65px;
     @media (max-width: $md) {
       background-size: 24px 24px;
       padding-left: 40px;
     }
-  }
+  }*/
 }
 
-h3 {
-  &.monto-transaccion {
-    background-color: $dorado-claro;
-    border-radius: 10px;
-    margin: 0;
-    @media (min-width: $md) {
-      margin: 0 20%;
-    }
-    &.border-gradient {
-      border: 10px solid;
-      border-image-slice: 1;
-      border-width: 5px;
-    }
-    &.border-dorado {
-      border-image-source: linear-gradient(to left, rgba(218, 166, 78, 0), rgba(218, 166, 78, .7), rgba(218, 166, 78, 0));
-      box-shadow: none !important;
-    }
+.monto-transferido {
+  margin: 0;
+  color: $dorado;
+  font-size: 32px;
+  @media (min-width: $md) {
+    margin: 0 20%;
   }
 }
 

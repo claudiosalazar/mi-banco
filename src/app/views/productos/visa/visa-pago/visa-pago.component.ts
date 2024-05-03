@@ -13,6 +13,7 @@ import { DatosUsuarioService } from '../../../../core/services/datos-usuario.ser
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
 import { FormatoEmailService } from '../../../../core/services/formato-email.service';
+import { BackdropService } from '../../../../core/services/backdrop.service';
 
 // Model
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
@@ -41,6 +42,8 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   private pesosPipe = new PesosPipe();
 
   pagoVisaForm: FormGroup = new FormGroup({});
+
+  modales: any[] = [];
   
   datosUsuarioActual: DatosUsuarioActual | undefined;
   submitted = false;
@@ -103,6 +106,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     private productosUsuarioService: ProductosUsuarioService,
     private ofertasProductosService: OfertasProductosService,
     private formatoEmailService: FormatoEmailService,
+    private backdropService: BackdropService,
     private http: HttpClient,
   ) { }
 
@@ -143,10 +147,18 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.modalPagoVisa) {
-      this.modalInstance = new bootstrap.Modal(this.modalPagoVisa.nativeElement);
-      this.mostrarBackdropCustomModal = true;
-    }
+
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.backdropService.show();  // Muestra el backdrop
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.backdropService.hide();  // Oculta el backdrop
+      });
+      return modal;
+    });
+
   }
   
   // LLamada a servicio para obtener datos de usuario
@@ -346,7 +358,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
 
   validaFormulario(): any {
     this.submitted = true;
-
+    this.backdropService.show();
     const montoPagoControl = this.pagoVisaForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoVisaForm.get('inputMontoPagoTotal');
     const inputOtroMontoControl = this.pagoVisaForm.get('inputOtroMonto');
@@ -392,13 +404,13 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
         this.productosUsuarioService.getDatosPagoVisa(datosTransaccion);
         this.pagoCorrecto = true;
         setTimeout(() => {
-          modalPagoVisa.hide();
+          this.backdropService.hide();
         }, 1500);
       }, error => {
         console.error('Error al enviar los datos al servidor:', error);
         this.pagoCorrecto = false;
         this.errorServer = true;
-        modalPagoVisa.hide();
+        this.backdropService.hide();
       });
     }
   }

@@ -1,19 +1,22 @@
 <div class="container pb-5">
   <div class="row">
-    <div class="col-12 col-md-10 col-lg-8 px-4 px-md-auto mx-auto">
-      <div class="card p-4 p-md-5 mt-4 mt-md-5">
+    <div class="col-12 col-xl-10 px-4 mx-auto">
+      <div class="card mt-4 mt-md-5">
         <div class="row">
+          <div class="col-12 columna-transferencia-realizada"></div>
           <div class="col-12">
-            <h1 class="mb-4 mb-md-5 mt-0 comprobante">Tu pago se realizo con exito</h1>
-            <p class="mb-3 text-center">
-              Se abono un monto de  <strong>{{ abono | pesos }}</strong> en tu Línea de Crédito.
+            <h2 class="mb-3 mt-0 text-center comprobante px-3">Tu pago se realizo con exito</h2>
+            <p class="mb-4 text-center px-3">
+              Se abono a tu Línea de Crédito un monto de:
             </p>
-            <p class="text-center">Enviamos el comprobante de pago a tu email <strong>{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p>
+            <hr>
+            <span class="p-0 text-center monto-transferido d-block">
+              <strong>{{ abono | pesos }}</strong>
+            </span>
+            <hr>
+            <p class="text-center ps-5 pe-5 mb-4">Enviamos el comprobante de pago a email <strong class="tinto">{{ datosUsuarioActual?.datosUsuario?.email }}</strong>.</p>
           </div>
-
-          <hr class="mb-4 mt-2 mb-md-5 mt-md-4">
-
-          <div class="col-12 d-flex justify-content-end flex-column flex-md-row justify-content-center">
+          <div class="col-12 mt-3 mb-5 px-5 d-flex justify-content-end flex-column flex-md-row justify-content-center">
             <button type="button" class="btn btn-secundario me-0 me-md-3 mb-3 mb-md-0" routerLink="/mibanco/productos/linea-credito">
               <div class="d-flex align-items-center justify-content-center">
                 <div class="material-symbols-outlined">
@@ -37,5 +40,6 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 </div>

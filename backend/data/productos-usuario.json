@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "869000",
+      "cupo": "862465",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -529,6 +529,44 @@
           "cargo": "5000",
           "abono": "",
           "saldo": "869000"
+        },
+        {
+          "id": "53",
+          "fecha": "2024-05-02",
+          "destinatario": "Alado Volados",
+          "detalle": "Transferencia a Alado Volados",
+          "mensaje": "",
+          "cargo": "35",
+          "abono": "",
+          "saldo": "868965"
+        },
+        {
+          "id": "54",
+          "fecha": "2024-05-02",
+          "destinatario": "Alexis Sanchez",
+          "detalle": "Transferencia a Alexis Sanchez",
+          "mensaje": "",
+          "cargo": "500",
+          "abono": "",
+          "saldo": "868465"
+        },
+        {
+          "id": "55",
+          "fecha": "2024-05-02",
+          "destinatario": "Boric Presi",
+          "detalle": "Transferencia a Boric Presi",
+          "mensaje": "",
+          "cargo": "1000",
+          "abono": "",
+          "saldo": "867465"
+        },
+        {
+          "id": "56",
+          "fecha": "2024-05-02",
+          "detalle": "Pago a LineaCredito",
+          "cargo": "5000",
+          "abono": "0",
+          "saldo": "862465"
         }
       ]
     },
@@ -536,8 +574,8 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "346500",
-      "cupoDisponible": "4656600",
+      "cupo": "340000",
+      "cupoDisponible": "4662600",
       "transacciones": [
         {
           "id": "0",
@@ -626,6 +664,46 @@
           "cargo": "0",
           "abono": "1000",
           "saldo": "346500"
+        },
+        {
+          "id": "11",
+          "fecha": "2024-05-02",
+          "detalle": "Pago a Visa",
+          "cargo": "500",
+          "abono": "0",
+          "saldo": "346000"
+        },
+        {
+          "id": "12",
+          "fecha": "2024-05-02",
+          "detalle": "Abono a Línea de Crédito",
+          "cargo": "0",
+          "abono": "5000",
+          "saldo": "346000"
+        },
+        {
+          "id": "13",
+          "fecha": "2024-05-02",
+          "detalle": "Pago a Visa",
+          "cargo": "5000",
+          "abono": "0",
+          "saldo": "341000"
+        },
+        {
+          "id": "14",
+          "fecha": "2024-05-02",
+          "detalle": "Pago a Visa",
+          "cargo": "1000",
+          "abono": "0",
+          "saldo": "340000"
+        },
+        {
+          "id": "15",
+          "fecha": "2024-05-02",
+          "detalle": "Abono a Línea de Crédito",
+          "cargo": "0",
+          "abono": "1000",
+          "saldo": "340000"
         }
       ]
     },
@@ -633,8 +711,8 @@
       "id": "2",
       "productoNombre": "Visa",
       "productoNumero": "5555-5555-5555-5555",
-      "cupo": "2316000",
-      "cupoDisponible": "2747700",
+      "cupo": "2315000",
+      "cupoDisponible": "2754200",
       "transacciones": [
         {
           "id": "0",
@@ -755,6 +833,38 @@
           "cargo": "0",
           "abono": "5000",
           "saldo": "2316000"
+        },
+        {
+          "id": "15",
+          "fecha": "2024-05-02",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "500",
+          "saldo": "2316000"
+        },
+        {
+          "id": "16",
+          "fecha": "2024-05-02",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "5000",
+          "saldo": "2316000"
+        },
+        {
+          "id": "17",
+          "fecha": "2024-05-02",
+          "detalle": "Abono a Visa",
+          "cargo": "0",
+          "abono": "1000",
+          "saldo": "2316000"
+        },
+        {
+          "id": "18",
+          "fecha": "2024-05-02",
+          "detalle": "Pago a LineaCredito",
+          "cargo": "1000",
+          "abono": "0",
+          "saldo": "2315000"
         }
       ]
     }

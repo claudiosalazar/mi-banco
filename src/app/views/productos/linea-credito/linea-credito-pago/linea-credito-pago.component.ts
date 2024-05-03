@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators';
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { OfertasProductosService } from '../../../../core/services/ofertas-productos.service';
+import { BackdropService } from '../../../../core/services/backdrop.service';
 
 // Model
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
@@ -56,6 +57,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
   montoValidoCtaCte: string | undefined;
 
   mostrarBackdropCustomModal = false;
+  modales: any[] = [];
 
   // Variables para saldos
   error1: boolean = false;
@@ -102,6 +104,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
     private ofertasProductosService: OfertasProductosService,
+    private backdropService: BackdropService,
     private http: HttpClient,
   ) { }
 
@@ -139,10 +142,16 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.modalPagoLineaCredito) {
-      this.modalInstance = new bootstrap.Modal(this.modalPagoLineaCredito.nativeElement);
-      this.mostrarBackdropCustomModal = true;
-    }
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.backdropService.show();  // Muestra el backdrop
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.backdropService.hide();  // Oculta el backdrop
+      });
+      return modal;
+    });
   }
 
   // LLamada a servicio para obtener datos de usuario
@@ -354,7 +363,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
 
   validaFormulario(): any {
     this.submitted = true;
-  
+    this.backdropService.show();
     const montoPagoControl = this.pagoLineaCreditoForm.get('montoPago');
     const inputMontoPagoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
     const inputOtroMontoControl = this.pagoLineaCreditoForm.get('inputOtroMonto');
@@ -400,14 +409,14 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
         this.productosUsuarioService.getDatosPagoLineaCredito(datosTransaccion);
         this.pagoCorrecto = true;
         setTimeout(() => {
-          modal.hide();
+          this.backdropService.hide();
         }, 1500);
       }, error => {
         console.error('Error al enviar los datos al servidor:', error);
         this.pagoCorrecto = false;
         this.errorServer = true;
         //this.mostrarBackdropCustomModal = false;
-        modal.hide();
+        this.backdropService.hide();
       });
     }
   }

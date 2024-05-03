@@ -42,6 +42,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   @ViewChild('mensaje') mensaje: ElementRef | undefined;
   @ViewChild('paso1') paso1: ElementRef | undefined;
   @ViewChild('paso2') paso2: ElementRef | undefined;
+  @ViewChild('tablaDestinatarioSeleccionado') tablaDestinatarioSeleccionado: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
    // Array bancos
@@ -120,6 +121,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   // Variable para mensajes de modal eliminar
   usuarioEliminado = false;
   errorServer = false;
+  destinatarioSeleccionadoTabla = false;
 
   // Variables para modal de nuevo destinatario
   datosNuevoDestinatario: any;
@@ -155,7 +157,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
   selectedId: any = null;
-  tablaDestinatarios = true;
+  // tablaDestinatarios = true;
   buscadorDestinatarios = true;
 
   offcanvasRef: any;
@@ -305,8 +307,12 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.pasosTransferencia = true;
     this.ingresarDatos = true;
     this.mostrarPaginador = false;
-    this.tablaDestinatarios = false;
+    // this.tablaDestinatarios = false;
     this.buscadorDestinatarios = false;
+    this.destinatarioSeleccionadoTabla = true;
+    if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
+      this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
+    }
   
     // Encuentra el destinatario seleccionado en la lista de destinatarios
     this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);
@@ -475,7 +481,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
     this.selectedId = null;
-    this.tablaDestinatarios = true;
+    // this.tablaDestinatarios = true;
     this.buscadorDestinatarios = true;
     this.cdRef.detectChanges();
 
@@ -511,7 +517,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
     this.selectedId = null;
-    this.tablaDestinatarios = true;
+    // this.tablaDestinatarios = true;
     this.buscadorDestinatarios = true;
     this.cdRef.detectChanges();
 
@@ -779,7 +785,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.cdRef.detectChanges();
     });
     this.selectedId = null;
-    this.tablaDestinatarios = true;
+    // this.tablaDestinatarios = true;
     this.buscadorDestinatarios = true;
     this.cdRef.detectChanges();
 

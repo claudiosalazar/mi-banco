@@ -33,7 +33,7 @@
                 <div class="col-12 mb-4">
                   <p><strong>Seleccione un producto para realizar el pago</strong></p>
                   <div class="form-floating">
-                    <custom-select [control]="pagoLineaCreditoForm.get('productoParaPago')" [options]="opcionesDePago" [zIndex]="3000" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
+                    <custom-select [control]="pagoLineaCreditoForm.get('productoParaPago')" [options]="opcionesDePago" [zIndex]="100" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoVisa | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoLineaCreditoForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
@@ -65,8 +65,7 @@
 
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoLineaCreditoForm.controls['montoPago'].value === 'pagoTotal'">
-                    <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal"
-                    [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
+                    <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal" [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
                     <label for="inputMontoPagoTotal">Pago Total</label>
                     <div *ngIf="error3" class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
