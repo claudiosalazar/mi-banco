@@ -99,21 +99,6 @@
                   </div>
 
                   <!-- Input pago minimo -->
-                  <!-- <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
-                    <input type="text" class="form-control" id="inputMontoPagoMinimo" formControlName="inputMontoPagoMinimo"
-                    [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (blur)="validaMontoPagoMinimo()">
-                    <label for="inputMontoPagoMinimo">Pago Mínimo</label>
-                    <div *ngIf="error1" class="invalid-feedback">
-                      <span>El valor no puede ser vacío.</span>
-                    </div>
-                    <div *ngIf="error2" class="invalid-feedback">
-                      <span>El monto para el pago es inferior al monto mínimo.</span>
-                    </div>
-                    <div *ngIf="montoValido" class="valid-feedback">
-                      <span>El monto es correcto.</span>
-                    </div>
-                  </div> -->
-
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
                     <input type="text" class="form-control" id="inputMontoPagoMinimo" formControlName="inputMontoPagoMinimo"
                     [class.is-invalid]="error3" [class.is-valid]="pagoMinimoValido">
@@ -223,7 +208,7 @@
 <div class="modal posicion fade" id="modalPagoVisa" tabindex="-1" aria-labelledby="modalPagoVisa" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-body p-5">
+      <div class="modal-body">
 
         <div *ngIf="pagoCorrecto">
           <div class="d-flex">

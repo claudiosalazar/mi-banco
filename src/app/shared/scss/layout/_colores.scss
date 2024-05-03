@@ -24,8 +24,9 @@
 }
 
 // Color de fondo
-.fondo-dorado {
-  background-color: $dorado-claro !important;
+.fondo-dorado-claro {
+  //background-color: $dorado-claro !important;
+  background-image: linear-gradient(to right bottom, #ff9a24, #fea833, #fdb643, #fcc354, #fccf65, #fccf65, #fccf65, #fccf65, #fcc354, #fdb643, #fea833, #ff9a24);
 }
 .fondo-gris-01 {
   background-color: $gris-01 !important;
