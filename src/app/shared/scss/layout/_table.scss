@@ -441,7 +441,8 @@
 
 .tabla-movimientos-home {
   font-size: 14px;
-  width: 100%;
+  margin: 6px 18px 16px 18px !important;
+  width: calc(100% - 36px) !important;
   th {
     padding: 10px 0;
     color: $gris-60 !important;

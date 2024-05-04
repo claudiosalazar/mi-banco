@@ -52,6 +52,10 @@ export class ResumenUsuarioComponent implements OnInit {
   ultimasTransaccionesLineaCredito = false;
   ultimasTransaccionesVisa = false;
 
+  isActiveCtaCte = true;
+  isActiveLineaCredito = false;
+  isActiveVisa = false;
+
   constructor(
     private datosUsuarioService: DatosUsuarioService,
     private productosUsuarioService: ProductosUsuarioService,
@@ -133,18 +137,27 @@ export class ResumenUsuarioComponent implements OnInit {
     this.ultimasTransaccionesCtaCte = true;
     this.ultimasTransaccionesLineaCredito = false;
     this.ultimasTransaccionesVisa = false;
+    this.isActiveCtaCte = true;
+    this.isActiveLineaCredito = false;
+    this.isActiveVisa = false;
   }
 
   mostrarTransaccionesLineaCredito(): void {
     this.ultimasTransaccionesCtaCte = false;
     this.ultimasTransaccionesLineaCredito = true;
     this.ultimasTransaccionesVisa = false;
+    this.isActiveCtaCte = false;
+    this.isActiveLineaCredito = true;
+    this.isActiveVisa = false;
   }
 
   mostrarTransaccionesVisa(): void {
     this.ultimasTransaccionesCtaCte = false;
     this.ultimasTransaccionesLineaCredito = false;
     this.ultimasTransaccionesVisa = true;
+    this.isActiveCtaCte = false;
+    this.isActiveLineaCredito = false;
+    this.isActiveVisa = true;
   }
 
 }

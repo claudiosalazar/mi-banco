@@ -42,20 +42,26 @@
   z-index: 100;
   .ultimas-transacciones {
     position: absolute;
-    padding: 12px 18px;
     left: 0;
     top: 0;
     width: 100%;
     background-color: $blanco;
     border-radius: 5px;
-    &.cuenta-corriente {
-      border-top: 2px solid $dorado;
-    }
-    &.linea-de-credito {
-      border-top: 2px solid $tinto;
-    }
-    &.visa {
-      border-top: 2px solid $azul-visa;
+    p {
+      padding: 12px 18px;
+      border-radius: 5px 5px 0 0;
+      color: $blanco;
+      font-weight: 500;
+      margin-bottom: 0 !important;
+      &.cuenta-corriente {
+        background-color:  $dorado;
+      }
+      &.linea-de-credito {
+        background-color: $tinto;
+      }
+      &.visa {
+        background-color: $azul-visa;
+      }
     }
   }
 }

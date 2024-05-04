@@ -7,8 +7,8 @@
 
       <div class="row align-items-md-stretch">
         <!-- Cuenta corriente -->
-        <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()">
-          <div class="card card-productos cuenta-corriente hover-productos-inicio mbs-md-4">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()">
+          <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveCtaCte}">
             <span class="nombre-producto dorado">Cuenta Corriente</span>
             <small class="numero-producto">N° {{ numeroCtaCte }}</small>
             <hr>
@@ -23,8 +23,8 @@
         </div>
 
         <!-- Linea de credito -->
-        <div class="col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()">
-          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()">
+          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveLineaCredito}">
             <span class="nombre-producto tinto">Línea de Crédito</span>
             <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
             <hr>
@@ -40,8 +40,8 @@
         </div>
 
         <!-- Visa -->
-        <div class="col-md-4" (mouseover)="mostrarTransaccionesVisa()">
-          <div class="card card-productos visa hover-productos-inicio mb-md-4">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesVisa()">
+          <div class="card card-productos visa hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveVisa}">
             <span class="nombre-producto azul-visa">Visa</span>
             <small class="numero-producto">N° {{ numeroVisa | numeroTarjeta }}</small>
             <hr>
@@ -56,13 +56,13 @@
           </div>
         </div>
 
-        <div class="col-12 contenedor-ultimas-transacciones d-none d-md-block ">
+        <div class="col-12 contenedor-ultimas-transacciones d-none d-md-block">
           <!-- Ultimas transacciones cta cte -->
-          <div class="ultimas-transacciones cuenta-corriente" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
-            <p class="mb-1 dorado">
-              <strong>Últimos movimientos de Cuenta Corriente</strong>
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
+            <p class="mb-1 cuenta-corriente">
+              Últimos movimientos Cuenta Corriente
             </p>
-            <hr class="my-2">
+            <!-- <hr class="my-2"> -->
             <table class="tabla-movimientos-home">
               <thead>
                 <tr>
@@ -92,12 +92,12 @@
           </div>
 
           <!-- Ultimas transacciones linea crédito -->
-          <div class="ultimas-transacciones linea-de-credito" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
-            <p class="mb-1 tinto">
-              <strong>Últimos movimientos de Línea de Crédito</strong>
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
+            <p class="mb-1 linea-de-credito">
+              Últimos movimientos Línea de Crédito
             </p>
-            <hr class="my-2">
-            <table class="tabla-movimientos-home" #lineaDeCredito>
+            <!-- <hr class="my-2"> -->
+            <table class="tabla-movimientos-home">
               <thead>
                 <tr>
                   <th>Fecha</th>
@@ -126,12 +126,12 @@
           </div>
 
           <!-- Ultimas transacciones visa -->
-          <div class="ultimas-transacciones visa" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
-            <p class="mb-1 azul-visa">
-              <strong>Últimos movimientos de Visa</strong>
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
+            <p class="mb-1 visa">
+              Últimos movimientos Visa
             </p>
-            <hr class="my-2">
-            <table class="tabla-movimientos-home" #visa>
+            <!-- <hr class="my-2"> -->
+            <table class="tabla-movimientos-home">
               <thead>
                 <tr>
                   <th>Fecha</th>
