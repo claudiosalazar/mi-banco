@@ -55,19 +55,21 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
     }
 
-    &.cuenta-corriente {
-      &.active {
-        border-bottom: 4px solid $dorado;
+    @media (min-width: $md) {
+      &.cuenta-corriente {
+        &.active {
+          border-bottom: 4px solid $dorado;
+        }
       }
-    }
-    &.linea-de-credito {
-      &.active {
-        border-bottom: 4px solid $tinto;
+      &.linea-de-credito {
+        &.active {
+          border-bottom: 4px solid $tinto;
+        }
       }
-    }
-    &.visa {
-      &.active {
-        border-bottom: 4px solid $azul-visa;
+      &.visa {
+        &.active {
+          border-bottom: 4px solid $azul-visa;
+        }
       }
     }
   }

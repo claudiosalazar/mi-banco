@@ -116,7 +116,7 @@
         }
       }
       .titulo {
-        font-family: "Noto Serif", serif;
+        //font-family: "Noto Serif", serif;
         font-style: italic;
         font-size: 30px;
         font-weight: 900;
@@ -125,7 +125,7 @@
         text-transform: uppercase;
         display: block;
         padding: 4px 0 8px 0;
-        text-shadow: 0 0 8px rgba(116, 45, 72, .9), 0 0 2px rgba(116, 45, 72, .6);
+        text-shadow: 0 0 8px rgba(116, 45, 72, .5), 0 0 2px rgba(116, 45, 72, .2);
         @media (min-width: $md) {
           font-size: 40px;
         }

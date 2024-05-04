@@ -3,7 +3,14 @@
 <div class="container pb-5" *ngIf="datosUsuarioActual && productosUsuario && ofertasProductos">
   <div class="row">
     <div class="col-12 px-4 px-md-auto">
-      <h1>Tus productos</h1>
+      <h1>
+        Tus productos
+        <span class="d-none d-md-block d-lg-none mb-4">
+          <small>
+            Si quieres ver las últimas transacciones de tus productos haz click sobre ellos.
+          </small>
+        </span>
+      </h1>
 
       <div class="row align-items-md-stretch">
         <!-- Cuenta corriente -->
@@ -165,12 +172,12 @@
   </div>
 </div>
 
-<div class="container-fluid py-5 fondo-dorado-claro">
+<div class="container-fluid py-5 fondo-banner-grande">
   <div class="row">
     <div class="col-12">
       <div class="container">
         <div class="row">
-          <div class="col-12 text-center mb-5">
+          <div class="col-12 text-center mb-5 m-2">
             <span class="titulo-ofertas">Aprovechas<br class="d-md-none"> las ofertas especiales<br> que tenemos para ti</span>
           </div>
   
