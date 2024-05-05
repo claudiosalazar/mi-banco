@@ -22,9 +22,7 @@
             <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
           </div>
           <!-- Importacion de componente tables -->
-          <div class="p-0 p-md-4 pt-md-0">
-            <app-tables [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
-          </div>
+          <app-tables [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables>
         </div>
       </div>
     </div>

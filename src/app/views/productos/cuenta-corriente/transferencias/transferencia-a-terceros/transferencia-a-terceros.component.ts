@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Subscription, Observable, of, from, throwError } from 'rxjs';
+import { Subscription, Observable, of, from, throwError, interval as observableInterval } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
@@ -42,6 +42,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   @ViewChild('mensaje') mensaje: ElementRef | undefined;
   @ViewChild('paso1') paso1: ElementRef | undefined;
   @ViewChild('paso2') paso2: ElementRef | undefined;
+  @ViewChild('paso3') paso3: ElementRef | undefined;
+  @ViewChild('formTransferencia') formTransferencia: ElementRef | undefined;
   @ViewChild('tablaDestinatarioSeleccionado') tablaDestinatarioSeleccionado: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
@@ -146,7 +148,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   transferenciaATercerosForm: FormGroup = new FormGroup({});
 
   // Variables proceso de transferencia
-  pasosTransferencia = false;
+  //pasosTransferencia: boolean | undefined;
   ingresarDatos = false;
   confirmarDatos = false;
   transferenciaARealizar = false;
@@ -186,6 +188,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   modalTransferenciaInstance: any;
 
+  pasosTransferencia: boolean = false;
+
+  
 
   constructor(
     public agendaService: AgendaDestinatariosService,
@@ -197,6 +202,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     private backdropService: BackdropService,
   ) { 
     this.destinatarioSeleccionado = { id: null, nombre: '' };
+    
   }
 
   ngOnInit(): void {
@@ -238,11 +244,20 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
-    });
+    });    
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
   }
 
   ngAfterViewInit(_e: Event): void {
-
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
@@ -258,11 +273,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();
     });
-
-    /*if (this.modalTransferencia) {
-      this.modalTransferencia = new bootstrap.Modal(this.modalTransferencia.nativeElement);
-      this.mostrarBackdropCustomModal = true;
-    }*/
 
     // Suscripción a getDatosNuevoDestinatario
     this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
@@ -288,6 +298,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
     
   }
+  
 
   // Captura datos de cuenta corriente
   getDatosCuentaCorriente(_id: any): void {
@@ -338,6 +349,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
     });
   }
+
+
 
   vaciarMontoATransferir(): void {
     this.transferenciaATercerosForm.patchValue({
@@ -533,18 +546,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     console.log('ID del usuario:', id);
     // Actualiza el ID del destinatario a editar en el servicio
     this.agendaService.actualizarIdDestinatarioAeditar(id);
-  }
-
-  ngOnDestroy(): void {
-    // Es importante cancelar la suscripción para evitar fugas de memoria
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
-    if (this.backdropSubscription) {
-      this.backdropSubscription.unsubscribe();
-    }
-  }
+  } 
 
   // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {

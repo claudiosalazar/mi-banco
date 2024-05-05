@@ -1,6 +1,6 @@
 
 .info-cta-cte {
-  background-color: $dorado-claro;
+  background-color: $gris-01;
   border-radius: 0 0 6px 6px;
 }
 
@@ -63,5 +63,42 @@
   margin-top: 12px;
   strong {
     font-weight: 600 !important;
+  }
+}
+
+
+.mostra-formulario {
+  visibility: visible;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  height: inherit;
+  .row {
+    height: inherit !important;  
+  }
+}
+
+.formulario-oculto {
+  visibility: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 0;
+  .row {
+    height: 0 !important;  
+  }
+}
+
+.paso-transferencia {
+  visibility: visible;
+  height: inherit;
+  .row {
+    height: inherit !important;  
+  }
+}
+
+.paso-transferencia-oculto {
+  visibility: hidden;
+  max-height: 0 !important;
+  .row {
+    height: 0 !important;  
   }
 }

@@ -1,3 +1,10 @@
+.contenedor-tabla {
+  margin: 16px;
+  padding: 0 10px 10px 10px;
+  border: 1px solid $gris-02;
+  border-radius: 10px;
+}
+
 .table {
   >:not(caption)>*>* {
     font-size: 14px;
@@ -31,10 +38,13 @@
       top: -9999px;
       left: -9999px;
     }
+    tr {
+      border-bottom: 1px solid $blanco;
+    }
     th {
-      background-color: $gris-02;
-      padding: 14px 20px;
-      font-weight: 800;
+      background-color: $blanco;
+      padding: 12px 10px;
+      font-weight: 600;
       color: $gris-60;
       &:first-child {
         border-radius: 5px 0 0 0!important;
@@ -48,6 +58,7 @@
           margin-left: 4px;
           cursor: pointer;
           &.animar-icono {
+            color: $tinto;
             &:hover {
               color: $dorado;
             }
@@ -76,11 +87,11 @@
     tr {
       border-bottom: 0 solid $gris-01;
       td {
-        padding: 18px 20px;
+        padding: 14px;
         color: $gris-60 !important;
       }
       
-      &:last-child {
+      /*&:last-child {
         td {
           &:first-child {
             border-radius: 0 0 0 5px !important;
@@ -109,7 +120,7 @@
         border-right: 0 inset $gris-01;
         border-left: 0 inset $gris-01;
         padding-right: 1px;
-      }
+      }*/
     }
 
     @media (max-width: $lg) {
@@ -488,7 +499,7 @@
         background-color: $blanco;
       }
       &:nth-child(odd) {
-        background-color: $gris-01;
+        background-color: $gris-00;
       }
     }
   }

@@ -66,6 +66,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
 import { ModaConsultasComponent } from './shared/components/header/moda-consultas/moda-consultas.component';
 import { CarouselComponent } from './views/resumen-usuario/carousel/carousel.component';
 import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.component';
+import { AlertasComponent } from './shared/components/alertas/alertas.component';
 
 
 
@@ -113,6 +114,7 @@ import { BreadcrumbComponent } from './shared/components/breadcrumb/breadcrumb.c
     ModaConsultasComponent,
     CarouselComponent,
     BreadcrumbComponent,
+    AlertasComponent,
 
   ],
   imports: [

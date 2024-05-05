@@ -49,11 +49,15 @@
                       <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
                     </div>
                   </div>
-                  <div class="col-12 mt-4" *ngIf="!urlActual.includes('transferencias')">
-                    <div class="alert alert-primary mt-4 mb-0 d-md-flex justify-content-md-between align-items-center d-none" role="alert">
-                      <small class="ms-2">Tienes un crédito pre-aprobado de <strong>{{montoPreAprobadoCreditoConsumo | pesos}}</strong>, con abono inmediato a tu cuenta corriente.</small>
-                      <button class="btn btn-primario" type="button">Simular aquí</button>
-                    </div>
+                  <div class="col-12 mt-4">
+                    <app-alertas 
+                      [icono]="false" 
+                      [tipoAlerta]="'warning'" 
+                      [mensajeTitulo]="'Tienes un crédito pre-aprobado con abono inmediato a tu cuenta corriente de:'" 
+                      [mensajeDestacado]="'<strong>' + (montoPreAprobadoCreditoConsumo | pesos) + '</strong>'" 
+                      [mensajeInfo]="'* Sujeto a evaluación crediticia.'" 
+                      [textoBoton]="'Simular aquí'" [boton]="true" [tipoBoton]="'btn-secundario'">
+                    </app-alertas>
                   </div>
                 </div>
               </div>
