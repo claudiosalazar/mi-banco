@@ -7,8 +7,8 @@
   <hr class="mt-4 mb-3">
 
   <div class="col-12">
-    <div class="p-0 p-md-4">
-      <table class="table table-striped tabla-cartolas-historicas" role="table">
+    <div class="contenedor-tabla">
+      <table class="table tabla-cartolas-historicas table-striped" role="table">
         <thead role="columnheader"ead role="rowgroup">
           <tr role="row">
             <th role="columnheader" (click)="ordenarDatos('numeroCartola'); onHeaderClick()">
@@ -49,27 +49,27 @@
         </thead>
         <tbody role="rowgroup">
           <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row">
-            <td role="cell">
-              <span class="contenido-td">{{ cartola.numeroCartola }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ cartola.numeroCartola }}</span>
             </td>
-            <td role="cell">
-              <span class="contenido-td">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span>
+            <td role="cell" class="ancho">
+              <span class="contenido-celda">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span>
             </td>
             <td role="cell" class="ancho py-0">
               <div class="contenido-celda">
                 <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
                   <!-- PDF -->
-                  <a href="javascript:void(0)">
+                  <button>
                     <span class="material-symbols-outlined">
                       picture_as_pdf
                     </span>
-                  </a>
+                  </button>
                   <!-- Doc -->
-                  <a href="javascript:void(0)">
+                  <button>
                     <span class="material-symbols-outlined">
                       description
                     </span>
-                  </a>
+                  </button>
                 </div>
               </div>
             </td>

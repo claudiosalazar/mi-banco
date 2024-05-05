@@ -170,8 +170,9 @@
   margin-right: 24px;
   padding: 10px 15px;
   border-radius: 4px;
-  border: 1px solid transparent;
+  border: 1px solid $tinto;
   font-weight: 600;
+  width: 100%;
   &:hover {
     color: $tinto;
     border: 1px solid $tinto;
@@ -181,9 +182,13 @@
     background-color: $dorado;
     color: $blanco;
   }
-  @media (max-width: $md) {
-    width: 100%;
-    border: 1px solid $tinto;
+  @media (min-width: $md) {
+    margin-right: 10px !important;
+    width: inherit;
+    border: 1px solid transparent;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 

@@ -90,37 +90,6 @@
         padding: 14px;
         color: $gris-60 !important;
       }
-      
-      /*&:last-child {
-        td {
-          &:first-child {
-            border-radius: 0 0 0 5px !important;
-            border-bottom: 0 solid $gris-01;
-          }
-          &:last-child {
-            border-radius: 0 0 5px 0;
-            border-bottom: 0 solid $gris-01;
-          }
-        }
-        
-      }
-      &:nth-child(even) {
-        border-right: 1px inset $gris-01;
-        border-left: 1px inset $gris-01;
-      }
-      &:nth-child(odd) {
-        border-right: 1px inset $gris-01;
-        border-left: 1px inset $gris-01;
-      }
-      &:first-child {
-        border-right: 0 inset $gris-01;
-        border-left: 0 inset $gris-01;
-      }
-      &:last-child {        
-        border-right: 0 inset $gris-01;
-        border-left: 0 inset $gris-01;
-        padding-right: 1px;
-      }*/
     }
 
     @media (max-width: $lg) {
@@ -408,10 +377,6 @@
       @media (max-width: $lg) {
         td {
           padding-left: 42%;
-          &:last-child {
-            padding-top: 16px;
-            padding-bottom: 12px !important;
-          }
         }
         td:nth-of-type(1):before {
           content: "N° Cartola";
@@ -421,7 +386,6 @@
         }
         td:nth-of-type(3):before {
           content: "Descargar";
-          margin-top: 14px;
         }
       }
     }

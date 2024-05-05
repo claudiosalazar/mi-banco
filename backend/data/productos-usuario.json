@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "862465",
+      "cupo": "862132",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -567,6 +567,16 @@
           "cargo": "5000",
           "abono": "0",
           "saldo": "862465"
+        },
+        {
+          "id": "57",
+          "fecha": "2024-05-05",
+          "destinatario": "Boric Presi",
+          "detalle": "Transferencia a Boric Presi",
+          "mensaje": "",
+          "cargo": "333",
+          "abono": "",
+          "saldo": "862132"
         }
       ]
     },

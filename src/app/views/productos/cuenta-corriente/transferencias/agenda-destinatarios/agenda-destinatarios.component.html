@@ -124,13 +124,13 @@
             <div class="contenido-celda">
               <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
                 <!-- Editar datos destinatario -->
-                <button href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()">
+                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()">
                   <span class="material-symbols-outlined">
                     edit
                   </span>
                 </button>
                 <!-- Eliminar destinatario -->
-                <button href="javascript:void(0)" (click)="abrirModalEliminar(destinatario)">
+                <button (click)="abrirModalEliminar(destinatario)">
                   <span class="material-symbols-outlined">
                     delete
                   </span>  
