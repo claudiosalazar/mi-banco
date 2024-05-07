@@ -311,7 +311,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       data => {
         this.productosUsuario = data.productos ? { productos: data.productos } : { productos: []};
         this.cupoCtaCte = parseFloat(this.productosUsuario.productos[0]?.transacciones[this.productosUsuario.productos[0]?.transacciones.length - 1]?.saldo);
-        console.log('Cupo cuenta corriente:', this.cupoCtaCte);
       }
     );
   }
@@ -584,11 +583,12 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     if (this.paso1 && this.paso1.nativeElement) {
       this.paso1.nativeElement.classList.remove('paso-ok');
     }
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = false;
+    }
   }
 
   datosDestinarioId(id: any): void {
-    console.log('ID del usuario:', id);
-    // Actualiza el ID del destinatario a editar en el servicio
     this.agendaService.actualizarIdDestinatarioAeditar(id);
   } 
 
