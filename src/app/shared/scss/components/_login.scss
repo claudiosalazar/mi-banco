@@ -34,10 +34,12 @@ h1 {
   }
 
   .btn {
+    padding: 16px 20px;
     &.btn-login {
       background-color: $dorado !important;
       color: $blanco;
       border-color: none;
+      border: none;
       text-transform: uppercase;
       &:hover {
         color: $blanco;
@@ -48,7 +50,28 @@ h1 {
   }
   
   .invalid-feedback {
-    color: $blanco;
-    font-weight: 700;
+    color: $advertencia !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
   }
+
+  .form-control {
+    &.is-valid {
+      border-color: $valido !important;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E") !important;
+      background-size: 16px 16px !important;
+      background-position: right calc(.8em + .1875rem) center !important;
+      &:focus {
+        border-color: $dorado !important;
+      }
+    }
+    &.is-invalid {
+      animation: none !important;
+      border: 2px solid $advertencia !important;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 16c-.4 0-.8-.2-1.2-.5-.3-.3-.5-.7-.5-1.2s.2-.8.5-1.2c.3-.3.7-.5 1.2-.5s.8.2 1.2.5c.3.3.5.7.5 1.2s-.2.8-.5 1.2c-.3.3-.7.5-1.2.5Zm-1.6-5.3V0h3.3v10.7H6.4Z' fill='%23ff1744'/%3E%3C/svg%3E") !important;
+      background-position: right calc(.8em + .1875rem) center !important;
+      box-shadow: 0px 0px 24px -4px rgba(255, 200, 0, .5);
+    }
+  }
+  
 }

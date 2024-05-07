@@ -41,7 +41,8 @@
           <app-alertas *ngIf="mensajeError"
             [icono]="true" 
             [tipoAlerta]="'error'" 
-            [mensajeTitulo]="'Datos de acceso incorrectos'" 
+            [mensajeTitulo]="'Datos incorrectos'" 
+            [mensajeInfo]="'El Rut o la Clave ingresada, no son correctos. Por favor, inténtalo nuevamente.'" 
             [textoBoton]="'Simular aquí'" [boton]="false">
           </app-alertas>
         </form>
