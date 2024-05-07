@@ -36,6 +36,13 @@ app.post('/data', (req, res) => {
   });
 });
 
+// Datos usuario login
+app.get('/backend/data/usuario-mi-banco.json', (_req, res) => {
+  const filePath = path.join(__dirname, 'data', 'usuario-mi-banco.json');
+  const fileData = fs.readFileSync(filePath);
+  res.send(JSON.parse(fileData));
+});
+
 // Datos usuario
 app.get('/backend/data/datos-usuario.json', (_req, res) => {
   const filePath = path.join(__dirname, 'data', 'datos-usuario.json');

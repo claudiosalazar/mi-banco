@@ -5,21 +5,48 @@
     <div class="col-12 col-sm-6 order-1 order-sm-2 d-flex position-relative justify-content-center align-items-center formulario-login">
       <div class="px-5">
         <div class="logo-login mb-3 mb-md-5"></div>
-        <h1 class="display-5 mb-3 mb-md-5">Bienvenido a Mi Banco</h1>
-        <p class="lead">Ingrese a sus datos.</p>
+        <h1 class="titulo-login">Bienvenido a Mi Banco</h1>
+        <p>Ingrese a sus datos.</p>
 
-        <form (submit)="login()" class="form-signin">
+        <form [formGroup]="formularioLogin" class="form-signin">
+          <!-- <div class="form-floating mb-4">
+            <input type="text" class="form-control" formControlName="rutUsuario" id="rutUsuario" placeholder="Ingresa tu Rut" (blur)="validaRut()" (keypress)="formatoRut($event);">
+            <label for="rutUsuario">Ingresa tu Rut</label>
+          </div> -->
+
           <div class="form-floating mb-4">
-            <input class="form-control" type="text" [(ngModel)]="user.user" name="user" placeholder="user">
-            <label for="user">Usuario</label>
+            <input type="text" class="form-control" formControlName="rutUsuario" placeholder="Ingresa tu Rut"  
+            [class.is-invalid]="formularioLogin.get('rutUsuario')?.touched && formularioLogin.get('rutUsuario')?.errors?.rutInvalido" (blur)="formatoRut()" 
+            (focus)="resetRutUsuario()">
+            <label for="rutUsuario">Ingresa tu Rut</label>
+            
+            <div *ngIf="formularioLogin.get('rutUsuario')?.touched && formularioLogin.get('rutUsuario')?.errors?.rutInvalido" class="invalid-feedback">
+              <span>El rut ingresado no es válido.</span>
+            </div>
           </div>
+
+          <!-- <div class="form-floating mb-4">
+            <input type="password" class="form-control" formControlName="claveUsuario" id="claveUsuario" placeholder="Ingresa tu Clave">
+            <label for="claveUsuario">Ingresa tu Clave</label>
+          </div> -->
+
           <div class="form-floating mb-4">
-            <input class="form-control" type="password" [(ngModel)]="user.password" name="password" placeholder="Password">
-            <label for="password">Clave</label>
+            <input type="password" class="form-control" formControlName="claveUsuario" placeholder="Ingresa tu Clave" (focus)="resetClaveUsuario()">
+            <label for="claveUsuario">Ingresa tu clave</label>
+            
           </div>
-          <button class="w-100 btn btn-lg" type="submit">Entrar</button>
-          <p class="mt-5 mb-3 text-center">Mi Banco © 2024</p>
+
+          <button class="w-100 btn btn-login mb-4" type="submit" [class.disabled]="!botonLoginDisabled" (click)="loginMiBanco()">Entrar</button>
+
+          <app-alertas *ngIf="mensajeError"
+            [icono]="true" 
+            [tipoAlerta]="'error'" 
+            [mensajeTitulo]="'Datos de acceso incorrectos'" 
+            [textoBoton]="'Simular aquí'" [boton]="false">
+          </app-alertas>
         </form>
+
+        <p class="mt-5 mb-3 text-center">Mi Banco © 2024</p>
 
       </div>
     </div>
