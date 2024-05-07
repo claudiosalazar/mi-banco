@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-alertas',
   templateUrl: './alertas.component.html'
 })
-export class AlertasComponent implements OnInit {
+export class AlertasComponent {
 
   @Input() tipoAlerta: any | undefined;
   @Input() mensajeTitulo: string | undefined;
@@ -14,10 +14,12 @@ export class AlertasComponent implements OnInit {
   @Input() textoBoton: string | undefined;
   @Input() boton: boolean | undefined;
   @Input() tipoBoton: any | undefined;
+  @Output() botonClick = new EventEmitter<void>();
 
   constructor() { }
 
-  ngOnInit(): void {
+  accionBoton() {
+    this.botonClick.emit();
   }
 
 }

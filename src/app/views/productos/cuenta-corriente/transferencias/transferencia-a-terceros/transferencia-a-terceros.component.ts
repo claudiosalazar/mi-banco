@@ -190,7 +190,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   pasosTransferencia: boolean = false;
 
-  
+  alertaAyuda: boolean = true;
 
   constructor(
     public agendaService: AgendaDestinatariosService,
@@ -298,6 +298,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
     
   }
+
+  ocultaMensaje() {
+    console.log('El botón en el componente app-alertas fue clickeado');
+    this.alertaAyuda = false;
+  }
   
 
   // Captura datos de cuenta corriente
@@ -312,6 +317,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
   }
 
   seleccionarDestinatario(id: any): void {
+    this.destinatarioSeleccionado = { id: id };
     this.getDatosCuentaCorriente(0);
     this.destinatarioId = id;
     this.selectedId = id;
@@ -321,9 +327,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     // this.tablaDestinatarios = false;
     this.buscadorDestinatarios = false;
     this.destinatarioSeleccionadoTabla = true;
-    if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
+    /*if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
       this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
-    }
+    }*/
   
     // Encuentra el destinatario seleccionado en la lista de destinatarios
     this.destinatarioATransferirSeleccionado = this.destinatarios.find(destinatario => destinatario.id === id);

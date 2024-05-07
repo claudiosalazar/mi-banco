@@ -13,8 +13,20 @@
   </div>
 
   <div class="row">
+    <div class="col-12 px-4">
+      <div class="contenedor-alerta mt-3 mb-2 mx-1" *ngIf="alertaAyuda">
+        <app-alertas
+        [icono]="true" 
+        [tipoAlerta]="'info'" 
+        [mensajeTitulo]="'Haz click sobre un destinatario de la tabla para realizar la transferencia.'"
+        [mensajeInfo]="'Si no quieres volver a ver este mensaje, haz click en el botón ocultar.'"
+        [textoBoton]="'Ocultar'" [boton]="true" [tipoBoton]="'btn-secundario'"
+        (botonClick)="ocultaMensaje()">
+      </app-alertas>
+      </div>
+    </div>
     <div class="col-12">
-      <div class="contenedor-tabla">
+      <div class="contenedor-tabla mb-0 pb-0">
         <table class="table table-striped tabla-agenda-transferencias" role="table" #tablaDestinatarioSeleccionado>
           <thead role="columnheader"ead role="rowgroup">
             <tr role="row">
@@ -93,15 +105,9 @@
             </tr>
           </thead>
           <tbody role="rowgroup">
-            <!-- <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" [class]="getClassForDestinatario(destinatario.id)"> -->
-            <tr role="row" *ngFor="let destinatario of paginatedDestinatarios">
+            <tr role="row" *ngFor="let destinatario of paginatedDestinatarios" (click)="seleccionarDestinatario(destinatario.id);" [ngClass]="{'active': destinatario.id === destinatarioSeleccionado?.id}">
               <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || destinatario.id === selectedId">
-                <span class="contenido-celda ps-1">
-                  <div class="form-check ps-0 d-flex align-items-center">
-                    <input class="form-check-input m-0" type="radio" id="destinatarioATransferir" (change)="seleccionarDestinatario(destinatario.id);" [disabled]="pasosTransferencia && destinatario.id === selectedId">
-                    <label for="destinatarioATransferir" class="ms-3">{{ destinatario.nombre }}</label>
-                  </div>
-                </span>
+                <span class="contenido-celda">{{ destinatario.nombre }}</span>
               </td>
               <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || destinatario.id === selectedId">
                 <span class="contenido-celda">{{ destinatario.banco }}</span>
@@ -121,11 +127,13 @@
             </tr>
           </tbody>
         </table>
-        <app-paginador *ngIf="!pasosTransferencia" [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+        <div class="pb-2" *ngIf="!pasosTransferencia" >
+          <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+        </div>
       </div>
     </div>
 
-    <div class="col-12" [ngClass]="{'formulario-oculto': !pasosTransferencia, 'mostra-formulario': pasosTransferencia}" #formTransferencia>
+    <div class="col-12 mt-3" [ngClass]="{'formulario-oculto': !pasosTransferencia, 'mostra-formulario': pasosTransferencia}" #formTransferencia>
       <form [formGroup]="transferenciaATercerosForm">
         
         <div class="stepper d-flex flex-column mx-auto">

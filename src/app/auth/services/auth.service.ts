@@ -23,7 +23,7 @@ export class AuthService {
         const autenticado = usuario.rutUsuario === datosServidor.rutUsuario && usuario.claveUsuario === datosServidor.claveUsuario;
         if (autenticado) {
           // Establece el estado de autenticación
-          this.usuarioAutenticado = usuario;
+          localStorage.setItem('usuario', JSON.stringify(usuario));
         } else {
           console.log('Invalid credentials');
         }

@@ -7,7 +7,7 @@
         <span class="destacado" [innerHTML]="mensajeDestacado"></span>
         <span class="texto-legal-alerta" [innerHTML]="mensajeInfo"></span>
       </div>
-      <button *ngIf="boton" class="btn" [ngClass]="tipoBoton" type="button">{{ textoBoton }}</button>
+      <button *ngIf="boton" class="btn" [ngClass]="tipoBoton" type="button" (click)="accionBoton()">{{ textoBoton }}</button>
     </div>
   </div>
 </div>

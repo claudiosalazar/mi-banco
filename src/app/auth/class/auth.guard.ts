@@ -11,8 +11,9 @@ export class AuthGuard implements CanActivate {
     private router: Router
   ) { }
 
-  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
-    if (this.authService.usuarioAutenticado) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const usuario = localStorage.getItem('usuario');
+    if (usuario) {
       return true;
     } else {
       console.log('No autenticado, redirigiendo a login...');
@@ -20,4 +21,5 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+
 }
