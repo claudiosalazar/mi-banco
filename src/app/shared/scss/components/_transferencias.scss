@@ -24,16 +24,28 @@
     }
   }
   .contenedor-nombre-destinatario {
-    width: 50%;
+    width: 100%;
+    @media (min-width: $md) {
+      width: 50%
+    }
     .nombre-destinatario-transferencia {
       display: block;
       font-size: 22px;
     }
   }
   .datos-destinatario {
-    width: 50%;
-    border-left: 1px solid $gris-10;
-    padding-left: 20px;
+    width: 100%;
+    border-top: 1px solid $gris-10;
+    margin-top: 16px;
+    padding-top: 16px;
+    @media (min-width: $md) {
+      width: 50%;
+      border-left: 1px solid $gris-10;
+      border-top: none;
+      padding-left: 20px;
+      margin-top: 0;
+      padding-top: 0;
+    }
   }
 }
 

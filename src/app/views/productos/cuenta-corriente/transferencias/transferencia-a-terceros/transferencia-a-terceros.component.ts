@@ -481,49 +481,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     this.confirmarDatos = false;
   }
 
-  botonCancelarTransferencia(){
+  botonCancelarTransferencia(): void {
     this.pasosTransferencia = false;
     this.ingresarDatos = false;
     this.confirmarDatos = false;
     this.transferenciaARealizar = false;
-    this.btnContinuar = true;
-    this.btnConfirmar = true;
-    this.agendaService.getDestinatarios().subscribe(data => {
-      // Hacer una copia de los datos
-      this.destinatarios = [...data];
-      this.ordenarDatos('nombre');
-      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
-        ...destinatario,
-        selected: false
-      }));
-      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
-      this.cdRef.detectChanges();
-    });
-    this.selectedId = null;
-    // this.tablaDestinatarios = true;
-    this.buscadorDestinatarios = true;
-    this.cdRef.detectChanges();
-
-    // Cierra el modal y oculta el backdrop-custom
-    const modalCancelarTransferencia = this.modales.find(modal => modal._element.id === 'modalCancelarTransferencia');
-    if (modalCancelarTransferencia) {
-      modalCancelarTransferencia.hide();
-    }
-    this.mostrarBackdropCustomModal = false;
-  }
-
-  getClassForDestinatario(destinatarioId: number): string {
-    if (destinatarioId === this.selectedId) {
-      return 'seleccionado';
-    } else if (this.selectedId !== null && destinatarioId !== this.selectedId) {
-      return 'oculto';
-    } else {
-      return '';
-    }
-  }
-
-  cambiarDestinatario(): void {
-    this.pasosTransferencia = false;
+    this.destinatarioSeleccionadoTabla = false;
+    this.destinatarioSeleccionado = { id: null, nombre: undefined };
     this.agendaService.getDestinatarios().subscribe(data => {
       // Hacer una copia de los datos
       this.destinatarios = [...data];
@@ -546,6 +510,80 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
       modalCambiosDestinatario.hide();
     }
     this.mostrarBackdropCustomModal = false;
+
+    if (this.paso1 && this.paso1.nativeElement && this.paso2 && this.paso2.nativeElement) {
+      this.paso1.nativeElement.classList.remove('paso-ok');
+      this.paso2.nativeElement.classList.remove('paso-ok');
+    }
+
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = false;
+    }
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = false;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = false;
+    }
+    this.btnConfirmar = true;
+    this.btnContinuar = true;
+  }
+
+  getClassForDestinatario(destinatarioId: number): string {
+    if (destinatarioId === this.selectedId) {
+      return 'seleccionado';
+    } else if (this.selectedId !== null && destinatarioId !== this.selectedId) {
+      return 'oculto';
+    } else {
+      return '';
+    }
+  }
+
+  cambiarDestinatario(): void {
+    this.pasosTransferencia = false;
+    this.ingresarDatos = false;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.destinatarioSeleccionadoTabla = false;
+    this.destinatarioSeleccionado = { id: null, nombre: undefined };
+    this.agendaService.getDestinatarios().subscribe(data => {
+      // Hacer una copia de los datos
+      this.destinatarios = [...data];
+      this.ordenarDatos('nombre');
+      this.paginatedDestinatarios = this.destinatarios.slice(0, this.itemsPerPage).map(destinatario => ({
+        ...destinatario,
+        selected: false
+      }));
+      this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;
+      this.cdRef.detectChanges();
+    });
+    this.selectedId = null;
+    // this.tablaDestinatarios = true;
+    this.buscadorDestinatarios = true;
+    this.cdRef.detectChanges();
+
+    // Cierra el modal y oculta el backdrop-custom
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      modalCambiosDestinatario.hide();
+    }
+    this.mostrarBackdropCustomModal = false;
+  }
+
+  botonModificarDatos(): void {
+    this.ingresarDatos = true;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.btnContinuar = true;
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = false;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = false;
+    }
+    if (this.paso1 && this.paso1.nativeElement) {
+      this.paso1.nativeElement.classList.remove('paso-ok');
+    }
   }
 
   datosDestinarioId(id: any): void {

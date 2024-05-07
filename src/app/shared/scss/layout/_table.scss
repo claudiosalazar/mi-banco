@@ -1,8 +1,11 @@
 .contenedor-tabla {
   margin: 16px;
-  padding: 0 10px 10px 10px;
+  padding: 0;
   border: 1px solid $gris-02;
   border-radius: 10px;
+  @media (min-width: $lg) {
+    padding: 0 10px 10px 10px;
+  }
 }
 
 .table {
@@ -282,19 +285,6 @@
   }
 
   &.tabla-agenda-transferencias {
-    .form-check {
-      min-height: inherit;
-      .form-check-input {
-        flex-shrink: 0;
-        width: 14px;
-        height: 14px;
-        margin-top: 0;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        border: 1px solid $dorado;
-      }
-    }
     th, td {
       &:nth-child(1) {
         width: 20%;
@@ -340,10 +330,16 @@
           color: $blanco !important;
           font-weight: 500 !important;
           &:first-child {
-            border-radius: 6px 0 0 6px!important;
+            border-radius: 6px 6px 0 0!important;
+            @media (min-width: $md) {
+              border-radius: 6px 0 0 6px!important;
+            }
           }
           &:last-child {
-            border-radius: 0 6px 6px 0 !important;
+            border-radius: 0 0 6px 6px !important;
+            @media (min-width: $md) {
+              border-radius: 0 6px 6px 0 !important;
+            }
           }
         }
       }

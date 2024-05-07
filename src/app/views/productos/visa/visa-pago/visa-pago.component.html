@@ -1,6 +1,6 @@
 <div class="container pb-5">
   <div class="row">
-    <div class="col-12 col-lg-7 px-4 px-md-auto">
+    <div class="col-12 col-lg-8 px-4 px-md-auto">
       <h1>Pago Visa</h1>
       <div class="row">
         <div class="col-12">
@@ -78,7 +78,7 @@
                     </div>
                     <!-- Otro monto -->
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto" >
                       <label class="form-check-label" for="montoPago">
                         Otro Monto 
                       </label>
@@ -113,7 +113,7 @@
                   
                   <!-- Input otro monto -->
                   <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
-                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
+                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" placeholder="Ingrese un monto a pagar" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
                     <label for="inputOtroMonto">Ingrese un monto a pagar</label>
                     <div *ngIf="error1" class="invalid-feedback">
                       <span>Debes ingresar un monto superior a 0.</span>
@@ -162,7 +162,7 @@
       </div>
     </div>
 
-    <div class="col-5 d-none d-lg-block mt-5">
+    <div class="col-4 d-none d-lg-block mt-5">
       <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-seguro-auto.jpg');">
           <div class="info-banner d-flex justify-content-around align-content-stretch">
             <div class="info-medio">
