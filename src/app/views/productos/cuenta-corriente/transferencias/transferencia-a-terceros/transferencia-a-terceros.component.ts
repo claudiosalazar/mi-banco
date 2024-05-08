@@ -207,15 +207,20 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.transferenciaATercerosForm = new FormGroup({
-      destinatarioATransferir: new FormControl({value: ''}),
-      destinatarioSeleccionado: new FormControl({value: ''}),
+      destinatarioATransferir: new FormControl(''),
+      destinatarioSeleccionado: new FormControl(''),
       montoATransferir: new FormControl('', [Validators.required]),
-      mensaje: new FormControl({value: ''}),
-      emailDestinatario: new FormControl({value: '', disabled: true}, [Validators.required]),
-      montoATransferirOk: new FormControl({value: ''}),
-      mensajeOk: new FormControl({value: ''}),
-      emailDestinatarioOk: new FormControl({value: ''}),
+      mensaje: new FormControl(''),
+      emailDestinatario: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      montoATransferirOk: new FormControl(''),
+      mensajeOk: new FormControl(''),
+      emailDestinatarioOk: new FormControl(''),
     });
+
+    let control = this.transferenciaATercerosForm.get('emailDestinatario');
+    if (control) {
+      control.disable();
+    }
 
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
       mostrar => this.mostrarBackdropCustomModal = mostrar
@@ -231,9 +236,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     });
 
     this.busquedaDestinatarios.valueChanges
-    .pipe(
-      switchMap(valorBusqueda => this.agendaService.filtrarDestinatarios(valorBusqueda))
-    )
+      .pipe(
+        switchMap(valorBusqueda => valorBusqueda ? this.agendaService.filtrarDestinatarios(valorBusqueda) : of([]))
+      )
     .subscribe(datosFiltrados => {
       this.destinatarios = datosFiltrados;
       this.totalPages = this.destinatarios ? Math.ceil(this.destinatarios.length / this.itemsPerPage) : 0;

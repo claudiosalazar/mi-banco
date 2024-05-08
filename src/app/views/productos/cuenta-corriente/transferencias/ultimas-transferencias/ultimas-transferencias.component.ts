@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@ang
 import { ProductosUsuarioService } from '../../../../../core/services/productos-usuario.service';
 import { FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-ultimas-transferencias',
@@ -31,15 +32,15 @@ export class UltimasTransferenciasComponent implements OnInit {
     private cdRef: ChangeDetectorRef
   ) { }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.getTransferencias();
 
     this.busquedaTransferencias.valueChanges
     .pipe(
-      switchMap(valorBusqueda => this.productosUsuarioService.buscarTransferencias(valorBusqueda))
+      switchMap(valorBusqueda => valorBusqueda ? this.productosUsuarioService.buscarTransferencias(valorBusqueda) : of([]))
     )
     .subscribe(datosFiltrados => {
-      this.transacciones = datosFiltrados;
+      this.transacciones = datosFiltrados as any[];
       this.cdRef.detectChanges();
     });
   }

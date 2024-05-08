@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef,
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AgendaDestinatariosService } from '../../../../../core/services/agenda-destinatarios.service';
 import { BackdropService } from '../../../../../core/services/backdrop.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 
@@ -127,7 +127,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.busquedaDestinatarios.valueChanges
     .pipe(
-      switchMap(valorBusqueda => this.agendaService.filtrarDestinatarios(valorBusqueda))
+      switchMap(valorBusqueda => valorBusqueda ? this.agendaService.filtrarDestinatarios(valorBusqueda) : of([]))
     )
     .subscribe(datosFiltrados => {
       this.destinatarios = datosFiltrados;
@@ -227,7 +227,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
           console.log('El destinatario fue eliminado correctamente');
           this.usuarioEliminado = true;
           // Emitir el evento de destinatario eliminado
-          this.agendaService.destinatarioEliminado.next();
+          this.agendaService.destinatarioEliminado.next(this.destinatarioId);
         },
         error => console.error('Hubo un error al eliminar el destinatario', error)
       );
@@ -340,7 +340,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         // Forzar la detección de cambios
         this.cdr.detectChanges();
   
-        this.agendaService.datosEditadosDestinatario.next();
+        this.agendaService.datosEditadosDestinatario.next(this.datosDestinatarioEditado);
       }, error => {
         // Espera al menos 2 segundos antes de indicar que ha habido un error
         setTimeout(() => {
