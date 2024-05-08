@@ -1,10 +1,9 @@
 .fondo-login {
-  display: none;
-  @media (min-width: $sm)  {
-    background-image: url('../../../../assets/images/bg-login.jpg');
-    background-size: cover;
-    background-position: center center;
-  }
+  background-image: url('../../../../assets/images/bg-login.jpg');
+  background-size: cover;
+  background-position: center center;
+  //
+  height: 100vh;
 }
 
 h1 {
