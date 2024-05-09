@@ -5,13 +5,15 @@
         <a class="navbar-brand" routerLink="/mibanco/">
           <div class="logo-mi-banco"></div>
         </a>
-        <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="abrirMenuMobile()">
+        <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+          aria-label="Toggle navigation" (click)="abrirMenuMobile()">
           <!-- <span class="navbar-toggler-icon"></span> -->
           <span class="icon-bar top-bar"></span>
           <span class="icon-bar middle-bar"></span>
           <span class="icon-bar bottom-bar"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
           <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
           <ul class="navbar-nav me-auto d-md-flex">
@@ -19,51 +21,69 @@
               <a class="nav-link" routerLink="/mibanco" (click)="ocultaDropdownMobile()">Inicio</a>
             </li>
             <li class="nav-item color-fondo-boton">
-              <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" (click)="ocultaDropdownMobile()">
+              <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias"
+                (click)="ocultaDropdownMobile()">
                 Transferencias
               </a>
             </li>
             <li class="nav-item menu-productos">
-              <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 Productos
                 <span class="material-symbols-outlined icono-dropdown">
                   expand_more
                 </span>
               </a>
               <ul class="dropdown-menu p-0 animate slideIn">
-                <li><a class="dropdown-item" routerLink="/mibanco/productos/resumen" (click)="ocultaDropdownMobile()">Mis Productos</a></li>
-                <li><a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" (click)="ocultaDropdownMobile()">Cuenta Corriente</a></li>
-                <li><a class="dropdown-item" routerLink="/mibanco/productos/linea-credito" (click)="ocultaDropdownMobile()">Línea de Crédito</a></li>
-                <li><a class="dropdown-item" routerLink="/mibanco/productos/visa" (click)="ocultaDropdownMobile()">Visa</a></li>
+                <li><a class="dropdown-item" routerLink="/mibanco/productos/resumen"
+                    (click)="ocultaDropdownMobile()">Mis Productos</a>
+                </li>
+                <li><a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos"
+                    (click)="ocultaDropdownMobile()">Cuenta Corriente</a></li>
+                <li><a class="dropdown-item" routerLink="/mibanco/productos/linea-credito"
+                    (click)="ocultaDropdownMobile()">Línea de Crédito</a></li>
+                <li><a class="dropdown-item" routerLink="/mibanco/productos/visa"
+                    (click)="ocultaDropdownMobile()">Visa</a></li>
               </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="/mibanco/productos/seguros" (click)="ocultaDropdownMobile()">Seguros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:void(0);" (click)="ocultaDropdownMobile(); abrirModalConsulta()">Consultas</a>
+              <a class="nav-link" href="javascript:void(0);"
+                (click)="ocultaDropdownMobile(); abrirModalConsulta()">Consultas</a>
             </li>
             <li class="nav-item ms-md-2 d-none d-lg-none">
               <div class="d-flex">
-                <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a>
+                <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo"
+                  (click)="ocultaDropdownMobile()">Mi ejecutivo</a>
               </div>
             </li>
           </ul>
           <div class="d-flex align-items-center menu-usuario border-gradient border-gradient-green ">
             <hr class="d-block">
-            <span class="me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ segundoNombre }}</span> {{ apellidoPaterno }} <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellidoMaterno }}</span></span>
-            <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" >
-              <span class="material-symbols-outlined icono-datos-usuario dorado" style="font-variation-settings: 'FILL' 1">
+            <span class="me-3 nombre-usuario" id="nombreUsuario">{{ primerNombre }} <span
+                class="d-inline-block d-lg-none d-xl-inline-block">{{ segundoNombre }}</span> {{ apellidoPaterno }}
+              <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellidoMaterno }}</span></span>
+            <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="material-symbols-outlined icono-datos-usuario dorado"
+                style="font-variation-settings: 'FILL' 1">
                 settings
               </span>
             </a>
             <hr class="d-block">
-            <ul class="dropdown-menu dropdown-menu-end dropdown-usuario p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile()">Mis datos</a></li>
-              <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
-              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile()">Emergencias</a></li>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-usuario p-0 animate slideIn"
+              aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos"
+                  (click)="ocultaDropdownMobile()">Mis datos</a></li>
+              <li><a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal"
+                  data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile()">Mi ejecutivo</a></li>
+              <li><a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias"
+                  (click)="ocultaDropdownMobile()">Emergencias</a></li>
               <li>
-                <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
+                <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);"
+                  data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile()">
                   <span class="ico-cerrar-sesion"></span>
                   <span>
                     Cerrar sesión
@@ -79,26 +99,27 @@
 </div>
 
 <!-- Modal cerrar sesion -->
-<div class="modal posicion fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal posicion fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static"
+  data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <div id="usuarioAEliminar">
-          <div class="d-flex align-items-center">
-            <div class="icono material-symbols-outlined d-block me-3 mensaje advertencia">
-              warning
-            </div>
-            <div>
-              <strong class="d-block">Estas cerrando tu sesión.</strong>
-              <small class="d-block">Para confirmar da click en el botón.</small>
-            </div>
+        <div class="d-flex align-items-center">
+          <div class="icono material-symbols-outlined d-block me-3 mensaje advertencia">
+            warning
+          </div>
+          <div>
+            <strong class="d-block">Estas cerrando tu sesión.</strong>
+            <small class="d-block">Para confirmar da click en el botón.</small>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <div class="d-flex justify-content-end flex-md-row">
-          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="ocultaDropdownMobile()">Cancelar</button>
-          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal"
+            (click)="ocultaDropdownMobile()">Cancelar</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar
+            sesión</button>
         </div>
       </div>
     </div>
@@ -106,7 +127,8 @@
 </div>
 
 <!-- Modal consultas -->
-<div class="modal posicion fade" id="modalConsultas" tabindex="-2"  aria-labelledby="modalConsultas" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal posicion fade" id="modalConsultas" tabindex="-2" aria-labelledby="modalConsultas"
+  data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between align-items-center">
@@ -114,26 +136,30 @@
           <span class="titulo-header">Consultas</span>
         </div>
         <!-- <a href="javascript:void(0);" aria-label="Close" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()"> -->
-        <button href="javascript:void(0);" class="btn-cerrar-modal d-flex align-items-center justify-content-center" aria-label="Close" data-bs-dismiss="modal">
+        <button href="javascript:void(0);" class="btn-cerrar-modal d-flex align-items-center justify-content-center"
+          aria-label="Close" data-bs-dismiss="modal">
           <span class="material-symbols-outlined">
             close
           </span>
         </button>
       </div>
-      <app-moda-consultas *ngIf="modalConsultaAbierto" (consultaCancelada)="modalConsultaAbierto = false"></app-moda-consultas>
+      <app-moda-consultas *ngIf="modalConsultaAbierto"
+        (consultaCancelada)="modalConsultaAbierto = false"></app-moda-consultas>
     </div>
   </div>
 </div>
 
 <!-- Modal ejecutivo -->
-<div class="modal posicion fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal posicion fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo"
+  data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-between align-items-center">
         <div>
           <span class="titulo-header">Tu ejecutivo</span>
         </div>
-        <button href="javascript:void(0);" class="btn-cerrar-modal d-flex align-items-center justify-content-center" aria-label="Close" data-bs-dismiss="modal">
+        <button href="javascript:void(0);" class="btn-cerrar-modal d-flex align-items-center justify-content-center"
+          aria-label="Close" data-bs-dismiss="modal">
           <span class="material-symbols-outlined">
             close
           </span>
@@ -173,9 +199,10 @@
         </div>
       </div>
       <div class="modal-footer">
-         <!-- Botones -->
-         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal"
+            (click)="ocultaBackDrop()">Cerrar</button>
         </div>
       </div>
     </div>
