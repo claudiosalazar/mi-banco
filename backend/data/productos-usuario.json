@@ -584,7 +584,7 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "340000",
+      "cupo": "3400000",
       "cupoDisponible": "4662600",
       "transacciones": [
         {
@@ -593,7 +593,7 @@
           "detalle": "Transferencia a Pepito",
           "cargo": "68000",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3332000"
         },
         {
           "id": "1",
@@ -601,7 +601,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "500",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3331500"
         },
         {
           "id": "2",
@@ -609,7 +609,7 @@
           "detalle": "Transferencia de Mario",
           "cargo": "0",
           "abono": "50000",
-          "saldo": "346500"
+          "saldo": "3381500"
         },
         {
           "id": "3",
@@ -617,7 +617,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "10000",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3371500"
         },
         {
           "id": "4",
@@ -625,7 +625,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "20500",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3351000"
         },
         {
           "id": "5",
@@ -633,7 +633,7 @@
           "detalle": "Transferencia a Maria",
           "cargo": "100000",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3251000"
         },
         {
           "id": "6",
@@ -641,7 +641,7 @@
           "detalle": "Transferencia a Jose",
           "cargo": "1500",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3249500"
         },
         {
           "id": "7",
@@ -649,7 +649,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "6000",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3249500"
         },
         {
           "id": "8",
@@ -657,7 +657,7 @@
           "detalle": "Transferencia de Constanza",
           "cargo": "0",
           "abono": "10000",
-          "saldo": "346500"
+          "saldo": "3259500"
         },
         {
           "id": "9",
@@ -665,7 +665,7 @@
           "detalle": "Pago Supermercado",
           "cargo": "200000",
           "abono": "0",
-          "saldo": "346500"
+          "saldo": "3059500"
         },
         {
           "id": "10",
@@ -673,7 +673,7 @@
           "detalle": "Abono a Línea de Crédito",
           "cargo": "0",
           "abono": "1000",
-          "saldo": "346500"
+          "saldo": "3060500"
         },
         {
           "id": "11",
@@ -681,7 +681,7 @@
           "detalle": "Pago a Visa",
           "cargo": "500",
           "abono": "0",
-          "saldo": "346000"
+          "saldo": "3060000"
         },
         {
           "id": "12",
@@ -689,7 +689,7 @@
           "detalle": "Abono a Línea de Crédito",
           "cargo": "0",
           "abono": "5000",
-          "saldo": "346000"
+          "saldo": "3065000"
         },
         {
           "id": "13",
@@ -697,7 +697,7 @@
           "detalle": "Pago a Visa",
           "cargo": "5000",
           "abono": "0",
-          "saldo": "341000"
+          "saldo": "3070000"
         },
         {
           "id": "14",
@@ -705,7 +705,7 @@
           "detalle": "Pago a Visa",
           "cargo": "1000",
           "abono": "0",
-          "saldo": "340000"
+          "saldo": "3069000"
         },
         {
           "id": "15",
@@ -713,7 +713,7 @@
           "detalle": "Abono a Línea de Crédito",
           "cargo": "0",
           "abono": "1000",
-          "saldo": "340000"
+          "saldo": "3070000"
         }
       ]
     },
@@ -722,7 +722,7 @@
       "productoNombre": "Visa",
       "productoNumero": "5555-5555-5555-5555",
       "cupo": "2315000",
-      "cupoDisponible": "2754200",
+      "cupoDisponible": "506500",
       "transacciones": [
         {
           "id": "0",
@@ -738,7 +738,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "100000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "2216000"
         },
         {
           "id": "2",
@@ -746,7 +746,7 @@
           "detalle": "Deposito de Mario",
           "cargo": "0",
           "abono": "200000",
-          "saldo": "2316000"
+          "saldo": "2416000"
         },
         {
           "id": "3",
@@ -754,7 +754,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "30000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "2386000"
         },
         {
           "id": "4",
@@ -762,7 +762,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "50000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "2336000"
         },
         {
           "id": "5",
@@ -770,7 +770,7 @@
           "detalle": "Transferencia a Maria",
           "cargo": "1000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "2331000"
         },
         {
           "id": "6",
@@ -778,7 +778,7 @@
           "detalle": "Transferencia a Jose",
           "cargo": "900000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "1431000"
         },
         {
           "id": "7",
@@ -786,7 +786,7 @@
           "detalle": "Pago Bazar de la esquina",
           "cargo": "1000000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "431000"
         },
         {
           "id": "8",
@@ -794,7 +794,7 @@
           "detalle": "Deposito de Constanza",
           "cargo": "0",
           "abono": "20000",
-          "saldo": "2316000"
+          "saldo": "451000"
         },
         {
           "id": "9",
@@ -802,7 +802,7 @@
           "detalle": "Pago Paris",
           "cargo": "5000",
           "abono": "0",
-          "saldo": "2316000"
+          "saldo": "446000"
         },
         {
           "id": "10",
@@ -810,7 +810,7 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "100",
-          "saldo": "2316000"
+          "saldo": "446100"
         },
         {
           "id": "11",
@@ -818,7 +818,7 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "100",
-          "saldo": "2316000"
+          "saldo": "446200"
         },
         {
           "id": "12",
@@ -826,7 +826,7 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "44800",
-          "saldo": "2316000"
+          "saldo": "491000"
         },
         {
           "id": "13",
@@ -834,7 +834,7 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "5000",
-          "saldo": "2316000"
+          "saldo": "496000"
         },
         {
           "id": "14",
@@ -842,7 +842,7 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "5000",
-          "saldo": "2316000"
+          "saldo": "501000"
         },
         {
           "id": "15",
@@ -850,31 +850,31 @@
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "500",
-          "saldo": "2316000"
+          "saldo": "501500"
         },
         {
           "id": "16",
-          "fecha": "2024-05-02",
+          "fecha": "2024-05-03",
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "5000",
-          "saldo": "2316000"
+          "saldo": "506500"
         },
         {
           "id": "17",
-          "fecha": "2024-05-02",
+          "fecha": "2024-05-04",
           "detalle": "Abono a Visa",
           "cargo": "0",
           "abono": "1000",
-          "saldo": "2316000"
+          "saldo": "507500"
         },
         {
           "id": "18",
-          "fecha": "2024-05-02",
+          "fecha": "2024-05-05",
           "detalle": "Pago a LineaCredito",
           "cargo": "1000",
           "abono": "0",
-          "saldo": "2315000"
+          "saldo": "506500"
         }
       ]
     }
