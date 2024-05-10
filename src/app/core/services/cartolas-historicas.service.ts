@@ -12,7 +12,8 @@ interface CartolaResponse {
 })
 export class CartolasHistoricasService {
 
-  private baseUrl = 'http://localhost:3000/backend/data/cartolas-historicas.json';
+  //private baseUrl = 'http://localhost:3000/backend/data/cartolas-historicas.json';
+  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/cartolas-historicas.json';
 
   constructor(
     private http: HttpClient

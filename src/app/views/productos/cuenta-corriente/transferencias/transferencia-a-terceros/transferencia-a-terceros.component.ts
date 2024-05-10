@@ -757,7 +757,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     let cupoCtaCte = result.cupoCtaCte;
     
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
-    return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(
+    //return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(
+    return from(this.http.get('https://www.claudiosalazar.cl/mi-banco/angular/backend/data/productos-usuario.json').toPromise()).pipe(
       tap(() => console.log('La petición HTTP se ha realizado')),
       map((res: any) => {
         console.log('La petición HTTP ha devuelto una respuesta');

@@ -9,7 +9,8 @@ import { map } from 'rxjs/operators';
 })
 export class SegurosUsuarioService {
 
-  private baseUrl = 'http://localhost:3000/backend/data/seguros-usuario.json';
+  //private baseUrl = 'http://localhost:3000/backend/data/seguros-usuario.json';
+  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/seguros-usuario.json';
 
   seguros: any[] = [];
 

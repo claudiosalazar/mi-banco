@@ -18,7 +18,8 @@ export class AuthService {
   ) { }
 
   autentificacion(usuario: DatosUsuarioLogin): Observable<boolean> {
-    return this.http.get<DatosUsuarioLogin>('http://localhost:3000/backend/data/usuario-mi-banco.json').pipe(
+    //return this.http.get<DatosUsuarioLogin>('http://localhost:3000/backend/data/usuario-mi-banco.json').pipe(
+    return this.http.get<DatosUsuarioLogin>('https://www.claudiosalazar.cl/mi-banco/angular/backend/data/usuario-mi-banco.json').pipe(
       map(datosServidor => {
         const autenticado = usuario.rutUsuario === datosServidor.rutUsuario && usuario.claveUsuario === datosServidor.claveUsuario;
         if (autenticado) {

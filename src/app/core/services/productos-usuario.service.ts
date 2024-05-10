@@ -11,7 +11,8 @@ import { UrlBrowserService } from './url-browser.service';
 })
 export class ProductosUsuarioService {
 
-  private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
+  //private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
+  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/productos-usuario.json';
   private datosUsados: any;
   productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;

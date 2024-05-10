@@ -11,7 +11,8 @@ import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 })
 export class DatosUsuarioService {
 
-  private baseUrl = 'http://localhost:3000/backend/data/datos-usuario.json';
+  //private baseUrl = 'http://localhost:3000/backend/data/datos-usuario.json';
+  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/datos-usuario.json';
 
   private datosUsuarioEditado = new Subject<any>();
 
@@ -48,7 +49,8 @@ import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna
 })
 export class ListaGeograficaService {
 
-  private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+  //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+  private baseUrlGeografica = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/regiones-ciudad-comuna.json';
 
   constructor(
     private http: HttpClient
@@ -68,7 +70,8 @@ import { RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciud
 })
 export class ListaGeograficaComercialService {
 
-  private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+  //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
+  private baseUrlGeografica = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/regiones-ciudad-comuna.json';
 
   constructor(
     private http: HttpClient
