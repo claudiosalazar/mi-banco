@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, of, throwError } from 'rxjs';
 import { Destinatario } from '../../shared/models/destinatarios.model';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { catchError, map } from 'rxjs/operators';
 export class AgendaDestinatariosService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transferencias.json';
-  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/agenda-usuarios-transferencias.json';
+  baseUrl = environment.baseUrl;
 
   private destinatarioSource = new BehaviorSubject(null);
   currentDestinatario = this.destinatarioSource.asObservable();
@@ -33,7 +34,7 @@ export class AgendaDestinatariosService {
   ) { }
 
   getDestinatarios(): Observable<any> {
-    return this.http.get(this.baseUrl);
+    return this.http.get(this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json');
   }
 
   actualizarIdDestinatarioAeditar(id: any): void {
@@ -69,7 +70,7 @@ export class AgendaDestinatariosService {
   }
 
   guardarNuevoDestinatario(datos: any): Observable<any> {
-    return this.http.put(this.baseUrl, datos, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json', datos, {responseType: 'text'}).pipe(
       map((res: any) => {
         return of(datos);
       }),
@@ -91,7 +92,7 @@ export class AgendaDestinatariosService {
   }
   guardarDestinatarioEditado(id: string, datosEditados: any): Observable<any> {
     console.log('Datos enviados al server:', datosEditados);
-    return this.http.put(`${this.baseUrl}/${id}`, datosEditados).pipe(
+    return this.http.put(`${this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json'}/${id}`, datosEditados).pipe(
       map((res: any) => {
         console.log('Datos recibidos del server:', res);
         return res;
@@ -105,7 +106,7 @@ export class AgendaDestinatariosService {
 
   // Eliminia un destinatario
   eliminarDestinatarioServer(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}?id=${id}`, {responseType: 'text'}).pipe(
+    return this.http.delete(`${this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json'}?id=${id}`, {responseType: 'text'}).pipe(
       catchError(error => {
         console.error('Error del server:', error);
         return throwError(error);

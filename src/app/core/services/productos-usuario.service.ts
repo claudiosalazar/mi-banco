@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 import { UrlBrowserService } from './url-browser.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { UrlBrowserService } from './url-browser.service';
 export class ProductosUsuarioService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/productos-usuario.json';
+  baseUrl = environment.baseUrl;
   private datosUsados: any;
   productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;
@@ -52,7 +53,7 @@ export class ProductosUsuarioService {
   }
 
   getProductosUsuarioResumen(id: string): Observable<ProductosUsuario> {
-    const url = `${this.baseUrl}?id=${id}`;
+    const url = `${this.baseUrl + '/backend/data/productos-usuario.json'}?id=${id}`;
     // console.log('URL de la solicitud:', url);
     return this.http.get<ProductosUsuario>(url).pipe(
       catchError(error => {
@@ -64,7 +65,7 @@ export class ProductosUsuarioService {
 
   // Llama a todos los datos de productos
   getProductosUsuario(id: number): Observable<ProductosUsuario['productos'][0]> {
-    const url = `${this.baseUrl}`;
+    const url = `${this.baseUrl + '/backend/data/productos-usuario.json'}`;
     // console.log('URL de la solicitud:', url);
     return this.http.get<ProductosUsuario>(url).pipe(
       map(data => {
@@ -88,7 +89,7 @@ export class ProductosUsuarioService {
 
   // llama los datos para ser usados en una tabla
   getProductosUsuarioTable(): Observable<ProductosUsuario> {
-    const url = `${this.baseUrl}`;
+    const url = `${this.baseUrl + '/backend/data/productos-usuario.json'}`;
     // console.log('URL de la solicitud:', url);
     return new Observable(observer => {
       this.http.get<ProductosUsuario>(url).pipe(
@@ -174,7 +175,7 @@ export class ProductosUsuarioService {
 
   // Guarda los datos actualizados en el servidor
   guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
-    return this.http.put(this.baseUrl, nuevosDatos, {responseType: 'text'}).pipe(
+    return this.http.put(this.baseUrl + '/backend/data/productos-usuario.json', nuevosDatos, {responseType: 'text'}).pipe(
       map((res: any) => {
         const datosActualizados = res;
         return of(nuevosDatos);
@@ -238,7 +239,7 @@ export class ProductosUsuarioService {
   guardaResultadosCalculosTransaccion(datosTransaccionCalculos: any): any {
     //console.log('datos para guardar en server', datosTransaccionCalculos);
     //console.log('Guardando datosTransferencia en el servidor:', datosTransaccionCalculos); // Agrega esta línea
-    this.http.put(this.baseUrl, datosTransaccionCalculos, {responseType: 'text'}).subscribe(response => {
+    this.http.put(this.baseUrl + '/backend/data/productos-usuario.json', datosTransaccionCalculos, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
       //console.log('Datos usados:', this.datosUsados); 
       setTimeout(() => {
@@ -328,7 +329,7 @@ export class ProductosUsuarioService {
 
   // Diferencia tipo de transacciones de cuenta corriente
   getTransferenciasCtaCte(): Observable<any[]> {
-    return this.http.get<any>(this.baseUrl).pipe(
+    return this.http.get<any>(this.baseUrl + '/backend/data/productos-usuario.json').pipe(
       map(response => {
         console.log(response);
         const producto = response.productos.find((producto: { id: string; }) => producto.id === '0');

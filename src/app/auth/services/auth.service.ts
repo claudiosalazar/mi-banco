@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { DatosUsuarioLogin } from '../models/datosUsuarioLogin.model';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { catchError, map } from 'rxjs/operators';
 export class AuthService {
 
   usuarioAutenticado: DatosUsuarioLogin | null = null;
+  baseUrl = environment.baseUrl;
 
   constructor(
     private router: Router,
@@ -18,8 +20,7 @@ export class AuthService {
   ) { }
 
   autentificacion(usuario: DatosUsuarioLogin): Observable<boolean> {
-    //return this.http.get<DatosUsuarioLogin>('http://localhost:3000/backend/data/usuario-mi-banco.json').pipe(
-    return this.http.get<DatosUsuarioLogin>('https://www.claudiosalazar.cl/mi-banco/angular/backend/data/usuario-mi-banco.json').pipe(
+    return this.http.get<DatosUsuarioLogin>(this.baseUrl + '/backend/data/usuario-mi-banco.json').pipe(
       map(datosServidor => {
         const autenticado = usuario.rutUsuario === datosServidor.rutUsuario && usuario.claveUsuario === datosServidor.claveUsuario;
         if (autenticado) {

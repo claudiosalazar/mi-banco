@@ -15,7 +15,8 @@
       <div class="row align-items-md-stretch">
         <!-- Cuenta corriente -->
         <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()">
-          <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveCtaCte}">
+          <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4"
+            [ngClass]="{'active': isActiveCtaCte}">
             <span class="nombre-producto dorado">Cuenta Corriente</span>
             <small class="numero-producto">N° {{ numeroCtaCte }}</small>
             <hr>
@@ -23,15 +24,18 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoCtaCte | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button"
+                routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
             </div>
           </div>
         </div>
 
         <!-- Linea de credito -->
         <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()">
-          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveLineaCredito}">
+          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4"
+            [ngClass]="{'active': isActiveLineaCredito}">
             <span class="nombre-producto tinto">Línea de Crédito</span>
             <small class="numero-producto">N° {{ numeroLineaCredito }}</small>
             <hr>
@@ -39,9 +43,12 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoLineaCredito | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
-              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button"
+                routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button"
+                routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
             </div>
           </div>
         </div>
@@ -56,9 +63,12 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoVisa | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/visa">Ver movimientos</button>
-              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/visa/pago">Pagar</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button"
+                routerLink="/mibanco/productos/visa">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button"
+                routerLink="/mibanco/productos/visa/pago">Pagar</button>
             </div>
           </div>
         </div>
@@ -88,10 +98,12 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : ''
+                      }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : ''
+                      }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -122,10 +134,12 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : ''
+                      }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : ''
+                      }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -156,10 +170,12 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : ''
+                      }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
+                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : ''
+                      }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -178,25 +194,30 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center mb-5 m-2">
-            <span class="titulo-ofertas">Aprovechas<br class="d-md-none"> las ofertas especiales<br> que tenemos para ti</span>
+            <span class="titulo-ofertas">Aprovechas<br class="d-md-none"> las ofertas especiales<br> que tenemos para
+              ti</span>
           </div>
-  
+
           <!-- Banner credito consumo -->
           <div class="col-12">
-            <div class="card card-banner banner-mibanco grande d-flex justify-content-end" style="background-image: url('/assets/images/banner-home-credito-consumo.jpg');">
+            <div class="card card-banner banner-mibanco grande d-flex justify-content-end"
+              style="background-image: url('./assets/images/banner-home-credito-consumo.jpg');">
               <div class="info-banner info-grande">
                 <span class="titulo-banner text-start">
                   Crédito de Consumo
                 </span>
                 <span class="texto-explicativo text-start">
-                  Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
+                  Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno
+                    }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
                 </span>
                 <span class="monto text-start">
                   {{ montoPreAprobadoCreditoConsumo | pesos }}
                 </span>
                 <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
                   <span class="texto-legal me-3">
-                    * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                    * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis
+                    est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque
+                    imperdiet.
                   </span>
                   <div>
                     <button class="btn-banner mb-3 mb-md-auto" type="button">Solicitar Crédito</button>
@@ -219,7 +240,8 @@
 
           <!-- Banner seguro -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
-            <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-seguro-auto.jpg');">
+            <div class="card card-banner banner-mibanco medio"
+              style="background-image: url('./assets/images/banner-seguro-auto.jpg');">
               <div class="info-banner d-flex justify-content-around align-content-stretch">
                 <div class="info-medio">
                   <div class="d-flex flex-column ">
@@ -230,19 +252,22 @@
                       Por un valor mensual por el primer año.
                     </span>
                     <span class="texto-explicativo">
-                      oferta exclusiva para solo por este mes 
+                      oferta exclusiva para solo por este mes
                     </span>
                     <span class="monto-cuota text-start rojo">
                       UF {{ montoPreAprobadoSeguroAuto}}
                     </span>
-                    <img src="../../../assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
+                    <img src="./assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
                   </div>
                   <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
                     <span class="texto-legal me-3">
-                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
+                      Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id
+                      pellentesque imperdiet.
                     </span>
                     <div>
-                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" type="button">
+                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto"
+                        type="button">
                         <div>
                           Más información
                         </div>
@@ -259,7 +284,8 @@
 
           <!-- Banner visa -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
-            <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-visa.jpg');">
+            <div class="card card-banner banner-mibanco medio"
+              style="background-image: url('./assets/images/banner-visa.jpg');">
               <div class="info-banner d-flex justify-content-around align-content-stretch">
                 <div class="info-medio">
                   <div class="d-flex flex-column">
@@ -275,10 +301,13 @@
                   </div>
                   <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-1 mt-md-auto">
                     <span class="texto-legal me-3">
-                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
+                      Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id
+                      pellentesque imperdiet.
                     </span>
                     <div>
-                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" type="button">
+                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto"
+                        type="button">
                         <div>
                           Más información
                         </div>

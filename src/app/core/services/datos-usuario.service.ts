@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment.prod';
 
 // Models
 import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
@@ -12,7 +13,7 @@ import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
 export class DatosUsuarioService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/datos-usuario.json';
-  private baseUrl = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/datos-usuario.json';
+  baseUrl = environment.baseUrl;
 
   private datosUsuarioEditado = new Subject<any>();
 
@@ -21,13 +22,13 @@ export class DatosUsuarioService {
   ) { }
 
     getDatosUsuario(): Observable<DatosUsuarioActual> {
-      const observable = this.http.get<DatosUsuarioActual>(this.baseUrl);
+      const observable = this.http.get<DatosUsuarioActual>(this.baseUrl + '/backend/data/datos-usuario.json');
       return observable;
     }
     
     guardarDestinatarioEditado(datosUsuarioEditado: any): Observable<any> {
       console.log('Datos enviados al server:', datosUsuarioEditado);
-      return this.http.put(`${this.baseUrl}`, datosUsuarioEditado, {responseType: 'text'}).pipe(
+      return this.http.put(`${this.baseUrl + '/backend/data/datos-usuario.json'}`, datosUsuarioEditado, {responseType: 'text'}).pipe(
         map((res: any) => {
           console.log('Datos recibidos del server:', res);
           return res;
@@ -44,20 +45,21 @@ export class DatosUsuarioService {
 
 import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ListaGeograficaService {
 
   //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
-  private baseUrlGeografica = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/regiones-ciudad-comuna.json';
+  baseUrl = environment.baseUrl;
 
   constructor(
     private http: HttpClient
   ) { }
 
   getListaGeografica(): Observable<RegionesCiudadComuna> {
-    const observable = this.http.get<RegionesCiudadComuna>(this.baseUrlGeografica);;
+    const observable = this.http.get<RegionesCiudadComuna>(this.baseUrl + '/backend/data/regiones-ciudad-comuna.json');
     return observable;
   }
 
@@ -71,14 +73,14 @@ import { RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciud
 export class ListaGeograficaComercialService {
 
   //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
-  private baseUrlGeografica = 'https://www.claudiosalazar.cl/mi-banco/angular/backend/data/regiones-ciudad-comuna.json';
+  baseUrl = environment.baseUrl;
 
   constructor(
     private http: HttpClient
   ) { }
 
   getListaGeograficaComercial(): Observable<RegionesCiudadComunaComercial> {
-    const observable = this.http.get<RegionesCiudadComunaComercial>(this.baseUrlGeografica);
+    const observable = this.http.get<RegionesCiudadComunaComercial>(this.baseUrl + '/backend/data/regiones-ciudad-comuna.json');
     return observable;
   }
 

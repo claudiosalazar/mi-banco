@@ -4,11 +4,11 @@
       <h1>Pago Visa</h1>
       <div class="row">
         <div class="col-12">
-          
+
           <div class="card p-4">
 
             <h5>Datos de pago</h5>
-            
+
             <div class="row">
 
               <!-- Datos del productos -->
@@ -28,16 +28,22 @@
                   <hr>
                   <p class="mb-0 col-12 col-md-6 pt-3 pt-md-3">
                     <span class="d-flex">
-                      <small *ngIf="!mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa | numeroTarjeta }}</strong></small>
-                      <small *ngIf="mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa }}</strong></small>
-                      <button class="btn-mostrar-numero-tarjeta" *ngIf="!mostrarNumeroTarjeta" (click)="mostrarNumeroVisa()">Mostrar</button>
+                      <small *ngIf="!mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa | numeroTarjeta
+                          }}</strong></small>
+                      <small *ngIf="mostrarNumeroTarjeta">Visa N°: <strong class="tinto">{{ numeroVisa
+                          }}</strong></small>
+                      <button class="btn-mostrar-numero-tarjeta" *ngIf="!mostrarNumeroTarjeta"
+                        (click)="mostrarNumeroVisa()">Mostrar</button>
                     </span>
                   </p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong class="tinto">{{ cupoVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pt-md-3"><small>Cupo Utilizado: <strong class="tinto">{{ cupoVisa
+                        | pesos }}</strong></small></p>
                 </div>
                 <div class="row">
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong class="tinto">{{ cupoInicialVisa | pesos }}</strong></small></p>
-                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong class="tinto">{{ cupoDisponibleVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-md-3 pt-md-2"><small>Cupo Total: <strong class="tinto">{{
+                        cupoInicialVisa | pesos }}</strong></small></p>
+                  <p class="mb-0 col-12 col-md-6 pt-2 pb-3 pb-md-3 pt-md-2"><small>Cupo Disponible: <strong
+                        class="tinto">{{ cupoDisponibleVisa | pesos }}</strong></small></p>
                 </div>
               </div>
 
@@ -49,10 +55,17 @@
                 <div class="col-12 mb-4">
                   <h6>Seleccione un producto para realizar el pago</h6>
                   <div class="form-floating">
-                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="opcionesDePago" [zIndex]="100" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'" (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte | pesos }}</strong></small>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoLineaCredito | pesos }}</strong></small>
-                    <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']" class="invalid-feedback d-block">
+                    <custom-select [control]="pagoVisaForm.get('productoParaPago')" [options]="opcionesDePago"
+                      [zIndex]="100" [submitted]="submitted" [labelSelect]="'Productos'" [errorKey]="'productoInvalido'"
+                      (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"></custom-select>
+                    <small class="pt-2 d-block"
+                      *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ cupoCtaCte
+                        | pesos }}</strong></small>
+                    <small class="pt-2 d-block"
+                      *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{
+                        cupoLineaCredito | pesos }}</strong></small>
+                    <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']"
+                      class="invalid-feedback d-block">
                       Debes seleccionar un producto para pagar.
                     </div>
                   </div>
@@ -64,31 +77,36 @@
                   <div class="d-flex mb-3">
                     <!-- Pago total -->
                     <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago"
+                        value="pagoTotal">
                       <label class="form-check-label" for="montoPago">
                         Monto Facturado
                       </label>
                     </div>
                     <!-- Pago minimo -->
                     <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoMinimo">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago"
+                        value="pagoMinimo">
                       <label class="form-check-label" for="montoPago">
                         Pago Mínimo
                       </label>
                     </div>
                     <!-- Otro monto -->
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto" >
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago"
+                        value="otroMonto">
                       <label class="form-check-label" for="montoPago">
-                        Otro Monto 
+                        Otro Monto
                       </label>
                     </div>
                   </div>
 
                   <!-- Input pago total -->
-                  <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'">
-                    <input type="text" class="form-control" id="inputMontoPagoTotal" formControlName="inputMontoPagoTotal"
-                    [class.is-invalid]="error3" [class.is-valid]="pagoTotalValido">
+                  <div class="form-floating mb-3" id="contenedorPagoTotal"
+                    *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoTotal'">
+                    <input type="text" class="form-control" id="inputMontoPagoTotal"
+                      formControlName="inputMontoPagoTotal" [class.is-invalid]="error3"
+                      [class.is-valid]="pagoTotalValido">
                     <label for="inputMontoPagoTotal">Monto Facturado</label>
                     <div *ngIf="error3" class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
@@ -99,9 +117,11 @@
                   </div>
 
                   <!-- Input pago minimo -->
-                  <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
-                    <input type="text" class="form-control" id="inputMontoPagoMinimo" formControlName="inputMontoPagoMinimo"
-                    [class.is-invalid]="error3" [class.is-valid]="pagoMinimoValido">
+                  <div class="form-floating mb-3" id="contenedorPagoTotal"
+                    *ngIf="pagoVisaForm.controls['montoPago'].value === 'pagoMinimo'">
+                    <input type="text" class="form-control" id="inputMontoPagoMinimo"
+                      formControlName="inputMontoPagoMinimo" [class.is-invalid]="error3"
+                      [class.is-valid]="pagoMinimoValido">
                     <label for="inputMontoPagoMinimo">Monto Pago Mínimo</label>
                     <div *ngIf="error3" class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
@@ -110,10 +130,14 @@
                       <span>El monto es correcto.</span>
                     </div>
                   </div>
-                  
+
                   <!-- Input otro monto -->
-                  <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
-                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto" placeholder="Ingrese un monto a pagar" [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();" (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
+                  <div class="form-floating" id="contenedorOtroPago"
+                    *ngIf="pagoVisaForm.controls['montoPago'].value === 'otroMonto'">
+                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto"
+                      placeholder="Ingrese un monto a pagar" [class.is-invalid]="error1 || error2"
+                      [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();"
+                      (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
                     <label for="inputOtroMonto">Ingrese un monto a pagar</label>
                     <div *ngIf="error1" class="invalid-feedback">
                       <span>Debes ingresar un monto superior a 0.</span>
@@ -131,17 +155,23 @@
                 <div class="col-12 mb-4">
                   <h6>Enviar comprobante a:</h6>
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }" (input)="emailValido('inputEmail')">
+                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail"
+                      [ngClass]="{ 'is-invalid': pagoVisaForm.controls['inputEmail'].invalid && (pagoVisaForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoVisaForm.controls['inputEmail'].valid }"
+                      (input)="emailValido('inputEmail')">
                     <label for="inputEmail">Email</label>
 
                     <div *ngIf="pagoVisaForm.controls['inputEmail'].valid" class="valid-feedback">
                       El email es correcto.
                     </div>
 
-                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)" class="invalid-feedback">
+                    <div
+                      *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['required'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted)"
+                      class="invalid-feedback">
                       Este campo es requerido.
                     </div>
-                    <div *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['customEmail'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted) && pagoVisaForm.controls['inputEmail'].value" class="invalid-feedback">
+                    <div
+                      *ngIf="pagoVisaForm.controls['inputEmail'].errors?.['customEmail'] && (pagoVisaForm.controls['inputEmail'].dirty || submitted) && pagoVisaForm.controls['inputEmail'].value"
+                      class="invalid-feedback">
                       Debe ser un email válido.
                     </div>
                   </div>
@@ -151,7 +181,8 @@
                 <div class="col-12 px-3">
                   <div class="row d-flex justify-content-md-end flex-column-reverse flex-md-row">
                     <button type="button" class="btn btn-secundario col-12 col-md-3 me-md-3">Cancelar</button>
-                    <button type="submit" class="btn btn-primario col-12 col-md-3 mb-3 mb-md-0" (click)="validaFormulario()">Pagar</button>
+                    <button type="submit" class="btn btn-primario col-12 col-md-3 mb-3 mb-md-0"
+                      (click)="validaFormulario()">Pagar</button>
                   </div>
                 </div>
 
@@ -163,42 +194,44 @@
     </div>
 
     <div class="col-4 d-none d-lg-block mt-5">
-      <div class="card card-banner banner-mibanco medio" style="background-image: url('/assets/images/banner-seguro-auto.jpg');">
-          <div class="info-banner d-flex justify-content-around align-content-stretch">
-            <div class="info-medio">
-              <div class="d-flex flex-column ">
-                <span class="titulo-banner text-start">
-                  Contrata tu Seguro Auto
-                </span>
-                <span class="texto-secundario">
-                  Por un valor mensual por el primer año.
-                </span>
-                <span class="texto-explicativo">
-                  oferta exclusiva para solo por este mes 
-                </span>
-                <span class="monto-cuota text-start rojo">
-                  UF {{ montoPreAprobadoSeguroAuto}}
-                </span>
-                <img src="../../../assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
+      <div class="card card-banner banner-mibanco medio"
+        style="background-image: url('./assets/images/banner-seguro-auto.jpg');">
+        <div class="info-banner d-flex justify-content-around align-content-stretch">
+          <div class="info-medio">
+            <div class="d-flex flex-column ">
+              <span class="titulo-banner text-start">
+                Contrata tu Seguro Auto
+              </span>
+              <span class="texto-secundario">
+                Por un valor mensual por el primer año.
+              </span>
+              <span class="texto-explicativo">
+                oferta exclusiva para solo por este mes
+              </span>
+              <span class="monto-cuota text-start rojo">
+                UF {{ montoPreAprobadoSeguroAuto}}
+              </span>
+              <img src="./assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
+            </div>
+            <div class="d-flex flex-column justify-content-start mt-4">
+              <div>
+                <a class="btn-link d-flex align-items-center mb-3" type="button">
+                  <div>
+                    Más información
+                  </div>
+                  <span class="material-symbols-outlined icono-link">
+                    chevron_right
+                  </span>
+                </a>
               </div>
-              <div class="d-flex flex-column justify-content-start mt-4">
-                <div>
-                  <a class="btn-link d-flex align-items-center mb-3" type="button">
-                    <div>
-                      Más información
-                    </div>
-                    <span class="material-symbols-outlined icono-link">
-                      chevron_right
-                    </span>
-                  </a>
-                </div>
-                <span class="texto-legal me-3">
-                  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
-                </span>
-              </div>
+              <span class="texto-legal me-3">
+                * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est
+                tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+              </span>
             </div>
           </div>
         </div>
+      </div>
     </div>
 
   </div>

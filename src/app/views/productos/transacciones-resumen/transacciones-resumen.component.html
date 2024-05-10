@@ -17,8 +17,10 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoCtaCte | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button"
+                routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
             </div>
           </div>
         </div>
@@ -33,9 +35,12 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoLineaCredito | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
-              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button"
+                routerLink="/mibanco/productos/linea-credito">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button"
+                routerLink="/mibanco/productos/linea-credito/pago">Pagar</button>
             </div>
           </div>
         </div>
@@ -50,9 +55,12 @@
               <span class="texto-montos">Disponible:</span>
               <span class="texto-montos monto">{{ cupoVisa | pesos }}</span>
             </div>
-            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button" routerLink="/mibanco/productos/visa">Ver movimientos</button>
-              <button class="btn-small btn-primario" type="button" routerLink="/mibanco/productos/visa/pago">Pagar</button>
+            <div
+              class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario me-3 me-md-0 me-lg-3 mb-md-3 mb-lg-0" type="button"
+                routerLink="/mibanco/productos/visa">Ver movimientos</button>
+              <button class="btn-small btn-primario" type="button"
+                routerLink="/mibanco/productos/visa/pago">Pagar</button>
             </div>
           </div>
         </div>
@@ -60,20 +68,24 @@
 
         <!-- Banner credito consumo -->
         <div class="col-12">
-          <div class="card card-banner banner-mibanco grande d-flex justify-content-end" style="background-image: url('/assets/images/banner-home-credito-consumo.jpg');">
+          <div class="card card-banner banner-mibanco grande d-flex justify-content-end"
+            style="background-image: url('./assets/images/banner-home-credito-consumo.jpg');">
             <div class="info-banner info-grande">
               <span class="titulo-banner text-start">
                 Crédito de Consumo
               </span>
               <span class="texto-explicativo text-start">
-                Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
+                Hola <strong>{{ datosUsuarioActual?.primerNombre }} {{ datosUsuarioActual?.apellidoPaterno }}</strong>,
+                disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
               </span>
               <span class="monto text-start">
                 {{ montoPreAprobadoCreditoConsumo | pesos }}
               </span>
               <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
                 <span class="texto-legal me-3">
-                  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+                  * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis
+                  est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque
+                  imperdiet.
                 </span>
                 <div>
                   <button class="btn-banner mb-3 mb-md-auto" type="button">Solicitar Crédito</button>
@@ -86,6 +98,6 @@
     </div>
 
 
-    
+
   </div>
 </div>
