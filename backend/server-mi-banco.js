@@ -6,8 +6,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-app.use(cors({ origin: 'http://localhost:4200' }));
-// app.use(cors({ origin: 'https://www.claudiosalazar.cl/mi-banco/angular/' }));
+app.use(cors({ origin: 'https://www.claudiosalazar.cl/mi-banco/angular/' }));
 
 app.use(express.json());
 

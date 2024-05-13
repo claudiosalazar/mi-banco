@@ -27,7 +27,7 @@ import { TransaccionesResumenComponent } from './views/productos/transacciones-r
 import { SegurosComponent } from './views/productos/seguros/seguros.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'mibanco', component: MainComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: ResumenUsuarioComponent },
