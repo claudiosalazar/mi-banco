@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 // Models
 import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
@@ -11,9 +11,8 @@ import { DatosUsuarioActual } from '../../shared/models/datos-usuario.model';
   providedIn: 'root'
 })
 export class DatosUsuarioService {
-
-  //private baseUrl = 'http://localhost:3000/backend/data/datos-usuario.json';
-  baseUrl = environment.baseUrl;
+  
+  baseUrl = 'http://localhost:3000';
 
   private datosUsuarioEditado = new Subject<any>();
 
@@ -52,7 +51,8 @@ import { RegionesCiudadComuna } from '../../shared/models/regiones-ciudad-comuna
 export class ListaGeograficaService {
 
   //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
 
   constructor(
     private http: HttpClient
@@ -73,7 +73,8 @@ import { RegionesCiudadComunaComercial } from '../../shared/models/regiones-ciud
 export class ListaGeograficaComercialService {
 
   //private baseUrlGeografica = 'http://localhost:3000/backend/data/regiones-ciudad-comuna.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
 
   constructor(
     private http: HttpClient

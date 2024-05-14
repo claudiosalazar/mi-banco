@@ -26,7 +26,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/favicon.ico"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -37,7 +38,6 @@
               [ "src/app/shared/scss" ]
             },
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
@@ -59,9 +59,9 @@
               "optimization": {
                 "scripts": true,
                 "styles": {
-                     "minify": true,
-                     "inlineCritical": false
-                     },
+                  "minify": true,
+                  "inlineCritical": false
+                },
                 "fonts": true
             },
               "outputHashing": "all"

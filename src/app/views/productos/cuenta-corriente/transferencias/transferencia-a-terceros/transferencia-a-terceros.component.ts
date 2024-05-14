@@ -91,6 +91,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     { value: '6', label: 'Cuenta Bancaria para extranjeros' },
   ];
 
+  baseUrl = 'http://localhost:3000';
+
   //destinatarios: { [key: string]: any }[] | undefined;
   destinatarioSeleccionado: { id: any, nombre?: string } | undefined;
   destinatarioId: string | null | undefined;
@@ -758,7 +760,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy{
     
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
     //return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(
-    return from(this.http.get('https://www.claudiosalazar.cl/mi-banco/angular/backend/data/productos-usuario.json').toPromise()).pipe(
+    return from(this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').toPromise()).pipe(
       tap(() => console.log('La petición HTTP se ha realizado')),
       map((res: any) => {
         console.log('La petición HTTP ha devuelto una respuesta');

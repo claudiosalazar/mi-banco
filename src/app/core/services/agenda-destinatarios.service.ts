@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, of, throwError } from 'rxjs';
 import { Destinatario } from '../../shared/models/destinatarios.model';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ import { environment } from '../../../environments/environment.prod';
 export class AgendaDestinatariosService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/agenda-usuarios-transferencias.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
 
   private destinatarioSource = new BehaviorSubject(null);
   currentDestinatario = this.destinatarioSource.asObservable();

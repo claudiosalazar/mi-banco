@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OfertasProductos } from '../../shared/models/ofertas-productos.model';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfertasProductosService {
   //private baseUrl = 'http://localhost:3000/backend/data/ofertas-productos.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
   constructor(private http: HttpClient) { }
 
   getOfertasProductos(id: any): Observable<OfertasProductos> {

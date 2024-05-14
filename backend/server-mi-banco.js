@@ -6,8 +6,8 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// app.use(cors({ origin: 'http://localhost:4200' }));
-app.use(cors({ origin: 'https://www.claudiosalazar.cl/mi-banco/angular/' }));
+app.use(cors({ origin: 'http://localhost:4200' }));
+//app.use(cors({ origin: 'https://www.claudiosalazar.cl/mi-banco/angular' }));
 
 app.use(express.json());
 
@@ -16,6 +16,10 @@ app.use(bodyParser.json());
 
 // Sirve los archivos estáticos en la carpeta backend/data
 app.use('/backend/data', express.static(path.join(__dirname, 'backend/data')));
+
+app.get('/', (_req, res) => {
+  res.send('Bienvenido a mi servidor');
+});
 
 app.post('/data', (req, res) => {
   const datos = req.body;
@@ -273,6 +277,6 @@ app.put('/backend/data/productos-usuario.json', (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`El servidor está corriendo en http://localhost:${port}`);
+app.listen(3000, () => {
+  console.log('Servidor corriendo en http://localhost:3000');
 });

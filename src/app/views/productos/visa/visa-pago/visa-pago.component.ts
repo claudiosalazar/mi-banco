@@ -39,6 +39,8 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalPagoVisa') modalPagoVisa: ElementRef | undefined;
 
+  baseUrl = 'http://localhost:3000';
+
   private pesosPipe = new PesosPipe();
 
   pagoVisaForm: FormGroup = new FormGroup({});
@@ -507,7 +509,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
     //return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
-    return from(this.http.get('https://www.claudiosalazar.cl/mi-banco/angular/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
+    return from(this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
       // Los datos del archivo están en 'res'
       const datosTransaccion = res;
       const productoCtaCte = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '0');

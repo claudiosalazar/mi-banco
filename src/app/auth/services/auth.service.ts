@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { DatosUsuarioLogin } from '../models/datosUsuarioLogin.model';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment.prod';
 export class AuthService {
 
   usuarioAutenticado: DatosUsuarioLogin | null = null;
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
 
   constructor(
     private router: Router,

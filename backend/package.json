@@ -2,7 +2,7 @@
   "name": "backend-mi-banco",
   "version": "1.0.0",
   "description": "Datos de ejemplo para proyecto Mi Banco",
-  "main": "index.js",
+  "main": "server-mi-banco.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

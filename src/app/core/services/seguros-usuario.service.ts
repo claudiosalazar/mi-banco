@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SegurosUsuario } from '../../shared/models/seguros-usuario.model';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ import { environment } from '../../../environments/environment.prod';
 export class SegurosUsuarioService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/seguros-usuario.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
 
   seguros: any[] = [];
 

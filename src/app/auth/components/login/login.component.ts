@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   
   checkInputs(rutUsuarioControl: AbstractControl, claveUsuarioControl: AbstractControl): void {
     if (rutUsuarioControl.value && claveUsuarioControl.value) {
-      this.botonLoginDisabled = !rutUsuarioControl.errors?.rutInvalido;
+      this.botonLoginDisabled = !rutUsuarioControl.errors?.['rutInvalido'];
     } else {
       this.botonLoginDisabled = false;
     }

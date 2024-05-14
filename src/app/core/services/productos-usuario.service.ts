@@ -5,7 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { ProductosUsuario } from '../../shared/models/productos-usuario.model';
 import { UrlBrowserService } from './url-browser.service';
-import { environment } from '../../../environments/environment.prod';
+//import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ import { environment } from '../../../environments/environment.prod';
 export class ProductosUsuarioService {
 
   //private baseUrl = 'http://localhost:3000/backend/data/productos-usuario.json';
-  baseUrl = environment.baseUrl;
+  baseUrl = 'http://localhost:3000';
+
   private datosUsados: any;
   productos: ProductosUsuario['productos'] = [];
   saldo: string | undefined;
