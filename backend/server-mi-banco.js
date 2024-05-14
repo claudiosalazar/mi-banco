@@ -162,7 +162,7 @@ app.delete('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
 });
 
 // Actualiza los datos de usuario
-app.put('/backend/data/datos-usuario.json', (req, res) => {
+app.post('/backend/data/datos-usuario.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'datos-usuario.json');
   const datosUsuarioEditado = req.body; // req.body ya es un objeto JavaScript
 
@@ -193,7 +193,7 @@ app.put('/backend/data/datos-usuario.json', (req, res) => {
 });
 
 // Guarda un nuevo destinatario en la agenda
-app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
+app.post('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'agenda-usuarios-transferencias.json');
   const destinatarioActualizado = req.body; // req.body ya es un objeto JavaScript
 
@@ -233,7 +233,7 @@ app.put('/backend/data/agenda-usuarios-transferencias.json', (req, res) => {
 });
 
 // Actualiza los datos de productos
-app.put('/backend/data/productos-usuario.json', (req, res) => {
+app.post('/backend/data/productos-usuario.json', (req, res) => {
   const filePath = path.join(__dirname, 'data', 'productos-usuario.json');
   const nuevosDatos = req.body;
   

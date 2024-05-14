@@ -71,7 +71,7 @@ export class AgendaDestinatariosService {
   }
 
   guardarNuevoDestinatario(datos: any): Observable<any> {
-    return this.http.put(this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json', datos, {responseType: 'text'}).pipe(
+    return this.http.post(this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json', datos, {responseType: 'text'}).pipe(
       map((res: any) => {
         return of(datos);
       }),
@@ -93,7 +93,7 @@ export class AgendaDestinatariosService {
   }
   guardarDestinatarioEditado(id: string, datosEditados: any): Observable<any> {
     console.log('Datos enviados al server:', datosEditados);
-    return this.http.put(`${this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json'}/${id}`, datosEditados).pipe(
+    return this.http.post(`${this.baseUrl + '/backend/data/agenda-usuarios-transferencias.json'}/${id}`, datosEditados).pipe(
       map((res: any) => {
         console.log('Datos recibidos del server:', res);
         return res;

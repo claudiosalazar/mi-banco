@@ -27,7 +27,7 @@ export class DatosUsuarioService {
     
     guardarDestinatarioEditado(datosUsuarioEditado: any): Observable<any> {
       console.log('Datos enviados al server:', datosUsuarioEditado);
-      return this.http.put(`${this.baseUrl + '/backend/data/datos-usuario.json'}`, datosUsuarioEditado, {responseType: 'text'}).pipe(
+      return this.http.post(`${this.baseUrl + '/backend/data/datos-usuario.json'}`, datosUsuarioEditado, {responseType: 'text'}).pipe(
         map((res: any) => {
           console.log('Datos recibidos del server:', res);
           return res;

@@ -176,7 +176,7 @@ export class ProductosUsuarioService {
 
   // Guarda los datos actualizados en el servidor
   guardaResultadosCalculos(nuevosDatos: ProductosUsuario['productos']): Observable<any> {
-    return this.http.put(this.baseUrl + '/backend/data/productos-usuario.json', nuevosDatos, {responseType: 'text'}).pipe(
+    return this.http.post(this.baseUrl + '/backend/data/productos-usuario.json', nuevosDatos, {responseType: 'text'}).pipe(
       map((res: any) => {
         const datosActualizados = res;
         return of(nuevosDatos);
@@ -240,7 +240,7 @@ export class ProductosUsuarioService {
   guardaResultadosCalculosTransaccion(datosTransaccionCalculos: any): any {
     //console.log('datos para guardar en server', datosTransaccionCalculos);
     //console.log('Guardando datosTransferencia en el servidor:', datosTransaccionCalculos); // Agrega esta línea
-    this.http.put(this.baseUrl + '/backend/data/productos-usuario.json', datosTransaccionCalculos, {responseType: 'text'}).subscribe(response => {
+    this.http.post(this.baseUrl + '/backend/data/productos-usuario.json', datosTransaccionCalculos, {responseType: 'text'}).subscribe(response => {
       console.log('Datos guardados con éxito:', response);
       //console.log('Datos usados:', this.datosUsados); 
       setTimeout(() => {
