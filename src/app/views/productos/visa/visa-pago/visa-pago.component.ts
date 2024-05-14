@@ -508,8 +508,7 @@ export class VisaPagoComponent implements OnInit, AfterViewInit {
     // let cupoDisponibleVisa = result.cupoDisponibleVisa;
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
-    //return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
-    return from(this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
+    return this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').pipe(map((res: any) => {
       // Los datos del archivo están en 'res'
       const datosTransaccion = res;
       const productoCtaCte = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '0');

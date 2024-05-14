@@ -465,8 +465,7 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
     let cupoDisponibleLineaCredito = result.cupoDisponibleLineaCredito;
 
     // Hacer una petición GET para obtener los datos del archivo productos-usuario.json
-    //return from(this.http.get('http://localhost:3000/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
-    return from(this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').toPromise()).pipe(map((res: any) => {
+    return this.http.get(this.baseUrl + '/backend/data/productos-usuario.json').pipe(map((res: any) => {
       // Los datos del archivo están en 'res'
       const datosTransaccion = res;
       const productoCtaCte = datosTransaccion.productos.find((productos: { id: string; }) => productos.id === '0');
@@ -477,13 +476,10 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
       if (result.productoParaPagoValue === '1') {
         // Datos Cuenta Corriente
         if (productoCtaCte) {
-          // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
           const cupoCtaCteString = cupoCtaCte.toString();
-          // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
 
           // Si el producto existe, agregar las variables y la nueva transacción
           productoCtaCte.cupo = cupoCtaCteString;
-          // productoLineaCredito.cupoDisponible = cupoDisponibleCtaCteString;
 
           // Obtener el último ID en el array de transacciones
           const ultimoIdTransaccion = Math.max(...productoCtaCte.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
@@ -505,13 +501,10 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
       } else if (result.productoParaPagoValue === '2') {
         // Datos Linea de credito
         if (productoVisa) {
-          // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
           const cupoVisaString = cupoVisa.toString();
-          // const cupoDisponibleCtaCteString = cupoDisponibleCtaCte.toString();
 
           // Si el producto existe, agregar las variables y la nueva transacción
           productoVisa.cupo = cupoVisaString;
-          // productoLineaCredito.cupoDisponible = cupoDisponibleCtaCteString;
 
           // Obtener el último ID en el array de transacciones
           const ultimoIdTransaccion = Math.max(...productoVisa.transacciones.map((t: { id: string; }) => parseInt(t.id)), 0);
@@ -532,7 +525,6 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
         
       }
       if (productoLineaCredito && productoLineaCredito.id === '1') {
-        // Convertir 'montoPagado', 'cupoLineaCredito' y 'cupoDisponibleLineaCredito' a strings
         const cupoLineaCreditoString = cupoLineaCredito.toString();
         const cupoDisponibleLineaCreditoString = cupoDisponibleLineaCredito.toString();
       
