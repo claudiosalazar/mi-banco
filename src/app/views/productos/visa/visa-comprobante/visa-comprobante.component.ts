@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { ProductosUsuarioService } from '../../../../core/services/productos-usuario.service';
 import { DatosUsuarioService } from '../../../../core/services/datos-usuario.service';
+import { BackdropService } from '../../../../core/services/backdrop.service';
 
 // Models
 import { DatosUsuarioActual } from '../../../../shared/models/datos-usuario.model';
@@ -23,12 +24,14 @@ export class VisaComprobanteComponent implements OnInit{
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
-    private productosUsuarioService: ProductosUsuarioService
+    private productosUsuarioService: ProductosUsuarioService,
+    private backdropService: BackdropService
   ) { }
 
   ngOnInit() {
     this.getDatosUsuario();
     this.getProductosUsuarioResumen('2'); 
+    this.backdropService.hide();
   }
 
   getDatosUsuario(): void {

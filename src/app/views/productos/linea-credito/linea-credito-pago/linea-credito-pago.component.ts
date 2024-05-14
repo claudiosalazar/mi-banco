@@ -406,19 +406,20 @@ export class LineaCreditoPagoComponent implements OnInit, AfterViewInit {
         keyboard: false
       });
       modal.show();
-  
-      this.datosPagoLineaCredito().subscribe((datosTransaccion: any) => {
-        this.productosUsuarioService.getDatosPagoLineaCredito(datosTransaccion);
-        this.pagoCorrecto = true;
-        setTimeout(() => {
-          this.backdropService.hide();
-        }, 1500);
-      }, error => {
-        console.error('Error al enviar los datos al servidor:', error);
-        this.pagoCorrecto = false;
-        this.errorServer = true;
-        //this.mostrarBackdropCustomModal = false;
-        this.backdropService.hide();
+
+      this.datosPagoLineaCredito().subscribe({
+        next: (datosTransaccion: any) => {
+          this.productosUsuarioService.getDatosPagoLineaCredito(datosTransaccion);
+          this.pagoCorrecto = true;
+          setTimeout(() => {
+            this.backdropService.hide();
+          }, 1500);
+        },
+        error: (error) => {
+          console.error('Error al enviar los datos al servidor:', error);
+          this.pagoCorrecto = false;
+          this.errorServer = true;
+        }
       });
     }
   }

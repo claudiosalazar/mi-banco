@@ -4,7 +4,7 @@
       "id": "0",
       "productoNombre": "Cuenta Corriente",
       "productoNumero": "3456789",
-      "cupo": "862132",
+      "cupo": "800000",
       "cupoDisponible": "",
       "transacciones": [
         {
@@ -577,6 +577,14 @@
           "cargo": "333",
           "abono": "",
           "saldo": "862132"
+        },
+        {
+          "id": "58",
+          "fecha": "2024-05-14",
+          "detalle": "Pago a LineaCredito",
+          "cargo": "62132",
+          "abono": "0",
+          "saldo": "800000"
         }
       ]
     },
@@ -584,8 +592,8 @@
       "id": "1",
       "productoNombre": "Linea de Crédito",
       "productoNumero": "0987654",
-      "cupo": "3400000",
-      "cupoDisponible": "4662600",
+      "cupo": "3070000",
+      "cupoDisponible": "4724732",
       "transacciones": [
         {
           "id": "0",
@@ -713,6 +721,14 @@
           "detalle": "Abono a Línea de Crédito",
           "cargo": "0",
           "abono": "1000",
+          "saldo": "3070000"
+        },
+        {
+          "id": "16",
+          "fecha": "2024-05-14",
+          "detalle": "Abono a Línea de Crédito",
+          "cargo": "0",
+          "abono": "62132",
           "saldo": "3070000"
         }
       ]
