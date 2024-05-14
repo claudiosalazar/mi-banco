@@ -110,7 +110,6 @@ export class ResumenUsuarioComponent implements OnInit {
         const cuentaCorriente = data.productos[0];
         if (cuentaCorriente) {
           this.transaccionesCuentaCorriente = cuentaCorriente.transacciones.slice(-3);
-          console.log('Transacciones asignadas:', this.transaccionesCuentaCorriente);
         }
       }
 
@@ -118,7 +117,6 @@ export class ResumenUsuarioComponent implements OnInit {
         const lineaCredito = data.productos[1];
         if (lineaCredito) {
           this.transaccionesLineaDeCredito = lineaCredito.transacciones.slice(-3);
-          console.log('Transacciones asignadas:', this.transaccionesLineaDeCredito);
         }
       }
 
@@ -126,7 +124,6 @@ export class ResumenUsuarioComponent implements OnInit {
         const visa = data.productos[2];
         if (visa) {
           this.transaccionesVisa = visa.transacciones.slice(-3);
-          console.log('Transacciones asignadas:', this.transaccionesVisa);
         }
       }
     });

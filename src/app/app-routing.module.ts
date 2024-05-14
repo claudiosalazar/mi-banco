@@ -28,6 +28,7 @@ import { SegurosComponent } from './views/productos/seguros/seguros.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'login', redirectTo: '', pathMatch: 'full' },
   { path: 'mibanco', component: MainComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: ResumenUsuarioComponent },
@@ -65,8 +66,7 @@ const routes: Routes = [
       { path: 'mis-datos', component: DatosUsuarioComponent },
       { path: 'ayuda/:id', component: AyudaComponent }
     ]
-  },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  }
 ];
 
 @NgModule({
