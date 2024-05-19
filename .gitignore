@@ -16,6 +16,7 @@ yarn-error.log
 
 # Backend
 /backend/node_modules
+/backend/package-lock.json
 
 # IDEs and editors
 .idea/
