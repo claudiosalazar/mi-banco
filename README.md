@@ -21,8 +21,8 @@ En terminal ejecutar `node server-mi-banco.js` en la carpeta Backend para que el
 
 El proyecto del sitio bancario ficticio tiene por nombre Mi Banco, en donde existe un usuario que tiene los productos:
 
--Cuenta Corriente
--Línea de Crédito
--Visa
--Seguros
--Credito de consumo
+- Cuenta Corriente
+- Línea de Crédito
+- Visa
+- Seguros
+- Credito de consumo
