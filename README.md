@@ -1,6 +1,13 @@
 # Mi Banco V.1
 
-Proyecto de sitio web bancario responsive generado con [Angular CLI](https://github.com/angular/angular-cli) version 12, Bootstrap 5 e Iconos de Google Font.
+Proyecto de sitio web bancario responsive generado con [Angular CLI](https://github.com/angular/angular-cli) version 15, Bootstrap 5 e Iconos de Google Font.
+
+Los datos de ingreso para ingresar al sitio son:
+
+- Usuario: 128404325
+- Clave: Usuario-123
+
+Puedes ver el proyecto online en https://www.claudiosalazar.cl/mi-banco/angular/ . Por restricciones del hosting los datos de las transacciones hechas no son actualizadas en el backend, pero los actuales datos si son consumidos correctamente.
 
 ## Servidor front end
 
