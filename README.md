@@ -7,8 +7,6 @@ Los datos de ingreso para ingresar al sitio son:
 - Usuario: 128404325
 - Clave: Usuario-123
 
-Puedes ver el proyecto online en https://www.claudiosalazar.cl/mi-banco/angular/ . Por restricciones del hosting los datos de las transacciones hechas no son actualizadas en el backend, pero los actuales datos si son consumidos correctamente.
-
 ## Servidor front end
 
 En terminal ejecutar `ng serve` para comenzar el servidor. Para ver el proyecto se debe ingresar a la URL `http://localhost:4200/`.
