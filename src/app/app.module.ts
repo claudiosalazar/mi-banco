@@ -7,6 +7,14 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { PrivateComponent } from './components/private/private.component';
 
+// Pipe
+import { DatePipe } from '@angular/common';
+import { PesosPipe } from './shared/pipes/pesos.pipe';
+import { RutPipe } from './shared/pipes/rut.pipe';
+import { CelularPipe } from './shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
+import { NumeroTarjetaPipe } from './shared/pipes/numero-tarjeta.pipe';
+
 // Modules
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +26,12 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     MiBancoComponent,
     LoginComponent,
     HomeComponent,
-    PrivateComponent
+    PrivateComponent,
+    PesosPipe,
+    RutPipe,
+    CelularPipe,
+    TelefonoFijoPipe,
+    NumeroTarjetaPipe,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +41,13 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
   ],
   providers: [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
-    JwtHelperService
+    JwtHelperService,
+    PesosPipe,
+    RutPipe,
+    CelularPipe,
+    TelefonoFijoPipe,
+    DatePipe,
+    NumeroTarjetaPipe
   ],
   bootstrap: [MiBancoComponent]
 })

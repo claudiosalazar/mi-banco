@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+
+// Pipes
+import { RutPipe } from '../../shared/pipes/rut.pipe';
 
 @Component({
   selector: 'app-login',
@@ -9,16 +13,21 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
 
   user = {
-    userName: '128404325',
-    pass: 'Usuario-123'
+    userName: '',
+    pass: ''
   };
+
+  formularioLogin: FormGroup = new FormGroup({});
+  botonLoginDisabled = false;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private rutPipe: RutPipe,
   ) { }
 
   ngOnInit(): void {
+    this.user.userName = this.rutPipe.transform(this.user.userName);
   }
 
   logIn() {
@@ -29,4 +38,5 @@ export class LoginComponent {
       this.router.navigate(['mibanco']);
     });
   }
+
 }
