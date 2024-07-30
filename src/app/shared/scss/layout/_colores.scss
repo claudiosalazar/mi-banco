@@ -1,0 +1,42 @@
+// Colores para tipografia
+.tinto {
+  color: $tinto !important;
+}
+
+.dorado {
+  color: $dorado !important;
+}
+
+.dorado-oscuro {
+  color: $dorado-oscuro-50 !important;
+}
+
+.gris-40 {
+  color: $gris-40 !important;
+}
+
+.azul-visa {
+  color: $azul-visa !important;
+}
+
+.advertencia {
+  color: $advertencia !important;
+}
+
+// Color de fondo
+.fondo-banner-grande {
+  //background-color: $dorado-claro !important;
+  //background-image: linear-gradient(to right bottom, #ff9a24, #fea833, #fdb643, #fcc354, #fccf65, #fccf65, #fccf65, #fccf65, #fcc354, #fdb643, #fea833, #ff9a24);
+  border-radius: 10px;
+  margin: 4px;
+  width: calc(100% - 8px);
+  background: rgb(227,227,227);
+  background: linear-gradient(150deg, rgba(227,227,227,1) 0%, rgba(255,255,255,1) 50%, rgba(227,227,227,1) 100%);
+}
+.fondo-gris-01 {
+  background-color: $gris-01 !important;
+}
+
+.fondo-gris-00 {
+  background-color: $gris-00 !important;
+}

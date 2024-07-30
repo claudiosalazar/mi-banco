@@ -1,0 +1,516 @@
+.contenedor-tabla {
+  margin: 16px;
+  padding: 0;
+  border: 1px solid $gris-02;
+  border-radius: 10px;
+  @media (min-width: $lg) {
+    padding: 0 10px 10px 10px;
+  }
+}
+
+.table {
+  >:not(caption)>*>* {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  @media (max-width: $lg) {
+
+    thead, tbody, th, td, tr {
+      display: block;
+    }
+    td {
+      border: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      &:before {
+        position: absolute;
+        white-space: nowrap;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  thead {
+    width: 100%;;
+    @media (max-width: $lg) {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+    tr {
+      border-bottom: 1px solid $blanco;
+    }
+    th {
+      background-color: $blanco;
+      padding: 12px 10px;
+      font-weight: 600;
+      color: $gris-60;
+      &:first-child {
+        border-radius: 5px 0 0 0!important;
+      }
+      &:last-child {
+        border-radius: 0 5px 0 0;
+      }
+      div {
+        span {
+          margin-top: 4px;
+          margin-left: 4px;
+          cursor: pointer;
+          &.animar-icono {
+            color: $tinto;
+            &:hover {
+              color: $dorado;
+            }
+          }
+        }
+      }
+      span {
+        &.rotated-in {
+          @include rotated-in;
+        }
+        &.rotated-out {
+          @include rotated-out;
+        }
+      }
+    }
+  }
+
+  .ancho {
+    .contenido-celda {
+      @include ellipse;
+      line-height: 1.1;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 0 solid $gris-01;
+      td {
+        padding: 14px;
+        color: $gris-60 !important;
+      }
+    }
+
+    @media (max-width: $lg) {
+      tr {
+        border: none !important;
+      }
+      td {
+        min-height: 46px;
+        &:nth-of-type(n):before {
+          margin: -3px 0 0 18px;
+          display: block;
+          left: 0;
+          //height: 20px !important;
+        }
+        &:nth-of-type(1n+1) {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &.tabla-movimientos {
+    th, td {
+      &:nth-child(1) {
+        width: 15%
+      }
+      &:nth-child(2) {
+        width: 34%;
+      }
+      &:nth-child(3) {
+        width: 17%;
+      }
+      &:nth-child(4) {
+        width: 17%;
+      }
+      &:nth-child(5) {
+        width: 17%;
+      }
+      @media (max-width: $lg) {
+        &:nth-child(n) {
+          width: inherit;
+        }
+        &:nth-child(1n+1) {
+          width: inherit;
+        }
+      }
+    }
+
+    tbody {
+      @media (max-width: $lg) {
+        td {
+          padding-left: 25%;
+        }
+        td:nth-of-type(1):before {
+          content: "Fecha";
+        }
+        td:nth-of-type(2):before {
+          content: "Detalle";
+        }
+        td:nth-of-type(3):before {
+          content: "Cargo";
+        }
+        td:nth-of-type(4):before {
+          content: "Abono";
+        }
+        td:nth-of-type(5):before {
+          content: "Saldo";
+        }
+      }
+    }
+  }
+
+  &.tabla-agenda {
+    th, td {
+      &:nth-child(1) {
+        width: 14.2%;
+      }
+      &:nth-child(2) {
+        width: 10.2%;
+      }
+      &:nth-child(3) {
+        width: 14.2%;
+      }
+      &:nth-child(4) {
+        width: 20%;
+      }
+      &:nth-child(5) {
+        width: 19%;
+      }
+      &:nth-child(6) {
+        width: 16%;
+      }
+      &:nth-child(7) {
+        width: 8%;
+      }
+      @media (max-width: $lg) {
+        &:nth-child(n) {
+          width: inherit;
+        }
+        &:nth-child(1n+1) {
+          width: inherit;
+        }
+      }
+    }
+
+    tbody {
+      @media (max-width: $lg) {
+        td {
+          padding-left: 35%;
+          &:last-child {
+            padding-top: 16px;
+            padding-bottom: 12px !important;
+          }
+        }
+        td:nth-of-type(1):before {
+          content: "Nombre";
+        }
+        td:nth-of-type(2):before {
+          content: "Apodo";
+        }
+        td:nth-of-type(3):before {
+          content: "Rut";
+        }
+        td:nth-of-type(4):before {
+          content: "Banco";
+        }
+        td:nth-of-type(5):before {
+          content: "Tipo Cuenta";
+        }
+        td:nth-of-type(6):before {
+          content: "N° Cuenta";
+        }
+        td:nth-of-type(7):before {
+          content: "Acciones";
+          margin-top: 14px;
+        }
+      }
+    }
+  }
+
+  &.tabla-ultimas-transferencias {
+    th, td {
+      &:nth-child(1) {
+        width: 15%;
+      }
+      &:nth-child(2) {
+        width: 17%;
+      }
+      &:nth-child(3) {
+        width: 34%;
+      }
+      &:nth-child(4) {
+        width: 17%;
+      }
+      &:nth-child(5) {
+        width: 17%;
+      }
+      @media (max-width: $lg) {
+        &:nth-child(n) {
+          width: inherit;
+        }
+        &:nth-child(1n+1) {
+          width: inherit;
+        }
+      }
+    }
+
+    tbody {
+      @media (max-width: $lg) {
+        td {
+          padding-left: 35%;
+        }
+        td:nth-of-type(1):before {
+          content: "Destinatario";
+        }
+        td:nth-of-type(2):before {
+          content: "Banco";
+        }
+        td:nth-of-type(3):before {
+          content: "Rut";
+        }
+        td:nth-of-type(4):before {
+          content: "Tipo Cuenta";
+        }
+        td:nth-of-type(5):before {
+          content: "N° Cuenta";
+        }
+      }
+    }
+  }
+
+  &.tabla-agenda-transferencias {
+    th, td {
+      &:nth-child(1) {
+        width: 20%;
+      }
+      &:nth-child(2) {
+        width: 16%;
+      }
+      &:nth-child(3) {
+        width: 12%;
+      }
+      &:nth-child(4) {
+        width: 16%;
+      }
+      &:nth-child(5) {
+        width: 16%;
+      }
+      &:nth-child(6) {
+        width: 20%;
+      }
+
+      @media (max-width: $lg) {
+        &:nth-child(n) {
+          width: inherit;
+        }
+        &:nth-child(1n+1) {
+          width: inherit;
+        }
+      }
+    }
+
+    tbody {
+      tr:hover {
+        td {
+          cursor: pointer !important;
+          background-color: $gris-02;
+          transition: none !important;
+        }
+      }
+      tr.active {
+        td {
+          cursor: default !important;
+          background-color: $dorado;
+          color: $blanco !important;
+          font-weight: 500 !important;
+          &:first-child {
+            border-radius: 6px 6px 0 0!important;
+            @media (min-width: $md) {
+              border-radius: 6px 0 0 6px!important;
+            }
+          }
+          &:last-child {
+            border-radius: 0 0 6px 6px !important;
+            @media (min-width: $md) {
+              border-radius: 0 6px 6px 0 !important;
+            }
+          }
+        }
+      }
+      @media (max-width: $lg) {
+        td {
+          padding-left: 43%;
+        }
+        td:nth-of-type(1):before {
+          content: "Destinatario";
+        }
+        td:nth-of-type(2):before {
+          content: "Banco";
+        }
+        td:nth-of-type(3):before {
+          content: "Rut";
+        }
+        td:nth-of-type(4):before {
+          content: "Tipo Cuenta";
+        }
+        td:nth-of-type(5):before {
+          content: "N° Cuenta";
+        }
+        td:nth-of-type(6):before {
+          content: "Email";
+        }
+      }
+    }
+  }
+
+  &.tabla-cartolas-historicas {
+    th, td {
+      &:nth-child(1) {
+        width: 40%
+      }
+      &:nth-child(2) {
+        width: 40%;
+      }
+      &:nth-child(3) {
+        width: 10%;
+      }
+      @media (max-width: $lg) {
+        &:nth-child(n) {
+          width: inherit;
+        }
+        &:nth-child(1n+1) {
+          width: inherit;
+        }
+      }
+    }
+
+    tbody {
+      @media (max-width: $lg) {
+        td {
+          padding-left: 42%;
+        }
+        td:nth-of-type(1):before {
+          content: "N° Cartola";
+        }
+        td:nth-of-type(2):before {
+          content: "Fecha Emisión";
+        }
+        td:nth-of-type(3):before {
+          content: "Descargar";
+        }
+      }
+    }
+  }
+
+  .contenedor-acciones {
+    margin-left: 0 !important;
+    button {
+      margin-top: 10px;
+      margin-right: 14px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: transparent;
+      color: $gris-60;
+      &:hover {
+        color: $dorado;
+      }
+    }
+    
+    @media (max-width: $lg) {
+      margin-left: 35%;
+      button {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .contenedor-btn-transferencia {
+    button {
+      @include ancho(24px);
+      @include alto(24px);
+      border: none !important;
+      background-color: transparent !important;
+      margin: 10px 10px 0 0 !important;
+      padding: 0 !important;
+      color: $gris-20;
+      &:hover {
+        color: $dorado;
+      }
+      &.active {
+        color: $dorado;
+      }
+      .material-symbols-outlined {
+        padding: 0 !important;
+      }
+    }
+    .nombre-destinatario {
+      @include alto(24px);
+      margin-top: 10px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center; 
+    }
+  }
+}
+
+.tabla-movimientos-home {
+  font-size: 14px;
+  margin: 6px 18px 16px 18px !important;
+  width: calc(100% - 36px) !important;
+  th {
+    padding: 10px 0;
+    color: $gris-60 !important;
+    font-weight: 700 !important;
+  }
+  td {
+    color: $gris-60 !important;
+    font-weight: 500 !important;
+    padding: 10px 0;
+  }
+  tbody {
+    tr {
+      padding: 10px 0 !important;
+      border-top: 1px solid $gris-01;
+      &:last-child td {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  th, td {
+    &:nth-child(1) {
+      width: 20%
+    }
+    &:nth-child(2) {
+      width: 40%;
+    }
+    &:nth-child(3) {
+      width: 20%;
+    }
+    &:nth-child(4) {
+      width: 20%;
+    }
+  }
+}
+
+
+// Pinta las filas de la tabla de forma alterna 
+.table-striped {
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: $blanco;
+      }
+      &:nth-child(odd) {
+        background-color: $gris-00;
+      }
+    }
+  }
+}

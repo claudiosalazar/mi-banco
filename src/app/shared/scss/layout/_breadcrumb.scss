@@ -1,0 +1,35 @@
+.contenedor-breadcrumb {
+  margin: 0 4px 4px 4px;
+  background-color: $gris-01;
+  border-radius: 10px;
+  
+  .breadcrumb {
+    padding: 12px 18px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+
+    .breadcrumb-item {
+      color: $tinto;
+      a {
+        color: $gris-20;
+        text-decoration: none;
+        .material-symbols-outlined {
+          font-size: 20px;
+        }
+      }
+      &:first-child::before {
+        content: '';
+      }
+      &::before {
+        content: '';
+        margin-top: 4px;
+        width: 20px;
+        height: 10px;
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6.1 10'%3E%3Cpath d='M3.9 5 0 1.1 1.1 0l5 5-5 5L0 8.9 3.9 5Z' fill='%23ffb662'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left center;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { MiBancoComponent } from './mi-banco.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { PrivateComponent } from './components/private/private.component';
@@ -15,7 +15,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    MiBancoComponent,
     LoginComponent,
     HomeComponent,
     PrivateComponent
@@ -30,6 +30,6 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [MiBancoComponent]
 })
 export class AppModule { }

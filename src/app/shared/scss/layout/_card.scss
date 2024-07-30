@@ -1,0 +1,106 @@
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.184);
+  border-radius: 5px;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+
+  &.card-modal {
+    box-shadow: none;
+    border: 1px solid $gris-02;
+    background-color: $gris-00;
+    padding: 12px 16px;
+  }
+
+  &.card-transferencia {
+    @media (max-width: $sm) {
+      box-shadow: none !important;
+    }
+  }
+
+  // Card de productos home
+  &.card-productos {
+    padding: 24px;
+    @include animacion-card-producto;
+    .nombre-producto {
+      font-weight: bold;
+      font-size: 18px;
+      color:  $tinto;
+    }
+    .numero-producto {
+      font-size: 14px;
+      font-weight: 600;
+      color: $gris-40;
+    }
+    .texto-montos {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: $gris-60;
+      &.monto {
+        font-weight: 800;
+        color: $dorado;
+        @media (min-width: $md) {
+          margin-bottom: 20px;
+        }
+      }
+      @media (min-width: $md) {
+        margin-bottom: 0;
+      }
+      @media (min-width: $lg) {
+        margin-bottom: 20px;
+      }
+    }
+    &.hover-productos-inicio:hover {
+      //background-color: $gris-00;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+    }
+
+    @media (min-width: $md) {
+      &.cuenta-corriente {
+        &.active {
+          border-bottom: 4px solid $dorado;
+        }
+      }
+      &.linea-de-credito {
+        &.active {
+          border-bottom: 4px solid $tinto;
+        }
+      }
+      &.visa {
+        &.active {
+          border-bottom: 4px solid $azul-visa;
+        }
+      }
+    }
+  }
+
+  // Card banner grande
+  &.card-banner {
+    &:hover {
+      box-shadow: 0 2px 8px rgba(84, 84, 84, 0.4);
+    }
+  }
+
+  &.card-datos-visa {
+    border: 1px solid $dorado;
+    padding: 18px 22px;
+    border-radius: 5px;
+    background-color: $gris-00;
+    margin-bottom: 24px;
+    box-shadow: none !important;
+  }
+}
+
+
+
+.columna-transferencia-realizada {
+  width: calc(100% - 22px);
+  margin: 0 auto 32px auto;
+  border-radius: 6px 6px 0 0;
+  height: 100px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 0C9 0 0 9 0 20s9 20 20 20 20-9 20-20S31 0 20 0Zm-2.9 27.5-7.3-7.3 2.1-2.1 5.1 5.1 10.9-10.9 2.1 2.1-13 13Z' fill='%23fff'/%3E%3C/svg%3E"), url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' baseProfile='tiny' version='1.2' viewBox='0 0 69.51 80'%3E%3Cpath fill='%232fc957' d='m48.47 44.49-3.48-2.22-10.23 6.51L.06 26.67v4.48l34.7 22.12 13.71-8.78z'/%3E%3Cpath fill='%232fc957' d='m21.04 35.51 3.48 2.22 10.3-6.58 34.69 22.12v-4.42L34.82 26.73l-13.78 8.78zM34.82 0 .06 22.12l3.48 2.21L34.82 4.42l34.69 22.12v-4.42L34.82 0z'/%3E%3Cpath fill='%232fc957' d='m55.48 48.91-3.47-2.21-17.25 10.99L0 35.58v4.48l34.76 22.12 20.72-13.27zM14.03 31.03l3.54 2.21 17.25-11v.07l34.69 22.11v-4.48L34.82 17.82 14.03 31.03z'/%3E%3Cpath fill='%232fc957' d='M34.76 71.09 62.5 53.4l-3.54-2.28-24.24 15.46L.06 44.49v4.48l34.63 22.08v.04h.07zM7.08 26.6l3.47 2.28L34.82 13.4l34.69 22.11v-4.48L34.82 8.91 7.08 26.6z'/%3E%3Cpath fill='%232fc957' d='M34.72 75.56.06 53.46v4.42l34.63 22.08V80h.07l34.75-22.12-3.54-2.21-31.25 19.89z'/%3E%3C/svg%3E");
+  background-position: center center,  102% 50%;
+  background-repeat: no-repeat, no-repeat;
+  background-color: $valido;
+  background-size: 60px auto, 120px auto;
+}

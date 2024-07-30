@@ -1,9 +1,48 @@
-<div class="mb-3">
-  <label for="exampleInputEmail1" class="form-label">Username</label>
-  <input [(ngModel)]="user.userName" type="text" class="form-control">
-</div>
-<div class="mb-3">
-  <label for="exampleInputPassword1" class="form-label">Password</label>
-  <input [(ngModel)]="user.pass" type="password" class="form-control">
-</div>
-<button type="submit" class="btn btn-primary" (click)="logIn()">Ingresar</button>
+<main class="container-fluid">
+  <div class="row">
+    <!-- Imagen de fondo -->
+    <div class="col-lg-6 fondo-login d-none d-lg-block"></div>
+
+    <!-- Formulario login -->
+    <div class="col-12 col-lg-6 formulario-login d-flex justify-content-center align-items-center">
+      <div class="row d-flex justify-content-center align-items-center">
+
+        <div class="col-10 col-md-8">
+          <div class="logo-login mb-3 mb-md-5"></div>
+        </div>
+
+        <div class="col-10 col-md-8">
+          <h1 class="titulo-login mt-0">Bienvenido a Mi Banco</h1>
+          <p>Ingrese a sus datos.</p>
+          <form>
+            <div class="form-floating mb-4">
+              <input [(ngModel)]="user.userName" type="text" class="form-control" id="floatingInput" >
+              <label for="floatingInput" id="floatingInput">Rut</label>
+              <!-- <div *ngIf="formularioLogin.get('RutUsuario')?.touched && formularioLogin.get('RutUsuario')?.errors?.['rutInvalido']" class="invalid-feedback">
+                <span>El rut ingresado no es válido.</span>
+              </div> -->
+            </div>
+
+            <div class="form-floating mb-4">
+              <input [(ngModel)]="user.pass" type="password" class="form-control" id="floatingPassword">
+              <label for="floatingPassword" class="form-label">Clave</label>
+            </div>
+
+            <!-- <button class="w-100 btn btn-login mb-4" type="submit" [class.disabled]="!botonLoginDisabled"(click)="loginMiBanco()">Entrar</button> -->
+            <button class="w-100 btn btn-login mb-4" type="submit" (click)="logIn()">Entrar</button>
+          </form>
+        </div>
+
+        <!-- <div class="col-10 col-md-8 my-3" *ngIf="mensajeError">
+          <app-alertas [icono]="true" [tipoAlerta]="'error'" [mensajeTitulo]="'Datos incorrectos'" [mensajeInfo]="'El Rut o la Clave ingresada, no son correctos. Por favor, inténtalo nuevamente.'"></app-alertas>
+        </div> -->
+
+        <div class="col-10 col-md-8">
+          <hr>
+          <small class="my-4 text-center d-block">Mi Banco © 2024</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>

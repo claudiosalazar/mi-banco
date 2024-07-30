@@ -1,0 +1,106 @@
+
+.banner-mibanco {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  .info-banner {
+    background-color: $blanco;
+    border-radius: 15px;
+    &.info-grande {
+      width: 100%;
+      margin: 0;
+      padding: 24px;
+      border-radius: 15px;
+      @media (min-width: $lg) {
+        width: 50%;
+        margin: 24px;
+        padding: 36px;
+        border-radius: 9px;
+      }
+    }
+    .info-medio {
+      width: 100%;
+      padding: 36px;
+      @media (max-width: $md) {
+        padding: 24px;
+      }
+    }
+  }
+
+  &.grande {
+    background-size: 150% auto;
+    background-repeat: no-repeat;
+    background-position: right top;
+    height: 500px;
+    @media (min-width: $sm) and (max-width: $md){
+      background-size: auto 50%;
+      background-position: right top;
+    }
+    @media (min-width: $lg) {
+      height: 450px;
+      background-size: cover;
+      background-position: right bottom;
+    }
+  } 
+  
+  &.medio {
+    padding-top: 40%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center 0;
+  }
+
+  // Textos banner
+  .titulo-banner {
+    font-size: 28px;
+    display: block;
+    font-weight: 800;
+    line-height: 30px;
+    color: $tinto;
+    margin-bottom: 16px;
+  }
+  .texto-secundario {
+    font-size: 20px;
+    display: block;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  .texto-explicativo {
+    font-size: 18px;
+    line-height: 18px;
+    display: block;
+    font-weight: 500;
+  }
+  .monto {
+    font-size: 34px;
+    display: block;
+    font-weight: 700;
+    color: $dorado-oscuro-50;
+    margin-top: 18px;
+    margin-bottom: 0;
+    @media (min-width: $md) {
+      margin-bottom: 18px;
+    }
+  }
+  .monto-cuota {
+    font-size: 24px;
+    display: block;
+    font-weight: 700;
+    color: $dorado-oscuro-50;
+    margin-top: 16px;
+    margin-bottom: 0;
+    @media (min-width: $md) {
+      margin-bottom: 18px;
+    }
+  }
+  .texto-legal {
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 11px;
+    display: block;
+  }
+  .logos-empresas {
+    width: 53px;
+    height: 30px;
+  }
+}

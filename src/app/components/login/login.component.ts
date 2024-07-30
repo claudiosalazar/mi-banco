@@ -4,14 +4,13 @@ import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
 
   user = {
-    userName: 'kevin',
-    pass: '123'
+    userName: '128404325',
+    pass: 'Usuario-123'
   };
 
   constructor(
@@ -24,10 +23,10 @@ export class LoginComponent {
 
   logIn() {
     console.log(this.user);
-    this.authService.singin(this.user).subscribe( (res: any) => {
+    this.authService.mibanco(this.user).subscribe( (res: any) => {
       console.log(res);
       localStorage.setItem('token', res.token);
-      this.router.navigate(['/private']);
+      this.router.navigate(['mibanco']);
     });
   }
 }

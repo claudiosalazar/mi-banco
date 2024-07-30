@@ -1,0 +1,112 @@
+
+
+.modal {
+  z-index: 4000 !important;
+  border: none !important;
+  font-family: 'Montserrat', sans-serif;
+  &.posicion{
+    position: absolute;
+  }
+
+  // Estilos para modal en mobile
+  @media (max-width: $sm) {
+    &.posicion {
+      position: fixed;
+      &.fade {
+        bottom: -100%;
+        transition: opacity 0.3s linear, bottom 0.3s ease-out;
+        &.show {
+          bottom: 0;
+          .modal-dialog {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: inherit;
+            height: auto;
+            align-items: inherit;
+            min-height: inherit;
+            max-height: 100vh;
+            overflow-y: auto;
+          }
+        }
+        .modal-dialog {
+          bottom: -100%;
+          transition: opacity 0.3s linear, bottom 0.3s ease-out;
+        }
+      }
+    }
+    .modal-dialog {
+      position: fixed;
+      margin: 0 !important;
+    }
+  }
+  
+  // Estilos para modal en desktop
+  .modal-dialog {
+    min-height: calc(100% - var(--bs-modal-margin)* 2);
+    display: flex;
+    align-items: center;
+  }
+  .modal-content {
+    border: none !important;
+    border-radius: 5px 5px 0 0;
+    top: 0;
+    padding: 18px 18px 12px 18px;
+    @media (min-width: $sm) {
+      padding: 24px 24px 16px 24px;
+      border-radius: 10px;
+      border: none !important;
+    }
+  }
+  .modal-header {
+    padding: 0;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid $gris-02;
+    .titulo-header {
+      font-size: 16px;
+      font-weight: 500;
+      color: $tinto;
+      display: block;
+    }
+    button {
+      width: 24px !important;
+      height: 24px !important;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  .modal-body {
+    padding: 0;
+    p {
+      margin: 0;
+      font-weight: 500;
+      color: $gris-60;
+    }
+    .titulo-modal {
+      font-size: 18px;
+      font-weight: 600;
+      color: $gris-60;
+      display: block;
+    }
+  }
+  .modal-footer {
+    padding: 0;
+    padding-top: 12px;
+    margin-top: 18px;
+  }
+
+}
+
+.modal.top {
+  top: 0;
+  bottom: auto;
+}
+.modal.bottom {
+  bottom: 0;
+  top: auto;
+}
+
+
+

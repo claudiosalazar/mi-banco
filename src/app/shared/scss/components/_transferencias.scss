@@ -1,0 +1,116 @@
+
+.info-cta-cte {
+  background-color: $gris-01;
+  border-radius: 0 0 6px 6px;
+}
+
+.info-destinatario-transferencia {
+  border: 1px solid $dorado;
+  padding: 18px 22px;
+  border-radius: 5px;
+  background-color: $gris-00;
+  margin-bottom: 24px;
+  small {
+    font-size: 15px;
+  }
+  .titulo-datos {
+    font-size: 18px;
+    display: block;
+    font-weight: 500;
+    color: $gris-60;
+    .datos-ingresados {
+      font-weight: 600 !important;
+      color: $tinto;
+    }
+  }
+  .contenedor-nombre-destinatario {
+    width: 100%;
+    @media (min-width: $md) {
+      width: 50%
+    }
+    .nombre-destinatario-transferencia {
+      display: block;
+      font-size: 22px;
+    }
+  }
+  .datos-destinatario {
+    width: 100%;
+    border-top: 1px solid $gris-10;
+    margin-top: 16px;
+    padding-top: 16px;
+    @media (min-width: $md) {
+      width: 50%;
+      border-left: 1px solid $gris-10;
+      border-top: none;
+      padding-left: 20px;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}
+
+.monto-a-transferir {
+  color: $blanco !important;
+}
+
+.paso-ok {
+  opacity: .5;
+  cursor: default;
+  .info-destinatario-transferencia {
+    border: 1px solid $gris-10;
+    .datos-ingresados {
+      color: $gris-60;
+    }
+  }
+  .rounded-circle {
+    background-color: $gris-10 !important;
+  }
+}
+
+.guia-transferencia {
+  list-style-type: square;
+  font-size: 14px;
+  color: $gris-40;
+  padding-left: 18px;
+  margin-top: 12px;
+  strong {
+    font-weight: 600 !important;
+  }
+}
+
+
+.mostra-formulario {
+  visibility: visible;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  height: inherit;
+  .row {
+    height: inherit !important;  
+  }
+}
+
+.formulario-oculto {
+  visibility: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 0;
+  .row {
+    height: 0 !important;  
+  }
+}
+
+.paso-transferencia {
+  visibility: visible;
+  height: inherit;
+  .row {
+    height: inherit !important;  
+  }
+}
+
+.paso-transferencia-oculto {
+  visibility: hidden;
+  max-height: 0 !important;
+  .row {
+    height: 0 !important;  
+  }
+}

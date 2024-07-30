@@ -1,0 +1,107 @@
+// Animacion para icono th de tablas
+@mixin rotated-in {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(180deg);
+}
+
+@mixin rotated-out {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(0deg);
+}
+
+// Input error
+// Animacion para mostrar errores en inputs
+@keyframes fade {
+  0%, 33% {
+    opacity: 0;
+  }
+  16%, 50% {
+    opacity: 1;
+  }
+  66%, 83% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin fade-animation($duration: .8s) {
+  animation: fade $duration ease-in-out;
+  animation-iteration-count: 1;
+}
+
+// Animacion para girar iconos
+@keyframes spin {
+  0% {
+		transform: rotate(0deg);
+  }
+  50% {
+		transform: rotate(-180deg);
+	}
+	100% {
+		transform: rotate(-360deg);
+	}
+}
+
+@mixin spin-animation($duration: 99999s) {
+  animation: spin 1s infinite linear;
+}
+
+// Animacion icono boton link
+@keyframes movimiento {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(6px);
+    opacity: 0;
+  }
+}
+
+@mixin movimiento-icono {
+  animation: movimiento .35s linear infinite;
+}
+
+// Ellipsis
+@mixin ellipse {
+  $font-size: 1;
+  $line-height: 1;
+  $lines: 1;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  display: -webkit-box;
+  height: $font-size * $line-height * $lines;
+  font-size: $font-size;
+  line-height: $line-height;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin animacion-btn {
+  transition: color .2s ease-in, background-color .2s ease-in, border-color .2s ease-in, box-shadow .2s ease-in;
+}
+
+@mixin animacion-btn-rrss {
+  transition: background-image .2s ease-in;
+}
+
+@mixin animacion-card-producto {
+  transition: background-color .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+
+// Tamaño fijo
+@mixin ancho($ancho) {
+  width: $ancho;
+  max-width: $ancho;
+  min-width: $ancho ;
+}
+@mixin alto($alto) {
+  height: $alto;
+  max-height: $alto;
+  min-height: $alto;
+}

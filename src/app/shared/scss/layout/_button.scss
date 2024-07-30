@@ -1,0 +1,275 @@
+
+// Botones estandar
+.btn {
+  border-radius: 2rem;
+  padding: 8px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  &.btn-primario {
+    background-color: $rojo;
+    color: $blanco;
+    border-color: $rojo;
+    &:hover {
+      color: $blanco;
+      background-color: $dorado;
+      border-color: $dorado;
+    }
+  }
+  &.btn-secundario {
+    background-color: $blanco;
+    color: $gris-40;
+    border-color: $gris-20;
+    &:hover {
+      background-color: $gris-01;
+      color: $gris-60;
+      border-color: $gris-60;
+    }
+    &.active {
+      background-color: $blanco;
+    color: $tinto;
+    border-color: $tinto;
+    }
+  }
+  &.btn-terciario {
+    background-color: $blanco;
+    color: $tinto;
+    border-color: $tinto;
+    &:hover {
+      background-color: $tinto;
+      color: $blanco;
+    }
+  }
+}
+
+// Botones para card
+.btn-small {
+  @include animacion-btn;
+  border-radius: 2rem;
+  padding: 4px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid;
+  @media (min-width: $md) {
+    margin-right: 12px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.btn-primario {
+    background-color: $rojo;
+    color: $blanco;
+    border-color: $rojo;
+    &:hover {
+      color: $blanco;
+      border-color: $dorado;
+      background-color: $dorado;
+      //box-shadow: $shadow-btn-hover;
+    }
+  }
+
+  &.btn-secundario {
+    background-color: $blanco;
+    color: $gris-40;
+    border-color: $gris-20;
+    &:hover {
+      background-color: $gris-01;
+      color: $gris-60;
+      border-color: $gris-60;
+    }
+    &.active {
+      background-color: $blanco;
+    color: $tinto;
+    border-color: $tinto;
+    }
+  }
+
+  &.btn-terciario {
+    background-color: $blanco;
+    color: $tinto;
+    border-color: $tinto;
+    &:hover {
+      background-color: $tinto;
+      color: $blanco;
+    }
+  }
+}
+
+// Link texto
+.btn-link {
+  @include animacion-btn;
+  color: $rojo;
+  text-decoration: none;
+  padding: 0;
+  font-size: 15px;
+  white-space: nowrap;
+  font-weight: 500;
+  span.icono-link {
+    padding-right: 6px;
+  }
+  &:hover {
+    @include animacion-btn;
+    color: $dorado;
+    span.icono-link {
+      @include movimiento-icono;
+    }
+  }
+}
+
+// Boton cerrar modal
+.btn-cerrar-modal {
+  @include animacion-btn;
+  width: 24px !important;
+  height: 24px !important;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  color: $gris-40;
+  background-color: $gris-00;
+  span {
+    font-size: 20px;
+  }
+  &:hover {
+    @include animacion-btn;
+    background-color: $dorado;
+    color: $blanco;
+  }
+}
+
+// Botones banner
+.btn-banner {
+  @include animacion-btn;
+  padding: 8px 20px;
+  font-size: 16px;
+  background-color: $dorado;
+  color: $blanco;
+  border: 1px solid $dorado;
+  border-radius: 2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 100%;
+  &:hover {
+    width: inherit;
+    background-color: $dorado-oscuro-50;
+    color: $blanco;
+    border-color: $dorado-oscuro-50;
+    box-shadow: $shadow-btn-banner-hover;
+  }
+  @media (min-width: $md) {
+    width: inherit;
+  }
+}
+
+// Botones tabs
+.btn-tab {
+  @include animacion-btn;
+  background-color: transparent;
+  color: $tinto;
+  margin-right: 24px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid $tinto;
+  font-weight: 600;
+  width: 100%;
+  &:hover {
+    color: $tinto;
+    border: 1px solid $tinto;
+    background-color: $blanco;
+  }
+  &.active {
+    background-color: $dorado;
+    color: $blanco;
+  }
+  @media (min-width: $md) {
+    margin-right: 10px !important;
+    width: inherit;
+    border: 1px solid transparent;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.contenedor-btn-editar {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  background-color: $gris-01;
+  border-radius: 0 6px 6px 0 !important;
+  .btn-editar-email {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    top: 4px;
+    width: 50px;
+    height: 50px;
+    background-color: $blanco;
+    color: $gris-40;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 6px;
+    &:hover {
+      background-color: $gris-01;
+      color: $dorado;
+    }
+  }
+}
+
+.btn-mostrar-numero-tarjeta {
+  @include animacion-btn;
+  border-radius: 2rem;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background-color: $gris-02; 
+  margin-left: 6px;
+  color: $gris-40;
+  cursor: pointer !important;
+  &:hover {
+    background-color: $gris-40;
+    color: $blanco;
+  }
+}
+
+
+.btn-rrss {
+  @include animacion-btn-rrss;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  display: block;
+  &.instagram {
+    @include animacion-btn-rrss;
+    background-image: $instagram;
+    &:hover {
+      background-image: $instagram-hover;
+    }
+  }
+  &.x {
+    @include animacion-btn-rrss;
+    background-image: $x;
+    &:hover {
+      background-image: $x-hover;
+    }
+  }
+  &.facebook {
+    @include animacion-btn-rrss;
+    background-image: $facebook;
+    &:hover {
+      background-image: $facebook-hover;
+    }
+  }
+  &.tiktok {
+    @include animacion-btn-rrss;
+    background-image: $tiktok;
+    &:hover {
+      background-image: $tiktok-hover;
+    }
+  }
+}

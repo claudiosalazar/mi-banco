@@ -1,0 +1,134 @@
+.bloquea-options {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  z-index: 1000;
+  background-color: transparent;
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+  height: 58px;
+  color: $gris-80;
+  background-color: $blanco;
+  border: 1px solid $gris-10 !important;
+  padding: 10px;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  appearance: none;
+  background-color: $blanco;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+  .selected-option {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 14.7 6.7 9.4l.7-.7 4.6 4.6 4.6-4.6.7.7-5.3 5.3Z' fill='%23bcbcbc'/%3E%3C/svg%3E");
+    background-size: 32px 32px;
+    background-position-x: 98%;
+    background-position-y: 6px;
+    background-repeat: no-repeat;
+    padding: 20px 10px 0 0;
+    cursor: pointer;
+    font-weight: 400;
+    color: $gris-40;
+  }
+
+  .label {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 12px;
+    color: $gris-40;
+    background-color: $blanco;
+    padding: 0 5px;
+    border-radius: 4px;
+    //z-index: auto + 1 !important;
+    span {
+      &.obligatorio {
+        color: $rojo;
+        font-size: 18px !important;
+        margin-top: 1px;
+        position: absolute;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 2px 0 0 2px;
+    background-color: $blanco;
+    width: calc(100% + 2px);
+    border: 1px solid $dorado;
+    border-radius: var(--bs-border-radius);
+    overflow: auto;
+    cursor: pointer;
+    box-shadow: $shadow-focus-input !important;
+    max-height: 300px;
+    .option {
+      padding: 18px 10px 18px 12px;
+      margin-left: -2px;
+      margin-top: -2px;
+      font-size: 1rem;
+      color: $gris-40;
+      &:hover {
+        background-color: $gris-01;
+        color: $gris-80;
+      }
+      &:first-child {
+        padding-top: 26px;
+        border-top-right-radius: var(--bs-border-radius);
+        border-top-left-radius: var(--bs-border-radius);
+      }
+      &:last-child {
+        border-bottom-right-radius: var(--bs-border-radius);
+        border-bottom-left-radius: var(--bs-border-radius);
+      }
+    }
+  }
+
+  &.custom-select-disabled {
+    background-color: $gris-01;
+    border-color: $gris-01 !important;
+    background-image: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    .label {
+      color: $gris-40;
+      background-color: $gris-01;
+    }
+    .selected-option {
+      color: $gris-40
+    }
+  }
+
+  &.is-valid {
+    border-color: $valido !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 13.8 0 8.2 1.2 7l4.4 4.4 9.2-9.3L16 3.3 5.5 13.8Z' fill='%234ad574'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(0.8em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+  }
+
+  &.is-invalid {
+    border-color: $error !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 16c-.4 0-.8-.2-1.2-.5-.3-.3-.5-.7-.5-1.2s.2-.8.5-1.2c.3-.3.7-.5 1.2-.5s.8.2 1.2.5c.3.3.5.7.5 1.2s-.2.8-.5 1.2c-.3.3-.7.5-1.2.5Zm-1.6-5.3V0h3.3v10.7H6.4Z' fill='%23ff1744'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(.8em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    @include fade-animation;
+  }  
+}
+
+

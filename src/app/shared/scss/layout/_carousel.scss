@@ -1,0 +1,205 @@
+.carousel {
+  padding: 0 4px 4px 4px;
+  z-index: 0;
+  min-height: fit-content !important;
+  .carousel-inner {
+    margin: 0 auto !important;
+    width: 100%;
+    border-radius: 10px;
+    .imagen-der {
+      background-position: 20% center;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      @media (min-width: $sm) {
+        background-position: 25% center;
+      }
+      @media (min-width: $md) {
+        background-size: cover;
+        background-position: 15% top;
+      }
+      @media (min-width: $lg) {
+        background-size: cover;
+        background-position: left top;
+      }
+    }
+    .imagen-izq {
+      background-position: 80% center;
+      background-size: auto 100%;
+      background-repeat: no-repeat;
+      @media (min-width: $sm) {
+        background-position: 75% center;
+      }
+      @media (min-width: $md) {
+        background-size: cover;
+        background-position: 85% top;
+      }
+      @media (min-width: $lg) {
+        background-size: cover;
+        background-position: right top;
+      }
+    }
+  }
+
+  .carousel-item {
+    //height: fit-content;
+    padding: 12px;
+    .ancho-info {
+      margin: 0 auto 24px auto;
+      width: 100%;
+      max-width: 1272px;
+      @media (min-width: $md) {
+        margin: 0 auto 24px auto;
+        height: fit-content;
+      }
+      @media (min-width: $lg) {
+        margin: 24px auto 32px auto;
+        height: 400px;
+      }
+    }
+
+    .info-slide-izq {
+      background: linear-gradient(-270deg, rgba(255, 174, 36, .8) 10%, rgba(255, 171, 74, .6) 90%);
+      z-index: 1;
+      width: 100%;
+      min-height: fit-content !important;
+      border-radius: 8px;
+      padding: 16px;
+      @media (min-width: $sm) and (max-width: $md) {
+        background: linear-gradient(-270deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
+        width: 80%;
+      }
+      @media (min-width: $md) {
+        border-radius: 16px;
+        background: linear-gradient(-270deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
+        padding: 24px;
+        width: 50%;
+      }
+      @media (min-width: $lg) {
+        padding: 32px;
+      }
+      
+    }
+    .info-slide-der {
+      background: linear-gradient(-90deg, rgba(255, 174, 36, .8) 10%, rgba(255, 171, 74, .6) 90%);
+      z-index: 1;
+      width: 100%;
+      min-height: fit-content !important;
+      border-radius: 8px;
+      padding: 16px;
+      @media (min-width: $sm) and (max-width: $md) {
+        background: linear-gradient(-90deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
+        width: 80%;
+        margin-left: 20%;
+      }
+      @media (min-width: $md) {
+        background: linear-gradient(-90deg, rgba(255, 255, 255, .6) 10%, rgba(255, 171, 74, 0) 90%);
+        border-radius: 16px;
+        padding: 24px;
+        width: 50%;
+        margin-left: 50%;
+      }
+      @media (min-width: $lg) {
+        padding: 32px;
+      }
+    }
+
+    .contenido-slide {
+      height: fit-content;
+      .pre-titulo {
+        text-transform: uppercase;
+        line-height: 90%;
+        color: $tinto;
+        display: block;
+        font-weight: 900;
+        @media (min-width: $md) {
+          font-size: 24px;
+        }
+      }
+      .titulo {
+        //font-family: "Noto Serif", serif;
+        font-style: italic;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 100%;
+        color: $blanco;
+        text-transform: uppercase;
+        display: block;
+        padding: 4px 0 8px 0;
+        text-shadow: 0 0 8px rgba(116, 45, 72, .5), 0 0 2px rgba(116, 45, 72, .2);
+        @media (min-width: $md) {
+          font-size: 40px;
+        }
+        @media (min-width: $lg) {
+          font-size: 44px;
+        }
+      }
+      .separador-slide {
+        background: $blanco !important;
+        height: 2px !important;
+        border: none !important;
+        opacity: .6;
+        margin-top: 12px;
+        margin-bottom: 18px;
+        &.izq {
+          background: linear-gradient(-270deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 80%) !important;
+        }
+        &.der {
+          background: linear-gradient(-90deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 80%) !important;
+        }
+        @media (min-width: $sm) {
+          margin-top: 8px;
+          margin-bottom: 14px;
+        }
+      }
+      .bajada {
+        line-height: 95%;
+        color: $blanco;
+        display: block;
+        font-weight: 600;
+        @media (min-width: $sm) {
+          color: $tinto;
+          font-size: 20px;
+        }
+      }
+      .monto-slide {
+        font-weight: 900;
+        color: $blanco;
+        display: block;
+        font-size: 32px;
+        @media (min-width: $sm) {
+          color: $dorado-oscuro-50;
+          font-size: 36px;
+        }
+        @media (min-width: $lg) {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  // Texto legal
+  .texto-legal {
+    width: 100%;
+    margin-top: 12px;
+    font-size: 11px;
+    color: $blanco;
+    display: block;
+  }
+  
+  .carousel-indicators {
+    height: 10px;
+    padding-top: 10px;
+    padding-bottom: 16px;
+    button {
+      border-radius: 6px;
+      border: none;
+      width: 30px;
+      height: 10px;
+      background-color: rgb(255, 255, 255, .5);
+      border:1px solid $tinto;
+      &.active {
+        background-color: $tinto;
+      }
+    }
+  }
+}

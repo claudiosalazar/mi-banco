@@ -1,0 +1,55 @@
+// Redes sociales
+.icono {
+
+  &.material-symbols-outlined {
+    font-size: 40px;
+    &.mensajes {
+      &.valido {
+        color: $valido;
+      }
+      &.error {
+        color: $error;
+      }
+      &.aviso {
+        color: $aviso;
+      }
+      &.advertencia {
+        color: $advertencia;
+      }
+      &.cargando {
+        color: $dorado;
+        display: block;
+        width: 42px;
+        height: 42px;
+        display: block;
+        @include spin-animation;
+      }
+    }
+  }
+}
+
+.link-rrss {
+  @include animacion-btn;
+  
+  // RRSS
+  .rrss {
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    &.instagram {
+      background-image: $instagram;
+    }
+    &.x {
+      background-image: $x;
+    }
+    &.facebook {
+      background-image: $facebook;
+    }
+    &.tiktok {
+      background-image: $tiktok;
+    }
+  }
+}

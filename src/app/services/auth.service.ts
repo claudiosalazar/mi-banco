@@ -14,8 +14,8 @@ export class AuthService {
     private jwtHelper: JwtHelperService
   ) { }
 
-  singin(user: any) { 
-    return this.http.post(`${this.URL}/user/singin`, user);
+  mibanco(user: any) { 
+    return this.http.post(`${this.URL}/user/mibanco`, user);
   }
 
   isAuth(): boolean {

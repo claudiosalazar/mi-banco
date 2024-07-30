@@ -1,0 +1,68 @@
+.contenido-general {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: stretch; 
+  flex-direction: column;  
+  height: 100%;
+  overflow: inherit;
+
+  #informacion {
+    position: relative;
+    margin-top: 68px;
+    flex-grow:1;
+    align-self:auto;
+    background-image: none;
+    @media (min-width: $md) {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg data-name='Capa 1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' baseProfile='tiny' version='1.2' viewBox='0 0 626.36 770.57'%3E%3Cdefs%3E%3ClinearGradient id='a' data-name='Degradado sin nombre 53' x1='312.68' y1='78.17' x2='315' y2='757.23' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23fff'/%3E%3Cstop offset='.03' stop-color='%23fefefe'/%3E%3Cstop offset='1' stop-color='%23fafafa'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' data-name='Degradado sin nombre 53' x1='312.31' y1='78.17' x2='314.63' y2='757.24' xlink:href='%23a'/%3E%3ClinearGradient id='c' data-name='Degradado sin nombre 53' x1='311.94' y1='78.17' x2='314.27' y2='757.24' xlink:href='%23a'/%3E%3ClinearGradient id='d' data-name='Degradado sin nombre 53' x1='333.06' y1='78.1' x2='335.38' y2='757.17' xlink:href='%23a'/%3E%3ClinearGradient id='e' data-name='Degradado sin nombre 53' x1='538.71' y1='77.39' x2='541.04' y2='756.46' xlink:href='%23a'/%3E%3ClinearGradient id='f' data-name='Degradado sin nombre 53' x1='226.95' y1='78.46' x2='229.28' y2='757.53' xlink:href='%23a'/%3E%3ClinearGradient id='g' data-name='Degradado sin nombre 53' x1='185.09' y1='78.6' x2='187.41' y2='757.67' xlink:href='%23a'/%3E%3ClinearGradient id='h' data-name='Degradado sin nombre 53' x1='62.16' y1='79.02' x2='64.48' y2='758.09' xlink:href='%23a'/%3E%3ClinearGradient id='i' data-name='Degradado sin nombre 53' x1='412.49' y1='77.82' x2='414.81' y2='756.89' xlink:href='%23a'/%3E%3C/defs%3E%3Cpath fill='url(%23a)' d='M626.49 338.57v-53.48L208.52 18.74 0 151.58v53.46L208.52 72.21l417.97 266.36z'/%3E%3Cpath fill='url(%23b)' d='m208.52 179.84 417.97 266.35v-53.82L208.52 126.02 0 258.78v53.71L208.52 179.5v.34z'/%3E%3Cpath fill='url(%23c)' d='M208.52 286.78v.34l417.97 266.35v-53.8L208.52 233.31v-.01L0 366.21v52.78l.72.46 207.8-132.67z'/%3E%3Cpath fill='url(%23d)' d='m42.69 446.19 42.3 26.73 123.53-78.51 417.97 266.35v-53.81L208.52 340.6 42.69 446.19z'/%3E%3Cpath fill='url(%23e)' d='m584.19 688.51-128.7 82.06h84.17l86.84-55.32-42.31-26.74z'/%3E%3Cpath fill='url(%23f)' d='m415.65 581.22-207.8 132.67v-.33L0 581.11v53.8l207.85 132.46 249.77-159.4-41.97-26.75z'/%3E%3Cpath fill='url(%23g)' d='m373.34 554.49-41.96-26.74-123.53 78.53L0 473.82v53.81l207.85 132.45 165.49-105.59z'/%3E%3Cpath fill='url(%23h)' d='m0 742.19 44.53 28.38h84.42L0 688.39v53.8z'/%3E%3Cpath fill='url(%23i)' d='m499.92 634.7-212.8 135.87h84.21l170.9-108.8-42.31-27.07z'/%3E%3C/svg%3E");
+      background-position: bottom left;
+      background-repeat: no-repeat;
+      background-size: 45% auto;
+      margin-top: 98px;
+    }
+  }
+}
+
+.desenfoque {
+  position: fixed;
+  z-index: 1999 !important;
+  width: calc(100% - 8px);
+  height: 60px;
+  margin: 4px;
+  border-radius: 5px;
+  backdrop-filter: blur(3px); 
+}
+
+.contenedor-ultimas-transacciones {
+  position: relative; // Asegúrate de que el contenedor tiene position: relative
+  width: calc(100% - 24px);
+  height: 230px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.184);
+  margin: 0 auto;
+  top: 0;
+  z-index: 100;
+  border-radius: 5px;
+  .ultimas-transacciones {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: $blanco;
+    // border-radius: 5px;
+    p {
+      padding: 12px 18px;
+      border-radius: 5px 5px 0 0;
+      color: $blanco;
+      font-weight: 500;
+      margin-bottom: 0 !important;
+      &.cuenta-corriente {
+        background-color:  $dorado;
+      }
+      &.linea-de-credito {
+        background-color: $tinto;
+      }
+      &.visa {
+        background-color: $azul-visa;
+      }
+    }
+  }
+}

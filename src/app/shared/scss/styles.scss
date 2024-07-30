@@ -1,0 +1,54 @@
+// Typografias
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=Fatface&family=Noto+Serif:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;900');
+
+@import 'variables';
+@import 'mixins';
+
+// Layout
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/table';
+@import 'layout/input';
+@import 'layout/select';
+@import 'layout/icons';
+@import 'layout/tabs';
+@import 'layout/modal';
+@import 'layout/offcanvas';
+@import 'layout/textos';
+@import 'layout/paginador';
+@import 'layout/accordion';
+@import 'layout/alert';
+@import 'layout/backdrop';
+@import 'layout/breadcrumb';
+@import 'layout/button';
+@import 'layout/card';
+@import 'layout/carousel';
+@import 'layout/colores';
+@import 'layout/stepper';
+@import 'components/banner';
+@import 'components/login';
+@import 'components/main';
+@import 'components/transferencias';
+
+html {
+  height: 100vh !important;
+}
+
+body {
+  height: 100vh !important;
+  text-rendering: optimizeLegibility;
+  * {
+    &:hover {
+      transition: all .3s ease;
+    }
+  }
+  hr {
+    background: rgb(218,166,78) !important;
+    background: radial-gradient(circle, rgba(218,166,78,1) 10%, rgba(218,166,78,1) 50%, rgba(218,166,78,0) 90%) !important;
+    height: 2px !important;
+    border: none !important;
+  }
+}
+

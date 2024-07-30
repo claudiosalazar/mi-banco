@@ -1,0 +1,19 @@
+.stepper {
+  width: calc(100% - 24px) !important;
+  .line {
+    width: 2px;
+    background-color: lightgrey !important;
+  }
+  .lead {
+    font-size: 1.1rem;
+  }
+
+  .rounded-circle {
+    background-color: $dorado !important;
+    color: $blanco !important;
+    font-weight: 600;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+  }
+}
