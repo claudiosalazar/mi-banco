@@ -31,39 +31,39 @@ const routes: Routes = [
   { path: 'login', pathMatch: 'full', redirectTo: '' },
   { path: 'mibanco', component: PrivateComponent, canActivate: [AuthGuard],
     children: [
-      { path: '', component: HomeComponent},
-      { path: 'productos', component: ProductosComponent,
+      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'productos', component: ProductosComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'resumen', component: TransaccionesResumenComponent },
-          { path: 'cuenta-corriente', component: CuentaCorrienteComponent,
+          { path: 'resumen', component: TransaccionesResumenComponent, canActivate: [AuthGuard] },
+          { path: 'cuenta-corriente', component: CuentaCorrienteComponent, canActivate: [AuthGuard],
             children: [
               { path: '', pathMatch: 'full', redirectTo: 'ultimos-movimientos'},
-              { path: 'ultimos-movimientos', component: MovimientosComponent },
-              { path: 'transferencias', component: TransferenciasComponent,
+              { path: 'ultimos-movimientos', component: MovimientosComponent, canActivate: [AuthGuard] },
+              { path: 'transferencias', component: TransferenciasComponent, canActivate: [AuthGuard],
                 children: [
                   { path: '', pathMatch: 'full', redirectTo: 'transferencia-a-terceros'},
-                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent},
-                  { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent},
-                  { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent},
-                  { path: 'agregar-destinatario', component: AgregarDestinatarioComponent},
-                  { path: 'editar-destinatario', component: EditarDestinatarioComponent},
+                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent, canActivate: [AuthGuard]},
+                  { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent, canActivate: [AuthGuard]},
+                  { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent, canActivate: [AuthGuard]},
+                  { path: 'agregar-destinatario', component: AgregarDestinatarioComponent, canActivate: [AuthGuard]},
+                  { path: 'editar-destinatario', component: EditarDestinatarioComponent, canActivate: [AuthGuard]},
                 ]
               },
               { path: 'cartola-historica', component: CartolaHistoricaComponent },
             ]
           },
-          { path: 'cuenta-corriente/comprobante-transferencia', component: ComprobanteTransferenciaComponent},
-          { path: 'linea-credito', component: LineaCreditoComponent },
-          { path: 'linea-credito/pago', component: LineaCreditoPagoComponent },
-          { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent },
-          { path: 'visa', component: VisaComponent },
-          { path: 'visa/pago', component: VisaPagoComponent },
-          { path: 'visa/comprobante', component: VisaComprobanteComponent },
+          { path: 'cuenta-corriente/comprobante-transferencia', component: ComprobanteTransferenciaComponent, canActivate: [AuthGuard]},
+          { path: 'linea-credito', component: LineaCreditoComponent, canActivate: [AuthGuard]},
+          { path: 'linea-credito/pago', component: LineaCreditoPagoComponent, canActivate: [AuthGuard]},
+          { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent, canActivate: [AuthGuard]},
+          { path: 'visa', component: VisaComponent, canActivate: [AuthGuard] },
+          { path: 'visa/pago', component: VisaPagoComponent, canActivate: [AuthGuard] },
+          { path: 'visa/comprobante', component: VisaComprobanteComponent, canActivate: [AuthGuard] },
           { path: 'seguros', component: SegurosComponent },
         ]
       },
-      { path: 'mis-datos', component: DatosUsuarioComponent },
-      { path: 'ayuda/:id', component: AyudaComponent }
+      { path: 'mis-datos', component: DatosUsuarioComponent, canActivate: [AuthGuard] },
+      { path: 'ayuda/:id', component: AyudaComponent, canActivate: [AuthGuard] }
     ]
   }
 ];
