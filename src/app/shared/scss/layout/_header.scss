@@ -10,6 +10,7 @@ header.mi-banco-header {
     max-height: 60px !important;
     padding: 0  !important;
     border-radius: 10px;
+    background-color: $tinto;
     @media (min-width: $md) {
       max-height: inherit !important;
       padding: 0 12px !important;

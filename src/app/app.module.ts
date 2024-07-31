@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
+// Modules
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { MiBancoComponent } from './mi-banco.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { PrivateComponent } from './components/private/private.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 // Pipe
 import { DatePipe } from '@angular/common';
@@ -15,18 +15,25 @@ import { CelularPipe } from './shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
 import { NumeroTarjetaPipe } from './shared/pipes/numero-tarjeta.pipe';
 
-// Modules
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+// Components
+import { MiBancoComponent } from './mi-banco.component';
+import { LoginComponent } from './components/login/login.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { PrivateComponent } from './components/private/private.component';
+import { HomeComponent } from './components/home/home.component';
+
+
 
 
 @NgModule({
   declarations: [
     MiBancoComponent,
     LoginComponent,
-    HomeComponent,
+    HeaderComponent,
+    FooterComponent,
     PrivateComponent,
+    HomeComponent,
     PesosPipe,
     RutPipe,
     CelularPipe,

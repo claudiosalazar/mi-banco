@@ -1,0 +1,115 @@
+
+<header class="mi-banco-header ps-3 pe-0 px-md-3 py-0">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/mibanco/">
+        <div class="logo-mi-banco"></div>
+      </a>
+      <button #navbarToggler class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
+        <ul class="navbar-nav me-auto d-md-flex">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco" routerLinkActive="active">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <!-- <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias">Transferencias</a> -->
+            <a class="nav-link" routerLink="/mibanco/transferencias">Transferencias</a>
+          </li>
+          <li class="nav-item menu-productos">
+            <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Productos
+              <span class="material-symbols-outlined icono-dropdown">
+                expand_more
+              </span>
+            </a>
+            <ul class="dropdown-menu p-0 animate slideIn">
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/resumen">Mis Productos</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Cuenta Corriente</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/linea-credito">Línea de Crédito</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/visa">Visa</a>
+              </li>
+            </ul>
+          </li>
+          <!-- 
+          <li class="nav-item menu-productos">
+            <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Productos
+              <span class="material-symbols-outlined icono-dropdown">
+                expand_more
+              </span>
+            </a>
+            <ul class="dropdown-menu p-0 animate slideIn">
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/resumen">Mis Productos</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Cuenta Corriente</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/linea-credito">Línea de Crédito</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/mibanco/productos/visa">Visa</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mibanco/productos/seguros">Seguros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);">Consultas</a>
+          </li>
+          <li class="nav-item ms-md-2 d-none d-lg-none">
+            <div class="d-flex">
+              <a class="nav-link" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo">Mi ejecutivo</a>
+            </div>
+          </li> -->
+        </ul>
+        <div class="d-flex align-items-center menu-usuario border-gradient border-gradient-green ">
+          <hr class="d-block">
+          <!-- <span class="me-3 nombre-usuario" id="nombreUsuario">{{ PrimerNombre }} 
+            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ SegundoNombre }}</span> {{ ApellidoPaterno }}
+            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ ApellidoMaterno }}</span>
+          </span> -->
+          <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-symbols-outlined icono-datos-usuario dorado" style="font-variation-settings: 'FILL' 1">
+              settings
+            </span>
+          </a>
+          <hr class="d-block">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-usuario p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
+            <li>
+              <a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos">Mis datos</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo">Mi ejecutivo</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias">Emergencias</a>
+            </li>
+            <!-- <li>
+              <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut">
+                <span class="ico-cerrar-sesion"></span>
+                <span>
+                  Cerrar sesión
+                </span>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
