@@ -42,6 +42,8 @@ export class HeaderComponent implements OnInit {
   @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
 
+  currentState = 'initial';
+  currentUrl: any;
   public modalConsultaAbierto = false;
   private backdropSubscription: Subscription | undefined;
   mostrarBackdropMenuMobile: boolean = false;
@@ -50,9 +52,14 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
+    private router: Router,
     private backdropService: BackdropService,
   ) { 
-    
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentUrl = event.urlAfterRedirects;
+    });
   }
 
   ngOnInit(): void {
@@ -85,6 +92,20 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(_event: any) {
+    this.currentState = window.scrollY >= 60 ? 'final' : 'initial';
+
+    if (this.headerElement) {
+      const header: HTMLElement = this.headerElement.nativeElement;
+      if (window.scrollY >= 60) {
+        header.style.backgroundColor = 'rgba(116, 45, 72, .85)';
+      } else {
+        header.style.backgroundColor = 'rgba(116, 45, 72, 1)';
+      }
+    }
   }
 
   abrirMenuMobile(): void {
