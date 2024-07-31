@@ -46,6 +46,7 @@ import { CartolaHistoricaComponent } from './components/private/views/productos/
 import { CuentaCorrienteComponent } from './components/private/views/productos/cuenta-corriente/cuenta-corriente.component';
 import { ProductosComponent } from './components/private/views/productos/productos.component';
 import { ModalConsultasComponent } from './shared/components/header/modal-consultas/modal-consultas.component';
+import { AlertasComponent } from './shared/components/alertas/alertas.component';
 
 
 
@@ -86,6 +87,7 @@ import { ModalConsultasComponent } from './shared/components/header/modal-consul
     CelularPipe,
     TelefonoFijoPipe,
     NumeroTarjetaPipe,
+    AlertasComponent
   ],
   imports: [
     BrowserModule,

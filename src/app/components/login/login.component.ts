@@ -19,6 +19,7 @@ export class LoginComponent {
 
   formularioLogin: FormGroup = new FormGroup({});
   botonLoginDisabled = false;
+  mensajeError = false;
 
   constructor(
     private authService: AuthService,
