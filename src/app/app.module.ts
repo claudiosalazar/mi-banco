@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Pipe
 import { DatePipe } from '@angular/common';
@@ -21,7 +22,8 @@ import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { PrivateComponent } from './components/private/private.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/private/views/home/home.component';
+import { CarouselComponent } from './components/private/views/home/carousel/carousel.component';
 import { MovimientosComponent } from './components/private/views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { AgregarDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agregar-destinatario/agregar-destinatario.component';
 import { ComprobanteTransferenciaComponent } from './components/private/views/productos/cuenta-corriente/transferencias/comprobante-transferencia/comprobante-transferencia.component';
@@ -43,6 +45,7 @@ import { TransferenciasComponent } from './components/private/views/productos/cu
 import { CartolaHistoricaComponent } from './components/private/views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 import { CuentaCorrienteComponent } from './components/private/views/productos/cuenta-corriente/cuenta-corriente.component';
 import { ProductosComponent } from './components/private/views/productos/productos.component';
+import { ModalConsultasComponent } from './shared/components/header/modal-consultas/modal-consultas.component';
 
 
 
@@ -52,9 +55,11 @@ import { ProductosComponent } from './components/private/views/productos/product
     MiBancoComponent,
     LoginComponent,
     HeaderComponent,
+    ModalConsultasComponent,
     FooterComponent,
     PrivateComponent,
     HomeComponent,
+    CarouselComponent,
     ProductosComponent,
     CuentaCorrienteComponent,
     CartolaHistoricaComponent,
@@ -86,7 +91,9 @@ import { ProductosComponent } from './components/private/views/productos/product
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},

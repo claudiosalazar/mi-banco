@@ -1,0 +1,118 @@
+
+<!-- Formulario consultas -->
+<form >
+  <div class="modal-body">
+    <!-- <div *ngIf="formularioConsultas"> -->
+    <div>
+      <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-3">
+        <span class="titulo-modal">Tus datos de contacto</span>
+        <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" routerLink="/mibanco/mis-datos" type="button" data-bs-dismiss="modal">
+        <!-- <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" routerLink="/mibanco/mis-datos" type="button" data-bs-dismiss="modal" (click)="cancelarConsulta()"> -->
+          <div>
+            Actualizar tus datos
+          </div>
+          <span class="material-symbols-outlined icono-link">
+            chevron_right
+          </span>
+        </a>
+      </div>
+  
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="card card-modal">
+            <div class="row">
+              <div class="col-12 col-md-6 mb-2 mb-sm-2">
+                <small class="m-0">Nombre</small>
+                <!-- <p class="tinto">{{ PrimerNombre }} {{ SegundoNombre }} {{ ApellidoPaterno }} {{ ApellidoMaterno }}</p> -->
+              </div>
+              <div class="col-12 col-md-6 mb-2 mb-sm-2">
+                <small class="m-0">Email</small>
+                <!-- <p class="tinto">{{ email }}</p> -->
+              </div>
+              <div class="col-12 col-md-6 mb-0">
+                <small class="m-0">Celular</small>
+                <!-- <p class="tinto">+56 {{ celular | celular }}</p> -->
+              </div>
+              <div class="col-12 col-md-6 mb-0">
+                <small class="m-0">Teléfono</small>
+                <!-- <p class="tinto">{{ telefono | telefonoFijo }}</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-12 mt-4">
+          <!-- Lista de consultas -->
+          <!-- <div class="form-floating mb-4">
+            <custom-select-reactivo [control]="consultasForm.get('consulta')" [options]="listaConsultas" [selectedValue]="consultaSeleccionada" [zIndex]="9999" [submitted]="submitted" [labelSelect]="'Selecciona el tipo de consulta *'" [isValid]="consultaValida" [isInvalid]="consultaValidaReset" (click)="activarSeleccionConsultas()"></custom-select-reactivo>
+          </div> -->
+          <!-- Campos formulario -->
+          <div class="form-floating">
+            <textarea class="form-control" id="textoConsulta" placeholder="Consulta" style="height: 150px;"></textarea>
+            <!-- <textarea class="form-control" id="textoConsulta" formControlName="textoConsulta" placeholder="Consulta" [ngClass]="{ 'is-valid': consultasForm.get('textoConsulta')?.valid }" style="height: 150px;"></textarea> -->
+            <label for="textoConsulta">Consulta</label>
+            <div class="d-flex justify-content-between">
+              <div class="d-block mt-1">
+                <span class="caracteres-textarea">Debes ingresar una consulta con una cantidad mínima de 50 caracteres y un máximo de 2.000.</span>
+              </div>
+              <div class="d-block mt-1">
+                <span class="caracteres-textarea">0 / 2000</span>
+                <!-- <span class="caracteres-textarea">{{ longitudTextoConsulta }} / 2000</span> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensaje enviado -->
+    <div *ngIf="envioConsultaCorrecta">
+      <div class="w-100 mx-5 mt-4">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+            done
+          </span>
+          <div class="d-flex flex-column">
+            <h4 class="mb-3 text-starts">Tu consulta fue enviada con éxito.</h4>
+            <p>En un plazo de 48 hrs nos contactaremos contigo, gracias por comunicarte con nosotros.</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-100">
+        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal">Cerrar</button>
+        <!-- <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button> -->
+      </div>
+    </div>
+  
+    <!-- Mensaje error -->
+    <div *ngIf="errorEnvioConsulta">
+  
+      <div class="w-100 mx-5 mt-4">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+            Error
+          </span>
+          <div class="d-flex flex-column">
+            <h4 class="mb-3 text-starts">Hubo un error al enviar tu consulta.</h4>
+            <p>Intento mas tarde.</p>
+          </div>
+        </div>
+      </div>
+      <div class="w-100">
+        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal">Cerrar</button>
+        <!-- <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- Botones -->
+    <div class="d-flex justify-content-end flex-row">
+      <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" >Cancelar</button>
+      <button type="button" class="btn btn-primario">Enviar consulta</button>
+      <!-- <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="cancelarConsulta()">Cancelar</button>
+      <button type="button" class="btn btn-primario" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()">Enviar consulta</button> -->
+    </div>
+  </div>
+
+</form>
