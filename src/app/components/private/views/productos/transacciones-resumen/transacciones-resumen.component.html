@@ -3,16 +3,16 @@
     <div class="col-12 px-4 px-md-auto">
       <h1>Resumen de Transacciones</h1>
 
-      <div class="row align-items-md-stretch"  *ngIf="productos.length > 0">
+      <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
         <!-- Cuenta corriente -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[0]">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[0] && getTransaccionesCtaCte()">
           <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4">
             <span class="nombre-producto dorado">{{ productos[0].nombre_producto }}</span>
             <small class="numero-producto">N° {{ productos[0].numero_producto }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto">{{ productos[0].saldo | pesos }}</span>
+              <span class="texto-montos monto">{{ transacciones[0].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
@@ -21,14 +21,14 @@
         </div>
 
         <!-- Linea de credito -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[1]">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[1] && getTransaccionesLineaCredito()">
           <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
             <span class="nombre-producto tinto">{{ productos[1].nombre_producto }}</span>
             <small class="numero-producto">N° {{ productos[1].numero_producto }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto tinto">{{ productos[1].cupo | pesos }}</span>
+              <span class="texto-montos monto tinto">{{ transacciones[1].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
@@ -37,14 +37,14 @@
         </div>
 
         <!-- Visa -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0"  *ngIf="productos[2]">
+        <div class="col-12 col-md-4 mb-3 mb-md-0"  *ngIf="productos[2] && getTransaccionesVisa()">
           <div class="card card-productos visa hover-productos-inicio mb-md-4">
             <span class="nombre-producto azul-visa">{{ productos[2].nombre_producto }}</span>
-            <small class="numero-producto">N° {{ productos[2].numero_producto }}</small>
+            <small class="numero-producto">N° {{ productos[2].numero_producto | numeroTarjeta }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto azul-visa">{{ productos[2].cupo | pesos }}</span>
+              <span class="texto-montos monto azul-visa">{{ transacciones[2].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
