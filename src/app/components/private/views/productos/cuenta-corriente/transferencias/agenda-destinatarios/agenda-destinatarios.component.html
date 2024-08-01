@@ -1,3 +1,376 @@
-<p>
-  agenda-destinatarios works!
-</p>
+<div class="col-12">
+  <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-4 px-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center">
+      <p class="mb-3 mb-md-0 me-3">Buscar destinatario</p>
+      <form class="d-flex ml-5" role="search" >
+        <!-- <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios"> -->
+        <input class="form-control me-2 buscador" type="search" aria-label="Search">
+      </form>
+    </div>
+    <hr class="d-md-none my-4">
+    <!-- <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()"> -->
+    <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
+      Agregar nuevo destinatario
+    </button>
+  </div>
+  <!-- Tabla -->
+  <div class="contenedor-tabla">
+    <table class="table table-striped tabla-agenda" role="table">
+      <thead role="columnheader" role="rowgroup">
+        <tr role="row">
+          <!-- <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Nombre
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <!-- <th role="columnheader" (click)="ordenarDatos('apodo'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Apodo
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'apodo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'apodo'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <!-- <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Rut
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <!-- <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Banco
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <!-- <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Tipo de cuenta
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <!-- <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()"> -->
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  N° de cuenta
+                </div>
+              </span>
+              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'"> -->
+              <span class="material-symbols-outlined animar-icono">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <th role="columnheader">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda ">
+                  Acciones
+                </div>
+              </span>
+              <span>&nbsp;</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <!-- <tr *ngFor="let destinatario of agendaDestinatarioFiltrados"> -->
+        <tr>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.nombre }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.apodo }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.rut | rut }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.banco }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.tipoCuenta }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho">
+            <!-- <span class="contenido-celda">{{ destinatario.numeroCuenta }}</span> -->
+            <span class="contenido-celda">asdasd</span>
+          </td>
+          <td role="cell" class="ancho py-0">
+            <div class="contenido-celda">
+              <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
+                <!-- Editar datos destinatario -->
+                <!-- <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()"> -->
+                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
+                  <span class="material-symbols-outlined">
+                    edit
+                  </span>
+                </button>
+                <!-- Eliminar destinatario -->
+                <!-- <button (click)="abrirModalEliminar(destinatario)"> -->
+                <button>
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>  
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador> -->
+
+  </div>
+</div>
+
+<!-- Sidenav para crear nuevo destinatario
+<div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
+  <div class="contenido-offcanvas">
+    <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+  </div>
+</div> -->
+
+<!-- Sidenav para editar destinatario
+<div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">
+  <div class="contenido-offcanvas">
+    <app-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-editar-destinatario>
+  </div>
+</div> -->
+
+<!-- Modal eliminar destinatario -->
+<div class="modal posicion fade" id="modalEliminarDestinatario" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modalEliminarDestinatario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div>
+          <span class="titulo-header">Eliminar destinatario</span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <!-- <div id="usuarioAEliminar" *ngIf="!usuarioEliminado"> -->
+        <div id="usuarioAEliminar">
+          <div class="d-flex align-items-center mb-2">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
+              warning
+            </span>
+            <p class="mb-0">
+              <!-- Estas seguro de que quieres eliminar al destinatario <strong>{{ destinatarioSeleccionado?.nombre }}</strong>. -->
+              ¿Estas seguro de que quieres eliminar al destinatario?
+            </p>
+          </div>
+        </div>
+        <!-- <div id="usuarioEliminado" *ngIf="usuarioEliminado"> -->
+        <div id="usuarioEliminado">
+          <!-- Usuario eliminado correctamente -->
+          <!-- <div class="d-flex align-items-center mb-2" id="eliminado" *ngIf="!errorServer"> -->
+          <div class="d-flex align-items-center mb-2" id="eliminado">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <h4 class="d-block">
+              El usuario fue eliminado correctamente.
+            </h4>
+          </div>
+          <!-- Error en server -->
+          <!-- <div id="errorServer" id="errorServer" *ngIf="errorServer"> -->
+          <div id="errorServer" id="errorServer">
+            <div class="d-flex align-items-center mb-2">
+              <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+                Error
+              </span>
+              <h4 class="d-block">
+                Hubo un error al eliminar el destinatario.
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <div class="d-flex justify-content-end flex-row" *ngIf="!usuarioEliminado"> -->
+        <div class="d-flex justify-content-end flex-row">
+          <!-- <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button> -->
+          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+          <!-- <button type="button" class="btn btn-primario ms-3" (click)="eliminarDestinatario(); ocultaBackDrop()">Eliminar</button> -->
+          <button type="button" class="btn btn-primario ms-3">Eliminar</button>
+        </div>
+        <!-- <div class="d-flex justify-content-end flex-row" *ngIf="errorServer"> -->
+        <div class="d-flex justify-content-end flex-row">
+          <!-- <button type="button" class="btn btn-primario ms-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
+          <button type="button" class="btn btn-primario ms-3" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal nuevo destinatario -->
+<div class="modal posicion fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- <div class="modal-body" *ngIf="enviandoNuevoDestinatario"> -->
+      <div class="modal-body">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined mensajes cargando me-3">
+            sync
+          </span>
+          <span class="mb-3 titulo-modal">Se estan guardando los nuevos datos del nuevo destinatario.</span>
+        </div>
+        <div class="w-100 text-center mt-3 pb-3">
+          <span>Espera un momento por favor.</span>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="datosGuardadosNuevoDestinatario"> -->
+      <div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <span class="titulo-modal">El nuevo destinatario se guardo con éxito.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <!-- <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="errorServerNuevoDestinatario"> -->
+      <div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <span class="titulo-modal mb-3">Hubo un error al intentar guardar el nuevo destinatario.</span>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <!-- <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal edición destinatario -->
+<div class="modal posicion fade" id="modalEdicionDestinatario" tabindex="-1" aria-labelledby="modalEdicionDestinatario" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <!-- <div class="modal-body" *ngIf="enviandoDestinatarioEditado"> -->
+      <div class="modal-body">
+        <div class="d-flex align-items-center">
+          <span class="icono material-symbols-outlined mensajes cargando me-3">
+            sync
+          </span>
+          <span class="mb-3 titulo-modal">Se estan guardando los nuevos datos del destinatario.</span>
+        </div>
+        <div class="w-100 text-center mt-3 pb-3">
+          <span>Espera un momento por favor.</span>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="datosGuardadosDestinatarioEditado"> -->
+      <div>
+        <div class="modal-body">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <span class="mb-3 titulo-modal">El destinatario se edito con éxito.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <!-- <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="errorServerDestinatarioEditado"> -->
+      <div>
+        <div class="modal-body">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <span class="titulo-modal">Hubo un error al intentar actualizar los datos del destinatario.</span>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <!-- <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" >Cerrar</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div> -->

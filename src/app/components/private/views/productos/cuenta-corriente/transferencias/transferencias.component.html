@@ -1,3 +1,21 @@
-<p>
-  transferencias works!
-</p>
+<div class="tabs-transferencias" id="transferencias-tab-pane" role="tabpanel" aria-labelledby="transferencias-tab" tabindex="0">
+  <div class="col-12">
+    <div class="p-4 pb-0">
+      <ul class="nav me-auto d-flex flex-column flex-md-row">
+        <li class="me-md-3">
+          <button class="btn-small btn-secundario" routerLink="/mibanco/productos/cuenta-corriente/transferencias/transferencia-a-terceros" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Transferencia <span></span>a Terceros</button>
+        </li>
+        <li class="me-md-3">
+          <button class="btn-small btn-secundario" routerLink="/mibanco/productos/cuenta-corriente/transferencias/ultimas-transferencias" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Últimas Transferencias</button>
+        </li>
+        <li>
+          <button class="btn-small btn-secundario" routerLink="/mibanco/productos/cuenta-corriente/transferencias/agenda-destinatarios" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Agenda</button>
+        </li>
+      </ul>
+    </div>
+
+    <hr class="mt-4 mb-3">
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

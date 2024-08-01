@@ -8,7 +8,7 @@ import { DatosUsuario } from '../../../../models/datos-usuario.model';
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   productos: Productos[] = [];
   ultimasTransaccionesCtaCte = true;

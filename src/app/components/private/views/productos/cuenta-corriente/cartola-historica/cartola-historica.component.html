@@ -1,3 +1,90 @@
-<p>
-  cartola-historica works!
-</p>
+<div class="tab-pane cartola" id="cartola-tab-pane" role="tabpanel" aria-labelledby="cartola-tab" tabindex="0">
+  <!-- Formulario de busqueda -->
+  <div class="col-12 p-4 pb-0">
+    <h4>Cartolas Historicas</h4>
+  </div>
+
+  <hr class="mt-4 mb-3">
+
+  <div class="col-12">
+    <div class="contenedor-tabla">
+      <table class="table tabla-cartolas-historicas table-striped" role="table">
+        <thead role="columnheader"ead role="rowgroup">
+          <tr role="row">
+            <!-- <th role="columnheader" (click)="ordenarDatos('numeroCartola'); onHeaderClick()"> -->
+            <th role="columnheader" >
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Número de Cartola
+                  </div>
+                </span>
+                <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCartola'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCartola'"> -->
+                <span class="material-symbols-outlined animar-icono">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <!-- <th role="columnheader" (click)="ordenarDatos('fechaEmision'); onHeaderClick()"> -->
+            <th role="columnheader" >
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Fecha Emisión Cartola
+                  </div>
+                </span>
+                <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fechaEmision'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fechaEmision'"> -->
+                <span class="material-symbols-outlined animar-icono">
+                  expand_more
+                </span>
+              </div>
+            </th>
+            <th role="columnheader">
+              <div class="d-flex align-items-center">
+                <span class="ancho">
+                  <div class="contenido-celda">
+                    Descargar
+                  </div>
+                </span>
+                <span>&nbsp;</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          <!-- <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row"> -->
+          <tr role="row">
+            <td role="cell" class="ancho">
+              <!-- <span class="contenido-celda">{{ cartola.numeroCartola }}</span> -->
+              <span class="contenido-celda">00000</span>
+            </td>
+            <td role="cell" class="ancho">
+              <!-- <span class="contenido-celda">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span> -->
+              <span class="contenido-celda">00000</span>
+            </td>
+            <td role="cell" class="ancho py-0">
+              <div class="contenido-celda">
+                <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
+                  <!-- PDF -->
+                  <button>
+                    <span class="material-symbols-outlined">
+                      picture_as_pdf
+                    </span>
+                  </button>
+                  <!-- Doc -->
+                  <button>
+                    <span class="material-symbols-outlined">
+                      description
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- <app-paginador [datosPaginador]="cartolas" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedCartolas = $event" [datosOrdenados]="datosOrdenados"></app-paginador> -->
+    </div>
+  </div>
+</div>
