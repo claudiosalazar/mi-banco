@@ -47,6 +47,7 @@ import { CuentaCorrienteComponent } from './components/private/views/productos/c
 import { ProductosComponent } from './components/private/views/productos/productos.component';
 import { ModalConsultasComponent } from './shared/components/header/modal-consultas/modal-consultas.component';
 import { AlertasComponent } from './shared/components/alertas/alertas.component';
+import { DatosUsuarioService } from './services/datosUsuario.service';
 
 
 
@@ -100,6 +101,7 @@ import { AlertasComponent } from './shared/components/alertas/alertas.component'
   providers: [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
+    DatosUsuarioService,
     PesosPipe,
     RutPipe,
     CelularPipe,

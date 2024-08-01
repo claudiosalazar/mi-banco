@@ -5,6 +5,9 @@ import { filter } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 
+import { DatosUsuarioService } from '../../../services/datosUsuario.service';
+import { DatosUsuario } from '../../../models/datos-usuario.model';
+
 declare var bootstrap: any;
 
 @Component({
@@ -42,6 +45,12 @@ export class HeaderComponent implements OnInit {
   @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
 
+  //datosUsuario: any;
+  primer_nombre: any;
+  segundo_nombre: any;
+  apellido_paterno: any;
+  apellido_materno: any;
+
   currentState = 'initial';
   currentUrl: any;
   public modalConsultaAbierto = false;
@@ -51,6 +60,7 @@ export class HeaderComponent implements OnInit {
   modales: any[] = [];
 
   constructor(
+    private datosUsuarioService: DatosUsuarioService,
     private renderer: Renderer2,
     private router: Router,
     private backdropService: BackdropService,
@@ -63,6 +73,27 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /*this.datosUsuarioService.getDatosUsuario().subscribe(
+      data => {
+        this.datosUsuario = data;
+        console.log('Datos del usuario:', this.datosUsuario);
+      },
+      error => {
+        console.error('Error al obtener los datos del usuario', error);
+      }
+    );*/
+
+    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
+      if (datos.length > 0) {
+        const usuario = datos[0];
+        console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
+        this.primer_nombre = usuario.primer_nombre;
+        this.segundo_nombre = usuario.segundo_nombre;
+        this.apellido_paterno = usuario.apellido_paterno;
+        this.apellido_materno = usuario.apellido_materno;
+      }
+    });
+
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
       mostrar => this.mostrarBackdropCustomModal = mostrar
     );

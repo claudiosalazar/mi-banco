@@ -53,12 +53,14 @@
             </div>
           </li>
         </ul>
-        <div class="d-flex align-items-center menu-usuario border-gradient border-gradient-green ">
+        <div class="d-flex align-items-center menu-usuario border-gradient border-gradient-green">
           <hr class="d-block">
-          <!-- <span class="me-3 nombre-usuario" id="nombreUsuario">{{ PrimerNombre }} 
-            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ SegundoNombre }}</span> {{ ApellidoPaterno }}
-            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ ApellidoMaterno }}</span>
-          </span> -->
+          <span class="me-3 nombre-usuario d-block" id="nombreUsuario">
+            {{ primer_nombre }}
+            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ segundo_nombre }}</span> 
+            {{ apellido_paterno }}
+            <span class="d-inline-block d-lg-none d-xl-inline-block">{{ apellido_materno }}</span>
+          </span>
           <a class="btn-datos-usuario" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="material-symbols-outlined icono-datos-usuario dorado" style="font-variation-settings: 'FILL' 1">
               settings
