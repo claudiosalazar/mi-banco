@@ -12,16 +12,17 @@
         </span>
       </h1>
 
-      <div class="row align-items-md-stretch"  *ngIf="productos.length > 0">
+      <div class="row align-items-md-stretch"  *ngIf="productos.length && transacciones.length">
         <!-- Cuenta corriente -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()" *ngIf="productos[0]">
+        <!-- <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()" *ngIf="productos[0] && transacciones[0]"> -->
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesCtaCte()" *ngIf="productos[0] && getTransaccionesCtaCte()">
           <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveCtaCte}">
             <span class="nombre-producto dorado">{{ productos[0].nombre_producto }}</span>
             <small class="numero-producto">N° {{ productos[0].numero_producto }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto">{{ productos[0].saldo | pesos }}</span>
+              <span class="texto-montos monto">{{ transacciones[0].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
@@ -30,14 +31,14 @@
         </div>
 
         <!-- Linea de credito -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()"*ngIf="productos[1]">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesLineaCredito()" *ngIf="productos[1] && getTransaccionesLineaCredito()">
           <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveLineaCredito}">
             <span class="nombre-producto tinto">{{ productos[1].nombre_producto }}</span>
             <small class="numero-producto">N° {{ productos[1].numero_producto }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto tinto">{{ productos[1].cupo | pesos }}</span>
+              <span class="texto-montos monto tinto">{{ transacciones[1].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
@@ -46,14 +47,14 @@
         </div>
 
         <!-- Visa -->
-        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesVisa()" *ngIf="productos[2]">
+        <div class="col-12 col-md-4 mb-3 mb-md-0" (mouseover)="mostrarTransaccionesVisa()" *ngIf="productos[2] && getTransaccionesVisa()">
           <div class="card card-productos visa hover-productos-inicio mb-md-4" [ngClass]="{'active': isActiveVisa}">
             <span class="nombre-producto azul-visa">{{ productos[2].nombre_producto }}</span>
-            <small class="numero-producto">N° {{ productos[2].numero_producto }}</small>
+            <small class="numero-producto">N° {{ productos[2].numero_producto | numeroTarjeta }}</small>
             <hr>
             <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
               <span class="texto-montos">Disponible:</span>
-              <span class="texto-montos monto azul-visa">{{ productos[2].cupo | pesos }}</span>
+              <span class="texto-montos monto azul-visa">{{ transacciones[2].saldo | pesos }}</span>
             </div>
             <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
               <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
@@ -62,7 +63,7 @@
         </div>
 
         <div class="col-12 contenedor-ultimas-transacciones d-none d-md-block">
-          <!-- Ultimas transacciones cta cte
+          <!-- Ultimas transacciones cta cte -->
           <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesCtaCte" [@fadeInOut]>
             <p class="mb-1 cuenta-corriente">
               Últimos movimientos Cuenta Corriente
@@ -77,7 +78,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let transaccion of transaccionesCuentaCorriente">
+                <tr *ngFor="let transaccion of getTransaccionesCtaCte()">
                   <td>
                     <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
                   </td>
@@ -95,10 +96,10 @@
                 </tr>
               </tbody>
             </table>
-          </div> -->
+          </div>
 
-          <!-- Ultimas transacciones linea crédito
-          <div class="ultimas-transacciones" [@fadeInOut]>
+          <!-- Ultimas transacciones linea crédito -->
+          <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesLineaCredito" [@fadeInOut]>
             <p class="mb-1 linea-de-credito">
               Últimos movimientos Línea de Crédito
             </p>
@@ -112,7 +113,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let transaccion of transaccionesLineaDeCredito">
+                <tr *ngFor="let transaccion of getTransaccionesLineaCredito()">
                   <td>
                     <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
                   </td>
@@ -120,19 +121,19 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : ''
+                    <span class="contenido-celda">{{ transaccion.cargo !== '1' ? (transaccion.cargo | pesos) : ''
                       }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : ''
+                    <span class="contenido-celda">{{ transaccion.abono !== '1' ? (transaccion.abono | pesos) : ''
                       }}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div> -->
+          </div>
 
-          <!-- Ultimas transacciones visa
+          <!-- Ultimas transacciones visa -->
           <div class="ultimas-transacciones" *ngIf="ultimasTransaccionesVisa" [@fadeInOut]>
             <p class="mb-1 visa">
               Últimos movimientos Visa
@@ -147,7 +148,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let transaccion of transaccionesVisa">
+                <tr *ngFor="let transaccion of getTransaccionesVisa()">
                   <td>
                     <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
                   </td>
@@ -155,17 +156,17 @@
                     <span class="contenido-celda">{{ transaccion.detalle }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : ''
+                    <span class="contenido-celda">{{ transaccion.cargo !== '2' ? (transaccion.cargo | pesos) : ''
                       }}</span>
                   </td>
                   <td>
-                    <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : ''
+                    <span class="contenido-celda">{{ transaccion.abono !== '2' ? (transaccion.abono | pesos) : ''
                       }}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div> -->
+          </div>
         </div>
 
       </div>

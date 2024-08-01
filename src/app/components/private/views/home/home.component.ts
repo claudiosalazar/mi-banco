@@ -1,16 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ProductosService } from '../../../../services/productos.service';
 import { Productos } from '../../../../models/productos.model';
 import { DatosUsuarioService } from '../../../../services/datosUsuario.service';
 import { DatosUsuario } from '../../../../models/datos-usuario.model';
+import { TransaccionesService } from '../../../../services/transacciones.service';
+import { Transacciones } from '../../../../models/transacciones.model';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.3s ease-in-out', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('0.3s ease-in-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
 
   productos: Productos[] = [];
+  transacciones: Transacciones[] = [];
   ultimasTransaccionesCtaCte = true;
   ultimasTransaccionesLineaCredito = false;
   ultimasTransaccionesVisa = false;
@@ -24,7 +39,8 @@ export class HomeComponent implements OnInit {
   
   constructor(
     private productosService: ProductosService,
-    private datosUsuarioService: DatosUsuarioService
+    private datosUsuarioService: DatosUsuarioService,
+    private transaccionesService: TransaccionesService
   ) { }
 
   ngOnInit() {
@@ -41,6 +57,24 @@ export class HomeComponent implements OnInit {
         this.apellido_paterno = usuario.apellido_paterno;
       }
     });
+
+    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+      if (transacciones) {
+        this.transacciones = transacciones;
+      }
+    });
+  }
+
+  getTransaccionesCtaCte() {
+    return this.transacciones.filter(transaccion => transaccion.id_producto === 0);
+  }
+  
+  getTransaccionesLineaCredito() {
+    return this.transacciones.filter(transaccion => transaccion.id_producto === 1);
+  }
+  
+  getTransaccionesVisa() {
+    return this.transacciones.filter(transaccion => transaccion.id_producto === 2);
   }
 
   mostrarTransaccionesCtaCte(): void {
