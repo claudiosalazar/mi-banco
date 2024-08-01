@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../services/productos.service';
 import { Productos } from '../../../../models/productos.model';
+import { DatosUsuarioService } from '../../../../services/datosUsuario.service';
+import { DatosUsuario } from '../../../../models/datos-usuario.model';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +15,30 @@ export class HomeComponent {
   ultimasTransaccionesLineaCredito = false;
   ultimasTransaccionesVisa = false;
 
+  primer_nombre: any;
+  apellido_paterno: any;
+
   isActiveCtaCte = true;
   isActiveLineaCredito = false;
   isActiveVisa = false;
   
   constructor(
-    private productosService: ProductosService
+    private productosService: ProductosService,
+    private datosUsuarioService: DatosUsuarioService
   ) { }
 
   ngOnInit() {
     this.productosService.getSeguros().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
+      }
+    });
+
+    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
+      if (datos.length > 0) {
+        const usuario = datos[0];
+        this.primer_nombre = usuario.primer_nombre;
+        this.apellido_paterno = usuario.apellido_paterno;
       }
     });
   }

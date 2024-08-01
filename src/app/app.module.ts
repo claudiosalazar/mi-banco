@@ -48,6 +48,9 @@ import { ProductosComponent } from './components/private/views/productos/product
 import { ModalConsultasComponent } from './shared/components/header/modal-consultas/modal-consultas.component';
 import { AlertasComponent } from './shared/components/alertas/alertas.component';
 import { DatosUsuarioService } from './services/datosUsuario.service';
+import { BannerCreditoConsumoComponent } from './shared/components/banners/banner-credito-consumo/banner-credito-consumo.component';
+import { BannerSeguroAutoComponent } from './shared/components/banners/banner-seguro-auto/banner-seguro-auto.component';
+import { BannerVisaDescuentoComponent } from './shared/components/banners/banner-visa-descuento/banner-visa-descuento.component';
 
 
 
@@ -88,7 +91,10 @@ import { DatosUsuarioService } from './services/datosUsuario.service';
     CelularPipe,
     TelefonoFijoPipe,
     NumeroTarjetaPipe,
-    AlertasComponent
+    AlertasComponent,
+    BannerCreditoConsumoComponent,
+    BannerSeguroAutoComponent,
+    BannerVisaDescuentoComponent
   ],
   imports: [
     BrowserModule,

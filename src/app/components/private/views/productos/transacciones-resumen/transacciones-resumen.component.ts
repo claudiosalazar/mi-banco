@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductosService } from '../../../../../services/productos.service';
+import { Productos } from '../../../../../models/productos.model';
 
 @Component({
   selector: 'app-transacciones-resumen',
@@ -6,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransaccionesResumenComponent implements OnInit {
 
-  constructor() { }
+  productos: Productos[] = [];
+
+  constructor(
+    private productosService: ProductosService
+  ) { }
 
   ngOnInit() {
+    this.productosService.getSeguros().subscribe((productos: Productos[]) => {
+      if (productos) {
+        this.productos = productos;
+      }
+    });
   }
 
 }

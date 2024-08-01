@@ -184,31 +184,7 @@
 
           <!-- Banner credito consumo -->
           <div class="col-12">
-            <div class="card card-banner banner-mibanco grande d-flex justify-content-end"
-              style="background-image: url('./assets/images/banner-home-credito-consumo.jpg');">
-              <div class="info-banner info-grande">
-                <span class="titulo-banner text-start">
-                  Crédito de Consumo
-                </span>
-                <!-- <span class="texto-explicativo text-start">
-                  Hola <strong>{{ datosUsuarioActual?.PrimerNombre }} {{ datosUsuarioActual?.ApellidoPaterno
-                    }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
-                </span>
-                <span class="monto text-start" *ngIf="getOfertaById(0) as oferta">
-                  {{ oferta.MontoPreAprobado | pesos }}
-                </span> -->
-                <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
-                  <span class="texto-legal me-3">
-                    * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis
-                    est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque
-                    imperdiet.
-                  </span>
-                  <div>
-                    <button class="btn-banner mb-3 mb-md-auto" type="button">Solicitar Crédito</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-banner-credito-consumo></app-banner-credito-consumo>
           </div>
         </div>
       </div>
@@ -224,86 +200,12 @@
 
           <!-- Banner seguro -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
-            <div class="card card-banner banner-mibanco medio"
-              style="background-image: url('./assets/images/banner-seguro-auto.jpg');">
-              <div class="info-banner d-flex justify-content-around align-content-stretch">
-                <div class="info-medio">
-                  <div class="d-flex flex-column ">
-                    <span class="titulo-banner text-start">
-                      Contrata tu Seguro Auto
-                    </span>
-                    <span class="texto-secundario">
-                      Por un valor mensual por el primer año.
-                    </span>
-                    <span class="texto-explicativo">
-                      oferta exclusiva para solo por este mes
-                    </span>
-                    <!-- <span class="monto-cuota text-start rojo" *ngIf="getOfertaById(0) as oferta">
-                      UF {{ oferta.MontoPreAprobado}}
-                    </span> -->
-                    <img src="./assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
-                  </div>
-                  <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">
-                    <span class="texto-legal me-3">
-                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
-                      Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id
-                      pellentesque imperdiet.
-                    </span>
-                    <div>
-                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto"
-                        type="button">
-                        <div>
-                          Más información
-                        </div>
-                        <span class="material-symbols-outlined icono-link">
-                          chevron_right
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-banner-seguro-auto></app-banner-seguro-auto>
           </div>
 
           <!-- Banner visa -->
           <div class="col-12 col-lg-6 mt-4 mb-md-5 d-flex">
-            <div class="card card-banner banner-mibanco medio"
-              style="background-image: url('./assets/images/banner-visa.jpg');">
-              <div class="info-banner d-flex justify-content-around align-content-stretch">
-                <div class="info-medio">
-                  <div class="d-flex flex-column">
-                    <span class="titulo-banner text-start">
-                      Paga con tu Tarjeta de Crédito Visa este mes y
-                    </span>
-                    <span class="texto-secundario">
-                      Disfruta un descuento de
-                    </span>
-                    <span class="monto text-start rojo">
-                      50%
-                    </span>
-                  </div>
-                  <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-1 mt-md-auto">
-                    <span class="texto-legal me-3">
-                      * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum.
-                      Duis est tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id
-                      pellentesque imperdiet.
-                    </span>
-                    <div>
-                      <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto"
-                        type="button">
-                        <div>
-                          Más información
-                        </div>
-                        <span class="material-symbols-outlined icono-link">
-                          chevron_right
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <app-banner-visa-descuento></app-banner-visa-descuento>
           </div>
 
         </div>
