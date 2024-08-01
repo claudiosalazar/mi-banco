@@ -65,7 +65,7 @@
       </tr>
     </thead>
     <tbody role="rowgroup">
-      <tr *ngFor="let transaccion of paginatedTransacciones" role="row">
+      <tr *ngFor="let transaccion of transacciones" role="row">
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
         </td>

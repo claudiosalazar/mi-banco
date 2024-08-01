@@ -32,7 +32,7 @@
           </div>
           <!-- Importacion de componente tables -->
           <!-- <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables> -->
-          <app-tabla-movimientos></app-tabla-movimientos>
+          <app-tabla-movimientos [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" [idProducto]="2" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tabla-movimientos>
         </div>
 
 

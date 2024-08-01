@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
+import { TransaccionesService } from '../../../../services/transacciones.service';
+import { Transacciones } from '../../../../models/transacciones.model';
 
 @Component({
   selector: 'app-tabla-movimientos',
@@ -8,6 +10,9 @@ import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 export class TablaMovimientosComponent implements OnInit {
 
   @Output() datosOrdenados = new EventEmitter<void>();
+  @Input() mostrarPaginador: boolean | undefined;
+  @Input() nuevaClase: string | undefined;
+  @Input() idProducto: number | undefined;
 
   transacciones: any[] = [];
   productos: any[] = [];
@@ -24,6 +29,7 @@ export class TablaMovimientosComponent implements OnInit {
   sortOrder = 1;
   sortedColumn = '';
   sortAscending: boolean = true;
+  
 
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
@@ -31,10 +37,19 @@ export class TablaMovimientosComponent implements OnInit {
   public columnaSeleccionada: string = '';
 
   constructor(
-    private pesosPipe: PesosPipe
+    private pesosPipe: PesosPipe,
+    private transaccionesService: TransaccionesService
   ) { }
 
   ngOnInit() {
+    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+      if (transacciones) {
+        // Filtrar las transacciones por id_producto
+        this.transacciones = this.idProducto !== undefined 
+          ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
+          : transacciones;
+      }
+    });
   }
 
   public onHeaderClick(): void {
