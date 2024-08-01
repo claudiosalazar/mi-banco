@@ -29,8 +29,7 @@
             <div class="p-4">
               <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
             </div>
-            <!-- Importacion de componente tables -->
-            <app-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'"  [idProducto]="1" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tabla-movimientos>
+            <app-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" [idProducto]="1" [datos]="transaccionesFiltradas"></app-tabla-movimientos>
           </div>
   
   

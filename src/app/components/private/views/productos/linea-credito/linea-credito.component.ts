@@ -11,10 +11,12 @@ import { FormControl } from '@angular/forms';
 })
 export class LineaCreditoComponent implements OnInit {
 
-  transaccionesLineaCredito = '1';
+  transaccionesLineaCredito = '';
 
   productos: Productos[] = [];
   transacciones: Transacciones[] = [];
+
+  transaccionesFiltradas: any[] = [];
 
   originalData: any[] = [];
   itemsPerPage = 5;
@@ -44,10 +46,11 @@ export class LineaCreditoComponent implements OnInit {
 
   handleDatosFiltrados(datosFiltrados: any[]) {
     this.transacciones = datosFiltrados;
-    //this.productos = [...this.transacciones];
+    this.transacciones = [...this.transacciones];
     this.originalData = [...this.transacciones];
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
   }
+
 
   mostrarPagoLineaDeCredito(): void {
     this.movimientosLineaDeCredito = false;

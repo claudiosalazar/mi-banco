@@ -13,6 +13,7 @@ export class TablaMovimientosComponent implements OnInit {
   @Input() mostrarPaginador: boolean | undefined;
   @Input() nuevaClase: string | undefined;
   @Input() idProducto: number | undefined;
+  @Input() datos: any | undefined;
 
   transacciones: any[] = [];
   productos: any[] = [];
@@ -36,6 +37,8 @@ export class TablaMovimientosComponent implements OnInit {
 
   public columnaSeleccionada: string = '';
 
+  transaccionesFiltradas: any[] = [];
+
   constructor(
     private pesosPipe: PesosPipe,
     private transaccionesService: TransaccionesService
@@ -54,6 +57,16 @@ export class TablaMovimientosComponent implements OnInit {
 
   public onHeaderClick(): void {
     this.isRotatedIn = !this.isRotatedIn;
+  }
+
+  handleDatosFiltrados(event: any) {
+    this.transaccionesFiltradas = event;
+    this.actualizarTabla();
+  }
+
+  actualizarTabla() {
+    console.log('Tabla actualizada con los datos filtrados:', this.transaccionesFiltradas);
+    // Aquí no necesitas hacer nada más, ya que Angular se encargará de actualizar la vista
   }
 
   // Ordena los datos de la tabla
