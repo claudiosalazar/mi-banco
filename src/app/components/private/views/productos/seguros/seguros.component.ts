@@ -18,7 +18,6 @@ export class SegurosComponent implements OnInit {
     this.segurosService.getSeguros().subscribe((seguros: Seguros[]) => {
       if (seguros) {
         this.seguros = seguros;
-        console.log('Datos seguros:', this.seguros);
       }
     });
   }
