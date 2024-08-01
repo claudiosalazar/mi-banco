@@ -73,20 +73,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.datosUsuarioService.getDatosUsuario().subscribe(
-      data => {
-        this.datosUsuario = data;
-        console.log('Datos del usuario:', this.datosUsuario);
-      },
-      error => {
-        console.error('Error al obtener los datos del usuario', error);
-      }
-    );*/
-
     this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
       if (datos.length > 0) {
         const usuario = datos[0];
-        console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
+        // console.log('Datos del usuario:', usuario);
         this.primer_nombre = usuario.primer_nombre;
         this.segundo_nombre = usuario.segundo_nombre;
         this.apellido_paterno = usuario.apellido_paterno;

@@ -13,9 +13,6 @@ export class DatosUsuarioService {
   constructor(private http: HttpClient) { }
 
   getDatosUsuario(): Observable<DatosUsuario[]> {
-    console.log('getDatosUsuario');
-    return this.http.get<DatosUsuario[]>(`${this.URL}/mibanco/datos_usuario`).pipe(
-      tap(datos => console.log('Datos del usuario:', datos))
-    );
+    return this.http.get<DatosUsuario[]>(`${this.URL}/mibanco/datos_usuario`).pipe();
   }
 }

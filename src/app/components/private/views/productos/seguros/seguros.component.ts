@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SegurosService } from '../../../../../services/seguros.service';
+import { Seguros } from '../../../../../models/seguros.model';
 
 @Component({
   selector: 'app-seguros',
@@ -6,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SegurosComponent implements OnInit {
 
-  constructor() { }
+  seguros: Seguros[] = [];
+
+  constructor(
+    private segurosService: SegurosService
+  ) { }
 
   ngOnInit() {
+    this.segurosService.getSeguros().subscribe((seguros: Seguros[]) => {
+      if (seguros) {
+        this.seguros = seguros;
+        console.log('Datos seguros:', this.seguros);
+      }
+    });
   }
 
 }
