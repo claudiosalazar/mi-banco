@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
+import { TransaccionesService } from '../../../../../services/transacciones.service';
+import { Transacciones } from '../../../../../models/transacciones.model';
 
 @Component({
   selector: 'app-visa',
@@ -9,6 +11,7 @@ import { Productos } from '../../../../../models/productos.model';
 export class VisaComponent implements OnInit {
 
   productos: Productos[] = [];
+  transacciones: Transacciones[] = [];
 
   movimientosVisa = true;
   formularioPagoVisa = false;
@@ -16,6 +19,7 @@ export class VisaComponent implements OnInit {
 
   constructor(
     private productosService: ProductosService,
+    private transaccionesService: TransaccionesService
   ) { }
 
   ngOnInit() {
@@ -24,6 +28,16 @@ export class VisaComponent implements OnInit {
         this.productos = productos;
       }
     });
+
+    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+      if (transacciones) {
+        this.transacciones = transacciones;
+      }
+    });
+  }
+
+  getTransaccionesVisa() {
+    return this.transacciones.filter(transaccion => transaccion.id_producto === 2);
   }
 
   mostrarPagoVisa(): void {

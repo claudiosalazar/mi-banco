@@ -1,7 +1,7 @@
 <!-- <ng-container *ngIf="movimientosVisa"> -->
 <ng-container>
   <div class="container pb-5">
-    <div class="row" *ngIf="productos.length > 0">
+    <div class="row" *ngIf="productos.length && transacciones.length">
       <div class="col-12 px-4 px-md-auto">
 
         <h1>
@@ -28,10 +28,11 @@
 
         <div class="card mt-4">
           <div class="p-4">
-            <!-- <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla> -->
+            <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
           </div>
           <!-- Importacion de componente tables -->
           <!-- <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables> -->
+          <app-tabla-movimientos></app-tabla-movimientos>
         </div>
 
 

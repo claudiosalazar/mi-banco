@@ -13,7 +13,6 @@
             <div class="d-flex justify-content-between flex-column  align-items-center flex-md-row">
               <div class="d-flex align-items-center">
                 <div>
-                  <h5>Monto Facturado del mes: <strong class="dorado">$ 50.000</strong></h5>
                   <small class="mb-0">
                     <!-- Último pago realizado el <br class="d-md-none"><strong class="tinto">{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">{{ ultimoMontoAbono | pesos }}</strong>. -->
                     Último pago realizado el <br class="d-md-none"><strong class="tinto">00/00/0000</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">000000</strong>.
@@ -28,10 +27,11 @@
   
           <div class="card mt-4">
             <div class="p-4">
-              <!-- <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla> -->
+              <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
             </div>
             <!-- Importacion de componente tables -->
             <!-- <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables> -->
+            <app-tabla-movimientos></app-tabla-movimientos>
           </div>
   
   

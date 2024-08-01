@@ -1,0 +1,21 @@
+<nav class="d-flex justify-content-center mt-3" *ngIf="mostrarPaginador">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);" (click)="prevPage()">
+        <span class="material-symbols-outlined">
+          chevron_left
+        </span>
+      </a>
+    </li>
+    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.hidden]="i < startPage - 1 || i >= startPage + displayedPages - 1">
+      <a class="page-link" [class.active]="i + 1 === currentPage" href="javascript:void(0);" (click)="seleccionarPagina(i + 1)">{{ i + 1 }}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);" (click)="nextPage()">
+        <span class="material-symbols-outlined">
+          chevron_right
+        </span>
+      </a>
+    </li>
+  </ul>
+</nav>

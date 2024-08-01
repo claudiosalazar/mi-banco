@@ -1,0 +1,88 @@
+<div class="contenedor-tabla">
+  <table class="table table-striped tabla-movimientos" role="table">
+    <thead role="columnheader" role="rowgroup">
+      <tr role="row">
+        <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Fecha
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" (click)="ordenarDatos('detalle'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Detalle
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'detalle'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'detalle'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" (click)="ordenarDatos('cargo'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Cargo
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" (click)="ordenarDatos('abono'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Abono
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'abono'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'abono'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" (click)="ordenarDatos('saldo'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Saldo
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'saldo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'saldo'">
+              expand_more
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      <tr *ngFor="let transaccion of paginatedTransacciones" role="row">
+        <td role="cell" class="ancho">
+          <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+        </td>
+        <td role="cell" class="ancho">
+          <span class="contenido-celda">{{ transaccion.detalle }}</span>
+        </td>
+        <td role="cell" class="ancho">
+          <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+        </td>
+        <td role="cell" class="ancho">
+          <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
+        </td>
+        <td role="cell" class="ancho">
+          <span class="contenido-celda">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-paginador [datosPaginador]="transacciones" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedTransacciones = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+</div>

@@ -51,6 +51,9 @@ import { DatosUsuarioService } from './services/datosUsuario.service';
 import { BannerCreditoConsumoComponent } from './shared/components/banners/banner-credito-consumo/banner-credito-consumo.component';
 import { BannerSeguroAutoComponent } from './shared/components/banners/banner-seguro-auto/banner-seguro-auto.component';
 import { BannerVisaDescuentoComponent } from './shared/components/banners/banner-visa-descuento/banner-visa-descuento.component';
+import { TablaMovimientosComponent } from './shared/components/tables/tabla-movimientos/tabla-movimientos.component';
+import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
+import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 
 
 
@@ -88,13 +91,17 @@ import { BannerVisaDescuentoComponent } from './shared/components/banners/banner
     DatosUsuarioComponent,
     PesosPipe,
     RutPipe,
+    PesosPipe,
     CelularPipe,
     TelefonoFijoPipe,
     NumeroTarjetaPipe,
     AlertasComponent,
     BannerCreditoConsumoComponent,
     BannerSeguroAutoComponent,
-    BannerVisaDescuentoComponent
+    BannerVisaDescuentoComponent,
+    TablaMovimientosComponent,
+    BuscadorTablaComponent,
+    PaginadorComponent
   ],
   imports: [
     BrowserModule,
