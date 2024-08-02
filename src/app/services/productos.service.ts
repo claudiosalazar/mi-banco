@@ -12,7 +12,7 @@ export class ProductosService {
 
   constructor(private http: HttpClient) { }
 
-  getSeguros(): Observable<Productos[]> {
+  getProductos(): Observable<Productos[]> {
     return this.http.get<Productos[]>(`${this.URL}/mibanco/productos`);
   }
 }

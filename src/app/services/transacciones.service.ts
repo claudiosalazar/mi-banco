@@ -16,8 +16,4 @@ export class TransaccionesService {
     return this.http.get<Transacciones[]>(`${this.apiUrl}/mibanco/transacciones`);
   }
 
-  getTransaccionesFiltradas(idProducto: number): Observable<Transacciones[]> {
-    return this.http.get<Transacciones[]>(`${this.apiUrl}/mibanco/transacciones?id_producto=${idProducto}&abono_ne=null`);
-  }
-
 }

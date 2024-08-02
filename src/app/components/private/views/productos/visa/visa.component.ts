@@ -3,7 +3,6 @@ import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from '../../../../../services/transacciones.service';
 import { Transacciones } from '../../../../../models/transacciones.model';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-visa',
@@ -11,23 +10,12 @@ import { FormControl } from '@angular/forms';
 })
 export class VisaComponent implements OnInit {
 
-  transaccionesVisa = '2';
-
   productos: Productos[] = [];
-  transacciones: Transacciones[] = [];
-
-  movimientosVisa = true;
+  transaccionesFiltradas: Transacciones[] = [];
+  transaccionMasReciente: Transacciones | null = null;
   formularioPagoVisa = false;
   comprobantePagoVisa = false;
-
-  originalData: any[] = [];
-  itemsPerPage = 5;
-  currentPage = 1;
-  paginatedData: any[] | undefined;
-  totalPages: any;
-
-  campoBusqueda = new FormControl('');
-  mostrarPaginador: boolean | undefined;
+  movimientosVisa = true;
 
   constructor(
     private productosService: ProductosService,
@@ -35,7 +23,7 @@ export class VisaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productosService.getSeguros().subscribe((productos: Productos[]) => {
+    this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }
@@ -43,26 +31,25 @@ export class VisaComponent implements OnInit {
 
     this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
-        this.transacciones = transacciones;
+        this.transaccionesFiltradas = transacciones.filter(transaccion => 
+          transaccion.id_producto === 2 && transaccion.abono != null
+        );
+        this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
     });
   }
 
-
-  handleDatosFiltrados(datosFiltrados: any[]) {
-    this.transacciones = datosFiltrados;
-    //this.productos = [...this.transacciones];
-    this.originalData = [...this.transacciones];
-    this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+  obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+    if (this.transaccionesFiltradas.length === 0) {
+      return null;
+    }
+    return this.transaccionesFiltradas
+      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
   }
 
   mostrarPagoVisa(): void {
     this.movimientosVisa = false;
     this.formularioPagoVisa = true;
     this.comprobantePagoVisa = false;
-
-    //this.urlBrowserService.navegarAPagoVisa();
   }
-  
-
 }

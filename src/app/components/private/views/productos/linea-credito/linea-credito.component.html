@@ -1,4 +1,4 @@
-
+<!-- <ng-container *ngIf="movimientosLineaDeCredito"> -->
 <ng-container>
   <div class="container pb-5">
     <div class="row" *ngIf="productos.length > 0">
@@ -6,7 +6,7 @@
 
         <h1>
           {{ productos[1].nombre_producto }}
-          <span>N° {{ productos[1].numero_producto | numeroTarjeta}}</span>
+          <span>N° {{ productos[1].numero_producto }}</span>
         </h1>
 
         <div class="card p-4 mt-4">

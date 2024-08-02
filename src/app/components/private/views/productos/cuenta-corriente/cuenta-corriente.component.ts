@@ -19,7 +19,7 @@ export class CuentaCorrienteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productosService.getSeguros().subscribe((productos: Productos[]) => {
+    this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }

@@ -1,7 +1,7 @@
 <!-- <ng-container *ngIf="movimientosVisa"> -->
 <ng-container>
   <div class="container pb-5">
-    <div class="row" *ngIf="productos.length && transacciones.length">
+    <div class="row" *ngIf="productos.length > 0">
       <div class="col-12 px-4 px-md-auto">
 
         <h1>
@@ -10,13 +10,17 @@
         </h1>
 
         <div class="card p-4 mt-4">
-          <div class="d-flex justify-content-between flex-column  align-items-center flex-md-row">
-            <div class="d-flex align-items-center">
+          <div class="d-flex justify-content-between flex-column align-items-center flex-md-row">
+            <div class="d-flex flex-column" *ngIf="transaccionMasReciente">
               <div>
                 <h5>Monto Facturado del mes: <strong class="dorado">$ 50.000</strong></h5>
+              </div>
+              <div>
                 <small class="mb-0">
-                  <!-- Último pago realizado el <br class="d-md-none"><strong class="tinto">{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">{{ ultimoMontoAbono | pesos }}</strong>. -->
-                  Último pago realizado el <br class="d-md-none"><strong class="tinto">00/00/0000</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">000000</strong>.
+                  Último pago realizado el <br class="d-md-none">
+                  <strong class="tinto">{{ transaccionMasReciente.fecha | date:"dd / MM / yyyy" }}</strong>,
+                  <br class="d-md-none"> por un valor de 
+                  <strong class="tinto">{{ transaccionMasReciente.abono | pesos }}</strong>.
                 </small>
               </div>
             </div>
@@ -25,17 +29,6 @@
             </div>
           </div>
         </div>
-
-        <div class="card mt-4">
-          <div class="p-4">
-            <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
-          </div>
-          <!-- Importacion de componente tables -->
-          <!-- <app-tables [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tables> -->
-          <app-tabla-movimientos [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" [idProducto]="2" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tabla-movimientos>
-        </div>
-
-
       </div>
     </div>
   </div>
