@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PesosPipe } from '../../../../shared/pipes/pesos.pipe';
 import { TransaccionesService } from '../../../../services/transacciones.service';
 import { Transacciones } from '../../../../models/transacciones.model';
 
@@ -14,9 +13,9 @@ export class TablaMovimientosComponent implements OnInit {
   @Input() nuevaClase: string | undefined;
   @Input() idProducto: number | undefined;
   @Input() datos: any | undefined;
+  @Input() mostrarColumnaNombre: boolean | undefined; // Nuevo Input
 
   transacciones: any[] = [];
-  productos: any[] = [];
 
   paginatedTransacciones: any[] = [];
 
@@ -40,14 +39,12 @@ export class TablaMovimientosComponent implements OnInit {
   transaccionesFiltradas: any[] = [];
 
   constructor(
-    private pesosPipe: PesosPipe,
     private transaccionesService: TransaccionesService
   ) { }
 
   ngOnInit() {
     this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
-        // Filtrar las transacciones por id_producto
         this.transacciones = this.idProducto !== undefined 
           ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
           : transacciones;
@@ -61,12 +58,6 @@ export class TablaMovimientosComponent implements OnInit {
 
   handleDatosFiltrados(event: any) {
     this.transaccionesFiltradas = event;
-    this.actualizarTabla();
-  }
-
-  actualizarTabla() {
-    console.log('Tabla actualizada con los datos filtrados:', this.transaccionesFiltradas);
-    // Aquí no necesitas hacer nada más, ya que Angular se encargará de actualizar la vista
   }
 
   // Ordena los datos de la tabla
@@ -85,7 +76,22 @@ export class TablaMovimientosComponent implements OnInit {
     this.transacciones?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
+    this.paginarTransacciones();
     this.datosOrdenados.emit();
+  }
+
+  // Paginación de transacciones
+  paginarTransacciones(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedTransacciones = this.transacciones.slice(start, end);
+    this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+  }
+
+  // Cambiar página
+  cambiarPagina(pagina: number): void {
+    this.currentPage = pagina;
+    this.paginarTransacciones();
   }
 
 }

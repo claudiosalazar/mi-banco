@@ -1,5 +1,5 @@
 <div class="contenedor-tabla">
-  <table class="table table-striped tabla-movimientos" role="table">
+  <table class="table table-striped tabla-movimientos-resumen" role="table">
     <thead role="columnheader" role="rowgroup">
       <tr role="row">
         <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">
@@ -10,6 +10,18 @@
               </div>
             </span>
             <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" *ngIf="mostrarColumnaNombre"  (click)="ordenarDatos('nombre_producto'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Producto
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'detalle'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'detalle'">
               expand_more
             </span>
           </div>
@@ -65,9 +77,12 @@
       </tr>
     </thead>
     <tbody role="rowgroup">
-      <tr *ngFor="let transaccion of transacciones" role="row">
+      <tr *ngFor="let transaccion of paginatedTransacciones" role="row">
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
+        </td>
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaNombre" >
+          <span class="contenido-celda"><strong>{{ transaccion.nombre_producto_trans }}</strong></span>
         </td>
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.detalle }}</span>
@@ -84,5 +99,7 @@
       </tr>
     </tbody>
   </table>
-  <app-paginador [datosPaginador]="transacciones" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedTransacciones = $event" [datosOrdenados]="datosOrdenados"></app-paginador>
+  <app-paginador [datosPaginador]="transacciones" [itemsPerPage]="5" 
+  [currentPage]="1" (paginatedData)="paginatedTransacciones = $event" 
+  [datosOrdenados]="datosOrdenados"></app-paginador>
 </div>
