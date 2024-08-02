@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,14 +10,9 @@ import { RutPipe } from '../../shared/pipes/rut.pipe';
   selector: 'mb-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  user = {
-    userName: '',
-    pass: ''
-  };
-
-  formularioLogin: FormGroup = new FormGroup({});
+  formularioLogin: FormGroup;
   botonLoginDisabled = false;
   mensajeError = false;
 
@@ -25,19 +20,31 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private rutPipe: RutPipe,
-  ) { }
-
-  ngOnInit(): void {
-    this.user.userName = this.rutPipe.transform(this.user.userName);
-  }
-
-  logIn() {
-    console.log(this.user);
-    this.authService.mibanco(this.user).subscribe( (res: any) => {
-      console.log(res);
-      localStorage.setItem('token', res.token);
-      this.router.navigate(['mibanco']);
+  ) {
+    this.formularioLogin = new FormGroup({
+      userName: new FormControl('', [Validators.required]),
+      pass: new FormControl('', [Validators.required])
     });
   }
 
+  ngOnInit(): void {
+    const userNameControl = this.formularioLogin.get('userName');
+    if (userNameControl) {
+      userNameControl.setValue(this.rutPipe.transform(userNameControl.value));
+    }
+  }
+
+  logIn() {
+    if (this.formularioLogin.valid) {
+      const user = this.formularioLogin.value;
+      console.log(user);
+      this.authService.mibanco(user).subscribe((res: any) => {
+        console.log(res);
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['mibanco']);
+      });
+    } else {
+      this.mensajeError = true;
+    }
+  }
 }
