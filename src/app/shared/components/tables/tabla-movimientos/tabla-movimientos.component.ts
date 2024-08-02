@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { TransaccionesService } from '../../../../services/transacciones.service';
 import { Transacciones } from '../../../../models/transacciones.model';
 
@@ -13,30 +13,31 @@ export class TablaMovimientosComponent implements OnInit {
   @Input() idProducto: number | undefined;
   @Input() datos: any | undefined;
   @Input() mostrarColumnaNombre: boolean | undefined;
-  @Input() claseTabla: string = '';
+  @Input() claseTabla: string = 'tabla-movimientos';
 
   transacciones: any[] = [];
   paginatedTransacciones: any[] = [];
   originalData: any[] = [];
   itemsPerPage = 5;
   currentPage = 1;
-  paginatedData: any[] | undefined;
+  paginatedData: any[] = [];
   totalPages: any;
 
   // Variables para ordenar datos de tabla
   sortOrder = 1;
-  sortedColumn = '';
+  sortedColumn: any;
   sortAscending: boolean = true;
 
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
 
-  public columnaSeleccionada: string = '';
+  public columnaSeleccionada: string | undefined;
 
   transaccionesFiltradas: any[] = [];
 
   constructor(
-    private transaccionesService: TransaccionesService
+    private transaccionesService: TransaccionesService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -45,6 +46,8 @@ export class TablaMovimientosComponent implements OnInit {
         this.transacciones = this.idProducto !== undefined 
           ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
           : transacciones;
+        this.paginarTransacciones();
+        this.cdr.detectChanges(); 
       }
     });
   }
@@ -75,6 +78,7 @@ export class TablaMovimientosComponent implements OnInit {
     });
     this.paginarTransacciones();
     this.datosOrdenados.emit();
+    this.cdr.detectChanges();
   }
 
   // Paginación de transacciones
@@ -83,12 +87,14 @@ export class TablaMovimientosComponent implements OnInit {
     const end = start + this.itemsPerPage;
     this.paginatedTransacciones = this.transacciones.slice(start, end);
     this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+    this.cdr.detectChanges();
   }
 
   // Cambiar página
   cambiarPagina(pagina: number): void {
     this.currentPage = pagina;
     this.paginarTransacciones();
+    this.cdr.detectChanges();
   }
 
 }

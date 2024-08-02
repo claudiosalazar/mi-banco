@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablaResumenTransaccionesComponent implements OnInit {
 
-  transaccionesVisa = '';
+  transaccionesVisa: any;
   mostrarPaginador: boolean | undefined;
   originalData: any[] = [];
   itemsPerPage = 5;
