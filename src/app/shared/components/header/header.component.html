@@ -77,14 +77,14 @@
             <li>
               <a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias">Emergencias</a>
             </li>
-            <!-- <li>
+            <li>
               <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut">
                 <span class="ico-cerrar-sesion"></span>
                 <span>
                   Cerrar sesión
                 </span>
               </a>
-            </li> -->
+            </li>
           </ul>
         </div>
       </div>
@@ -107,6 +107,34 @@
         </button>
       </div> 
       <mb-modal-consultas *ngIf="modalConsultaAbierto" (consultaCancelada)="modalConsultaAbierto = false"></mb-modal-consultas>
+    </div>
+  </div>
+</div>
+
+<!-- Modal cerrar sesion -->
+<div class="modal posicion fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static"
+  data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex align-items-center">
+          <div class="icono material-symbols-outlined d-block me-3 mensaje advertencia">
+            warning
+          </div>
+          <div>
+            <strong class="d-block">Estas cerrando tu sesión.</strong>
+            <small class="d-block">Para confirmar da click en el botón.</small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-end flex-md-row">
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal"
+            (click)="ocultaDropdownMobile()">Cancelar</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar
+            sesión</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

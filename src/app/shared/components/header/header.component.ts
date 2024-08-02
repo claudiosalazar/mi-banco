@@ -4,6 +4,7 @@ import { BackdropService } from '../../../services/backdrop.service';
 import { filter } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 import { DatosUsuarioService } from '../../../services/datosUsuario.service';
 import { DatosUsuario } from '../../../models/datos-usuario.model';
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
     private renderer: Renderer2,
     private router: Router,
     private backdropService: BackdropService,
+    private authService: AuthService
   ) { 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -148,6 +150,10 @@ export class HeaderComponent implements OnInit {
     var modalConsultas = new bootstrap.Modal(document.getElementById('modalConsultas'), {});
     modalConsultas.show();
     this.backdropService.show();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }
