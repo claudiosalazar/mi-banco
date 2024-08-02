@@ -1,49 +1,43 @@
-<!-- <ng-container *ngIf="movimientosVisa"> -->
-  <ng-container>
-    <div class="container pb-5">
-      <div class="row" *ngIf="productos.length > 0">
-        <div class="col-12 px-4 px-md-auto">
-  
-          <h1>
-            {{ productos[1].nombre_producto }}
-            <span>N° {{ productos[1].numero_producto | numeroTarjeta}}</span>
-          </h1>
-  
-          <div class="card p-4 mt-4">
-            <div class="d-flex justify-content-between flex-column  align-items-center flex-md-row">
-              <div class="d-flex align-items-center">
-                <div>
-                  <small class="mb-0">
-                    <!-- Último pago realizado el <br class="d-md-none"><strong class="tinto">{{ fechaUltimoAbono | date:"dd / MM / yyyy" }}</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">{{ ultimoMontoAbono | pesos }}</strong>. -->
-                    Último pago realizado el <br class="d-md-none"><strong class="tinto">00/00/0000</strong>,<br class="d-md-none"> por un valor de  <strong class="tinto">000000</strong>.
-                  </small>
-                </div>
-              </div>
-              <div>
-                <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoLineaDeCredito()">Pagar</button>
-              </div>
+
+<ng-container>
+  <div class="container pb-5">
+    <div class="row" *ngIf="productos.length > 0">
+      <div class="col-12 px-4 px-md-auto">
+
+        <h1>
+          {{ productos[1].nombre_producto }}
+          <span>N° {{ productos[1].numero_producto | numeroTarjeta}}</span>
+        </h1>
+
+        <div class="card p-4 mt-4">
+          <div class="d-flex justify-content-between flex-column align-items-center flex-md-row">
+            <div class="d-flex align-items-center" *ngIf="transaccionMasReciente">
+              <small class="mb-0">
+                Último pago realizado el <br class="d-md-none">
+                <strong class="tinto">{{ transaccionMasReciente.fecha | date:"dd / MM / yyyy" }}</strong>,
+                <br class="d-md-none"> por un valor de 
+                <strong class="tinto">{{ transaccionMasReciente.abono | pesos }}</strong>.
+              </small>
+            </div>
+            <div>
+              <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoLineaDeCredito()">Pagar</button>
             </div>
           </div>
-  
-          <div class="card mt-4">
-            <div class="p-4">
-              <app-buscador-tabla [tituloBuscador]="'Buscar transacción'"></app-buscador-tabla>
-            </div>
-            <app-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'" [idProducto]="1" [datos]="transaccionesFiltradas"></app-tabla-movimientos>
-          </div>
-  
-  
         </div>
+
+        <app-tabla-linea-credito></app-tabla-linea-credito>
+
       </div>
     </div>
-  </ng-container>
-  
-  <!-- Muestra formulario pago -->
-  <ng-container *ngIf="formularioPagoLineaDeCredito">
-    <app-linea-credito-pago></app-linea-credito-pago>
-  </ng-container>
-  
-  <!-- Muestra comprobante de pago -->
-  <ng-container *ngIf="comprobantePagoLineaDeCredito">
-    <app-linea-credito-comprobante></app-linea-credito-comprobante>
-  </ng-container>
+  </div>
+</ng-container>
+
+<!-- Muestra formulario pago -->
+<ng-container *ngIf="formularioPagoLineaDeCredito">
+  <app-linea-credito-pago></app-linea-credito-pago>
+</ng-container>
+
+<!-- Muestra comprobante de pago -->
+<ng-container *ngIf="comprobantePagoLineaDeCredito">
+  <app-linea-credito-comprobante></app-linea-credito-comprobante>
+</ng-container>

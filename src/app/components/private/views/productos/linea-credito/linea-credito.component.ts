@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
-import { TransaccionesService } from '../../../../../services/transacciones.service';
-import { Transacciones } from '../../../../../models/transacciones.model';
-import { FormControl } from '@angular/forms';
+import { TransaccionesService } from 'src/app/services/transacciones.service';
+import { Transacciones } from 'src/app/models/transacciones.model';
 
 @Component({
   selector: 'app-linea-credito',
@@ -11,22 +10,9 @@ import { FormControl } from '@angular/forms';
 })
 export class LineaCreditoComponent implements OnInit {
 
-  transaccionesLineaCredito = '';
-
   productos: Productos[] = [];
-  transacciones: Transacciones[] = [];
-
-  transaccionesFiltradas: any[] = [];
-
-  originalData: any[] = [];
-  itemsPerPage = 5;
-  currentPage = 1;
-  paginatedData: any[] | undefined;
-  totalPages: any;
-
-  campoBusqueda = new FormControl('');
-  mostrarPaginador: boolean | undefined;
-
+  transaccionesFiltradas: Transacciones[] = [];
+  transaccionMasReciente: Transacciones | null = null;
   formularioPagoLineaDeCredito = false;
   comprobantePagoLineaDeCredito = false;
   movimientosLineaDeCredito = true;
@@ -42,22 +28,29 @@ export class LineaCreditoComponent implements OnInit {
         this.productos = productos;
       }
     });
+
+    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+      if (transacciones) {
+        this.transaccionesFiltradas = transacciones.filter(transaccion => 
+          transaccion.id_producto === 1 && transaccion.abono != null
+        );
+        this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+      }
+    });
   }
 
-  handleDatosFiltrados(datosFiltrados: any[]) {
-    this.transacciones = datosFiltrados;
-    this.transacciones = [...this.transacciones];
-    this.originalData = [...this.transacciones];
-    this.totalPages = Math.ceil(this.transacciones.length / this.itemsPerPage);
+  obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+    if (this.transaccionesFiltradas.length === 0) {
+      return null;
+    }
+    return this.transaccionesFiltradas
+      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
   }
-
 
   mostrarPagoLineaDeCredito(): void {
     this.movimientosLineaDeCredito = false;
     this.formularioPagoLineaDeCredito = true;
     this.comprobantePagoLineaDeCredito = false;
-
-    //this.urlBrowserService.navegarAPagoLineaDeCredito();
   }
 
 }

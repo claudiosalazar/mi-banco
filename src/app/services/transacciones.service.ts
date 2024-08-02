@@ -8,24 +8,16 @@ import { Transacciones } from '../models/transacciones.model';
 })
 export class TransaccionesService {
 
-  private URL = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
   getTransacciones(): Observable<Transacciones[]> {
-    return this.http.get<Transacciones[]>(`${this.URL}/mibanco/transacciones`);
+    return this.http.get<Transacciones[]>(`${this.apiUrl}/mibanco/transacciones`);
   }
 
-}
-
-export class DatosFiltradosService {
-  private datosFiltradosSource = new Subject<any[]>();
-  datosFiltrados$ = this.datosFiltradosSource.asObservable();
-  paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
-  paginationData$ = this.paginationData.asObservable();
-
-  actualizarDatosFiltrados(datosFiltrados: any[]) {
-    this.datosFiltradosSource.next(datosFiltrados);
-    this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
+  getTransaccionesFiltradas(idProducto: number): Observable<Transacciones[]> {
+    return this.http.get<Transacciones[]>(`${this.apiUrl}/mibanco/transacciones?id_producto=${idProducto}&abono_ne=null`);
   }
+
 }

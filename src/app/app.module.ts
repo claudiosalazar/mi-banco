@@ -31,6 +31,7 @@ import { EditarDestinatarioComponent } from './components/private/views/producto
 import { TransferenciaATercerosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { UltimasTransferenciasComponent } from './components/private/views/productos/cuenta-corriente/transferencias/ultimas-transferencias/ultimas-transferencias.component';
 import { LineaCreditoComponent } from './components/private/views/productos/linea-credito/linea-credito.component';
+import { TablaLineaCreditoComponent } from './components/private/views/productos/linea-credito/tabla-linea-credito/tabla-linea-credito.component';
 import { LineaCreditoComprobanteComponent } from './components/private/views/productos/linea-credito/linea-credito-comprobante/linea-credito-comprobante.component';
 import { LineaCreditoPagoComponent } from './components/private/views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { SegurosComponent } from './components/private/views/productos/seguros/seguros.component';
@@ -54,7 +55,7 @@ import { BannerVisaDescuentoComponent } from './shared/components/banners/banner
 import { TablaMovimientosComponent } from './shared/components/tables/tabla-movimientos/tabla-movimientos.component';
 import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
-import { DatosFiltradosService } from './services/transacciones.service';
+import { BuscadorTablaService } from './services/buscadorTabla.service';
 
 
 
@@ -81,6 +82,7 @@ import { DatosFiltradosService } from './services/transacciones.service';
     TransferenciaATercerosComponent,
     UltimasTransferenciasComponent,
     LineaCreditoComponent,
+    TablaLineaCreditoComponent,
     LineaCreditoComprobanteComponent,
     LineaCreditoPagoComponent,
     SegurosComponent,
@@ -116,7 +118,7 @@ import { DatosFiltradosService } from './services/transacciones.service';
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
     DatosUsuarioService,
-    DatosFiltradosService,
+    BuscadorTablaService,
     PesosPipe,
     RutPipe,
     CelularPipe,
