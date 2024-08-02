@@ -10,15 +10,13 @@ export class TablaMovimientosComponent implements OnInit {
 
   @Output() datosOrdenados = new EventEmitter<void>();
   @Input() mostrarPaginador: boolean | undefined;
-  @Input() nuevaClase: string | undefined;
   @Input() idProducto: number | undefined;
   @Input() datos: any | undefined;
-  @Input() mostrarColumnaNombre: boolean | undefined; // Nuevo Input
+  @Input() mostrarColumnaNombre: boolean | undefined;
+  @Input() claseTabla: string = '';
 
   transacciones: any[] = [];
-
   paginatedTransacciones: any[] = [];
-
   originalData: any[] = [];
   itemsPerPage = 5;
   currentPage = 1;
@@ -29,7 +27,6 @@ export class TablaMovimientosComponent implements OnInit {
   sortOrder = 1;
   sortedColumn = '';
   sortAscending: boolean = true;
-  
 
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;

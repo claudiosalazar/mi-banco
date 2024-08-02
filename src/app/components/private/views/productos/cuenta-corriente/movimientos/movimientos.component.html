@@ -9,5 +9,5 @@
   <div class="px-4 pt-0">
     <app-buscador-tabla [tituloBuscador]="'Buscar movimiento'"></app-buscador-tabla>
   </div>
-  <app-tabla-movimientos [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" [nuevaClase]="'table-productos'"  [idProducto]="0" (datosFiltradosEvent)="handleDatosFiltrados([$event])"></app-tabla-movimientos>
+  <app-tabla-movimientos [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="0"></app-tabla-movimientos>
 </div>

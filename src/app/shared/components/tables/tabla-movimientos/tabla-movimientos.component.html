@@ -1,5 +1,5 @@
 <div class="contenedor-tabla">
-  <table class="table table-striped tabla-movimientos-resumen" role="table">
+  <table [ngClass]="['table', 'table-striped', claseTabla]" role="table">
     <thead role="columnheader" role="rowgroup">
       <tr role="row">
         <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">

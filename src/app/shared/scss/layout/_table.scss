@@ -117,7 +117,7 @@
   &.tabla-movimientos-resumen {
     th, td {
       &:nth-child(1) {
-        width: 15%
+        width: 15%;
       }
       &:nth-child(2) {
         width: 15%;
@@ -143,11 +143,36 @@
         }
       }
     }
-  
+    tbody {
+      @media (max-width: $lg) {
+        td {
+          padding-left: 25%;
+        }
+        td:nth-of-type(1):before {
+          content: "Fecha";
+        }
+        td:nth-of-type(2):before {
+          content: "Producto";
+        }
+        td:nth-of-type(32):before {
+          content: "Detalle";
+        }
+        td:nth-of-type(4):before {
+          content: "Cargo";
+        }
+        td:nth-of-type(5):before {
+          content: "Abono";
+        }
+        td:nth-of-type(6):before {
+          content: "Saldo";
+        }
+      }
+    }
+  }
   &.tabla-movimientos {
     th, td {
       &:nth-child(1) {
-        width: 15%
+        width: 15%;
       }
       &:nth-child(2) {
         width: 34%;
@@ -170,7 +195,7 @@
         }
       }
     }
-  }
+  
 
     tbody {
       @media (max-width: $lg) {
