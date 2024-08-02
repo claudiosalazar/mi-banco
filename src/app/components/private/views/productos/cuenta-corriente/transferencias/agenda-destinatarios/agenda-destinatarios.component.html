@@ -165,7 +165,7 @@
       </tbody>
     </table>
 
-    <!-- <app-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></app-paginador> -->
+    <!-- <mb-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></mb-paginador> -->
 
   </div>
 </div>
@@ -173,14 +173,14 @@
 <!-- Sidenav para crear nuevo destinatario
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <div class="contenido-offcanvas">
-    <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+    <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-agregar-destinatario>
   </div>
 </div> -->
 
 <!-- Sidenav para editar destinatario
 <div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">
   <div class="contenido-offcanvas">
-    <app-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-editar-destinatario>
+    <mb-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-editar-destinatario>
   </div>
 </div> -->
 

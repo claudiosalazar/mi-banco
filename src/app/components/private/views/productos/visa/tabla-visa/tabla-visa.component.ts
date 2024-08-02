@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tabla-visa',
+  selector: 'mb-tabla-visa',
   templateUrl: './tabla-visa.component.html'
 })
 export class TablaVisaComponent implements OnInit {

@@ -3,7 +3,7 @@ import { DatosUsuarioService } from '../../../../services/datosUsuario.service';
 import { DatosUsuario } from '../../../../models/datos-usuario.model';
 
 @Component({
-  selector: 'app-banner-credito-consumo',
+  selector: 'mb-banner-credito-consumo',
   templateUrl: './banner-credito-consumo.component.html'
 })
 export class BannerCreditoConsumoComponent implements OnInit {

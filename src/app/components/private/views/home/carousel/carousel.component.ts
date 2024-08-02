@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-carousel',
+  selector: 'mb-carousel',
   templateUrl: './carousel.component.html'
 })
 export class CarouselComponent implements OnInit {

@@ -4,7 +4,7 @@ import { DatosUsuarioService } from 'src/app/services/datosUsuario.service';
 import { DatosUsuario } from 'src/app/models/datos-usuario.model';
 
 @Component({
-  selector: 'app-modal-consultas',
+  selector: 'mb-modal-consultas',
   templateUrl: './modal-consultas.component.html'
 })
 export class ModalConsultasComponent implements OnInit {

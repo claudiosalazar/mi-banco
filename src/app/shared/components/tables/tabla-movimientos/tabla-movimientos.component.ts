@@ -3,7 +3,7 @@ import { TransaccionesService } from '../../../../services/transacciones.service
 import { Transacciones } from '../../../../models/transacciones.model';
 
 @Component({
-  selector: 'app-tabla-movimientos',
+  selector: 'mb-tabla-movimientos',
   templateUrl: './tabla-movimientos.component.html'
 })
 export class TablaMovimientosComponent implements OnInit {

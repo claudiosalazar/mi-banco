@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-paginador',
+  selector: 'mb-paginador',
   templateUrl: './paginador.component.html'
 })
 export class PaginadorComponent implements OnInit {

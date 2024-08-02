@@ -5,7 +5,7 @@ import { TransaccionesService } from '../../../../../services/transacciones.serv
 import { Transacciones } from '../../../../../models/transacciones.model';
 
 @Component({
-  selector: 'app-visa',
+  selector: 'mb-visa',
   templateUrl: './visa.component.html'
 })
 export class VisaComponent implements OnInit {

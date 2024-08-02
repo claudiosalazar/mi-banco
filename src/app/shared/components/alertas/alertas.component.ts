@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-alertas',
+  selector: 'mb-alertas',
   templateUrl: './alertas.component.html'
 })
 export class AlertasComponent {

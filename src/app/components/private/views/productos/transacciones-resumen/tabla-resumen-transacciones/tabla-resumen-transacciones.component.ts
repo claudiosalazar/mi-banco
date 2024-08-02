@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tabla-resumen-transacciones',
+  selector: 'mb-tabla-resumen-transacciones',
   templateUrl: './tabla-resumen-transacciones.component.html'
 })
 export class TablaResumenTransaccionesComponent implements OnInit {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-linea-credito-pago',
+  selector: 'mb-linea-credito-pago',
   templateUrl: './linea-credito-pago.component.html'
 })
 export class LineaCreditoPagoComponent implements OnInit {

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-banner-seguro-auto',
-  templateUrl: './banner-seguro-auto.component.html',
-  styleUrls: ['./banner-seguro-auto.component.css']
+  selector: 'mb-banner-seguro-auto',
+  templateUrl: './banner-seguro-auto.component.html'
 })
 export class BannerSeguroAutoComponent implements OnInit {
 

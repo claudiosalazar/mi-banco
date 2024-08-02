@@ -3,7 +3,7 @@ import { BuscadorTablaService } from 'src/app/services/buscadorTabla.service';
 
 
 @Component({
-  selector: 'app-buscador-tabla',
+  selector: 'mb-buscador-tabla',
   templateUrl: './buscador-tabla.component.html'
 })
 export class BuscadorTablaComponent implements OnInit {

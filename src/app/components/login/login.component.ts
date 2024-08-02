@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { RutPipe } from '../../shared/pipes/rut.pipe';
 
 @Component({
-  selector: 'app-login',
+  selector: 'mb-login',
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
