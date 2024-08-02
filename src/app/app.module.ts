@@ -36,7 +36,9 @@ import { LineaCreditoComprobanteComponent } from './components/private/views/pro
 import { LineaCreditoPagoComponent } from './components/private/views/productos/linea-credito/linea-credito-pago/linea-credito-pago.component';
 import { SegurosComponent } from './components/private/views/productos/seguros/seguros.component';
 import { TransaccionesResumenComponent } from './components/private/views/productos/transacciones-resumen/transacciones-resumen.component';
+import { TablaResumenTransaccionesComponent } from './components/private/views/productos/transacciones-resumen/tabla-resumen-transacciones/tabla-resumen-transacciones.component';
 import { VisaComponent } from './components/private/views/productos/visa/visa.component';
+import { TablaVisaComponent } from './components/private/views/productos/visa/tabla-visa/tabla-visa.component';
 import { VisaComprobanteComponent } from './components/private/views/productos/visa/visa-comprobante/visa-comprobante.component';
 import { VisaPagoComponent } from './components/private/views/productos/visa/visa-pago/visa-pago.component';
 import { AyudaComponent } from './components/private/views/ayuda/ayuda.component';
@@ -56,8 +58,6 @@ import { TablaMovimientosComponent } from './shared/components/tables/tabla-movi
 import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 import { BuscadorTablaService } from './services/buscadorTabla.service';
-
-
 
 
 @NgModule({
@@ -87,7 +87,9 @@ import { BuscadorTablaService } from './services/buscadorTabla.service';
     LineaCreditoPagoComponent,
     SegurosComponent,
     TransaccionesResumenComponent,
+    TablaResumenTransaccionesComponent,
     VisaComponent,
+    TablaVisaComponent,
     VisaComprobanteComponent,
     VisaPagoComponent,
     AyudaComponent,
