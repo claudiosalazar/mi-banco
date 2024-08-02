@@ -16,26 +16,26 @@
           <p>Ingrese a sus datos.</p>
           <form [formGroup]="formularioLogin" (ngSubmit)="logIn()">
             <div class="form-floating mb-4">
-              <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="Rut">
+              <input formControlName="userName" type="text" class="form-control" id="userName" placeholder="Rut" 
+                     [ngClass]="{'is-invalid': formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']}" 
+                     (blur)="formatoRut()" (focus)="resetUserName()">
               <label for="userName">Rut</label>
-              <!-- <div *ngIf="formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']" class="invalid-feedback">
+              <div *ngIf="formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']" class="invalid-feedback">
                 <span>El rut ingresado no es válido.</span>
-              </div> -->
+              </div>
             </div>
             
             <div class="form-floating mb-4">
-              <input formControlName="pass" type="password" class="form-control" id="pass" placeholder="Clave">
+              <input formControlName="pass" type="password" class="form-control" id="pass" placeholder="Clave" (focus)="resetPass()">
               <label for="pass" class="form-label">Clave</label>
             </div>
-
-            <button class="w-100 btn btn-login mb-4" type="submit">Entrar</button>
+          
+            <button class="w-100 btn btn-login mb-4" type="submit" [class.disabled]="!botonLoginDisabled">Entrar</button>
           </form>
         </div>
 
         <div class="col-10 col-md-8 my-3" *ngIf="mensajeError">
-          <mb-alertas [icono]="true" [tipoAlerta]="'error'" [mensajeTitulo]="'Datos incorrectos'" 
-          [mensajeInfo]="'El Rut o la Clave ingresada, no son correctos. Por favor, inténtalo nuevamente.'">
-          </mb-alertas>
+          <mb-alertas [icono]="true" [tipoAlerta]="'error'" [mensajeTitulo]="'Datos incorrectos'" [mensajeInfo]="'El Rut o la Clave ingresada, no son correctos. Por favor, inténtalo nuevamente.'"></mb-alertas>
         </div>
 
         <div class="col-10 col-md-8">

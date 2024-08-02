@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token'); // Eliminar el token del localStorage
-    this.router.navigate(['/login']); // Redirigir a la página de login
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }
