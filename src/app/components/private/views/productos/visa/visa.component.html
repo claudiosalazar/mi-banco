@@ -32,7 +32,7 @@
 
         <div class="card mt-4">
           <div class="p-4">
-            <mb-buscador-tabla (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
+            <mb-buscador-tabla [tituloBuscador]="'Buscar transaccion'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
           </div>
           <mb-tabla-movimientos [id]="transaccionesVisa" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="2"></mb-tabla-movimientos>
         </div>

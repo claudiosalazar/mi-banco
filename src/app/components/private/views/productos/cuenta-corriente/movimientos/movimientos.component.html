@@ -7,7 +7,7 @@
   <hr class="my-4">
 
   <div class="px-4 pt-0">
-    <mb-buscador-tabla [tituloBuscador]="'Buscar movimiento'"></mb-buscador-tabla>
+    <mb-buscador-tabla (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
   </div>
   <mb-tabla-movimientos [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="0"></mb-tabla-movimientos>
 </div>

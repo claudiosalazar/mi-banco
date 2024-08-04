@@ -69,7 +69,6 @@ export class VisaComponent implements OnInit {
   handleDatosFiltrados(datosFiltrados: any[]) {
     const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 2);
     this.transacciones = datosFiltradosPorProducto;
-    //this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
