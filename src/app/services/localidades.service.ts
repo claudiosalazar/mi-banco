@@ -13,7 +13,6 @@ export class LocalidadesService {
   constructor(private http: HttpClient) { }
 
   getCiudades(): Observable<Localidades[]> {
-    console.log('getCiudades');
     return this.http.get<Localidades[]>(`${this.URL}/mibanco/localidades/ciudades`);
   }
 

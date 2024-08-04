@@ -99,38 +99,33 @@
               <label for="depto_villa_block">Depto / Villa / Block</label>
             </div>
 
-            <!-- <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('region')" [options]="listaRegiones"
-                [selectedValue]="regionSeleccionadaPersonal" [zIndex]="600" [submitted]="submitted"
-                [labelSelect]="'Región Personal'" [isValid]="customRegionPersonalValido"
-                [isInvalid]="customRegionPersonalInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customRegionPersonalInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una región.
-              </div>
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('region')" [options]="listaRegiones" 
+                [selectedValue]="region"
+                [zIndex]="600" [submitted]="submitted"
+                [selectedValue]="region"
+                [labelSelect]="'Región Personal'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('ciudad')" [options]="listaCiudad"
-                [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="500" [submitted]="submitted"
-                [labelSelect]="'Ciudad Personal'" [isValid]="customCiudadPersonalValido"
-                [isInvalid]="customCiudadPersonalInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customCiudadPersonalInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una ciudad.
-              </div>
+              <mb-custom-select [control]="misDatosForm.get('comuna')" [options]="listaComunas" 
+                [zIndex]="500" [submitted]="submitted"
+                [selectedValue]="comuna"
+                [labelSelect]="'Comuna Personal'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('comuna')" [options]="listaComuna"
-                [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="400" [submitted]="submitted"
-                [labelSelect]="'Comuna Personal'" [isValid]="customComunaPersonalValido"
-                [isInvalid]="customComunaPersonalInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customComunaPersonalInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una comuna.
-              </div>
-            </div> -->
+              <mb-custom-select [control]="misDatosForm.get('ciudad')" [options]="listaCiudades" 
+                [zIndex]="400" [submitted]="submitted"
+                [selectedValue]="ciudad"
+                [labelSelect]="'Ciudad Personal'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
+            </div>
 
           </div>
 
@@ -154,38 +149,33 @@
               <label for="oficina">Oficina</label>
             </div>
 
-            <!-- <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaRegionesComercial"
-                [selectedValue]="regionSeleccionadaComercial" [zIndex]="300" [submitted]="submitted"
-                [labelSelect]="'Región Comercial'" [isValid]="customRegionComercialValido"
-                [isInvalid]="customRegionComercialInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customRegionComercialInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una región.
-              </div>
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaRegionesComerciales" 
+                [selectedValue]="regionComercial"
+                [zIndex]="300" [submitted]="submitted"
+                [selectedValue]="regionComercial"
+                [labelSelect]="'Región Comercial'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaCiudadComercial"
-                [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="200" [submitted]="submitted"
-                [labelSelect]="'Ciudad Comercial'" [isValid]="customCiudadComercialValido"
-                [isInvalid]="customCiudadComercialInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customCiudadComercialInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una ciudad.
-              </div>
+              <mb-custom-select [control]="misDatosForm.get('comuna_comercial')" [options]="listaComunasComerciales" 
+                [zIndex]="200" [submitted]="submitted"
+                [selectedValue]="comunaComercial"
+                [labelSelect]="'Comuna Comercial'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
             </div>
 
             <div class="form-floating mb-4">
-              <mb-custom-select [control]="misDatosForm.get('comuna_comercial')" [options]="listaComunaComercial"
-                [selectedValue]="comunaSeleccionadaComercial" [zIndex]="100" [submitted]="submitted"
-                [labelSelect]="'Comuna Comercial'" [isValid]="customComunaComercialValido"
-                [isInvalid]="customComunaComercialInvalido"
-                [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customComunaComercialInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una comuna.
-              </div>
-            </div> -->
+              <mb-custom-select [control]="misDatosForm.get('ciudad_comercial')" [options]="listaCiudadesComerciales" 
+                [zIndex]="100" [submitted]="submitted"
+                [selectedValue]="ciudadComercial"
+                [labelSelect]="'Ciudad Comercial'"
+                [customDisabled]="customSelectDisabled">
+              </mb-custom-select>
+            </div>
 
           </div>
 

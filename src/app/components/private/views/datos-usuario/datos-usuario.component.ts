@@ -16,6 +16,23 @@ import { Localidades } from '../../../../models/localidades.model';
 export class DatosUsuarioComponent implements OnInit {
 
   misDatosForm: FormGroup;
+  submitted: boolean = false;
+  customSelectDisabled: boolean = false;
+  listaRegiones: Localidades[] = [];
+  listaComunas: Localidades[] = [];
+  listaCiudades: Localidades[] = [];
+  listaRegionesComerciales: Localidades[] = [];
+  listaComunasComerciales: Localidades[] = [];
+  listaCiudadesComerciales: Localidades[] = [];
+
+  
+  region: any | undefined;
+  comuna: any | undefined;
+  ciudad: any | undefined;
+
+  regionComercial: any | undefined;
+  comunaComercial: any | undefined;
+  ciudadComercial: any | undefined;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -51,19 +68,96 @@ export class DatosUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*this.localidadesService.getRegiones().subscribe((regiones: Localidades[]) => {
-      console.log(regiones);
-    });*/
+
+    this.localidadesService.getRegiones().subscribe((regiones: Localidades[]) => {
+      this.listaRegiones = regiones;
+      this.listaRegionesComerciales = regiones;
+    });
+    this.localidadesService.getComunas().subscribe((comunas: Localidades[]) => {
+      this.listaComunas = comunas;
+      this.listaComunasComerciales = comunas;
+    });
+    this.localidadesService.getCiudades().subscribe((ciudades: Localidades[]) => {
+      this.listaCiudades = ciudades;
+      this.listaCiudadesComerciales = ciudades;
+    });
+
     this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
       if (datos.length > 0) {
         const usuario = datos[0];
         usuario.rut = this.rutPipe.transform(usuario.rut);
         usuario.celular = this.celularPipe.transform(usuario.celular);
         usuario.telefono = this.telefonoFijoPipe.transform(usuario.telefono);
+        this.region = usuario.region;
+        this.comuna = usuario.comuna;
+        this.ciudad = usuario.ciudad;
+        this.regionComercial = usuario.region_comercial;
+        this.comunaComercial = usuario.comuna_comercial;
+        this.ciudadComercial = usuario.ciudad_comercial;
         this.misDatosForm.patchValue(usuario);
       }
     });
-    
+
+    this.observarCambiosRegion();
+    this.observarCambiosComuna();
+    this.observarCambiosCiudad();
+    this.observarCambiosRegionComercial();
+    this.observarCambiosComunaComercial();
+    this.observarCambiosCiudadComercial();
+  }
+
+  observarCambiosRegion() {
+    this.misDatosForm.get('region')?.valueChanges.subscribe(selectedRegionId => {
+      const selectedRegion = this.listaRegiones.find(region => region.id === selectedRegionId);
+      if (selectedRegion) {
+        this.region = selectedRegion.label;
+      }
+    });
+  }
+
+  observarCambiosComuna() {
+    this.misDatosForm.get('comuna')?.valueChanges.subscribe(selectedComunaId => {
+      const selectedComuna = this.listaComunas.find(comuna => comuna.id === selectedComunaId);
+      if (selectedComuna) {
+        this.comuna = selectedComuna.label;
+      }
+    });
+  }
+
+  observarCambiosCiudad() {
+    this.misDatosForm.get('ciudad')?.valueChanges.subscribe(selectedCiudadId => {
+      const selectedCiudad = this.listaCiudades.find(ciudad => ciudad.id === selectedCiudadId);
+      if (selectedCiudad) {
+        this.ciudad = selectedCiudad.label;
+      }
+    });
+  }
+
+  observarCambiosRegionComercial() {
+    this.misDatosForm.get('region_comercial')?.valueChanges.subscribe(selectedRegionComercialId => {
+      const selectedRegionComercial = this.listaRegionesComerciales.find(regionComercial => regionComercial.id === selectedRegionComercialId);
+      if (selectedRegionComercial) {
+        this.regionComercial = selectedRegionComercial.label;
+      }
+    });
+  }
+
+  observarCambiosComunaComercial() {
+    this.misDatosForm.get('comuna_comercial')?.valueChanges.subscribe(selectedComunaComercialId => {
+      const selectedComunaComercial = this.listaComunasComerciales.find(comunaComercial => comunaComercial.id === selectedComunaComercialId);
+      if (selectedComunaComercial) {
+        this.comunaComercial = selectedComunaComercial.label;
+      }
+    });
+  }
+
+  observarCambiosCiudadComercial() {
+    this.misDatosForm.get('ciudad_comercial')?.valueChanges.subscribe(selectedCiudadComercialId => {
+      const selectedCiudadComercial = this.listaCiudadesComerciales.find(ciudadComercial => ciudadComercial.id === selectedCiudadComercialId);
+      if (selectedCiudadComercial) {
+        this.ciudadComercial = selectedCiudadComercial.label;
+      }
+    });
   }
 
 }
