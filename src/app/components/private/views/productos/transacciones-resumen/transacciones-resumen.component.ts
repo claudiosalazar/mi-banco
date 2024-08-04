@@ -15,7 +15,7 @@ export class TransaccionesResumenComponent implements OnInit {
   transacciones: Transacciones[] = [];
   transaccionesFiltradas: Transacciones[] = [];
   transaccionMasReciente: Transacciones | null = null;
-  mostrarPaginador: boolean | undefined;
+  mostrarPaginador: boolean = true;
   originalData: any[] = [];
   itemsPerPage = 5;
   currentPage = 1;
@@ -39,28 +39,32 @@ export class TransaccionesResumenComponent implements OnInit {
     this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
         this.transacciones = transacciones;
+        this.transaccionesFiltradas = transacciones; // Inicializar transaccionesFiltradas
       }
     });
+  }
+
+  getUltimaTransaccion(idProducto: number) {
+    const transaccionesFiltradas = this.transacciones.filter(transaccion => transaccion.id_producto === idProducto);
+    return transaccionesFiltradas.length > 0 ? transaccionesFiltradas[transaccionesFiltradas.length - 1] : null;
   }
 
   getTransaccionesCtaCte() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 0);
   }
-  
+
   getTransaccionesLineaCredito() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 1);
   }
-  
+
   getTransaccionesVisa() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 2);
   }
 
   // Maneja los datos filtrados
   handleDatosFiltrados(datosFiltrados: any[]) {
-    const datosFiltradosPorProducto = datosFiltrados;
-    this.transacciones = datosFiltradosPorProducto;
-    this.originalData = [...this.transacciones];
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+    this.transaccionesFiltradas = datosFiltrados; // Actualizar solo transaccionesFiltradas
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados);
   }
 
 }

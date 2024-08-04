@@ -65,14 +65,19 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getUltimaTransaccion(idProducto: number) {
+    const transaccionesFiltradas = this.transacciones.filter(transaccion => transaccion.id_producto === idProducto);
+    return transaccionesFiltradas.length > 0 ? transaccionesFiltradas[transaccionesFiltradas.length - 1] : null;
+  }
+
   getTransaccionesCtaCte() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 0);
   }
-  
+
   getTransaccionesLineaCredito() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 1);
   }
-  
+
   getTransaccionesVisa() {
     return this.transacciones.filter(transaccion => transaccion.id_producto === 2);
   }
