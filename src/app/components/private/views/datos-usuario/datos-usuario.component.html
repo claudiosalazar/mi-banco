@@ -7,9 +7,14 @@
           <h1>Mis Datos</h1>
         </div>
         <div>
-          <!-- <button class="btn btn-primario" (click)="editarDatos()" [disabled]="botonEditar">Editar mis datos</button> -->
-          <button class="btn btn-primario" >Editar mis datos</button>
+          <button class="btn btn-primario" (click)="editarDatos()" [disabled]="botonEditar">Editar mis datos</button>
         </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-5" *ngIf="mensajeInformativo">
+      <div class="alert alert-primary" role="alert">
+        <span class="m-0">Todos los campos que ya contiene informacion son obligatorios.</span>
       </div>
     </div>
 
@@ -202,10 +207,10 @@
             </div>
           </div>
 
-          <!-- <hr class="mt-5 mb-5" *ngIf="separadorBotonGuardar"> -->
+          <hr class="mt-5 mb-5" *ngIf="separadorBotonGuardar">
 
-          <!-- <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar"> -->
-          <div class="col-12 d-flex justify-content-end">
+          <!-- <div class="col-12 d-flex justify-content-end"> -->
+          <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar">
             <!-- <button type="button" class="btn btn-secundario me-0 me-md-3" (click)="cancelarEdicion()">Cancelar</button> -->
             <button type="button" class="btn btn-secundario me-0 me-md-3">Cancelar</button>
             <!-- <button type="button" class="btn btn-primario" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" [class.disabled]="!botonGuardarDisabled">Guardar datos</button> -->

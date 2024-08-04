@@ -17,7 +17,12 @@ export class DatosUsuarioComponent implements OnInit {
 
   misDatosForm: FormGroup;
   submitted: boolean = false;
-  customSelectDisabled: boolean = false;
+  customSelectDisabled: boolean = true;
+  botonEditar = false;
+  mensajeInformativo = false;
+  separadorBotonGuardar = false;
+  botonGuardar = false;
+
   listaRegiones: Localidades[] = [];
   listaComunas: Localidades[] = [];
   listaCiudades: Localidades[] = [];
@@ -43,27 +48,27 @@ export class DatosUsuarioComponent implements OnInit {
     private localidadesService: LocalidadesService
   ) { 
     this.misDatosForm = new FormGroup({
-      primer_nombre: new FormControl('', [Validators.required]),
-      segundo_nombre: new FormControl('', [Validators.required]),
-      apellido_paterno: new FormControl('', [Validators.required]),
-      apellido_materno: new FormControl('', [Validators.required]),
-      rut: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      email_comercial: new FormControl('', [Validators.required]),
-      celular: new FormControl('', [Validators.required]),
-      telefono: new FormControl('', [Validators.required]),
-      calle: new FormControl('', [Validators.required]),
-      numero_calle: new FormControl('', [Validators.required]),
-      depto_villa_block: new FormControl('', [Validators.required]),
-      ciudad: new FormControl('', [Validators.required]),
-      comuna: new FormControl('', [Validators.required]),
-      region: new FormControl('', [Validators.required]),
-      calle_comercial: new FormControl('', [Validators.required]),
-      numero_calle_comercial: new FormControl('', [Validators.required]),
-      oficina: new FormControl('', [Validators.required]),
-      ciudad_comercial: new FormControl('', [Validators.required]),
-      comuna_comercial: new FormControl('', [Validators.required]),
-      region_comercial: new FormControl('', [Validators.required]),
+      primer_nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
+      segundo_nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
+      apellido_paterno: new FormControl({value: '', disabled: true}, [Validators.required]),
+      apellido_materno: new FormControl({value: '', disabled: true}, [Validators.required]),
+      rut: new FormControl({value: '', disabled: true}, [Validators.required]),
+      email: new FormControl({value: '', disabled: true}, [Validators.required]),
+      email_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      celular: new FormControl({value: '', disabled: true}, [Validators.required]),
+      telefono: new FormControl({value: '', disabled: true}, [Validators.required]),
+      calle: new FormControl({value: '', disabled: true}, [Validators.required]),
+      numero_calle: new FormControl({value: '', disabled: true}, [Validators.required]),
+      depto_villa_block: new FormControl({value: '', disabled: true}, [Validators.required]),
+      ciudad: new FormControl({value: '', disabled: true}, [Validators.required]),
+      comuna: new FormControl({value: '', disabled: true}, [Validators.required]),
+      region: new FormControl({value: '', disabled: true}, [Validators.required]),
+      calle_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      numero_calle_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      oficina: new FormControl({value: '', disabled: true}, [Validators.required]),
+      ciudad_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      comuna_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
+      region_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
     });
   }
 
@@ -158,6 +163,33 @@ export class DatosUsuarioComponent implements OnInit {
         this.ciudadComercial = selectedCiudadComercial.label;
       }
     });
+  }
+
+  editarDatos() {
+    this.botonEditar = true;
+    this.misDatosForm.enable();
+    this.misDatosForm.get('rut')?.disable();
+    this.customSelectDisabled = false;
+    this.mensajeInformativo = true;
+    this.separadorBotonGuardar = true;
+    this.botonGuardar = true;
+    /*
+    
+    this.botonGuardar = true;
+    
+    this.activarSeleccionRegionPersonal();
+    this.activarSeleccionCiudadPersonal();
+    this.activarSeleccionComunaPersonal();
+    this.activarSeleccionRegionComercial();
+    this.activarSeleccionCiudadComercial();
+    this.activarSeleccionComunaComercial();
+    this.observarCambiosRegionPersonal();
+    this.observarCambiosCiudadPersonal();
+    this.observarCambiosComunaPersonal();
+    this.observarCambiosRegionComercial();
+    this.observarCambiosCiudadComercial();
+    this.observarCambiosComunaComercial();
+    this.detectarCambios();*/
   }
 
 }
