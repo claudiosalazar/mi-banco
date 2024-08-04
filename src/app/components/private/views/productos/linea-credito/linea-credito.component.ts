@@ -67,9 +67,10 @@ export class LineaCreditoComponent implements OnInit {
 
   // Maneja los datos filtrados
   handleDatosFiltrados(datosFiltrados: any[]) {
-    this.transacciones = datosFiltrados;
+    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 1);
+    this.transacciones = datosFiltradosPorProducto;
     this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados); // Envía los datos al servicio
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto); // Envía los datos al servicio
   }
 }

@@ -43,21 +43,16 @@ export class TablaMovimientosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('TablaMovimientosComponent initialized');
     this.loadData(this.idProducto);
   }
 
   loadData(_idProducto: number | undefined): void {
     this.datosFiltradosService.datosFiltrados$.subscribe(
       datosFiltrados => {
-        console.log('Datos filtrados recibidos:', datosFiltrados);
         this.transacciones = datosFiltrados;
         this.transacciones = [...this.transacciones];
         this.originalData = [...this.transacciones];
         this.cdr.detectChanges();
-      },
-      error => {
-        console.error('Error en datosFiltradosService:', error);
       }
     );
 
@@ -66,9 +61,6 @@ export class TablaMovimientosComponent implements OnInit {
         this.itemsPerPage = paginationData.itemsPerPage;
         this.currentPage = paginationData.currentPage;
         this.cdr.detectChanges();
-      },
-      error => {
-        console.error('Error en paginationData:', error);
       }
     );
 
