@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Transacciones } from 'src/app/models/transacciones.model';
-import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service'; // Importa el servicio
+import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
   selector: 'mb-linea-credito',
@@ -31,7 +31,7 @@ export class LineaCreditoComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     private transaccionesService: TransaccionesService,
-    private datosFiltradosService: DatosFiltradosService // Inyecta el servicio
+    @Inject(DatosFiltradosService) private datosFiltradosService: DatosFiltradosService // Inyecta el servicio
   ) { }
 
   ngOnInit() {
@@ -69,8 +69,9 @@ export class LineaCreditoComponent implements OnInit {
   handleDatosFiltrados(datosFiltrados: any[]) {
     const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 1);
     this.transacciones = datosFiltradosPorProducto;
-    this.productos = [...this.transacciones];
+    //this.productos = [...this.transacciones];
     this.originalData = [...this.transacciones];
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto); // Envía los datos al servicio
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
+
 }

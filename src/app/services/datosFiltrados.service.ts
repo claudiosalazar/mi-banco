@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Transacciones } from '../models/transacciones.model';
 import { TransaccionesService } from './transacciones.service';
 
@@ -8,7 +8,6 @@ import { TransaccionesService } from './transacciones.service';
 })
 export class DatosFiltradosService {
   private datosFiltradosSource = new Subject<any[]>();
-  private transaccionesActualizadas = new BehaviorSubject<Transacciones[]>([]);
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
   paginationData$ = this.paginationData.asObservable();

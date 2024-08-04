@@ -1,10 +1,10 @@
 <!-- <ng-container *ngIf="movimientosLineaDeCredito"> -->
 <ng-container>
   <div class="container pb-5">
-    <div class="row" *ngIf="productos.length > 0">
+    <div class="row">
       <div class="col-12 px-4 px-md-auto">
 
-        <h1>
+        <h1 *ngIf="productos.length > 0">
           {{ productos[1].nombre_producto }}
           <span>N° {{ productos[1].numero_producto }}</span>
         </h1>
@@ -27,7 +27,7 @@
 
         <div class="card mt-4">
           <div class="p-4">
-            <mb-buscador-tabla [tituloBuscador]="'Buscar transacción'"></mb-buscador-tabla>
+            <mb-buscador-tabla (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
           </div>
           <mb-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="1"></mb-tabla-movimientos>
         </div>

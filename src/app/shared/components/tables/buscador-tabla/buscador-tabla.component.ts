@@ -30,14 +30,9 @@ export class BuscadorTablaComponent implements OnInit {
   
       this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
         if (Array.isArray(datosFiltrados)) {
-          this.updateTable(datosFiltrados);
+          this.datosFiltradosEvent.emit(datosFiltrados);
         }
       });
     });
-  }
-  
-  updateTable(datosFiltrados: any[]) {
-    this.paginatedData = datosFiltrados;
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados);
   }
 }
