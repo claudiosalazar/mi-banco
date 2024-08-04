@@ -11,6 +11,7 @@ export interface DatosUsuario {
   telefono: any,
   calle: any,
   numero_calle: any,
+  depto_villa_block: any,
   ciudad: any,
   comuna: any,
   region: any,

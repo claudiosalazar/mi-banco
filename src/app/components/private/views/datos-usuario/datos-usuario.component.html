@@ -1,3 +1,304 @@
-<p>
-  datos-usuario works!
-</p>
+<div class="container mb-5 px-4 px-md-auto">
+  <div class="row">
+
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1>Mis Datos</h1>
+        </div>
+        <div>
+          <!-- <button class="btn btn-primario" (click)="editarDatos()" [disabled]="botonEditar">Editar mis datos</button> -->
+          <button class="btn btn-primario" >Editar mis datos</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12">
+      <form [formGroup]="misDatosForm">
+        <div class="row">
+          <div class="col-12 col-md-6 pe-md-4">
+            <h5>Información personal</h5>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="primer_nombre">
+              <label for="primer_nombre">Primera nombre</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="segundo_nombre">
+              <label for="segundo_nombre">Segundo nombre</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="apellido_paterno">
+              <label for="apellido_paterno">Apellido Paterno</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="apellido_materno">
+              <label for="apellido_materno">Apellido Materno</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="rut">
+              <label for="rut">Rut</label>
+            </div>
+
+          </div>
+
+          <hr class="my-4 mt-md-4 mb-md-5 d-md-none">
+
+          <div class="col-12 col-md-6 ps-md-4">
+            <h5 class="mt-3 mt-md-auto">Información de Contacto</h5>
+
+            <div class="form-floating mb-4">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" formControlName="email">
+                <label for="email">Email</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" formControlName="email_comercial">
+                <label for="email_comercial">Email comercial</label>
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control celular" formControlName="celular">
+              <label for="celular">Celular</label>
+              <div class="prefijo-chile"></div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="telefono">
+              <label for="telefono">Teléfono</label>
+            </div>
+
+          </div>
+
+          <hr class="my-4 mt-md-4 mb-md-5">
+
+          <div class="col-12 col-md-6 pe-md-4">
+            <h5 class="mt-3 mt-md-auto">Dirección personal</h5>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="calle">
+              <label for="calle">Calle</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="numero_calle">
+              <label for="numero_calle">Número</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="depto_villa_block">
+              <label for="depto_villa_block">Depto / Villa / Block</label>
+            </div>
+
+            <!-- <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('region')" [options]="listaRegiones"
+                [selectedValue]="regionSeleccionadaPersonal" [zIndex]="600" [submitted]="submitted"
+                [labelSelect]="'Región Personal'" [isValid]="customRegionPersonalValido"
+                [isInvalid]="customRegionPersonalInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customRegionPersonalInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('ciudad')" [options]="listaCiudad"
+                [selectedValue]="ciudadSeleccionadaPersonal" [zIndex]="500" [submitted]="submitted"
+                [labelSelect]="'Ciudad Personal'" [isValid]="customCiudadPersonalValido"
+                [isInvalid]="customCiudadPersonalInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customCiudadPersonalInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una ciudad.
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('comuna')" [options]="listaComuna"
+                [selectedValue]="comunaSeleccionadaPersonal" [zIndex]="400" [submitted]="submitted"
+                [labelSelect]="'Comuna Personal'" [isValid]="customComunaPersonalValido"
+                [isInvalid]="customComunaPersonalInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customComunaPersonalInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una comuna.
+              </div>
+            </div> -->
+
+          </div>
+
+          <hr class="my-4 mt-md-4 mb-md-5 d-md-none">
+
+          <div class="col-12 col-md-6 ps-md-4">
+            <h5 class="mt-3 mt-md-auto">Dirección comercial</h5>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="calle_comercial">
+              <label for="calle_comercial">Calle</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="numero_calle_comercial">
+              <label for="numero_calle_comercial">Número</label>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" formControlName="oficina">
+              <label for="oficina">Oficina</label>
+            </div>
+
+            <!-- <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaRegionesComercial"
+                [selectedValue]="regionSeleccionadaComercial" [zIndex]="300" [submitted]="submitted"
+                [labelSelect]="'Región Comercial'" [isValid]="customRegionComercialValido"
+                [isInvalid]="customRegionComercialInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customRegionComercialInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una región.
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaCiudadComercial"
+                [selectedValue]="ciudadSeleccionadaComercial" [zIndex]="200" [submitted]="submitted"
+                [labelSelect]="'Ciudad Comercial'" [isValid]="customCiudadComercialValido"
+                [isInvalid]="customCiudadComercialInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customCiudadComercialInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una ciudad.
+              </div>
+            </div>
+
+            <div class="form-floating mb-4">
+              <mb-custom-select [control]="misDatosForm.get('comuna_comercial')" [options]="listaComunaComercial"
+                [selectedValue]="comunaSeleccionadaComercial" [zIndex]="100" [submitted]="submitted"
+                [labelSelect]="'Comuna Comercial'" [isValid]="customComunaComercialValido"
+                [isInvalid]="customComunaComercialInvalido"
+                [customDisabled]="customSelectDisabled"></mb-custom-select>
+              <div *ngIf="customComunaComercialInvalidoMensaje" class="invalid-feedback d-block">
+                Debes seleccionar una comuna.
+              </div>
+            </div> -->
+
+          </div>
+
+          <hr class="mt-4 mb-5">
+
+          <div class="col-12">
+            <div class="card p-4">
+              <h5>¿Dónde quieres que enviemos tu correspondencia?</h5>
+              <p class="mb-0">Deseo que todo aviso, comunicación o correspondencia que el Banco deba enviarme con motivo
+                de los productos que he contratado, me sea enviado a:</p>
+              <br>
+              <div class="form-check form-switch my-1 mt-0">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
+                <label class="form-check-label" for="flexSwitchCheckDefault">Email Personal</label>
+              </div>
+              <div class="form-check form-switch my-1">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Email Comercial</label>
+              </div>
+              <div class="form-check form-switch my-1 mb-0">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Domicilio</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- <hr class="mt-5 mb-5" *ngIf="separadorBotonGuardar"> -->
+
+          <!-- <div class="col-12 d-flex justify-content-end" *ngIf="botonGuardar"> -->
+          <div class="col-12 d-flex justify-content-end">
+            <!-- <button type="button" class="btn btn-secundario me-0 me-md-3" (click)="cancelarEdicion()">Cancelar</button> -->
+            <button type="button" class="btn btn-secundario me-0 me-md-3">Cancelar</button>
+            <!-- <button type="button" class="btn btn-primario" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" [class.disabled]="!botonGuardarDisabled">Guardar datos</button> -->
+            <button type="button" class="btn btn-primario" data-bs-toggle="modal" data-bs-target="#modalConfirmarEdicion" >Guardar datos</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal posicion fade" id="modalConfirmarEdicion" tabindex="-1" aria-labelledby="modalConfirmarEdicion"
+  data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <!-- <div *ngIf="actualizarDatosUsuario"> -->
+        <div>
+          <div class="d-flex align-items-center mb-2">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
+              warning
+            </span>
+            <p class="d-block">
+              ¿Deseas guardar los cambios hechos?
+            </p>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="datosGuardadosUsuarioEditado"> -->
+        <div>
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <p>Tus nuevos datos se guardaron con éxito.</p>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="errorServerAlGuardarDatos"> -->
+        <div>
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al intentar guardar tus nuevos datos.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <!-- <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados();">Cerrar</button> -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <!-- <div class="d-flex justify-content-end flex-row" *ngIf="actualizarDatosUsuario"> -->
+        <div class="d-flex justify-content-end flex-row">
+          <button type="submit" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+          <!-- <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0" (click)="guardarDatosUsuario()">Confirmar cambios</button> -->
+          <button type="button" class="btn btn-primario ms-md-3 mb-3 mb-md-0">Confirmar cambios</button>
+        </div>
+
+        <!-- <div class="d-flex justify-content-end" *ngIf="datosGuardadosUsuarioEditado"> -->
+        <div class="d-flex justify-content-end">
+          <!-- <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button> -->
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+
+        <!-- <div class="d-flex justify-content-end" *ngIf="errorServerAlGuardarDatos"> -->
+        <div class="d-flex justify-content-end" >
+          <!-- <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="datosGuardados()">Cerrar</button> -->
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" >Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div> -->

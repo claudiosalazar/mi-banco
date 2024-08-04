@@ -1,0 +1,11 @@
+<div class="bloquea-options" [hidden]="!customDisabled"></div>
+<div class="custom-select" [ngClass]="{'is-invalid': isValid === false, 'is-valid': isValid === true}" (click)="isOpen = !isOpen" [class.custom-select-disabled]="customDisabled">
+  <div class="selected-option">{{selectedOption}}</div>
+  <div class="options" *ngIf="isOpen">
+    <div class="option" *ngFor="let option of options" (click)="selectOption(option)">{{option.label}}</div>
+  </div>
+  <div class="label">
+    {{ labelSelect ? labelSelect.replace('*', '') : '' }}
+    <span *ngIf="labelSelect?.includes('*')" class="obligatorio">*</span>
+  </div>
+</div>

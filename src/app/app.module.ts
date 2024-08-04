@@ -57,6 +57,7 @@ import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabl
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
 import { BuscadorTablaService } from './services/buscadorTabla.service';
 import { DatosFiltradosService } from './services/datosFiltrados.service';
+import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 
 
 @NgModule({
@@ -102,7 +103,10 @@ import { DatosFiltradosService } from './services/datosFiltrados.service';
     BannerVisaDescuentoComponent,
     TablaMovimientosComponent,
     BuscadorTablaComponent,
-    PaginadorComponent
+    PaginadorComponent,
+    CustomSelectComponent,
+    CelularPipe,
+    TelefonoFijoPipe
   ],
   imports: [
     BrowserModule,
