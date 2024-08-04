@@ -36,7 +36,6 @@ import { LineaCreditoPagoComponent } from './components/private/views/productos/
 import { SegurosComponent } from './components/private/views/productos/seguros/seguros.component';
 import { TransaccionesResumenComponent } from './components/private/views/productos/transacciones-resumen/transacciones-resumen.component';
 import { VisaComponent } from './components/private/views/productos/visa/visa.component';
-import { TablaVisaComponent } from './components/private/views/productos/visa/tabla-visa/tabla-visa.component';
 import { VisaComprobanteComponent } from './components/private/views/productos/visa/visa-comprobante/visa-comprobante.component';
 import { VisaPagoComponent } from './components/private/views/productos/visa/visa-pago/visa-pago.component';
 import { AyudaComponent } from './components/private/views/ayuda/ayuda.component';
@@ -86,7 +85,6 @@ import { DatosFiltradosService } from './services/datosFiltrados.service';
     SegurosComponent,
     TransaccionesResumenComponent,
     VisaComponent,
-    TablaVisaComponent,
     VisaComprobanteComponent,
     VisaPagoComponent,
     AyudaComponent,

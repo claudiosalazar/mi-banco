@@ -31,7 +31,7 @@ export class LineaCreditoComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     private transaccionesService: TransaccionesService,
-    @Inject(DatosFiltradosService) private datosFiltradosService: DatosFiltradosService // Inyecta el servicio
+    @Inject(DatosFiltradosService) private datosFiltradosService: DatosFiltradosService
   ) { }
 
   ngOnInit() {

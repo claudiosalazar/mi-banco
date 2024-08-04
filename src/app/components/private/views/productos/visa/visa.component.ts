@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from '../../../../../services/transacciones.service';
 import { Transacciones } from '../../../../../models/transacciones.model';
+import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
   selector: 'mb-visa',
@@ -17,9 +18,20 @@ export class VisaComponent implements OnInit {
   comprobantePagoVisa = false;
   movimientosVisa = true;
 
+  // Variables para busqueda y tabla
+  transaccionesVisa = '';
+  transacciones: any[] | undefined;
+  mostrarPaginador: boolean | undefined;
+  originalData: any[] = [];
+  itemsPerPage = 5;
+  currentPage = 1;
+  paginatedData: any[] | undefined;
+  totalPages: any;
+
   constructor(
     private productosService: ProductosService,
-    private transaccionesService: TransaccionesService
+    private transaccionesService: TransaccionesService,
+    @Inject(DatosFiltradosService) private datosFiltradosService: DatosFiltradosService
   ) { }
 
   ngOnInit() {
@@ -51,5 +63,14 @@ export class VisaComponent implements OnInit {
     this.movimientosVisa = false;
     this.formularioPagoVisa = true;
     this.comprobantePagoVisa = false;
+  }
+
+  // Maneja los datos filtrados
+  handleDatosFiltrados(datosFiltrados: any[]) {
+    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 2);
+    this.transacciones = datosFiltradosPorProducto;
+    //this.productos = [...this.transacciones];
+    this.originalData = [...this.transacciones];
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 }
