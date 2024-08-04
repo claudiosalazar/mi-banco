@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Pipe
 import { DatePipe } from '@angular/common';
+import { PercentPipe } from '@angular/common';
 import { PesosPipe } from './shared/pipes/pesos.pipe';
 import { RutPipe } from './shared/pipes/rut.pipe';
 import { CelularPipe } from './shared/pipes/celular.pipe';
@@ -122,6 +123,7 @@ import { DatosFiltradosService } from './services/datosFiltrados.service';
     CelularPipe,
     TelefonoFijoPipe,
     DatePipe,
+    PercentPipe,
     NumeroTarjetaPipe
   ],
   bootstrap: [MiBancoComponent]

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OfertasService } from '../../../../services/ofertas.service';
+import { Ofertas } from '../../../../models/ofertas.model';
 
 @Component({
   selector: 'mb-banner-seguro-auto',
@@ -6,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BannerSeguroAutoComponent implements OnInit {
 
-  constructor() { }
+  ofertas: Ofertas[] = [];
+
+  constructor(
+    private ofertasService: OfertasService
+  ) { }
 
   ngOnInit() {
+    this.ofertasService.getOfertas().subscribe((ofertas: Ofertas[]) => {
+      if (ofertas) {
+        this.ofertas = ofertas;
+      }
+    });
   }
 
 }
