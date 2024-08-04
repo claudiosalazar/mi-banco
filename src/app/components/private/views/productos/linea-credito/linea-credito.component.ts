@@ -3,9 +3,10 @@ import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from 'src/app/services/transacciones.service';
 import { Transacciones } from 'src/app/models/transacciones.model';
+import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service'; // Importa el servicio
 
 @Component({
-  selector: 'app-linea-credito',
+  selector: 'mb-linea-credito',
   templateUrl: './linea-credito.component.html'
 })
 export class LineaCreditoComponent implements OnInit {
@@ -16,10 +17,21 @@ export class LineaCreditoComponent implements OnInit {
   formularioPagoLineaDeCredito = false;
   comprobantePagoLineaDeCredito = false;
   movimientosLineaDeCredito = true;
+  
+  // Variables para busqueda y tabla
+  transaccionesLineaCredito = '';
+  transacciones: any[] | undefined;
+  mostrarPaginador: boolean | undefined;
+  originalData: any[] = [];
+  itemsPerPage = 5;
+  currentPage = 1;
+  paginatedData: any[] | undefined;
+  totalPages: any;
 
   constructor(
     private productosService: ProductosService,
-    private transaccionesService: TransaccionesService
+    private transaccionesService: TransaccionesService,
+    private datosFiltradosService: DatosFiltradosService // Inyecta el servicio
   ) { }
 
   ngOnInit() {
@@ -53,4 +65,11 @@ export class LineaCreditoComponent implements OnInit {
     this.comprobantePagoLineaDeCredito = false;
   }
 
+  // Maneja los datos filtrados
+  handleDatosFiltrados(datosFiltrados: any[]) {
+    this.transacciones = datosFiltrados;
+    this.productos = [...this.transacciones];
+    this.originalData = [...this.transacciones];
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados); // Envía los datos al servicio
+  }
 }

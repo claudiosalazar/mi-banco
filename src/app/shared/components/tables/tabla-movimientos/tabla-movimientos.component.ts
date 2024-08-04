@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { TransaccionesService } from '../../../../services/transacciones.service';
+import { DatosFiltradosService } from '../../../../services/datosFiltrados.service';
 import { Transacciones } from '../../../../models/transacciones.model';
 
 @Component({
@@ -37,19 +38,55 @@ export class TablaMovimientosComponent implements OnInit {
 
   constructor(
     private transaccionesService: TransaccionesService,
+    private datosFiltradosService: DatosFiltradosService,
     private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
-      if (transacciones) {
-        this.transacciones = this.idProducto !== undefined 
-          ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
-          : transacciones;
-        this.paginarTransacciones();
-        this.cdr.detectChanges(); 
+    console.log('TablaMovimientosComponent initialized');
+    this.loadData(this.idProducto);
+  }
+
+  loadData(_idProducto: number | undefined): void {
+    this.datosFiltradosService.datosFiltrados$.subscribe(
+      datosFiltrados => {
+        console.log('Datos filtrados recibidos:', datosFiltrados);
+        this.transacciones = datosFiltrados;
+        this.transacciones = [...this.transacciones];
+        this.originalData = [...this.transacciones];
+        this.cdr.detectChanges();
+      },
+      error => {
+        console.error('Error en datosFiltradosService:', error);
       }
-    });
+    );
+
+    this.datosFiltradosService.paginationData$.subscribe(
+      paginationData => {
+        this.itemsPerPage = paginationData.itemsPerPage;
+        this.currentPage = paginationData.currentPage;
+        this.cdr.detectChanges();
+      },
+      error => {
+        console.error('Error en paginationData:', error);
+      }
+    );
+
+    this.transaccionesService.getTransacciones().subscribe(
+      (transacciones: Transacciones[]) => {
+        console.log('Transacciones recibidas:', transacciones);
+        if (transacciones) {
+          this.transacciones = this.idProducto !== undefined 
+            ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
+            : transacciones;
+          this.paginarTransacciones();
+          this.cdr.detectChanges(); 
+        }
+      },
+      ( error: any) => {
+        console.error('Error en transaccionesService:', error);
+      }
+    );
   }
 
   public onHeaderClick(): void {

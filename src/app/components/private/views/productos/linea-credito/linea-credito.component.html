@@ -25,7 +25,12 @@
           </div>
         </div>
 
-        <mb-tabla-linea-credito></mb-tabla-linea-credito>
+        <div class="card mt-4">
+          <div class="p-4">
+            <mb-buscador-tabla [tituloBuscador]="'Buscar transacción'"></mb-buscador-tabla>
+          </div>
+          <mb-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="1"></mb-tabla-movimientos>
+        </div>
 
       </div>
     </div>

@@ -12,6 +12,13 @@ export class TransaccionesResumenComponent implements OnInit {
 
   productos: Productos[] = [];
   transacciones: Transacciones[] = [];
+  transaccionesVisa: any;
+  mostrarPaginador: boolean | undefined;
+  originalData: any[] = [];
+  itemsPerPage = 5;
+  currentPage = 1;
+  paginatedData: any[] | undefined;
+  totalPages: any;
 
   constructor(
     private productosService: ProductosService,

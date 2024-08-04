@@ -53,7 +53,13 @@
         </div>
       </div>
 
-      <mb-tabla-resumen-transacciones></mb-tabla-resumen-transacciones>
+      <!-- <mb-tabla-resumen-transacciones></mb-tabla-resumen-transacciones> -->
+      <div class="card mt-4">
+        <div class="p-4">
+          <mb-buscador-tabla [tituloBuscador]="'Buscar transacción'"></mb-buscador-tabla>
+        </div>
+        <mb-tabla-movimientos [id]="transaccionesVisa" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
+      </div>
 
       <div class="col-12 mt-5">
         <mb-banner-credito-consumo></mb-banner-credito-consumo>

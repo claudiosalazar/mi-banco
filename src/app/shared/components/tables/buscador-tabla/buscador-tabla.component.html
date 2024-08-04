@@ -1,6 +1,6 @@
 <div class="d-flex align-items-md-center flex-column flex-md-row">
   <p class="mt-0 mt-md-3 me-0 me-md-3">{{ tituloBuscador }}</p>
   <form class="d-flex ml-5" role="search" >
-    <input class="form-control me-2 buscador" type="search" aria-label="Search">
+    <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="campoBusqueda">
   </form>
 </div>
