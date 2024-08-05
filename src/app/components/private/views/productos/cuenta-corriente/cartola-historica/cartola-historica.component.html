@@ -11,30 +11,26 @@
       <table class="table tabla-cartolas-historicas table-striped" role="table">
         <thead role="columnheader"ead role="rowgroup">
           <tr role="row">
-            <!-- <th role="columnheader" (click)="ordenarDatos('numeroCartola'); onHeaderClick()"> -->
-            <th role="columnheader" >
+            <th role="columnheader" (click)="ordenarDatos('numero_cartola'); onHeaderClick()">
               <div class="d-flex align-items-center">
                 <span class="ancho">
                   <div class="contenido-celda">
                     Número de Cartola
                   </div>
                 </span>
-                <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCartola'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCartola'"> -->
-                <span class="material-symbols-outlined animar-icono">
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numero_cartola'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numero_cartola'">
                   expand_more
                 </span>
               </div>
             </th>
-            <!-- <th role="columnheader" (click)="ordenarDatos('fechaEmision'); onHeaderClick()"> -->
-            <th role="columnheader" >
+            <th role="columnheader" (click)="ordenarDatos('fecha_emision'); onHeaderClick()">
               <div class="d-flex align-items-center">
                 <span class="ancho">
                   <div class="contenido-celda">
                     Fecha Emisión Cartola
                   </div>
                 </span>
-                <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fechaEmision'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fechaEmision'"> -->
-                <span class="material-symbols-outlined animar-icono">
+                <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha_emision'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha_emision'">
                   expand_more
                 </span>
               </div>
@@ -52,15 +48,12 @@
           </tr>
         </thead>
         <tbody role="rowgroup">
-          <!-- <tr *ngFor="let cartola of paginatedCartolas; let i = index" [hidden]="i === 0" role="row"> -->
-          <tr role="row">
+          <tr *ngFor="let cartola of paginatedCartola" role="row">
             <td role="cell" class="ancho">
-              <!-- <span class="contenido-celda">{{ cartola.numeroCartola }}</span> -->
-              <span class="contenido-celda">00000</span>
+              <span class="contenido-celda">{{ cartola.numero_cartola }}</span>
             </td>
             <td role="cell" class="ancho">
-              <!-- <span class="contenido-celda">{{ cartola.fechaEmision | date:"dd / MM / yyyy" }}</span> -->
-              <span class="contenido-celda">00000</span>
+              <span class="contenido-celda">{{ cartola.fecha_emision | date:"dd / MM / yyyy" }}</span>
             </td>
             <td role="cell" class="ancho py-0">
               <div class="contenido-celda">
@@ -84,7 +77,7 @@
         </tbody>
       </table>
   
-      <!-- <mb-paginador [datosPaginador]="cartolas" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedCartolas = $event" [datosOrdenados]="datosOrdenados"></mb-paginador> -->
+      <mb-paginador [datosPaginador]="cartolas" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedCartola = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
     </div>
   </div>
 </div>
