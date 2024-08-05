@@ -3,8 +3,8 @@
     <div class="d-flex flex-column flex-md-row align-items-md-center">
       <p class="mb-3 mb-md-0 me-3">Buscar destinatario</p>
       <form class="d-flex ml-5" role="search" >
-        <!-- <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios"> -->
-        <input class="form-control me-2 buscador" type="search" aria-label="Search">
+        <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios">
+        <!-- <input class="form-control me-2 buscador" type="search" aria-label="Search"> -->
       </form>
     </div>
     <hr class="d-md-none my-4">
@@ -18,86 +18,74 @@
     <table class="table table-striped tabla-agenda" role="table">
       <thead role="columnheader" role="rowgroup">
         <tr role="row">
-          <!-- <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   Nombre
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'">
                 expand_more
               </span>
             </div>
           </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('apodo'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('apodo'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   Apodo
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'apodo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'apodo'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'apodo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'apodo'">
                 expand_more
               </span>
             </div>
           </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   Rut
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'">
                 expand_more
               </span>
             </div>
           </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   Banco
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'">
                 expand_more
               </span>
             </div>
           </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('tipo_cuenta'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   Tipo de cuenta
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipo_cuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipo_cuenta'">
                 expand_more
               </span>
             </div>
           </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()"> -->
-          <th role="columnheader">
+          <th role="columnheader" (click)="ordenarDatos('numero_cuenta'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
                 <div class="contenido-celda">
                   N° de cuenta
                 </div>
               </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'"> -->
-              <span class="material-symbols-outlined animar-icono">
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numero_cuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numero_cuenta'">
                 expand_more
               </span>
             </div>
@@ -115,31 +103,24 @@
         </tr>
       </thead>
       <tbody role="rowgroup">
-        <!-- <tr *ngFor="let destinatario of agendaDestinatarioFiltrados"> -->
-        <tr>
+        <tr *ngFor="let agenda of paginatedAgenda">
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.nombre }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.nombre }}</span>
           </td>
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.apodo }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.apodo }}</span>
           </td>
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.rut | rut }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.rut | rut }}</span>
           </td>
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.banco }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.banco }}</span>
           </td>
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.tipoCuenta }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.tipo_cuenta }}</span>
           </td>
           <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ destinatario.numeroCuenta }}</span> -->
-            <span class="contenido-celda">asdasd</span>
+            <span class="contenido-celda">{{ agenda.numero_cuenta }}</span>
           </td>
           <td role="cell" class="ancho py-0">
             <div class="contenido-celda">
@@ -165,7 +146,8 @@
       </tbody>
     </table>
 
-    <!-- <mb-paginador [datosPaginador]="destinatarios" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedDestinatarios = $event" [datosOrdenados]="datosOrdenados"></mb-paginador> -->
+    <!-- <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1"  ></mb-paginador> -->
+    <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedAgenda = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
 
   </div>
 </div>

@@ -58,6 +58,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
 import { BuscadorTablaService } from './services/buscadorTabla.service';
 import { DatosFiltradosService } from './services/datosFiltrados.service';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
+import { AgendaService } from './services/agenda.service';
 
 
 @NgModule({
@@ -122,6 +123,7 @@ import { CustomSelectComponent } from './shared/components/custom-select/custom-
     DatosUsuarioService,
     BuscadorTablaService,
     DatosFiltradosService,
+    AgendaService,
     PesosPipe,
     RutPipe,
     CelularPipe,
