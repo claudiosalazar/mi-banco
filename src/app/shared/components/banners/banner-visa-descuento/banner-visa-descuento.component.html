@@ -8,7 +8,7 @@
         <span class="texto-secundario">
           Disfruta un descuento de
         </span>
-        <span class="monto text-start rojo">
+        <span class="monto text-start rojo" *ngIf="ofertas.length > 0 && ofertas[2]?.monto_preaprobado">
           {{ ofertas[2].monto_preaprobado | percent}}
         </span>
       </div>

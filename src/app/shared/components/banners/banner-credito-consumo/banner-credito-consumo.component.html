@@ -6,7 +6,7 @@
     <span class="texto-explicativo text-start">
       Hola <strong>{{ primer_nombre }} {{ apellido_paterno }}</strong>, disfruta de lo que quieras, con tu Crédito de Consumo pre-aprobado por un monto de:
     </span>
-    <span class="monto text-start">
+    <span class="monto text-start" *ngIf="ofertas.length > 0 && ofertas[0]?.monto_preaprobado">
       {{ ofertas[0].monto_preaprobado | pesos }}
     </span>
     <div class="d-flex align-items-md-end flex-column-reverse flex-md-row mt-3">

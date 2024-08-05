@@ -11,7 +11,7 @@
         <span class="texto-explicativo">
           oferta exclusiva para solo por este mes
         </span>
-        <span class="monto-cuota text-start rojo" >
+        <span class="monto-cuota text-start rojo"  *ngIf="ofertas.length > 0 && ofertas[1]?.monto_preaprobado">
           UF {{ ofertas[1].monto_preaprobado }}
         </span>
         <img src="./assets/images/aseguradora.jpg" alt="Aseguradora" class="logos-empresas">
