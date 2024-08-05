@@ -61,7 +61,12 @@
         <!-- banco -->
         <div class="form-floating mb-4">
           <!-- <mb-custom-select [control]="editarDestinatarioForm.get('banco')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></mb-custom-select> -->
-          <mb-custom-select [control]="editarDestinatarioForm.get('banco')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" ></mb-custom-select>
+          <mb-custom-select [control]="editarDestinatarioForm.get('banco')" 
+          [options]="listaBancos" 
+          [selectedValue]="bancoInicio" 
+          [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" 
+          [isValid]="bancoValido" [isInvalid]="bancoInvalido"
+           ></mb-custom-select>
           <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
             Debes seleccionar un banco.
           </div>
@@ -70,7 +75,9 @@
         <!-- Tipo cuenta -->
         <div class="form-floating mb-4">
           <!-- <mb-custom-select [control]="editarDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></mb-custom-select> -->
-          <mb-custom-select [control]="editarDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida"></mb-custom-select>
+          <mb-custom-select [control]="editarDestinatarioForm.get('tipo_cuenta')" [options]="tiposCuenta" 
+          [selectedValue]="tipoCuentaInicio" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" 
+          [isInvalid]="cuentaInvalida"></mb-custom-select>
           <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
             Debes seleccionar un tipo de cuenta.
           </div>

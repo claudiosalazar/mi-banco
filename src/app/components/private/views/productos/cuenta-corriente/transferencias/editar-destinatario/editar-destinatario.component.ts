@@ -45,12 +45,16 @@ export class EditarDestinatarioComponent implements OnInit {
 
   // Variables para banco
   banco: any;
+  tipo_cuenta: any;
   valorBancoInicial: any | undefined;
   nuevoValorBanco: string | null = null;
   bancoSeleccionado: any | undefined;
   bancoValido: any;
   bancoInvalido: any;
   bancoInvalidoMensaje: any;
+
+  bancoInicio: any;
+  tipoCuentaInicio: any;
 
   // Variables para tipo cuenta
   tipoCuenta: any;
@@ -60,6 +64,8 @@ export class EditarDestinatarioComponent implements OnInit {
   cuentaValida: any;
   cuentaInvalida: any;
   cuentaInvalidaMensaje: any;
+
+  bancoSeleccionadoLabel: string | undefined;
 
   id: number | null = null;
 
@@ -133,8 +139,38 @@ export class EditarDestinatarioComponent implements OnInit {
       celular: new FormControl(''),
       telefono: new FormControl(''),
     });
+
+    this.observaBancoInicio();
+    this.observaCuentaInicio();
   }
 
+  observaBancoInicio(): void {
+    const bancoControl = this.editarDestinatarioForm.get('banco');
+    if (bancoControl) {
+      bancoControl.valueChanges.subscribe(nuevoBanco => {
+        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
+        if (bancoSeleccionado) {
+          this.bancoInicio = bancoSeleccionado.label;
+          console.log('Nuevo Banco Inicio:', this.bancoInicio);
+        }
+      });
+    }
+  }
+
+  observaCuentaInicio(): void {
+    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
+    if (cuentaControl) {
+      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
+        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
+        if (cuentaSeleccionada) {
+          this.tipoCuentaInicio = cuentaSeleccionada.label;
+          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
+        }
+      });
+    }
+  }
+
+  
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       console.log('Agenda:', agenda);
@@ -157,6 +193,10 @@ export class EditarDestinatarioComponent implements OnInit {
         celular: this.celularPipe.transform(destinatario.celular),
         telefono: this.telefonoFijoPipe.transform(destinatario.telefono),
       });
+
+      this.bancoInicio = destinatario.banco;
+      this.tipoCuentaInicio = destinatario.tipo_cuenta;
+      console.log('Banco:', this.bancoInicio);
     }
   }
 
@@ -320,7 +360,7 @@ export class EditarDestinatarioComponent implements OnInit {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const tieneValor = control.value && control.value.trim() !== '';
       const longitudValida = tieneValor ? control.value.length <= 11 : true;
-      return longitudValida ? null : { 'longitudInvalida': { value: control.value } };
+      return longitudValida ? null : { 'longitudInvalida': { id: 0, value: control.value } };
     };
   }
   
