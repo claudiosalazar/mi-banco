@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Agenda } from '../models/agenda.model';
 
 @Injectable({
@@ -11,10 +11,16 @@ export class AgendaService {
   private URL = 'http://localhost:3000';
 
   private datosFiltradosSource = new Subject<any[]>();
+  private idSource = new BehaviorSubject<number | null>(null);
+  currentId = this.idSource.asObservable()
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
   paginationData$ = this.paginationData.asObservable();
   id: any;
+
+  private idDestinatarioAeditarSource = new BehaviorSubject(null);
+  idDestinatarioAeditar = this.idDestinatarioAeditarSource.asObservable();
+  datosEditadosDestinatario = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -37,9 +43,24 @@ export class AgendaService {
       ))
     );
   }
-
+  
   actualizarDatosFiltrados(datosFiltrados: any[]) {
     this.datosFiltradosSource.next(datosFiltrados);
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
+
+  getDatosEditadosDestinatario(): Observable<any> {
+    return this.datosEditadosDestinatario.asObservable();
+  }
+
+  setId(id: number): void {
+    console.log('id', id);
+    this.idSource.next(id);
+  }
+
+  getDestinatarioById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.URL}/mibanco/agenda/${id}`);
+  }
+
+  
 }

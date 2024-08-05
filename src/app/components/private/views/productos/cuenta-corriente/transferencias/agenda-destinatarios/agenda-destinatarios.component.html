@@ -126,14 +126,13 @@
               <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
                 <!-- Editar datos destinatario -->
                 <!-- <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()"> -->
-                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop">
+                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="abrirOffcanvas(agenda.id)">
                   <span class="material-symbols-outlined">
                     edit
                   </span>
                 </button>
                 <!-- Eliminar destinatario -->
-                <!-- <button (click)="abrirModalEliminar(destinatario)"> -->
-                <button>
+                <button (click)="abrirModalEliminar(agenda.id)">
                   <span class="material-symbols-outlined">
                     delete
                   </span>  
@@ -145,7 +144,6 @@
       </tbody>
     </table>
 
-    <!-- <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1"  ></mb-paginador> -->
     <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedAgenda = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
 
   </div>
@@ -158,12 +156,12 @@
   </div>
 </div> -->
 
-<!-- Sidenav para editar destinatario
+<!-- Sidenav para editar destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">
   <div class="contenido-offcanvas">
     <mb-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-editar-destinatario>
   </div>
-</div> -->
+</div>
 
 <!-- Modal eliminar destinatario -->
 <div class="modal posicion fade" id="modalEliminarDestinatario" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="modalEliminarDestinatario" aria-hidden="true">
@@ -175,8 +173,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <!-- <div id="usuarioAEliminar" *ngIf="!usuarioEliminado"> -->
-        <div id="usuarioAEliminar">
+        <div id="usuarioAEliminar" *ngIf="!usuarioEliminado">
           <div class="d-flex align-items-center mb-2">
             <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
               warning
@@ -187,11 +184,9 @@
             </p>
           </div>
         </div>
-        <!-- <div id="usuarioEliminado" *ngIf="usuarioEliminado"> -->
-        <div id="usuarioEliminado">
+        <div id="usuarioEliminado" *ngIf="usuarioEliminado">
           <!-- Usuario eliminado correctamente -->
-          <!-- <div class="d-flex align-items-center mb-2" id="eliminado" *ngIf="!errorServer"> -->
-          <div class="d-flex align-items-center mb-2" id="eliminado">
+          <div class="d-flex align-items-center mb-2" id="eliminado" *ngIf="!errorServer">
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
               done
             </span>
@@ -200,8 +195,7 @@
             </h4>
           </div>
           <!-- Error en server -->
-          <!-- <div id="errorServer" id="errorServer" *ngIf="errorServer"> -->
-          <div id="errorServer" id="errorServer">
+          <div id="errorServer" id="errorServer" *ngIf="errorServer">
             <div class="d-flex align-items-center mb-2">
               <span class="icono material-symbols-outlined d-block me-3 mensajes error">
                 Error
@@ -297,8 +291,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       
-      <!-- <div class="modal-body" *ngIf="enviandoDestinatarioEditado"> -->
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="enviandoDestinatarioEditado">
         <div class="d-flex align-items-center">
           <span class="icono material-symbols-outlined mensajes cargando me-3">
             sync
@@ -310,8 +303,7 @@
         </div>
       </div>
 
-      <!-- <div *ngIf="datosGuardadosDestinatarioEditado"> -->
-      <div>
+      <div *ngIf="datosGuardadosDestinatarioEditado">
         <div class="modal-body">
           <div class="d-flex">
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
@@ -323,13 +315,12 @@
         <div class="modal-footer">
           <div class="d-flex justify-content-end flex-row">
             <!-- <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
       </div>
 
-      <!-- <div *ngIf="errorServerDestinatarioEditado"> -->
-      <div>
+      <div *ngIf="errorServerDestinatarioEditado">
         <div class="modal-body">
           <div class="d-flex">
             <span class="icono material-symbols-outlined d-block me-3 mensajes error">
@@ -344,7 +335,7 @@
         <div class="modal-footer">
           <div class="d-flex justify-content-end flex-row">
             <!-- <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" >Cerrar</button>
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
       </div>
@@ -353,5 +344,5 @@
   </div>
 </div>
 
-<!-- <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
-<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div> -->
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div>

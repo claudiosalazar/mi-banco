@@ -1,19 +1,48 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AgendaService } from '../../../../../../../services/agenda.service';
+import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { FormControl } from '@angular/forms';
-import { of, switchMap } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
+import { of, Subscription, switchMap } from 'rxjs';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-agenda-destinatarios',
-  templateUrl: './agenda-destinatarios.component.html'
+  templateUrl: './agenda-destinatarios.component.html',
+  animations: [
+    trigger('fadeInOut', [
+      state('void', style({
+        opacity: 0
+      })),
+      state('*', style({
+        opacity: 0.5
+      })),
+      transition('void <=> *', animate('0.2s'))
+    ])
+  ]
 })
-export class AgendaDestinatariosComponent implements OnInit {
+export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
+
+  @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('modalEliminarDestinatario') modalEliminarDestinatario: ElementRef | undefined;
+  @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
+  @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
+
+  private backdropSubscription: Subscription | undefined;
+  private subscription: Subscription | undefined;
+  public columnaSeleccionada: string | undefined;
+  public isRotatedIn: boolean = false;
+  mostrarBackdropCustomModal = false;
+  modales: any[] = [];
+  mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
+  mostrarBackdropCustomOffcanvasEstado: boolean = false;
+  usuarioEliminado = false;
+  errorServer = false;
 
   agenda: any[] = [];
   paginatedAgenda: any[] = [];
-  public columnaSeleccionada: string | undefined;
-  public isRotatedIn: boolean = false;
+  
   // Variables para ordenar datos de tabla
   sortOrder = 1;
   sortedColumn: any;
@@ -24,14 +53,19 @@ export class AgendaDestinatariosComponent implements OnInit {
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;
-  id: undefined;
+  id: number | undefined;
 
   busquedaDestinatarios = new FormControl('');
   datosOrdenados = new EventEmitter<void>();
 
+  enviandoDestinatarioEditado: boolean = true;
+  datosGuardadosDestinatarioEditado: boolean = false;
+  errorServerDestinatarioEditado: boolean = false;
+
   constructor(
     private agendaService: AgendaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private backdropService: BackdropService
   ) { }
 
   ngOnInit() {
@@ -58,6 +92,44 @@ export class AgendaDestinatariosComponent implements OnInit {
       this.paginarAgenda();
       this.cdr.detectChanges();
     });
+
+    this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
+      this.mostrarBackdropCustomOffcanvasEstado = valor;
+    });
+
+    this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
+      mostrar => this.mostrarBackdropCustomModal = mostrar
+    );
+  }
+
+  ngOnDestroy(): void {
+    // Es importante cancelar la suscripción para evitar fugas de memoria
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
+  }
+  
+
+  ngAfterViewInit(_e: Event): void {
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.backdropService.show();  // Muestra el backdrop
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.backdropService.hide();  // Oculta el backdrop
+      });
+      return modal;
+    });
+
+    /*this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
+      this.datosCapturados = datos;
+      this.abrirModalNuevoDestinatario();
+    });*/
+
   }
 
   loadData(): void {
@@ -108,6 +180,33 @@ export class AgendaDestinatariosComponent implements OnInit {
     this.agenda = datosFiltradosPorProducto;
     this.originalData = [...this.agenda];
     this.agendaService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+  }
+
+  abrirModalEliminar(id: number): void {
+    this.id = id;
+    console.log(this.id);
+    var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
+    modalEliminarDestinatario.show();
+    this.backdropService.show();
+  }
+
+  abrirOffcanvas(id: number): void {
+    this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.mostrarBackdropCustomOffcanvasEstado = true;
+    
+    // Aquí puedes enviar el ID al componente 'editar-destinatario'
+    // Supongamos que tienes un servicio para compartir datos entre componentes
+    this.agendaService.setId(id);
+  }
+
+  abrirModalEdicionDestinatario(): void {
+    var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
+    modalEdicionDestinatario.show();
+    this.backdropService.show();
+  }
+  
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
   }
 
 }
