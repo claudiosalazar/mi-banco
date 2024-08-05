@@ -111,6 +111,64 @@
   </div>
 </div>
 
+<!-- Modal ejecutivo -->
+<div class="modal posicion fade" id="modalEjecutivo" tabindex="-1" aria-labelledby="modalEjecutivo" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <div>
+          <span class="titulo-header">Tu ejecutivo</span>
+        </div>
+        <button href="javascript:void(0);" class="btn-cerrar-modal d-flex align-items-center justify-content-center"
+          aria-label="Close" data-bs-dismiss="modal">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="card card-modal">
+                  <p>Datos de tu ejecutivo</p>
+                  <span class="titulo-modal">Jose Andres Gonzalez Herrara</span>
+                </div>
+                <br>
+                <div class="d-flex align-items-center mb-3 ms-0 ms-sm-3">
+                  <span class="material-symbols-outlined me-3 dorado">
+                    mail
+                  </span>
+                  <p class="m-0">jose@mibanco.cl</p>
+                </div>
+                <div class="d-flex align-items-center mb-3 ms-0 ms-sm-3">
+                  <span class="material-symbols-outlined me-3 dorado">
+                    person_pin_circle
+                  </span>
+                  <p class="m-0">Sucursal Manuel Montt, Temuco</p>
+                </div>
+                <div class="d-flex align-items-center mb-2 ms-0 ms-sm-3">
+                  <span class="material-symbols-outlined me-3 dorado">
+                    phone_in_talk
+                  </span>
+                  <p class="m-0">+56 85 245 6987</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- Botones -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal cerrar sesion -->
 <div class="modal posicion fade" id="modalLogOut" tabindex="-1" aria-labelledby="modalLogOut" data-bs-backdrop="static"
   data-bs-keyboard="false" aria-hidden="true">
@@ -129,10 +187,8 @@
       </div>
       <div class="modal-footer">
         <div class="d-flex justify-content-end flex-md-row">
-          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal"
-            (click)="ocultaDropdownMobile()">Cancelar</button>
-          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar
-            sesión</button>
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="ocultaDropdownMobile()">Cancelar</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
         </div>
       </div>
     </div>
