@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { AgendaService } from '../../../../../../../services/agenda.service';
-import { Agenda } from '../../../../../../../models/agenda.model';
 import { FormControl } from '@angular/forms';
 import { of, switchMap } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
@@ -40,11 +39,23 @@ export class AgendaDestinatariosComponent implements OnInit {
 
     this.busquedaDestinatarios.valueChanges
     .pipe(
-      switchMap(valorBusqueda => valorBusqueda ? this.agendaService.filtrarAgenda(valorBusqueda) : of([]))
+      switchMap(valorBusqueda => {
+        if (valorBusqueda) {
+          return this.agendaService.filtrarAgenda(valorBusqueda);
+        } else {
+          // Resetear a los datos originales y la página a 1
+          this.currentPage = 1;
+          this.agenda = [...this.originalData];
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+          return of(this.originalData);
+        }
+      })
     )
     .subscribe(datosFiltrados => {
       this.agenda = datosFiltrados;
       this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+      this.paginarAgenda();
       this.cdr.detectChanges();
     });
   }
@@ -56,7 +67,6 @@ export class AgendaDestinatariosComponent implements OnInit {
       this.paginarAgenda();
       this.cdr.detectChanges();
     });
-    
   }
 
   public onHeaderClick(): void {
@@ -100,9 +110,4 @@ export class AgendaDestinatariosComponent implements OnInit {
     this.agendaService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 
-  cambiarPagina(pagina: number): void {
-    this.currentPage = pagina;
-    this.paginarAgenda();
-    this.cdr.detectChanges();
-  }
 }
