@@ -4,28 +4,28 @@
         <h1>Cuenta Corriente</h1>
 
         <div class="row">
-          <div class="col-12" id="datosCuentaCorriente" *ngIf="productos.length && transacciones.length">
-            <div class="card mb-5">
+          <!-- <div class="col-12" id="datosCuentaCorriente" *ngIf="productos.length && transacciones.length"> -->
+            <!-- <div class="card mb-5">
               <div class="p-4">
                 <div class="row">
                   <div class="col-12 mb-4">
-                    <!-- <p class="mb-0">Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> <br class="d-md-none">al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong></p> -->
+                    <p class="mb-0">Saldo de Cuenta Corriente <strong>Nº {{numeroCtaCte}}</strong> <br class="d-md-none">al <strong>{{fechaYhoraActual | date:"dd / MM / yyyy, HH:mm"}} hrs.</strong></p>
                     <p class="mb-0">Saldo de {{ productos[0].nombre_producto }} <strong>Nº {{ productos[0].numero_producto }}</strong> <br class="d-md-none"> al <strong> hrs.</strong></p>
                   </div>
                   <div class="col-12 col-md-6 mb-3 mb-md-auto">
                     <small class="mb-0">Saldo disponible</small>
-                    <!-- <h4 class="mb-0 rojo"><strong>{{ cupoCtaCte | pesos }}</strong></h4> -->
+                    <h4 class="mb-0 rojo"><strong>{{ cupoCtaCte | pesos }}</strong></h4>
                     <h4 class="mb-0 rojo"><strong>{{ transacciones[0].saldo | pesos }}</strong></h4>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- <small class="mb-0">Saldo disponible en Línea de Crédito <br class="d-md-none"><strong>Nº {{numeroLineaCredito}}</strong></small> -->
+                    <small class="mb-0">Saldo disponible en Línea de Crédito <br class="d-md-none"><strong>Nº {{numeroLineaCredito}}</strong></small>
                     <small class="mb-0">Saldo disponible en Línea de Crédito <br class="d-md-none"><strong>Nº {{ productos[1].numero_producto }}</strong></small>
-                    <!-- <h4 class="mb-0 rojo"><strong>{{ Cupo | pesos }}</strong></h4> -->
+                    <h4 class="mb-0 rojo"><strong>{{ Cupo | pesos }}</strong></h4>
                     <h4 class="mb-0 rojo"><strong>{{ transacciones[1].saldo | pesos }}</strong></h4>
                   </div>
                 </div>
               </div>
-              <!-- <div class="info-cta-cte p-4" *ngIf="!urlActual.includes('transferencias') && !urlActual.includes('cartola-historica')"> -->
+              <div class="info-cta-cte p-4" *ngIf="!urlActual.includes('transferencias') && !urlActual.includes('cartola-historica')">
               <div class="info-cta-cte p-4" >
                 <div class="row">
                   <div class="col-12 col-md-6">
@@ -43,33 +43,33 @@
                       <small class="mb-0"><strong>$ 0</strong></small>
                     </div>
                   </div>
-                  <!-- <div class="col-12 col-md-6" *ngIf="!urlActual.includes('transferencias')"> -->
+                  <div class="col-12 col-md-6" *ngIf="!urlActual.includes('transferencias')">
                   <div class="col-12 col-md-6" >
                     <p class="d-md-none mt-3 mb-1"><strong>Línea de Crédito</strong></p>
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Último cargo</small>
-                      <!-- <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small> -->
+                      <small class="mb-0"><strong>{{ ultimoCargo | pesos }}</strong></small>
                       <small class="mb-0"><strong>00000</strong></small>
                     </div>
                     <div class="d-flex flex-row justify-content-between">
                       <small class="mb-0">Último abono</small>
-                      <!-- <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small> -->
+                      <small class="mb-0"><strong>{{ ultimoAbono | pesos }}</strong></small>
                       <small class="mb-0"><strong>00000</strong></small>
                     </div>
                   </div>
                   <div class="col-12 mt-4">
-                    <!-- <mb-alertas 
+                    <mb-alertas 
                       [icono]="false" 
                       [tipoAlerta]="'warning'" 
                       [mensajeTitulo]="'Tienes un crédito pre-aprobado con abono inmediato a tu cuenta corriente de:'" 
                       [mensajeDestacado]="'<strong>' + (montoPreAprobadoCreditoConsumo | pesos) + '</strong>'" 
                       [mensajeInfo]="'* Sujeto a evaluación crediticia.'" 
                       [textoBoton]="'Simular aquí'" [boton]="true" [tipoBoton]="'btn-secundario'">
-                    </mb-alertas> -->
+                    </mb-alertas>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="col-12">
@@ -100,4 +100,3 @@
         </div>
     </div>
   </div>
-</div>

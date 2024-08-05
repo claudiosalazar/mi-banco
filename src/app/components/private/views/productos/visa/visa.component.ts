@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from '../../../../../services/transacciones.service';
-import { Transacciones } from '../../../../../models/transacciones.model';
+//import { Transacciones } from '../../../../../models/cuenta-corriente.model';
 import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
@@ -12,8 +12,8 @@ import { DatosFiltradosService } from '../../../../../services/datosFiltrados.se
 export class VisaComponent implements OnInit {
 
   productos: Productos[] = [];
-  transaccionesFiltradas: Transacciones[] = [];
-  transaccionMasReciente: Transacciones | null = null;
+  // transaccionesFiltradas: Transacciones[] = [];
+  // transaccionMasReciente: Transacciones | null = null;
   formularioPagoVisa = false;
   comprobantePagoVisa = false;
   movimientosVisa = true;
@@ -41,23 +41,23 @@ export class VisaComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+    /*this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
         this.transaccionesFiltradas = transacciones.filter(transaccion => 
           transaccion.id_producto === 2 && transaccion.abono != null
         );
         this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
-    });
+    });*/
   }
 
-  obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+  /*obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
     if (this.transaccionesFiltradas.length === 0) {
       return null;
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }
+  }*/
 
   mostrarPagoVisa(): void {
     this.movimientosVisa = false;

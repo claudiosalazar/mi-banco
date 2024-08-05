@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { TransaccionesService } from '../../../../services/transacciones.service';
 import { DatosFiltradosService } from '../../../../services/datosFiltrados.service';
-import { Transacciones } from '../../../../models/transacciones.model';
+//import { Transacciones } from '../../../../models/cuenta-corriente.model';
 
 @Component({
   selector: 'mb-tabla-movimientos',
@@ -64,7 +64,7 @@ export class TablaMovimientosComponent implements OnInit {
       }
     );
 
-    this.transaccionesService.getTransacciones().subscribe(
+    /*this.transaccionesService.getTransacciones().subscribe(
       (transacciones: Transacciones[]) => {
         console.log('Transacciones recibidas:', transacciones);
         if (transacciones) {
@@ -78,7 +78,7 @@ export class TablaMovimientosComponent implements OnInit {
       ( error: any) => {
         console.error('Error en transaccionesService:', error);
       }
-    );
+    );*/
   }
 
   public onHeaderClick(): void {

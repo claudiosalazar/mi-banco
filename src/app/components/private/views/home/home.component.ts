@@ -5,7 +5,9 @@ import { Productos } from '../../../../models/productos.model';
 import { DatosUsuarioService } from '../../../../services/datosUsuario.service';
 import { DatosUsuario } from '../../../../models/datos-usuario.model';
 import { TransaccionesService } from '../../../../services/transacciones.service';
-import { Transacciones } from '../../../../models/transacciones.model';
+import { CuentaCorriente } from '../../../../models/cuenta-corriente.model';
+import { LineaCredito } from '../../../../models/linea-credito.model';
+import { Visa } from '../../../../models/visa.model';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +27,11 @@ import { Transacciones } from '../../../../models/transacciones.model';
 export class HomeComponent implements OnInit {
 
   productos: Productos[] = [];
-  transacciones: Transacciones[] = [];
+  transaccionesCtaCte: CuentaCorriente[] = [];
+  transaccionesLineaCre: LineaCredito[] = [];
+  transaccionesVisa: Visa[] = [];
+
+  // Variables para mostrar tablas de últimas transacciones
   ultimasTransaccionesCtaCte = true;
   ultimasTransaccionesLineaCredito = false;
   ultimasTransaccionesVisa = false;
@@ -36,6 +42,11 @@ export class HomeComponent implements OnInit {
   isActiveCtaCte = true;
   isActiveLineaCredito = false;
   isActiveVisa = false;
+
+  // Variables para almacenar el saldo de la última transacción
+  saldoUltimaTransaccionCtaCte: number | null = null;
+  saldoUltimaTransaccionLineaCredito: number | null = null;
+  saldoUltimaTransaccionVisa: number | null = null;
   
   constructor(
     private productosService: ProductosService,
@@ -58,28 +69,44 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
-      if (transacciones) {
-        this.transacciones = transacciones;
+    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+      if (transaccionesCtaCte) {
+        this.transaccionesCtaCte = transaccionesCtaCte;
+        this.saldoUltimaTransaccionCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
+      }
+    });
+
+    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
+      if (transaccionesLineaCre) {
+        this.transaccionesLineaCre = transaccionesLineaCre;
+        this.saldoUltimaTransaccionLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo : null;
+      }
+    });
+
+    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
+      if (transaccionesVisa) {
+        this.transaccionesVisa = transaccionesVisa;
+        this.saldoUltimaTransaccionVisa = transaccionesVisa.length > 0 ? transaccionesVisa[transaccionesVisa.length - 1].saldo : null;
       }
     });
   }
 
-  getUltimaTransaccion(idProducto: number) {
-    const transaccionesFiltradas = this.transacciones.filter(transaccion => transaccion.id_producto === idProducto);
-    return transaccionesFiltradas.length > 0 ? transaccionesFiltradas[transaccionesFiltradas.length - 1] : null;
-  }
-
   getTransaccionesCtaCte() {
-    return this.transacciones.filter(transaccion => transaccion.id_producto === 0);
+    return this.transaccionesCtaCte
+      .sort((a, b) => b.id_trans_cta_cte - a.id_trans_cta_cte) // Ordenar por ID en orden descendente
+      .slice(0, 3); // Tomar las primeras 3 transacciones
   }
-
+  
   getTransaccionesLineaCredito() {
-    return this.transacciones.filter(transaccion => transaccion.id_producto === 1);
+    return this.transaccionesLineaCre
+      .sort((a, b) => b.id_trans_linea_cre - a.id_trans_linea_cre)
+      .slice(0, 3);
   }
-
+  
   getTransaccionesVisa() {
-    return this.transacciones.filter(transaccion => transaccion.id_producto === 2);
+    return this.transaccionesVisa
+      .sort((a, b) => b.id_trans_visa - a.id_trans_visa)
+      .slice(0, 3);
   }
 
   mostrarTransaccionesCtaCte(): void {

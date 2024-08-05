@@ -28,11 +28,11 @@ export class BuscadorTablaComponent implements OnInit {
     ]).subscribe(([valorBusqueda]) => {
       this.valorBusqueda = valorBusqueda;
   
-      this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
+      /*this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
         if (Array.isArray(datosFiltrados)) {
           this.datosFiltradosEvent.emit(datosFiltrados);
         }
-      });
+      });*/
     });
   }
 }

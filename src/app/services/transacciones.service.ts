@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transacciones } from '../models/transacciones.model';
+import { CuentaCorriente } from '../models/cuenta-corriente.model';
+import { LineaCredito } from '../models/linea-credito.model';
+import { Visa } from '../models/visa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,19 @@ export class TransaccionesService {
 
   constructor(private http: HttpClient) { }
 
-  getTransacciones(): Observable<Transacciones[]> {
+  getTransCuentaCorriente(): Observable<CuentaCorriente[]> {
+    return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`);
+  }
+
+  getTransLineaCredito(): Observable<LineaCredito[]> {
+    return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`);
+  }
+
+  getTransVisa(): Observable<Visa[]> {
+    return this.http.get<Visa[]>(`${this.apiUrl}/mibanco/transacciones/visa`);
+  }
+
+  /*getTransacciones(): Observable<Transacciones[]> {
     return this.http.get<Transacciones[]>(`${this.apiUrl}/mibanco/transacciones`);
   }
 
@@ -32,5 +46,5 @@ export class TransaccionesService {
              abono.includes(valorBusquedaLower) ||
              saldo.includes(valorBusquedaLower);
     });
-  }
+  }*/
 }

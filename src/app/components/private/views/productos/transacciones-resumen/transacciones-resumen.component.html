@@ -3,14 +3,14 @@
     <div class="col-12 px-4 px-md-auto">
       <h1>Resumen de Transacciones</h1>
 
-      <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
+      <!-- <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
         <div class="container pb-5">
           <div class="row">
             <div class="col-12 px-4 px-md-auto">
               <h1>Resumen de Transacciones</h1>
         
               <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
-                <!-- Cuenta corriente -->
+
                 <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[0] && getUltimaTransaccion(0)">
                   <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4">
                     <span class="nombre-producto dorado">{{ productos[0].nombre_producto }}</span>
@@ -26,7 +26,7 @@
                   </div>
                 </div>
         
-                <!-- Linea de credito -->
+
                 <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[1] && getUltimaTransaccion(1)">
                   <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
                     <span class="nombre-producto tinto">{{ productos[1].nombre_producto }}</span>
@@ -42,7 +42,7 @@
                   </div>
                 </div>
         
-                <!-- Visa -->
+
                 <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[2] && getUltimaTransaccion(2)">
                   <div class="card card-productos visa hover-productos-inicio mb-md-4">
                     <span class="nombre-producto azul-visa">{{ productos[2].nombre_producto }}</span>
@@ -71,18 +71,18 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-      <div class="card mt-4">
-        <div class="p-4">
-          <mb-buscador-tabla [tituloBuscador]="'Buscar transacciones'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
-        </div>
-        <mb-tabla-movimientos [id]="transacciones" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
-      </div>
+        <!-- <div class="card mt-4">
+          <div class="p-4">
+            <mb-buscador-tabla [tituloBuscador]="'Buscar transacciones'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
+          </div>
+          <mb-tabla-movimientos [id]="transacciones" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
+        </div> -->
 
-      <div class="col-12 mt-5">
-        <mb-banner-credito-consumo></mb-banner-credito-consumo>
-      </div>
+        <div class="col-12 mt-5">
+          <mb-banner-credito-consumo></mb-banner-credito-consumo>
+        </div>
     </div>
 
   </div>

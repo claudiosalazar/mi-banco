@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Transacciones } from '../models/transacciones.model';
+//import { Transacciones } from '../models/cuenta-corriente.model';
 import { TransaccionesService } from './transacciones.service';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class DatosFiltradosService {
     });
   }
 
-  buscarDatos(valorBusqueda: string): Observable<Transacciones[]> {
+  /*buscarDatos(valorBusqueda: string): Observable<Transacciones[]> {
     return new Observable(observer => {
       this.transaccionesService.getTransacciones().subscribe(transacciones => {
         const datosFiltrados = this.transaccionesService.filtrarTransacciones(transacciones, valorBusqueda);
@@ -32,7 +32,7 @@ export class DatosFiltradosService {
         observer.error('Error al obtener transacciones');
       });
     });
-  }
+  }*/
 
   actualizarDatosFiltrados(datosFiltrados: any[]) {
     console.log('Datos filtrados recibidos:', datosFiltrados); // Verifica que los datos se reciben

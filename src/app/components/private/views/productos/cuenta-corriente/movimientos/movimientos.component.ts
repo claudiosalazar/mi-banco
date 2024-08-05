@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DatosFiltradosService } from '../../../../../../services/datosFiltrados.service';
 import { TransaccionesService } from '../../../../../../services/transacciones.service';
-import { Transacciones } from '../../../../../../models/transacciones.model';
+//import { Transacciones } from '../../../../../../models/cuenta-corriente.model';
 
 @Component({
   selector: 'app-movimientos',
@@ -10,8 +10,8 @@ import { Transacciones } from '../../../../../../models/transacciones.model';
 })
 export class MovimientosComponent implements OnInit {
 
-  transaccionesFiltradas: Transacciones[] = [];
-  transaccionMasReciente: Transacciones | null = null;
+  // transaccionesFiltradas: Transacciones[] = [];
+  // transaccionMasReciente: Transacciones | null = null;
 
   transaccionesCuentaCorriente = '';
   transacciones: any[] | undefined;
@@ -31,23 +31,23 @@ export class MovimientosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+    /*this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
         this.transaccionesFiltradas = transacciones.filter(transaccion => 
           transaccion.id_producto === 0 && transaccion.abono != null
         );
         this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
-    });
+    });*/
   }
 
-  obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+  /*obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
     if (this.transaccionesFiltradas.length === 0) {
       return null;
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }
+  }*/
 
   handleDatosFiltrados(datosFiltrados: any[]) {
     const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 0);

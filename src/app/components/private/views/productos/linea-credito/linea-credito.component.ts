@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from 'src/app/services/transacciones.service';
-import { Transacciones } from 'src/app/models/transacciones.model';
+// import { Transacciones } from 'src/app/models/cuenta-corriente.model';
 import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
@@ -12,8 +12,8 @@ import { DatosFiltradosService } from '../../../../../services/datosFiltrados.se
 export class LineaCreditoComponent implements OnInit {
 
   productos: Productos[] = [];
-  transaccionesFiltradas: Transacciones[] = [];
-  transaccionMasReciente: Transacciones | null = null;
+  // transaccionesFiltradas: Transacciones[] = [];
+  // transaccionMasReciente: Transacciones | null = null;
   formularioPagoLineaDeCredito = false;
   comprobantePagoLineaDeCredito = false;
   movimientosLineaDeCredito = true;
@@ -41,23 +41,23 @@ export class LineaCreditoComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+    /* this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
         this.transaccionesFiltradas = transacciones.filter(transaccion => 
           transaccion.id_producto === 1 && transaccion.abono != null
         );
         this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
-    });
+    });*/
   }
 
-  obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+  /*obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
     if (this.transaccionesFiltradas.length === 0) {
       return null;
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }
+  }*/
 
   mostrarPagoLineaDeCredito(): void {
     this.movimientosLineaDeCredito = false;

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from '../../../../../services/transacciones.service';
-import { Transacciones } from '../../../../../models/transacciones.model';
+// import { Transacciones } from '../../../../../models/cuenta-corriente.model';
 import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { DatosFiltradosService } from '../../../../../services/datosFiltrados.se
 export class TransaccionesResumenComponent implements OnInit {
 
   productos: Productos[] = [];
-  transacciones: Transacciones[] = [];
-  transaccionesFiltradas: Transacciones[] = [];
-  transaccionMasReciente: Transacciones | null = null;
+  // transacciones: Transacciones[] = [];
+  // transaccionesFiltradas: Transacciones[] = [];
+  // transaccionMasReciente: Transacciones | null = null;
   mostrarPaginador: boolean = true;
   originalData: any[] = [];
   itemsPerPage = 5;
@@ -36,15 +36,15 @@ export class TransaccionesResumenComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
+    /* this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
       if (transacciones) {
         this.transacciones = transacciones;
         this.transaccionesFiltradas = transacciones; // Inicializar transaccionesFiltradas
       }
-    });
+    }); */
   }
 
-  getUltimaTransaccion(idProducto: number) {
+  /*getUltimaTransaccion(idProducto: number) {
     const transaccionesFiltradas = this.transacciones.filter(transaccion => transaccion.id_producto === idProducto);
     return transaccionesFiltradas.length > 0 ? transaccionesFiltradas[transaccionesFiltradas.length - 1] : null;
   }
@@ -65,6 +65,6 @@ export class TransaccionesResumenComponent implements OnInit {
   handleDatosFiltrados(datosFiltrados: any[]) {
     this.transaccionesFiltradas = datosFiltrados; // Actualizar solo transaccionesFiltradas
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados);
-  }
+  }*/
 
 }
