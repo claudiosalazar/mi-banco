@@ -3,6 +3,7 @@ export interface CuentaCorriente {
   fecha: any,
   detalle: any,
   id_destinatario: any,
+  transferencia: number,
   nombre_destinatario: any,
   rut_destinatario: any,
   mensaje: any,

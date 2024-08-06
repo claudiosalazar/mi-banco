@@ -29,7 +29,19 @@
           <div class="p-4">
             <mb-buscador-tabla [tituloBuscador]="'Buscar transaccion'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
           </div>
-          <mb-tabla-movimientos [id]="transaccionesLineaCre" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [transProducto]="'lineaCredito'" ></mb-tabla-movimientos>
+          <mb-tabla-movimientos 
+            [id]="transaccionesLineaCre"
+            [claseTabla]="'tabla-movimientos'" 
+            [mostrarColumnaDestinatario]="false"
+            [mostrarColumnaRut]="false"
+            [mostrarColumnaNombreProducto]="false"
+            [mostrarColumnaMensaje]="false" 
+            [mostrarColumnaDetalle]="true" 
+            [mostrarColumnaAbono]="true" 
+            [mostrarColumnaSaldo]="true" 
+            [mostrarPaginador]="mostrarPaginador" 
+            [transProducto]="'lineaCredito'" >
+          </mb-tabla-movimientos>
         </div>
 
       </div>

@@ -55,7 +55,6 @@ import { BannerVisaDescuentoComponent } from './shared/components/banners/banner
 import { TablaMovimientosComponent } from './shared/components/tables/tabla-movimientos/tabla-movimientos.component';
 import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
-import { BuscadorTablaService } from './services/buscadorTabla.service';
 import { DatosFiltradosService } from './services/datosFiltrados.service';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 import { AgendaService } from './services/agenda.service';
@@ -121,7 +120,6 @@ import { AgendaService } from './services/agenda.service';
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     JwtHelperService,
     DatosUsuarioService,
-    BuscadorTablaService,
     DatosFiltradosService,
     AgendaService,
     PesosPipe,

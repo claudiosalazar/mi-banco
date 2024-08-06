@@ -1,119 +1,18 @@
 <div class="col-12">
-
-  <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-4 px-4">
-    <div class="d-flex flex-column flex-md-row align-items-md-center">
-      <p class="mb-3 mb-md-0 me-3">Buscar transferencia</p>
-      <form class="d-flex ml-5" role="search" >
-        <!-- <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaTransferencias"> -->
-        <input class="form-control me-2 buscador" type="search" aria-label="Search">
-      </form>
-    </div>
+  <div class="px-4 pt-0">
+    <mb-buscador-tabla [tituloBuscador]="'Buscar transferencia'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
   </div>
-
-  <div class="contenedor-tabla">
-    <table class="table table-striped tabla-ultimas-transferencias" role="table">
-      <thead role="columnheader"ead role="rowgroup">
-        <tr role="row">
-          <!-- <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()"> -->
-          <th role="columnheader">
-            <div class="d-flex align-items-center">
-              <span class="ancho">
-                <div class="contenido-celda">
-                  Fecha
-                </div>
-              </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'"> -->
-              <span class="material-symbols-outlined animar-icono">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('destinatario'); onHeaderClick()"> -->
-          <th role="columnheader">
-            <div class="d-flex align-items-center">
-              <span class="ancho">
-                <div class="contenido-celda">
-                  Destinatario
-                </div>
-              </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'destinatario'"> -->
-              <span class="material-symbols-outlined animar-icono">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('mensaje'); onHeaderClick()"> -->
-          <th role="columnheader">
-            <div class="d-flex align-items-center">
-              <span class="ancho">
-                <div class="contenido-celda">
-                  Mensaje
-                </div>
-              </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'mensaje'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'mensaje'"> -->
-              <span class="material-symbols-outlined animar-icono">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('cargo'); onHeaderClick()"> -->
-            <th role="columnheader">
-            <div class="d-flex align-items-center">
-              <span class="ancho">
-                <div class="contenido-celda">
-                  Cargo
-                </div>
-              </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'"> -->
-              <span class="material-symbols-outlined animar-icono">
-                expand_more
-              </span>
-            </div>
-          </th>
-          <!-- <th role="columnheader" (click)="ordenarDatos('saldo'); onHeaderClick()"> -->
-          <th role="columnheader">
-            <div class="d-flex align-items-center">
-              <span class="ancho">
-                <div class="contenido-celda">
-                  Saldo
-                </div>
-              </span>
-              <!-- <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'saldo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'saldo'"> -->
-              <span class="material-symbols-outlined animar-icono">
-                expand_more
-              </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody role="rowgroup">
-        <!-- <tr *ngFor="let transaccion of paginatedTransacciones" role="row"> -->
-        <tr role="row">
-          <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span> -->
-            <span class="contenido-celda">00/00/0000</span>
-          </td>
-          <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ transaccion.destinatario }}</span> -->
-            <span class="contenido-celda">asdasdas</span>
-          </td>
-          <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ transaccion.mensaje }}</span> -->
-            <span class="contenido-celda">asdasdas</span>
-          </td>
-          <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span> -->
-            <span class="contenido-celda">asdasd</span>
-          </td>
-          <td role="cell" class="ancho">
-            <!-- <span class="contenido-celda">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</span> -->
-            <span class="contenido-celda">654654</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- <mb-paginador [datosPaginador]="transacciones" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedTransacciones = $event" [datosOrdenados]="datosOrdenados"></mb-paginador> -->
-
-  </div>
+  <mb-tabla-movimientos 
+    [id]="transaccionesFiltradas" 
+    [claseTabla]="'tabla-ultimas-transferencias'" 
+    [mostrarColumnaDestinatario]="true"
+    [mostrarColumnaRut]="true"
+    [mostrarColumnaNombreProducto]="false"
+    [mostrarColumnaMensaje]="true" 
+    [mostrarColumnaDetalle]="false" 
+    [mostrarColumnaAbono]="false" 
+    [mostrarColumnaSaldo]="false"
+    [transProducto]="'ctaCte'"
+    >
+  </mb-tabla-movimientos>
 </div>

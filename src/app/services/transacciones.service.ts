@@ -20,6 +20,20 @@ export class TransaccionesService {
     );
   }
 
+  getTransCuentaCorrienteTransferencia(): Observable<CuentaCorriente[]> {
+    return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
+      map(transacciones => 
+        transacciones
+          .filter(transaccion => transaccion.transferencia === 1) // Filtrar las transacciones con transferencia = 1
+          .sort((a, b) => b.fecha.localeCompare(a.fecha))
+      ),
+      tap(transacciones => {
+        console.log('Transacciones filtradas y ordenadas:', transacciones); // Log de las transacciones
+        transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente');
+      })
+    );
+}
+
   getTransLineaCredito(): Observable<LineaCredito[]> {
     return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`).pipe(
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),

@@ -16,8 +16,13 @@ export class TablaMovimientosComponent implements OnInit {
   @Input() mostrarPaginador: boolean | undefined;
   @Input() transProducto: 'ctaCte' | 'lineaCredito' | 'visa' | 'todos' | undefined;
   @Input() datos: any | undefined;
-  @Input() mostrarColumnaNombre: boolean | undefined;
-  @Input() mostrarColumnaSaldo: boolean | undefined;
+  @Input() mostrarColumnaDestinatario = false;
+  @Input() mostrarColumnaRut = false;
+  @Input() mostrarColumnaNombreProducto = false;
+  @Input() mostrarColumnaMensaje = false;
+  @Input() mostrarColumnaDetalle= true;
+  @Input() mostrarColumnaAbono = true;
+  @Input() mostrarColumnaSaldo = true;
   @Input() claseTabla: string = 'tabla-movimientos';
 
   transacciones: any[] = [];

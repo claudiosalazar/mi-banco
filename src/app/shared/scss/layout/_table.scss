@@ -290,6 +290,7 @@
   }
 
   &.tabla-ultimas-transferencias {
+    
     th, td {
       &:nth-child(1) {
         width: 15%;
@@ -298,10 +299,10 @@
         width: 17%;
       }
       &:nth-child(3) {
-        width: 34%;
+        width: 17%;
       }
       &:nth-child(4) {
-        width: 17%;
+        width: 34%;
       }
       &:nth-child(5) {
         width: 17%;
@@ -570,3 +571,4 @@
     }
   }
 }
+

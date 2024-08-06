@@ -14,7 +14,31 @@
             </span>
           </div>
         </th>
-        <th role="columnheader" *ngIf="mostrarColumnaNombre"  (click)="ordenarDatos('nombre_producto'); onHeaderClick()">
+        <th role="columnheader" *ngIf="mostrarColumnaDestinatario" (click)="ordenarDatos('nombre_destinatario'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Destinatario
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre_destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre_destinatario'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" *ngIf="mostrarColumnaRut" (click)="ordenarDatos('rut_destinatario'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Rut
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut_destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut_destinatario'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" *ngIf="mostrarColumnaNombreProducto"  (click)="ordenarDatos('nombre_producto'); onHeaderClick()">
           <div class="d-flex align-items-center">
             <span class="ancho">
               <div class="contenido-celda">
@@ -26,7 +50,19 @@
             </span>
           </div>
         </th>
-        <th role="columnheader" (click)="ordenarDatos('detalle'); onHeaderClick()">
+        <th role="columnheader" *ngIf="mostrarColumnaMensaje" (click)="ordenarDatos('mensaje'); onHeaderClick()">
+          <div class="d-flex align-items-center">
+            <span class="ancho">
+              <div class="contenido-celda">
+                Mensaje
+              </div>
+            </span>
+            <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'mensaje'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'mensaje'">
+              expand_more
+            </span>
+          </div>
+        </th>
+        <th role="columnheader" *ngIf="mostrarColumnaDetalle" (click)="ordenarDatos('detalle'); onHeaderClick()">
           <div class="d-flex align-items-center">
             <span class="ancho">
               <div class="contenido-celda">
@@ -50,7 +86,7 @@
             </span>
           </div>
         </th>
-        <th role="columnheader" (click)="ordenarDatos('abono'); onHeaderClick()">
+        <th role="columnheader" *ngIf="mostrarColumnaAbono" (click)="ordenarDatos('abono'); onHeaderClick()">
           <div class="d-flex align-items-center">
             <span class="ancho">
               <div class="contenido-celda">
@@ -81,16 +117,25 @@
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
         </td>
-        <td role="cell" class="ancho" *ngIf="mostrarColumnaNombre">
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaDestinatario">
+          <span class="contenido-celda" *ngIf="mostrarColumnaDestinatario">{{ transaccion.nombre_destinatario }}</span>
+        </td>
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaRut">
+          <span class="contenido-celda" *ngIf="mostrarColumnaRut">{{ transaccion.rut_destinatario }}</span>
+        </td>
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaNombreProducto">
           <span class="contenido-celda"><strong>{{ transaccion.nombre_producto_trans }}</strong></span>
         </td>
-        <td role="cell" class="ancho">
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaMensaje">
+          <span class="contenido-celda">{{ transaccion.mensaje }}</span>
+        </td>
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaDetalle">
           <span class="contenido-celda">{{ transaccion.detalle }}</span>
         </td>
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
         </td>
-        <td role="cell" class="ancho">
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaAbono">
           <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
         </td>
         <td role="cell" class="ancho" *ngIf="mostrarColumnaSaldo">
