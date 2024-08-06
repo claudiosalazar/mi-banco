@@ -9,18 +9,18 @@
           <span>N° {{ productos[2].numero_producto | numeroTarjeta}}</span>
         </h1>
 
-        <!-- <div class="card p-4 mt-4">
+        <div class="card p-4 mt-4">
           <div class="d-flex justify-content-between flex-column align-items-center flex-md-row">
-            <div class="d-flex flex-column" *ngIf="transaccionMasReciente">
+            <div class="d-flex flex-column">
               <div>
                 <h5>Monto Facturado del mes: <strong class="dorado">$ 50.000</strong></h5>
               </div>
               <div>
                 <small class="mb-0">
                   Último pago realizado el <br class="d-md-none">
-                  <strong class="tinto">{{ transaccionMasReciente.fecha | date:"dd / MM / yyyy" }}</strong>,
+                  <strong class="tinto">{{ fecha | date:"dd / MM / yyyy" }}</strong>,
                   <br class="d-md-none"> por un valor de 
-                  <strong class="tinto">{{ transaccionMasReciente.abono | pesos }}</strong>.
+                  <strong class="tinto">{{ abono | pesos }}</strong>.
                 </small>
               </div>
             </div>
@@ -28,7 +28,7 @@
               <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoVisa()">Pagar</button>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="card mt-4">
           <div class="p-4">

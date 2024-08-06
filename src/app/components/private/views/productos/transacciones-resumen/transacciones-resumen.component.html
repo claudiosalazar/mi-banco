@@ -3,86 +3,69 @@
     <div class="col-12 px-4 px-md-auto">
       <h1>Resumen de Transacciones</h1>
 
-      <!-- <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
-        <div class="container pb-5">
-          <div class="row">
-            <div class="col-12 px-4 px-md-auto">
-              <h1>Resumen de Transacciones</h1>
-        
-              <div class="row align-items-md-stretch" *ngIf="productos.length && transacciones.length">
+      <div class="row align-items-md-stretch" *ngIf="productos.length">
 
-                <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[0] && getUltimaTransaccion(0)">
-                  <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4">
-                    <span class="nombre-producto dorado">{{ productos[0].nombre_producto }}</span>
-                    <small class="numero-producto">N° {{ productos[0].numero_producto }}</small>
-                    <hr>
-                    <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
-                      <span class="texto-montos">Disponible:</span>
-                      <span class="texto-montos monto">{{ getUltimaTransaccion(0)?.saldo | pesos }}</span>
-                    </div>
-                    <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-                      <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
-                    </div>
-                  </div>
-                </div>
-        
-
-                <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[1] && getUltimaTransaccion(1)">
-                  <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
-                    <span class="nombre-producto tinto">{{ productos[1].nombre_producto }}</span>
-                    <small class="numero-producto">N° {{ productos[1].numero_producto }}</small>
-                    <hr>
-                    <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
-                      <span class="texto-montos">Disponible:</span>
-                      <span class="texto-montos monto tinto">{{ getUltimaTransaccion(1)?.saldo | pesos }}</span>
-                    </div>
-                    <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-                      <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
-                    </div>
-                  </div>
-                </div>
-        
-
-                <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[2] && getUltimaTransaccion(2)">
-                  <div class="card card-productos visa hover-productos-inicio mb-md-4">
-                    <span class="nombre-producto azul-visa">{{ productos[2].nombre_producto }}</span>
-                    <small class="numero-producto">N° {{ productos[2].numero_producto | numeroTarjeta }}</small>
-                    <hr>
-                    <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
-                      <span class="texto-montos">Disponible:</span>
-                      <span class="texto-montos monto azul-visa">{{ getUltimaTransaccion(2)?.saldo | pesos }}</span>
-                    </div>
-                    <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
-                      <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <div class="card mt-4">
-                <div class="p-4">
-                  <mb-buscador-tabla [tituloBuscador]="'Buscar transacciones'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
-                </div>
-                <mb-tabla-movimientos [id]="transaccionesFiltradas" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
-              </div>
-        
-              <div class="col-12 mt-5">
-                <mb-banner-credito-consumo></mb-banner-credito-consumo>
-              </div>
+        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[0]">
+          <div class="card card-productos cuenta-corriente hover-productos-inicio mb-md-4">
+            <span class="nombre-producto dorado">{{ productos[0].nombre_producto }}</span>
+            <small class="numero-producto">N° {{ productos[0].numero_producto }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto">{{ saldoCtaCte | pesos }}</span>
+            </div>
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
             </div>
           </div>
-        </div> -->
+        </div>
 
-        <!-- <div class="card mt-4">
+
+        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[1]">
+          <div class="card card-productos linea-de-credito hover-productos-inicio mb-md-4">
+            <span class="nombre-producto tinto">{{ productos[1].nombre_producto }}</span>
+            <small class="numero-producto">N° {{ productos[1].numero_producto }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto tinto">{{ saldoLineaCredito | pesos }}</span>
+            </div>
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-md-4 mb-3 mb-md-0" *ngIf="productos[2]">
+          <div class="card card-productos visa hover-productos-inicio mb-md-4">
+            <span class="nombre-producto azul-visa">{{ productos[2].nombre_producto }}</span>
+            <small class="numero-producto">N° {{ productos[2].numero_producto | numeroTarjeta }}</small>
+            <hr>
+            <div class="d-flex justify-content-between flex-row flex-md-column flex-lg-row">
+              <span class="texto-montos">Disponible:</span>
+              <span class="texto-montos monto azul-visa">{{ saldoVisa | pesos }}</span>
+            </div>
+            <div class="d-flex justify-content-end justify-content-md-center justify-content-lg-end flex-row flex-md-column flex-lg-row">
+              <button class="btn-small btn-secundario" type="button" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">Ver movimientos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 mt-5">
+        <div class="card mt-4">
           <div class="p-4">
             <mb-buscador-tabla [tituloBuscador]="'Buscar transacciones'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
           </div>
-          <mb-tabla-movimientos [id]="transacciones" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
-        </div> -->
-
-        <div class="col-12 mt-5">
-          <mb-banner-credito-consumo></mb-banner-credito-consumo>
+          <mb-tabla-movimientos [id]="transacciones" [claseTabla]="'tabla-movimientos-resumen'" [mostrarColumnaNombre]="true" [mostrarColumnaSaldo]="false" [transProducto]="'todos'" [mostrarPaginador]="mostrarPaginador"></mb-tabla-movimientos>
         </div>
+      </div>
+
+      <div class="col-12 mt-5">
+        <mb-banner-credito-consumo></mb-banner-credito-consumo>
+      </div> 
+
     </div>
 
   </div>

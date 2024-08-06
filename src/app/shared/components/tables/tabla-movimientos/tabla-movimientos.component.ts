@@ -13,14 +13,12 @@ export class TablaMovimientosComponent implements OnInit {
 
   @Output() datosOrdenados = new EventEmitter<void>();
   @Input() mostrarPaginador: boolean | undefined;
-  @Input() transProducto: 'ctaCte' | 'lineaCredito' | 'visa' | undefined; // Modificado para aceptar valores específicos
+  @Input() transProducto: 'ctaCte' | 'lineaCredito' | 'visa' | 'todos' | undefined;
   @Input() datos: any | undefined;
   @Input() mostrarColumnaNombre: boolean | undefined;
+  @Input() mostrarColumnaSaldo: boolean | undefined;
   @Input() claseTabla: string = 'tabla-movimientos';
 
-  /*transaccionesCtaCte: any[] = [];
-  transaccionesLineaCre: any[] = [];
-  transaccionesVisa: any[] = [];*/
   transacciones: any[] = [];
   paginatedTransacciones: any[] = [];
   originalData: any[] = [];
@@ -91,6 +89,34 @@ export class TablaMovimientosComponent implements OnInit {
       this.transaccionesService.getTransVisa().subscribe(
         (transacciones: Visa[]) => {
           this.handleTransacciones(transacciones);
+        },
+        (error: any) => {
+          console.error('Error en transaccionesService:', error);
+        }
+      );
+    } else if (this.transProducto === 'todos') {
+      this.transaccionesService.getTransCuentaCorriente().subscribe(
+        (ctaCteTransacciones: CuentaCorriente[]) => {
+          this.transaccionesService.getTransLineaCredito().subscribe(
+            (lineaCreditoTransacciones: LineaCredito[]) => {
+              this.transaccionesService.getTransVisa().subscribe(
+                (visaTransacciones: Visa[]) => {
+                  const todasTransacciones = [
+                    ...ctaCteTransacciones,
+                    ...lineaCreditoTransacciones,
+                    ...visaTransacciones
+                  ];
+                  this.handleTransacciones(todasTransacciones);
+                },
+                (error: any) => {
+                  console.error('Error en transaccionesService:', error);
+                }
+              );
+            },
+            (error: any) => {
+              console.error('Error en transaccionesService:', error);
+            }
+          );
         },
         (error: any) => {
           console.error('Error en transaccionesService:', error);

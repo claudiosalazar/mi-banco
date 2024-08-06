@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProductosService } from '../../../../../services/productos.service';
 import { Productos } from '../../../../../models/productos.model';
 import { TransaccionesService } from '../../../../../services/transacciones.service';
-//import { Transacciones } from '../../../../../models/cuenta-corriente.model';
+import { Visa } from '../../../../../models/visa.model';
 import { DatosFiltradosService } from '../../../../../services/datosFiltrados.service';
 
 @Component({
@@ -12,14 +12,14 @@ import { DatosFiltradosService } from '../../../../../services/datosFiltrados.se
 export class VisaComponent implements OnInit {
 
   productos: Productos[] = [];
-  // transaccionesFiltradas: Transacciones[] = [];
-  // transaccionMasReciente: Transacciones | null = null;
+  transaccionesFiltradas: Visa[] = [];
+  transaccionMasReciente: Visa | null = null;
   formularioPagoVisa = false;
   comprobantePagoVisa = false;
   movimientosVisa = true;
 
   // Variables para busqueda y tabla
-  transaccionesVisa = '';
+  transaccionesVisa: string[] = [];
   transacciones: any[] | undefined;
   mostrarPaginador: boolean | undefined;
   originalData: any[] = [];
@@ -27,6 +27,9 @@ export class VisaComponent implements OnInit {
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;
+
+  abono: number | null = null;
+  fecha: any;
 
   constructor(
     private productosService: ProductosService,
@@ -41,23 +44,22 @@ export class VisaComponent implements OnInit {
       }
     });
 
-    /*this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
-      if (transacciones) {
-        this.transaccionesFiltradas = transacciones.filter(transaccion => 
-          transaccion.id_producto === 2 && transaccion.abono != null
-        );
-        this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
+      if (transaccionesVisa) {
+        this.fecha = transaccionesVisa.length > 0 ? transaccionesVisa[0].fecha : null;
+        this.abono = transaccionesVisa.length > 0 ? transaccionesVisa[0].abono : null;
       }
-    });*/
+      this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+    });
   }
 
-  /*obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+  obtenerTransaccionMasRecienteConAbono(): Visa | null {
     if (this.transaccionesFiltradas.length === 0) {
       return null;
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }*/
+  }
 
   mostrarPagoVisa(): void {
     this.movimientosVisa = false;
@@ -67,9 +69,16 @@ export class VisaComponent implements OnInit {
 
   // Maneja los datos filtrados
   handleDatosFiltrados(datosFiltrados: any[]) {
-    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 2);
-    this.transacciones = datosFiltradosPorProducto;
-    this.originalData = [...this.transacciones];
+    // Filtrar las transacciones que tienen un valor definido para id_trans_linea_cre
+    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_trans_visa !== undefined && transaccion.id_trans_visa !== null);
+    
+    // Asignar las transacciones filtradas a transaccionesLineaCre
+    this.transaccionesVisa = datosFiltradosPorProducto;
+    
+    // Guardar una copia de los datos originales
+    this.originalData = [...this.transaccionesVisa];
+    
+    // Actualizar los datos filtrados en el servicio
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 }

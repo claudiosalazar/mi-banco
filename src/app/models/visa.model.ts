@@ -7,4 +7,5 @@ export interface Visa {
   cargo: any,
   abono: any,
   saldo: any,
+  nombre_producto_trans: any
 }

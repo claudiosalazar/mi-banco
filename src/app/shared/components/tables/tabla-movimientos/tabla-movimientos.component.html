@@ -62,7 +62,7 @@
             </span>
           </div>
         </th>
-        <th role="columnheader" (click)="ordenarDatos('saldo'); onHeaderClick()">
+        <th role="columnheader" *ngIf="mostrarColumnaSaldo" (click)="ordenarDatos('saldo'); onHeaderClick()">
           <div class="d-flex align-items-center">
             <span class="ancho">
               <div class="contenido-celda">
@@ -81,20 +81,20 @@
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.fecha | date:"dd / MM / yyyy" }}</span>
         </td>
-        <td role="cell" class="ancho" *ngIf="mostrarColumnaNombre" >
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaNombre">
           <span class="contenido-celda"><strong>{{ transaccion.nombre_producto_trans }}</strong></span>
         </td>
         <td role="cell" class="ancho">
           <span class="contenido-celda">{{ transaccion.detalle }}</span>
         </td>
         <td role="cell" class="ancho">
-          <span class="contenido-celda">{{ transaccion.cargo !== '0' ? (transaccion.cargo | pesos) : '' }}</span>
+          <span class="contenido-celda">{{ transaccion.cargo | pesos }}</span>
         </td>
         <td role="cell" class="ancho">
-          <span class="contenido-celda">{{ transaccion.abono !== '0' ? (transaccion.abono | pesos) : '' }}</span>
+          <span class="contenido-celda">{{ transaccion.abono | pesos }}</span>
         </td>
-        <td role="cell" class="ancho">
-          <span class="contenido-celda">{{ transaccion.saldo !== '0' ? (transaccion.saldo | pesos) : '' }}</span>
+        <td role="cell" class="ancho" *ngIf="mostrarColumnaSaldo">
+          <span class="contenido-celda">{{ transaccion.saldo | pesos }}</span>
         </td>
       </tr>
     </tbody>

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DatosFiltradosService } from '../../../../../../services/datosFiltrados.service';
 import { TransaccionesService } from '../../../../../../services/transacciones.service';
-//import { Transacciones } from '../../../../../../models/cuenta-corriente.model';
+import { CuentaCorriente } from '../../../../../../models/cuenta-corriente.model';
 
 @Component({
   selector: 'app-movimientos',
@@ -10,10 +10,10 @@ import { TransaccionesService } from '../../../../../../services/transacciones.s
 })
 export class MovimientosComponent implements OnInit {
 
-  // transaccionesFiltradas: Transacciones[] = [];
-  // transaccionMasReciente: Transacciones | null = null;
+  transaccionesFiltradas: CuentaCorriente[] = [];
+  transaccionMasReciente: CuentaCorriente | null = null;
 
-  transaccionesCuentaCorriente = '';
+  transaccionesCuentaCorriente: string[] = [];
   transacciones: any[] | undefined;
   productos: any[] = [];
   originalData: any[] = [];
@@ -31,28 +31,33 @@ export class MovimientosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /*this.transaccionesService.getTransacciones().subscribe((transacciones: Transacciones[]) => {
-      if (transacciones) {
-        this.transaccionesFiltradas = transacciones.filter(transaccion => 
-          transaccion.id_producto === 0 && transaccion.abono != null
-        );
+    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCuentaCorriente: CuentaCorriente[]) => {
+      if (transaccionesCuentaCorriente) {
+        this.transaccionesFiltradas = transaccionesCuentaCorriente;
         this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
-    });*/
+    });
   }
 
-  /*obtenerTransaccionMasRecienteConAbono(): Transacciones | null {
+  obtenerTransaccionMasRecienteConAbono(): CuentaCorriente | null {
     if (this.transaccionesFiltradas.length === 0) {
       return null;
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }*/
+  }
 
   handleDatosFiltrados(datosFiltrados: any[]) {
-    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 0);
-    this.transacciones = datosFiltradosPorProducto;
-    this.originalData = [...this.transacciones];
+    // Filtrar las transacciones que tienen un valor definido para id_trans_linea_cre
+    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_trans_cta_cte !== undefined && transaccion.id_trans_cta_cte !== null);
+    
+    // Asignar las transacciones filtradas a transaccionesLineaCre
+    this.transaccionesCuentaCorriente = datosFiltradosPorProducto;
+    
+    // Guardar una copia de los datos originales
+    this.originalData = [...this.transaccionesCuentaCorriente];
+    
+    // Actualizar los datos filtrados en el servicio
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 

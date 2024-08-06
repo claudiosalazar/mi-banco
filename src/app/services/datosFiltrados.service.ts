@@ -36,7 +36,7 @@ export class DatosFiltradosService {
           observer.next(datosFiltrados);
           observer.complete();
         },
-        error => {
+        _error => {
           observer.error('Error al obtener transacciones');
         }
       );

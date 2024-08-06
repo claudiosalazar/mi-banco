@@ -9,4 +9,5 @@ export interface CuentaCorriente {
   cargo: any,
   abono: any,
   saldo: any,
+  nombre_producto_trans: any
 }
