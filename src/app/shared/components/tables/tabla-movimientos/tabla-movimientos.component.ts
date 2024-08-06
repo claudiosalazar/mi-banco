@@ -4,6 +4,7 @@ import { DatosFiltradosService } from '../../../../services/datosFiltrados.servi
 import { CuentaCorriente } from '../../../../models/cuenta-corriente.model';
 import { LineaCredito } from '../../../../models/linea-credito.model';
 import { Visa } from '../../../../models/visa.model';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'mb-tabla-movimientos',
@@ -95,28 +96,22 @@ export class TablaMovimientosComponent implements OnInit {
         }
       );
     } else if (this.transProducto === 'todos') {
-      this.transaccionesService.getTransCuentaCorriente().subscribe(
-        (ctaCteTransacciones: CuentaCorriente[]) => {
-          this.transaccionesService.getTransLineaCredito().subscribe(
-            (lineaCreditoTransacciones: LineaCredito[]) => {
-              this.transaccionesService.getTransVisa().subscribe(
-                (visaTransacciones: Visa[]) => {
-                  const todasTransacciones = [
-                    ...ctaCteTransacciones,
-                    ...lineaCreditoTransacciones,
-                    ...visaTransacciones
-                  ];
-                  this.handleTransacciones(todasTransacciones);
-                },
-                (error: any) => {
-                  console.error('Error en transaccionesService:', error);
-                }
-              );
-            },
-            (error: any) => {
-              console.error('Error en transaccionesService:', error);
-            }
-          );
+      forkJoin({
+        ctaCteTransacciones: this.transaccionesService.getTransCuentaCorriente(),
+        lineaCreditoTransacciones: this.transaccionesService.getTransLineaCredito(),
+        visaTransacciones: this.transaccionesService.getTransVisa()
+      }).pipe(
+        map(({ ctaCteTransacciones, lineaCreditoTransacciones, visaTransacciones }) => {
+          const todasTransacciones = [
+            ...ctaCteTransacciones,
+            ...lineaCreditoTransacciones,
+            ...visaTransacciones
+          ];
+          return todasTransacciones.sort((a, b) => b.fecha.localeCompare(a.fecha));
+        })
+      ).subscribe(
+        (todasTransacciones) => {
+          this.handleTransacciones(todasTransacciones);
         },
         (error: any) => {
           console.error('Error en transaccionesService:', error);
