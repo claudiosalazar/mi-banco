@@ -32,6 +32,10 @@ export class TransaccionesResumenComponent implements OnInit {
   saldoLineaCredito: any;
   saldoVisa: any;
 
+  saldoUltimaTransaccionCtaCte: number | null = null;
+  saldoUltimaTransaccionLineaCredito: number | null = null;
+  saldoUltimaTransaccionVisa: number | null = null;
+
   constructor(
     private productosService: ProductosService,
     private transaccionesService: TransaccionesService,
@@ -66,19 +70,19 @@ export class TransaccionesResumenComponent implements OnInit {
     // Valor para imprimir saldo en las card
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[] ) => {
       if (transaccionesCtaCte) {
-        this.saldoCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[0].saldo : null;
+        this.saldoCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
       }
     });
 
     this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[] ) => {
       if (transaccionesLineaCre) {
-        this.saldoLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[0].saldo : null;
+        this.saldoLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo : null;
       }
     });
 
     this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[] ) => {
       if (transaccionesVisa) {
-        this.saldoVisa = transaccionesVisa.length > 0 ? transaccionesVisa[0].saldo : null;
+        this.saldoVisa = transaccionesVisa.length > 0 ? transaccionesVisa[transaccionesVisa.length - 1].saldo : null;
       }
     });
 
