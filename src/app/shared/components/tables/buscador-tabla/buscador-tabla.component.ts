@@ -12,7 +12,6 @@ export class BuscadorTablaComponent implements OnInit {
   @Output() datosFiltradosEvent = new EventEmitter<any[]>();
   @Input() tituloBuscador: string | undefined;
 
-  id: any | undefined;
   paginatedData: any[] | undefined;
   valorBusqueda: any | undefined;
   campoBusqueda = new FormControl('');
@@ -24,15 +23,14 @@ export class BuscadorTablaComponent implements OnInit {
   ngOnInit() {
     combineLatest([
       this.campoBusqueda.valueChanges,
-      this.datosFiltradosService.getIdActual()
     ]).subscribe(([valorBusqueda]) => {
       this.valorBusqueda = valorBusqueda;
   
-      /*this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
+      this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
         if (Array.isArray(datosFiltrados)) {
           this.datosFiltradosEvent.emit(datosFiltrados);
         }
-      });*/
+      });
     });
   }
 }

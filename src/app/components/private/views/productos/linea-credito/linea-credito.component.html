@@ -9,27 +9,27 @@
           <span>N° {{ productos[1].numero_producto }}</span>
         </h1>
 
-        <!-- <div class="card p-4 mt-4">
+        <div class="card p-4 mt-4">
           <div class="d-flex justify-content-between flex-column align-items-center flex-md-row">
-            <div class="d-flex align-items-center" *ngIf="transaccionMasReciente">
+            <div class="d-flex align-items-center">
               <small class="mb-0">
                 Último pago realizado el <br class="d-md-none">
-                <strong class="tinto">{{ transaccionMasReciente.fecha | date:"dd / MM / yyyy" }}</strong>,
+                <strong class="tinto">{{ fecha | date:"dd / MM / yyyy" }}</strong>,
                 <br class="d-md-none"> por un valor de 
-                <strong class="tinto">{{ transaccionMasReciente.abono | pesos }}</strong>.
+                <strong class="tinto">{{ abono | pesos }}</strong>.
               </small>
             </div>
             <div>
               <button class="btn btn-primario mt-3 mt-md-0" (click)="mostrarPagoLineaDeCredito()">Pagar</button>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="card mt-4">
           <div class="p-4">
             <mb-buscador-tabla [tituloBuscador]="'Buscar transaccion'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
           </div>
-          <mb-tabla-movimientos [id]="transaccionesLineaCredito" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [idProducto]="1"></mb-tabla-movimientos>
+          <mb-tabla-movimientos [id]="transaccionesLineaCre" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [transProducto]="'lineaCredito'" ></mb-tabla-movimientos>
         </div>
 
       </div>

@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { TransaccionesService } from '../../../../services/transacciones.service';
 import { DatosFiltradosService } from '../../../../services/datosFiltrados.service';
-//import { Transacciones } from '../../../../models/cuenta-corriente.model';
+import { CuentaCorriente } from '../../../../models/cuenta-corriente.model';
+import { LineaCredito } from '../../../../models/linea-credito.model';
+import { Visa } from '../../../../models/visa.model';
 
 @Component({
   selector: 'mb-tabla-movimientos',
@@ -11,11 +13,14 @@ export class TablaMovimientosComponent implements OnInit {
 
   @Output() datosOrdenados = new EventEmitter<void>();
   @Input() mostrarPaginador: boolean | undefined;
-  @Input() idProducto: number | undefined;
+  @Input() transProducto: 'ctaCte' | 'lineaCredito' | 'visa' | undefined; // Modificado para aceptar valores específicos
   @Input() datos: any | undefined;
   @Input() mostrarColumnaNombre: boolean | undefined;
   @Input() claseTabla: string = 'tabla-movimientos';
 
+  /*transaccionesCtaCte: any[] = [];
+  transaccionesLineaCre: any[] = [];
+  transaccionesVisa: any[] = [];*/
   transacciones: any[] = [];
   paginatedTransacciones: any[] = [];
   originalData: any[] = [];
@@ -43,10 +48,10 @@ export class TablaMovimientosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadData(this.idProducto);
+    this.loadData();
   }
 
-  loadData(_idProducto: number | undefined): void {
+  loadData(): void {
     this.datosFiltradosService.datosFiltrados$.subscribe(
       datosFiltrados => {
         this.transacciones = datosFiltrados;
@@ -64,21 +69,42 @@ export class TablaMovimientosComponent implements OnInit {
       }
     );
 
-    /*this.transaccionesService.getTransacciones().subscribe(
-      (transacciones: Transacciones[]) => {
-        console.log('Transacciones recibidas:', transacciones);
-        if (transacciones) {
-          this.transacciones = this.idProducto !== undefined 
-            ? transacciones.filter(transaccion => transaccion.id_producto === this.idProducto)
-            : transacciones;
-          this.paginarTransacciones();
-          this.cdr.detectChanges(); 
+    if (this.transProducto === 'ctaCte') {
+      this.transaccionesService.getTransCuentaCorriente().subscribe(
+        (transacciones: CuentaCorriente[]) => {
+          this.handleTransacciones(transacciones);
+        },
+        (error: any) => {
+          console.error('Error en transaccionesService:', error);
         }
-      },
-      ( error: any) => {
-        console.error('Error en transaccionesService:', error);
-      }
-    );*/
+      );
+    } else if (this.transProducto === 'lineaCredito') {
+      this.transaccionesService.getTransLineaCredito().subscribe(
+        (transacciones: LineaCredito[]) => {
+          this.handleTransacciones(transacciones);
+        },
+        (error: any) => {
+          console.error('Error en transaccionesService:', error);
+        }
+      );
+    } else if (this.transProducto === 'visa') {
+      this.transaccionesService.getTransVisa().subscribe(
+        (transacciones: Visa[]) => {
+          this.handleTransacciones(transacciones);
+        },
+        (error: any) => {
+          console.error('Error en transaccionesService:', error);
+        }
+      );
+    }
+  }
+
+  handleTransacciones(transacciones: any[]): void {
+    if (transacciones) {
+      this.transacciones = transacciones.filter(transaccion => transaccion);
+      this.paginarTransacciones();
+      this.cdr.detectChanges();
+    }
   }
 
   public onHeaderClick(): void {
@@ -125,5 +151,4 @@ export class TablaMovimientosComponent implements OnInit {
     this.paginarTransacciones();
     this.cdr.detectChanges();
   }
-
 }

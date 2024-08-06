@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-//import { Transacciones } from '../models/cuenta-corriente.model';
+import { Observable, Subject, forkJoin } from 'rxjs';
 import { TransaccionesService } from './transacciones.service';
+import { CuentaCorriente } from '../models/cuenta-corriente.model';
+import { LineaCredito } from '../models/linea-credito.model';
+import { Visa } from '../models/visa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,28 +13,35 @@ export class DatosFiltradosService {
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
   paginationData$ = this.paginationData.asObservable();
-  idActual: any;
+  
+  constructor(
+    private transaccionesService: TransaccionesService
+  ) { }
 
-  constructor(private transaccionesService: TransaccionesService) { }
-
-  getIdActual() {
+  buscarDatos(valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito | Visa)[]> {
     return new Observable(observer => {
-      observer.next(this.idActual);
-      observer.complete();
+      // Obtener todas las transacciones de los diferentes tipos
+      const transaccionesObservables = [
+        this.transaccionesService.getTransCuentaCorriente(),
+        this.transaccionesService.getTransLineaCredito(),
+        this.transaccionesService.getTransVisa()
+      ];
+
+      // Combinar todas las transacciones en un solo array
+      forkJoin(transaccionesObservables).subscribe(
+        (value: (CuentaCorriente[] | LineaCredito[] | Visa[])[]) => {
+          const [cuentaCorriente, lineaCredito, visa] = value;
+          const todasTransacciones = [...cuentaCorriente, ...lineaCredito, ...visa];
+          const datosFiltrados = this.transaccionesService.filtrarTransacciones(todasTransacciones, valorBusqueda);
+          observer.next(datosFiltrados);
+          observer.complete();
+        },
+        error => {
+          observer.error('Error al obtener transacciones');
+        }
+      );
     });
   }
-
-  /*buscarDatos(valorBusqueda: string): Observable<Transacciones[]> {
-    return new Observable(observer => {
-      this.transaccionesService.getTransacciones().subscribe(transacciones => {
-        const datosFiltrados = this.transaccionesService.filtrarTransacciones(transacciones, valorBusqueda);
-        observer.next(datosFiltrados);
-        observer.complete();
-      }, error => {
-        observer.error('Error al obtener transacciones');
-      });
-    });
-  }*/
 
   actualizarDatosFiltrados(datosFiltrados: any[]) {
     console.log('Datos filtrados recibidos:', datosFiltrados); // Verifica que los datos se reciben
