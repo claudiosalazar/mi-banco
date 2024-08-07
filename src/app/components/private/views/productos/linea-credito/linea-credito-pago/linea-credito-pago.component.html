@@ -1,3 +1,238 @@
-<p>
-  linea-credito-pago works!
-</p>
+<div class="container pb-xxl-5">
+  <div class="row">
+    <div class="col-12 col-lg-7">
+      <div class="row">
+        <div class="col-12">
+          <h1>Pago Línea de Crédito</h1>
+          <div class="card p-4">
+
+            <h5>Datos del producto</h5>
+            <div class="row" *ngIf="productos.length > 0">
+
+              <!-- Datos del productos -->
+              <div class="col-12 col-md-6">
+                <p class="mb-0"><small class="d-block">Linea de Credito N°: <strong class="tinto">{{ productos[1].numero_producto }}</strong></small></p>
+                <p class="mb-0"><small>Cupo Utilizado: <strong class="tinto">{{ cupoUsadoUltimaTransaccionLineaCredito | pesos }}</strong></small></p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0"><small>Cupo Total: <strong class="tinto">{{ productos[1].cupo | pesos }}</strong></small></p>
+                <p class="mb-0"><small>Cupo Disponible: <strong class="tinto">{{ saldoUltimaTransaccionLineaCredito | pesos }}</strong></small></p>
+              </div>
+              <div class="col-12">
+                <hr class="my-3">
+                <h4 class="tinto">Datos de pago</h4>
+              </div>
+
+
+
+
+              <!-- Inicio formulario -->
+              <form [formGroup]="pagoLineaCreditoForm">
+                <!-- Producto para pago -->
+                <div class="col-12 mb-4">
+                  <p><strong>Seleccione un producto para realizar el pago</strong></p>
+                  <div class="form-floating">
+                    <mb-custom-select 
+                      [control]="pagoLineaCreditoForm.get('productoParaPago')"
+                      [zIndex]="100"
+                      [options]="opcionesDePago"
+                      [labelSelect]="'Productos'"
+                      [errorKey]="'productoInvalido'"
+                      (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"
+                      >
+                    </mb-custom-select>
+                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoUltimaTransaccionCtaCte | pesos }}</strong></small>
+                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoUltimaTransaccionVisa | pesos }}</strong></small>
+                    <div *ngIf="submitted && pagoLineaCreditoForm.get('productoParaPago')?.errors?.['productoInvalido']"
+                      class="invalid-feedback d-block">
+                      Debes seleccionar un producto para pagar.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Monto a pagar -->
+                <div class="col-12 mb-4">
+                  <h6>Monto a pagar</h6>
+                  <div class="d-flex mb-3">
+                    <!-- Pago total -->
+                    <div class="form-check me-3">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="pagoTotal">
+                      <label class="form-check-label" for="montoPago">
+                        Pago Total
+                      </label>
+                    </div>
+                    <!-- Otro monto -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" formControlName="montoPago" id="montoPago" value="otroMonto">
+                      <label class="form-check-label" for="montoPago">
+                        Otro Monto
+                      </label>
+                    </div>
+                  </div>
+
+
+                  <!-- Input pago total -->
+                  <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoLineaCreditoForm.controls['montoPago'].value === 'pagoTotal'">
+                    <input type="text" class="form-control" id="inputMontoPagoTotal"
+                      formControlName="inputMontoPagoTotal" [class.is-invalid]="error3"
+                      [class.is-valid]="pagoTotalValido">
+                    <label for="inputMontoPagoTotal">Pago Total</label>
+                    <div *ngIf="error3" class="invalid-feedback">
+                      <span>El monto para el pago es superior al saldo.</span>
+                    </div>
+                    <div *ngIf="pagoTotalValido" class="valid-feedback">
+                      <span>El monto es correcto.</span>
+                    </div>
+                  </div>
+
+                  <!-- Input otro monto -->
+                  <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoLineaCreditoForm.controls['montoPago'].value === 'otroMonto'">
+                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto"
+                      placeholder="Ingrese un monto a pagar" [class.is-invalid]="error1 || error2 || error4"
+                      [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();"
+                      (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
+                    <label for="inputOtroMonto">Ingrese un monto a pagar</label>
+                    <div *ngIf="error1" class="invalid-feedback">
+                      <span>Debes ingresar un monto superior a 0.</span>
+                    </div>
+                    <div *ngIf="error2" class="invalid-feedback">
+                      <span>El monto ingresado para el pago es superior al saldo.</span>
+                    </div>
+                    <div *ngIf="error4" class="invalid-feedback">
+                      <span>El monto ingresado es superior al cupo usado.</span>
+                    </div>
+                    <div *ngIf="montoValido" class="valid-feedback">
+                      <span>El monto es correcto.</span>
+                    </div>
+                  </div>
+
+
+
+                </div>
+
+                <!-- Email para comprobante -->
+                <div class="col-12 mb-4">
+                  <h6>Enviar comprobante a:</h6>
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" 
+                     [ngClass]="{ 'is-invalid': pagoLineaCreditoForm.controls['inputEmail'].invalid && (pagoLineaCreditoForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoLineaCreditoForm.controls['inputEmail'].valid }" 
+                     (input)="emailValido('inputEmail')">
+                    <label for="inputEmail">Email</label>
+
+                    <!-- Mensaje valido -->
+                    <div *ngIf="pagoLineaCreditoForm.controls['inputEmail'].valid" class="valid-feedback">
+                      El email es correcto.
+                    </div>
+                    <!-- Mensajes de error -->
+                    <div
+                      *ngIf="pagoLineaCreditoForm.controls['inputEmail'].errors?.['required'] && (pagoLineaCreditoForm.controls['inputEmail'].dirty || submitted)"
+                      class="invalid-feedback">
+                      Este campo es requerido.
+                    </div>
+                    <div
+                      *ngIf="pagoLineaCreditoForm.controls['inputEmail'].errors?.['customEmail'] && (pagoLineaCreditoForm.controls['inputEmail'].dirty || submitted) && pagoLineaCreditoForm.controls['inputEmail'].value"
+                      class="invalid-feedback">
+                      Debe ser un email válido.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="col-12 px-3">
+                  <div class="row d-flex justify-content-md-end flex-column-reverse flex-md-row">
+                    <button type="button" class="btn btn-secundario col-12 col-md-3 me-md-3">Cancelar</button>
+                    <!-- <button type="submit" class="btn btn-primario col-12 col-md-3 mb-3 mb-md-0" (click)="validaFormulario()">Pagar</button> -->
+                    <button type="submit" class="btn btn-primario col-12 col-md-3 mb-3 mb-md-0">Pagar</button>
+                  </div>
+                </div>
+
+              </form>
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="col-5 d-none d-lg-block mt-5">
+      <div class="card card-banner banner-mibanco medio ms-2"
+        style="background-image: url('./assets/images/banner-visa.jpg');">
+        <div class="info-banner d-flex justify-content-around align-content-stretch">
+          <div class="info-medio">
+            <div class="d-flex flex-column">
+              <span class="titulo-banner text-start">
+                Paga con tu Tarjeta de Crédito Visa este mes y
+              </span>
+              <span class="texto-secundario">
+                Disfruta un descuento de
+              </span>
+              <span class="monto text-start rojo">
+                50%
+              </span>
+            </div>
+            <div class="d-flex flex-column justify-content-start mt-4">
+              <div>
+                <a class="btn-link d-flex align-items-center mb-3" type="button">
+                  <div>
+                    Más información
+                  </div>
+                  <span class="material-symbols-outlined icono-link">
+                    chevron_right
+                  </span>
+                </a>
+              </div>
+              <span class="texto-legal me-3">
+                * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend finibus condimentum. Duis est
+                tortor, pulvinar vel sem sed, consequat pulvinar dolor. Praesent congue arcu id pellentesque imperdiet.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal pago -->
+<div class="modal posicion fade" id="modalPagoLineaCredito" tabindex="-1" aria-labelledby="modalPagoLineaCredito"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+        <div *ngIf="pagoCorrecto">
+          <div class="d-flex align-items-center mb-2">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes cargando">
+              sync
+            </span>
+            <div>
+              <p class="mb-1"><strong>Se esta confirmando el pago.</strong></p>
+              <p class="mb-0">Espera un momento por favor.</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="errorServer">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <span class="titulo-modal d-block">Hubo un error al realizar el pago.</span>
+              <span class="d-block">Intento mas tarde.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="errorServer">
+        <div class="text-end mt-3">
+          <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
