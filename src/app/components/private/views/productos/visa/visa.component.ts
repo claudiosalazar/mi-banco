@@ -81,4 +81,9 @@ export class VisaComponent implements OnInit {
     // Actualizar los datos filtrados en el servicio
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
+
+  onCancelacionConfirmada() {
+    this.movimientosVisa = true;
+    this.formularioPagoVisa = false;
+  }
 }

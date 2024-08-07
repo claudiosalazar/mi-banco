@@ -112,14 +112,23 @@ export class LineaCreditoPagoComponent implements OnInit {
     });
 
     this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
-      if (transaccionesLineaCre) {
-        this.saldoUltimaTransaccionLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo : null;
-        this.cupoUsadoUltimaTransaccionLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].cupo_usado : null;
-        
+      if (transaccionesLineaCre && transaccionesLineaCre.length > 0) {
+        // Ordenar las transacciones por ID en orden descendente
+        transaccionesLineaCre.sort((a, b) => b.id_trans_linea_cre - a.id_trans_linea_cre);
+    
+        // Obtener la última transacción (primer elemento después de ordenar)
+        const ultimaTransaccion = transaccionesLineaCre[0];
+    
+        this.saldoUltimaTransaccionLineaCredito = ultimaTransaccion.saldo;
+        this.cupoUsadoUltimaTransaccionLineaCredito = ultimaTransaccion.cupo_usado;
+    
         // Actualizar el valor del campo inputMontoPagoTotal
         this.pagoLineaCreditoForm.patchValue({
           inputMontoPagoTotal: this.cupoUsadoUltimaTransaccionLineaCredito
         });
+      } else {
+        this.saldoUltimaTransaccionLineaCredito = null;
+        this.cupoUltimaTransaccionLineaCredito = null;
       }
     });
 
