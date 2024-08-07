@@ -3,6 +3,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormatoEmailService } from './../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../services/agenda.service';
+import { BackdropService } from '../../../../../../../services/backdrop.service';
+import { TransaccionesService } from '../../../../../../../services/transacciones.service';
+import { CuentaCorriente } from '../../../../../../../models/cuenta-corriente.model';
+
+// Pipes
+import { DatePipe } from '@angular/common';
+import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
 
 declare var bootstrap: any;
 
@@ -38,9 +45,14 @@ export class TransferenciaATercerosComponent implements OnInit {
   @ViewChild('tablaDestinatarioSeleccionado') tablaDestinatarioSeleccionado: ElementRef | undefined;
   @Output() datosOrdenados = new EventEmitter<void>();
 
+  private pesosPipe = new PesosPipe();
+
   // Fomularios
   busquedaDestinatarios = new FormControl('');
   transferenciaATercerosForm: FormGroup = new FormGroup({});
+  transaccionesCtaCte: CuentaCorriente[] = [];
+  saldoUltimaTransaccionCtaCte: number | null = null;
+  saldo: number | undefined;
 
   // Variable para animacion de icono en th
   agenda: any[] = [];
@@ -72,6 +84,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   destinatarioSeleccionado: { id: any, nombre?: string } | undefined;
   selectedId: any = null;
   nombreDestinatario: any;
+  buscadorAgenda = true;
 
   // Variables para botones
   continuarTransferencia = false;
@@ -85,16 +98,25 @@ export class TransferenciaATercerosComponent implements OnInit {
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
 
+  // Variables para modal
+  mostrarBackdropCustomModal = false;
+  modales: any[] = [];
+  mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
+  mostrarBackdropCustomOffcanvasEstado: boolean = false;;
   // Variable para mensajes de modal eliminar
   usuarioEliminado = false;
   errorServer = false;
   destinatarioSeleccionadoTabla = false;
   destinatarioId: any;
 
+  alertaAyuda: boolean = true;
+
   constructor(
     private formatoEmailService: FormatoEmailService,
     private cdr: ChangeDetectorRef,
-    private agendaService: AgendaService
+    private agendaService: AgendaService,
+    private backdropService: BackdropService,
+    private transaccionesService: TransaccionesService
   ) { }
 
   ngOnInit() {
@@ -110,6 +132,12 @@ export class TransferenciaATercerosComponent implements OnInit {
       mensajeOk: new FormControl(''),
       emailDestinatarioOk: new FormControl(''),
     });
+    
+    // Aplica pipe pesos
+    this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
+    });  
   }
 
   loadData(): void {
@@ -119,18 +147,22 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.paginarAgenda();
       this.cdr.detectChanges();
     });
+
+    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+      if (transaccionesCtaCte) {
+        this.saldoUltimaTransaccionCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
+        console.log('Saldo última transacción:', this.saldoUltimaTransaccionCtaCte);
+      }
+    });
   }
+
 
   seleccionarDestinatario(id: any): void {
     this.destinatarioSeleccionado = { id: id };
-    //this.getDatosCuentaCorriente(0);
     this.destinatarioId = id;
     this.selectedId = id;
     this.pasosTransferencia = true;
     this.ingresarDatos = true;
-    //this.mostrarPaginador = false;
-    // this.tablaDestinatarios = false;
-    //this.buscadorDestinatarios = false;
     this.destinatarioSeleccionadoTabla = true;
     /*if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
       this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
@@ -188,11 +220,46 @@ export class TransferenciaATercerosComponent implements OnInit {
   
     if (this.inputValidoEmail) {
       this.inputValidoEmail = true;
-      this.validaDatosTransferencia(); // Solo llama a validaDatosTransferencia si inputValidoEmail es true
+      this.validaDatosTransferencia();
     } else {
       this.inputValidoEmail = false;
-      this.continuarTransferencia = false; // Establece continuarTransferencia en false si inputValidoEmail es false
+      this.continuarTransferencia = false;
     }
+  }
+
+  validaMontoATransferir(): void {
+    const controlMontoATransferir = this.transferenciaATercerosForm.get('montoATransferir');
+  
+    if (controlMontoATransferir) {
+      let montoATransferir = controlMontoATransferir.value;
+  
+      // Convertir el valor del input a número
+      montoATransferir = montoATransferir.replace(/\$|\.| /g, '');
+      const numericInputMonto = Number(montoATransferir);
+  
+      // Validación 1
+      if (numericInputMonto === 0 || !numericInputMonto) {
+        this.error1 = true;
+        this.error2 = false;
+        this.montoValido = false;
+        console.log('valor 0 o vacío');
+      } 
+      // Validación 2
+      else if (this.saldoUltimaTransaccionCtaCte !== null && numericInputMonto > this.saldoUltimaTransaccionCtaCte) {
+        this.error1 = false;
+        this.error2 = true;
+        this.montoValido = false;
+        console.log('valor superior');
+      } 
+      // Monto válido
+      else {
+        this.error1 = false;
+        this.error2 = false;
+        this.montoValido = true;
+        console.log('valido');
+      }
+    }
+    this.validaDatosTransferencia();
   }
 
   validaDatosTransferencia() {
@@ -247,6 +314,167 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.paginarAgenda();
     this.datosOrdenados.emit();
     this.cdr.detectChanges();
+  }
+
+  cambiarDestinatario(): void {
+    this.pasosTransferencia = false;
+    this.ingresarDatos = false;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.destinatarioSeleccionadoTabla = false;
+    this.destinatarioSeleccionado = { id: null, nombre: undefined };
+    this.agendaService.getAgenda().subscribe(data => {
+      // Hacer una copia de los datos
+      this.agenda = [...data];
+      this.ordenarDatos('nombre');
+      this.paginatedAgenda = this.agenda.slice(0, this.itemsPerPage).map(agenda => ({
+        ...agenda,
+        selected: false
+      }));
+      this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+      this.cdr.detectChanges();
+    });
+    this.selectedId = null;
+    // this.tablaDestinatarios = true;
+    this.buscadorAgenda = true;
+    this.cdr.detectChanges();
+
+    // Cierra el modal y oculta el backdrop-custom
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      modalCambiosDestinatario.hide();
+    }
+    this.mostrarBackdropCustomModal = false;
+  }
+
+  abrirModalCambioDestinatario(): void {
+    var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
+    modalCambiosDestinatario.show();
+  }
+
+  abrirModalCancelarTransferencia(): void {
+    var modalCancelarTransferencia = new bootstrap.Modal(document.getElementById('modalCancelarTransferencia'), {});
+    modalCancelarTransferencia.show();
+  }
+
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
+  }
+
+  ocultaMensaje() {
+    this.alertaAyuda = false;
+  }
+
+  soloNumeros(event: { which: any; keyCode: any; }): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  botonContinuar(){
+    if (this.paso1 && this.paso1.nativeElement) {
+      this.paso1.nativeElement.classList.add('paso-ok');
+    }
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = true;
+    }
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = true;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = true;
+    }
+    this.montoValido = false;
+    this.confirmarDatos = true;
+    this.btnContinuar = false;
+  }
+
+  botonModificarDatos(): void {
+    this.ingresarDatos = true;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.btnContinuar = true;
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = false;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = false;
+    }
+    if (this.paso1 && this.paso1.nativeElement) {
+      this.paso1.nativeElement.classList.remove('paso-ok');
+    }
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = false;
+    }
+  }
+
+  botonConfirmarDatos(){
+    if (this.paso2 && this.paso2.nativeElement) {
+      this.paso2.nativeElement.classList.add('paso-ok');
+    }
+    this.transferenciaARealizar = true;
+    this.btnConfirmar = false;
+  }
+
+  botonValidaDatosTransferencia(){
+    this.ingresarDatos = true;
+    this.confirmarDatos = false;
+  }
+
+  // Agregar nuevo destinatario
+  abrirOffcanvas(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.mostrarBackdropCustomOffcanvasEstado = true;
+  }
+
+  botonCancelarTransferencia(): void {
+    this.pasosTransferencia = false;
+    this.ingresarDatos = false;
+    this.confirmarDatos = false;
+    this.transferenciaARealizar = false;
+    this.destinatarioSeleccionadoTabla = false;
+    this.destinatarioSeleccionado = { id: null, nombre: undefined };
+    this.agendaService.getAgenda().subscribe(data => {
+      // Hacer una copia de los datos
+      this.agenda = [...data];
+      this.ordenarDatos('nombre');
+      this.paginatedAgenda = this.agenda.slice(0, this.itemsPerPage).map(agenda => ({
+        ...agenda,
+        selected: false
+      }));
+      this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+      this.cdr.detectChanges();
+    });
+    this.selectedId = null;
+    // this.tablaDestinatarios = true;
+    this.buscadorAgenda = true;
+    this.cdr.detectChanges();
+
+    // Cierra el modal y oculta el backdrop-custom
+    const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
+    if (modalCambiosDestinatario) {
+      modalCambiosDestinatario.hide();
+    }
+    this.mostrarBackdropCustomModal = false;
+
+    if (this.paso1 && this.paso1.nativeElement && this.paso2 && this.paso2.nativeElement) {
+      this.paso1.nativeElement.classList.remove('paso-ok');
+      this.paso2.nativeElement.classList.remove('paso-ok');
+    }
+
+    if (this.cambiaDestinatario && this.cambiaDestinatario.nativeElement) {
+      this.cambiaDestinatario.nativeElement.disabled = false;
+    }
+    if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
+      this.inputMontoATransferir.nativeElement.disabled = false;
+    }
+    if (this.mensaje && this.mensaje.nativeElement) {
+      this.mensaje.nativeElement.disabled = false;
+    }
+    this.btnConfirmar = true;
+    this.btnContinuar = true;
   }
 
   // Paginación de transacciones
