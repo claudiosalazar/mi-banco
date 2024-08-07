@@ -1,3 +1,486 @@
-<p>
-  transferencia-a-terceros works!
-</p>
+<div class="col-12">
+  <!-- <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-1 px-4" *ngIf="buscadorDestinatarios"> -->
+  <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-1 px-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center">
+      <p class="mb-3 mb-md-0 me-3">Buscar destinatario</p>
+      <form class="d-flex ml-5" role="search" >
+        <!-- <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaDestinatarios"> -->
+        <input class="form-control me-2 buscador" type="search" aria-label="Search">
+      </form>
+    </div>
+    <hr class="d-md-none my-4">
+    <!-- <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
+      Agregar nuevo destinatario
+    </button> -->
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <!-- <div class="contenedor-alerta mt-3 mb-2 mx-1" *ngIf="alertaAyuda">
+        <app-alertas
+          [icono]="true" 
+          [tipoAlerta]="'info'" 
+          [mensajeTitulo]="'Haz click sobre un destinatario de la tabla para realizar la transferencia.'"
+          [mensajeInfo]="'Si no quieres volver a ver este mensaje, haz click en el botón ocultar.'"
+          [textoBoton]="'Ocultar'" [boton]="true" [tipoBoton]="'btn-secundario'"
+          (botonClick)="ocultaMensaje()">
+        </app-alertas>
+      </div> -->
+    </div>
+    <div class="col-12">
+      <div class="contenedor-tabla mb-0 pb-0">
+        <table class="table table-striped tabla-agenda-transferencias mb-0 mb-md-2" role="table" #tablaDestinatarioSeleccionado>
+          <thead role="columnheader" role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" (click)="ordenarDatos('nombre'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      Destinatario
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      Banco
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'banco'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'banco'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th role="columnheader" (click)="ordenarDatos('rut'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      Rut
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th role="columnheader" (click)="ordenarDatos('tipoCuenta'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      Tipo de cuenta
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'tipoCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'tipoCuenta'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th role="columnheader" (click)="ordenarDatos('numeroCuenta'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      N° de cuenta
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'numeroCuenta'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'numeroCuenta'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+              <th role="columnheader" (click)="ordenarDatos('email'); onHeaderClick()">
+                <div class="d-flex align-items-center">
+                  <span class="ancho">
+                    <div class="contenido-celda">
+                      Email
+                    </div>
+                  </span>
+                  <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'email'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'email'">
+                    expand_more
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row" *ngFor="let agenda of paginatedAgenda" (click)="seleccionarDestinatario(agenda.id);" [ngClass]="{'active': agenda.id === destinatarioSeleccionado?.id}">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.nombre }}</span>
+              </td>
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.banco }}</span>
+              </td>
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.rut| rut }}</span>
+              </td>
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.tipo_cuenta }}</span>
+              </td>
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.numero_cuenta }}</span>
+              </td>
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id === selectedId">
+                <span class="contenido-celda">{{ agenda.email }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pb-2" *ngIf="!pasosTransferencia" >
+          <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedAgenda = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3" [ngClass]="{'formulario-oculto': !pasosTransferencia, 'mostra-formulario': pasosTransferencia}" #formTransferencia>
+      
+      <form [formGroup]="transferenciaATercerosForm">  
+        <div class="stepper d-flex flex-column ps-2 ps-md-0 mx-auto">
+
+          <div class="row d-flex" [ngClass]="{'paso-transferencia': ingresarDatos}" #paso1>
+            <div class="col-1 d-flex flex-column pr-4 align-items-center">
+              <div class="rounded-circle py-2 px-3 mb-3">1</div>
+              <div class="line h-100"></div>
+            </div>
+            <div class="col-11" id="posicion1">
+              <div class="row">
+                <div class="col-12">
+                  <h4 class="mt-2">Ingresa los datos para la transferencia</h4>
+                  <hr class="mt-0 mb-4">
+                </div>
+                <div class="col-12 col-xl-9 pe-4 pe-xl-0">
+                  <div class="info-destinatario-transferencia d-flex flex-column flex-md-row mb-3 mb-xl-4">
+                    <div class="contenedor-nombre-destinatario">
+                      <p class="mb-1">La transferencia se realizara a:</p>
+                      <span class="nombre-destinatario-transferencia" *ngIf="destinatarioATransferirSeleccionado?.apodo">
+                        <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> 
+                        <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small>
+                      </span>
+                      <span class="nombre-destinatario-transferencia" *ngIf="!destinatarioATransferirSeleccionado?.apodo">
+                        <strong>{{destinatarioATransferirSeleccionado?.nombre}}</strong>
+                      </span>
+                    </div>
+                    <div class="datos-destinatario">
+                      <small class="m-0 d-block">Rut: <strong>{{ destinatarioATransferirSeleccionado?.rut | rut }}</strong></small>
+                      <small class="m-0 d-block">Banco: <strong>{{ destinatarioATransferirSeleccionado?.banco }}</strong></small>
+                      <small class="m-0 d-block">{{ destinatarioATransferirSeleccionado?.tipoCuenta }}: <strong>{{ destinatarioATransferirSeleccionado?.numeroCuenta }}</strong></small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-xl-3 text-end mb-3 pe-4">
+                  <!-- <button class="btn btn-terciario" type="button" #cambiaDestinatario (click)="abrirModalCambioDestinatario(); ordenarDatos('nombre');"> -->
+                  <button class="btn btn-terciario" type="button" #cambiaDestinatario>
+                    Cambiar destinatario
+                  </button>
+                </div>
+
+                <div class="col-12">
+                  <hr class="mt-0 mb-4">
+                </div>
+
+                <div class="d-flex flex-column-reverse flex-lg-row">
+                  <div class="col-12 col-lg-7 pe-3" [ngClass]="{'paso-transferencia-oculto': !ingresarDatos, 'paso-transferencia': ingresarDatos}">
+                    <div class="form-floating mb-3">
+                      <!-- <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" #inputMontoATransferir 
+                      [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
+                      (keypress)="soloNumeros($event)" 
+                      (blur)="validaMontoATransferir()"> -->
+                      <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" #inputMontoATransferir 
+                      [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
+                      >
+                      <label for="montoATransferir" class="form-label">Monto <span class="obligatorio">*</span></label>
+                      <div *ngIf="error1" class="invalid-feedback">
+                        <span>Debes ingresar un monto superior a 0.</span>
+                      </div>
+                      <div *ngIf="error2" class="invalid-feedback">
+                        <span>El monto ingresado para el pago es superior al saldo.</span>
+                      </div>
+                      <div *ngIf="montoValido" class="valid-feedback">
+                        <span>El monto es correcto.</span>
+                      </div>
+                    </div>
+        
+                    <!-- Mensaje textarea -->
+                    <div class="form-floating mb-3">
+                      <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje" style="height: 100px;" #mensaje></textarea>
+                      <label for="mensaje" class="form-label">Mensaje</label>
+                    </div>
+        
+                    <!-- Email -->
+                    <div class="input-group form-floating mb-3">
+                      <!-- <input type="email" class="form-control " formControlName="emailDestinatario" 
+                      [class.is-invalid]="transferenciaATercerosForm.get('emailDestinatario')?.invalid && transferenciaATercerosForm.get('emailDestinatario')?.touched" 
+                      [class.is-valid]="transferenciaATercerosForm.get('emailDestinatario')?.valid && transferenciaATercerosForm.get('emailDestinatario')?.touched" 
+                      (blur)="validaEmail('emailDestinatario')" (input)="continuarTransferencia = false">  -->
+                      <input type="email" class="form-control " formControlName="emailDestinatario" 
+                      [class.is-invalid]="transferenciaATercerosForm.get('emailDestinatario')?.invalid && transferenciaATercerosForm.get('emailDestinatario')?.touched" 
+                      [class.is-valid]="transferenciaATercerosForm.get('emailDestinatario')?.valid && transferenciaATercerosForm.get('emailDestinatario')?.touched" 
+                      (input)="continuarTransferencia = false"> 
+                      <label for="emailDestinatario" class="form-label emailTransferencia">Email <span class="obligatorio">*</span></label>
+                      <div class="contenedor-btn-editar">
+                        <button class="btn-editar-email" type="button" id="button-addon2" (click)="vaciarEmailDestinatario()">
+                          <span class="material-symbols-outlined">
+                            edit
+                          </span>
+                        </button>
+                      </div>
+                      <div *ngIf="transferenciaATercerosForm.controls['emailDestinatario'].errors?.['required'] && transferenciaATercerosForm.controls['emailDestinatario'].touched" class="invalid-feedback">
+                        El campo Email no puede quedar vacío.
+                      </div>
+                      <div *ngIf="transferenciaATercerosForm.controls['emailDestinatario'].errors?.['customEmail'] && transferenciaATercerosForm.controls['emailDestinatario'].touched" class="invalid-feedback">
+                        Debe ser un email válido.
+                      </div>
+                      <div *ngIf="inputValidoEmail" class="valid-feedback">
+                        El email es valido.
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-12 col-lg-5 mb-3">
+                    <small class="gris-40 pb-4 ms-lg-3">Los campos monto e email son obligatorios.</small>
+                  </div>
+                </div>
+
+                <div class="col-12" *ngIf="btnContinuar">
+                  <div class="d-flex flex-column-reverse flex-md-row">
+                    <!-- <button class="btn btn-primario mx-0" type="button" id="botonContinarTransferencia" (click)="botonContinuar()" [class.disabled]="!continuarTransferencia"> -->
+                    <button class="btn btn-primario mx-0" type="button" id="botonContinarTransferencia" [class.disabled]="!continuarTransferencia">
+                      Continuar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-flex mb-1" [ngClass]="{'paso-transferencia-oculto': !confirmarDatos, 'paso-transferencia': confirmarDatos}" #paso2>
+            <div class="col-1 d-flex flex-column pr-4 align-items-center">
+              <div class="rounded-circle py-2 px-3 bg-primary text-white my-3">2</div>
+              <div class="line h-100"></div>
+            </div>
+            <div class="col-11 mt-3">
+              <div class="row">
+                <div class="col-12 pe-4">
+                  <h4 class="mt-2">Confirmar datos para la transferencia</h4>
+                  <hr class="mt-0 mb-4">
+                </div>
+                <div class="col-12 col-lg-7 pe-4">
+                  <div class="info-destinatario-transferencia">
+                    <div class="titulo-datos mb-2">
+                      Monto a transferir: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('montoATransferir')?.value }}</span>
+                    </div>
+                    <div class="titulo-datos mb-2">
+                      Mensaje: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('mensaje')?.value }}</span>
+                    </div>
+                    <div class="titulo-datos">
+                      Email: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('emailDestinatario')?.value }}</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-column-reverse flex-md-row my-3" *ngIf="btnConfirmar">
+                    <!-- <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="botonModificarDatos()"> -->
+                    <button class="btn btn-secundario me-0 me-md-3" type="button">
+                      Modificar datos
+                    </button>
+                    <!-- <button class="btn btn-primario mb-3 mb-md-0" type="button" (click)="botonConfirmarDatos()"> -->
+                    <button class="btn btn-primario mb-3 mb-md-0" type="button">
+                      Confirmar datos
+                    </button>
+                  </div>
+                </div>
+                <div class="col-5 pe-4 d-none d-lg-block">
+                  <small class="gris-40">Revisa los datos ingresados.</small>
+                  <ul class="guia-transferencia">
+                    <li>Si los datos ingresados son correctos, <strong class="tinto">haz clic en el botón Confirmar datos</strong>.</li>
+                    <li>Si deseas modificar los datos, <strong class="tinto">haz clic en el botón Modificar datos</strong>.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-flex mb-1" [ngClass]="{'paso-transferencia-oculto': !transferenciaARealizar, 'paso-transferencia': transferenciaARealizar}" #paso3>
+            <div class="col-1 d-flex flex-column pr-4 align-items-center">
+              <div class="rounded-circle py-2 px-3 bg-primary text-white my-3">3</div>
+              <div class="line h-100 d-none"></div>
+            </div>
+            <div class="col-11">
+              <div class="row">
+                <div class="col-12 mt-3 pe-4">
+                  <h4 class="mt-2">Realizar transferencia</h4>
+                  <hr class="mt-0 mb-4">
+                </div>
+                <div class="col-12 pe-4">
+                  <div class="info-destinatario-transferencia">
+                    <div class="titulo-datos mb-2">
+                      Monto a transferir: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('montoATransferir')?.value }}</span>
+                    </div>
+                    <div class="titulo-datos mb-2">
+                      Mensaje: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('mensaje')?.value }}</span>
+                    </div>
+                    <div class="titulo-datos">
+                      Email: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('emailDestinatario')?.value }}</span>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-column-reverse flex-md-row my-3">
+                    <!-- <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="abrirModalCancelarTransferencia(); ordenarDatos('nombre');"> -->
+                    <button class="btn btn-secundario me-0 me-md-3" type="button">
+                      Cancelar
+                    </button>
+                    <!-- <button class="btn btn-primario mb-3 mb-md-0" type="button" (click)="abrirModalTransferencia()"> -->
+                    <button class="btn btn-primario mb-3 mb-md-0" type="button" >
+                      Realizar transferencia
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Sidenav para crear nuevo destinatario -->
+<!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
+  <app-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></app-agregar-destinatario>
+</div> -->
+
+<!-- Modal cancelar transferencia -->
+<!-- <div class="modal posicion fade" id="modalCancelarTransferencia" tabindex="-1" aria-labelledby="modalCancelarTransferencia" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
+            warning
+          </span>
+          <p class="text-start">¿Estás seguro de que quieres cancelar la transferencia?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-end flex-row">
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="botonCancelarTransferencia(); ocultaBackDrop()">Cancelar transferencia</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Modal cambios destinatario -->
+<div class="modal posicion fade" id="modalCambiosDestinatario" tabindex="-1" aria-labelledby="modalCambiosDestinatario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
+            warning
+          </span>
+          <p class="text-start">¿Estás seguro de que quieres cambiar el actual destinatario?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-end flex-row">
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal">Cancelar</button>
+          <!-- <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="cambiarDestinatario(); ocultaBackDrop()">Cambiar destinatario</button> -->
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" >Cambiar destinatario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal nuevo destinatario -->
+<!-- <div class="modal posicion fade" id="modalNuevoDestinatario" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <div *ngIf="enviandoNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+              sync
+            </span>
+            <h4 class="mb-3 ms-3 text-starts">Se estan guardando los nuevos datos del nuevo agenda.</h4>
+          </div>
+          <div class="w-100 text-center">
+            <span>Espera un momento por favor.</span>
+          </div>
+        </div>
+
+        <div *ngIf="datosGuardadosNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <h4 class="mb-3 text-starts">El nuevo destinatario se guardo con éxito.</h4>
+          </div>
+          <div class="w-100">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarANuevoDestinatarios(); ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+
+        <div *ngIf="errorServerNuevoDestinatario">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-starts">Hubo un error al intentar guardar el nuevo agenda.</h4>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Modal transferencia -->
+<!-- <div class="modal posicion fade" id="modalTransferencia" aria-labelledby="modalTransferencia" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body p-5">
+
+        <div *ngIf="transferenciaOk" class="text-center">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined mensajes cargando ms-2">
+              sync
+            </span>
+            <h4 class="mb-3 ms-3 text-start">Se esta realizando la transferencia.</h4>
+          </div>
+          <p>Espera un momento por favor.</p>
+        </div>
+
+        <div *ngIf="tranferenciaError" class="text-center">
+          <div class="d-flex">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <h4 class="mb-2 text-start">Hubo un error al realizar la transferencia.</h4>
+            </div>
+          </div>
+          <p>Intentalo más tarde.</p>
+          <div class="w-100 mt-3">
+            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="resetearFormulario(); ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div> -->

@@ -40,7 +40,6 @@ export class TablaMovimientosComponent implements OnInit {
 
   // Variable para animacion de icono en th
   public isRotatedIn: boolean = false;
-
   public columnaSeleccionada: string | undefined;
 
   transaccionesFiltradas: any[] = [];
