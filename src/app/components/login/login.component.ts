@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
     if (userNameControl) {
       userNameControl.setValue(this.rutPipe.transform(userNameControl.value));
     }
+
+    // Suscribirse a los cambios en el formulario
+    this.formularioLogin.valueChanges.subscribe(() => {
+      this.botonLoginDisabled = !this.formularioLogin.valid;
+    });
   }
 
   formatoRut(): void {
