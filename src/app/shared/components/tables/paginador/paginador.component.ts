@@ -39,10 +39,12 @@ export class PaginadorComponent implements OnInit {
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedDataArray = this._datosPaginador.slice(startIndex, endIndex);
     this.paginatedData.emit(this.paginatedDataArray);
+    this.mostrarPaginador = this._datosPaginador.length > 5;
   }
 
   calculateTotalPages(): void {
     this.totalPages = Math.ceil(this._datosPaginador.length / this.itemsPerPage);
+    this.mostrarPaginador = this._datosPaginador.length > 5;
   }
 
   prevPage(): void {
