@@ -82,4 +82,9 @@ export class LineaCreditoComponent implements OnInit {
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 
+  onCancelacionConfirmada() {
+    this.movimientosLineaDeCredito = true;
+    this.formularioPagoLineaDeCredito = false;
+  }
+
 }

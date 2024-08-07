@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DatosUsuarioService } from '../../../../../../services/datosUsuario.service';
@@ -34,6 +34,8 @@ declare var bootstrap: any;
 export class LineaCreditoPagoComponent implements OnInit {
 
   @ViewChild('modalPagoLineaCredito') modalPagoLineaCredito: ElementRef | undefined;
+  @ViewChild('modalCancelarPago') modalCancelarPago: ElementRef | undefined;
+  @Output() cancelacionConfirmada = new EventEmitter<void>();
 
   productos: Productos[] = [];
   usuario: DatosUsuario[] = [];
@@ -85,7 +87,6 @@ export class LineaCreditoPagoComponent implements OnInit {
     private transaccionesService: TransaccionesService,
     private datosUsuarioService: DatosUsuarioService,
     private backdropService: BackdropService,
-    private numeroTarjetaPipe: NumeroTarjetaPipe,
     private FormatoEmailService: FormatoEmailService
   ) { }
 
@@ -149,22 +150,28 @@ export class LineaCreditoPagoComponent implements OnInit {
       inputOtroMonto: new FormControl({value: '', disabled: true}, [Validators.required]),
       inputEmail: new FormControl(['', [Validators.required, this.formatoEmail]]),
     });
-
-    // Aplica pipe pesos
-    this.pagoLineaCreditoForm.controls['inputOtroMonto' && 'inputMontoPagoTotal'].valueChanges.subscribe((value) => {
-      const transformedValue = this.pesosPipe.transform(value);
-      this.pagoLineaCreditoForm.controls['inputOtroMonto' && 'inputMontoPagoTotal'].setValue(transformedValue, {emitEvent: false});
-    });  
   }
 
   ngAfterViewInit(): void {
+    // Aplica pipe pesos
+    this.pagoLineaCreditoForm.controls['inputOtroMonto'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoLineaCreditoForm.controls['inputOtroMonto'].setValue(transformedValue, { emitEvent: false });
+    });
+  
+    // Aplica pipe pesos a inputMontoPagoTotal
+    this.pagoLineaCreditoForm.controls['inputMontoPagoTotal'].valueChanges.subscribe((value) => {
+      const transformedValue = this.pesosPipe.transform(value);
+      this.pagoLineaCreditoForm.controls['inputMontoPagoTotal'].setValue(transformedValue, { emitEvent: false });
+    });
+
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.backdropService.show();  // Muestra el backdrop
+        this.backdropService.show();
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.backdropService.hide();  // Oculta el backdrop
+        this.backdropService.hide();
       });
       return modal;
     });
@@ -398,6 +405,23 @@ export class LineaCreditoPagoComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  cancelarPago() {
+    let modal = new bootstrap.Modal(document.getElementById('modalCancelarPago'), {
+      backdrop: 'static',
+      keyboard: false
+    });
+    modal.show();
+  }
+
+  confirmarCancelacion() {
+    this.ngOnDestroy();
+  }
+
+  ngOnDestroy() {
+    this.cancelacionConfirmada.emit();
+    this.backdropService.hide();
   }
 
 }

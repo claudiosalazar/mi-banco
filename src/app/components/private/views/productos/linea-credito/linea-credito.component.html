@@ -50,7 +50,7 @@
 
 <!-- Muestra formulario pago -->
 <ng-container *ngIf="formularioPagoLineaDeCredito">
-  <mb-linea-credito-pago></mb-linea-credito-pago>
+  <mb-linea-credito-pago (cancelacionConfirmada)="onCancelacionConfirmada()"></mb-linea-credito-pago>
 </ng-container>
 
 <!-- Muestra comprobante de pago -->
