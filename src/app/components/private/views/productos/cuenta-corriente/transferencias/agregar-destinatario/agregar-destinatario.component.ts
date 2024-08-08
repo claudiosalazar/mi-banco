@@ -120,7 +120,7 @@ export class AgregarDestinatarioComponent implements OnInit {
     this.loadData();
     this.crearDestinatarioForm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
-      apodoDestinatario: new FormControl(''),
+      apodo: new FormControl(''),
       rut: new FormControl('', [Validators.required]),
       banco: new FormControl('', [Validators.required]),
       tipo_cuenta: new FormControl('', [Validators.required]),
@@ -374,7 +374,7 @@ export class AgregarDestinatarioComponent implements OnInit {
       const datosNuevoDestinatario: Agenda = {
         id: null,
         nombre: formValues.nombre,
-        apodo: formValues.apodoDestinatario,
+        apodo: formValues.apodo,
         rut: rutSinFormato,
         banco: this.listaBancos.find(b => b.value === formValues.banco)?.label ?? '',
         tipo_cuenta: this.tiposCuenta.find(t => t.value === formValues.tipo_cuenta)?.label ?? '',
