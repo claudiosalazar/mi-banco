@@ -1,7 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormatoEmailService } from '../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../services/agenda.service';
 import { Agenda } from '../../../../../../../models/agenda.model';
+import { RutPipe } from '../../../../../../../shared/pipes/rut.pipe';
+import { CelularPipe } from '../../../../../../../shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from '../../../../../../../shared/pipes/telefono-fijo.pipe';
 
 @Component({
   selector: 'mb-agregar-destinatario',
@@ -61,10 +65,55 @@ export class AgregarDestinatarioComponent implements OnInit {
   crearDestinatarioForm: FormGroup = new FormGroup({});
   submitted: boolean = false;
 
-  botonGuardarDisabled = true;
+  // Variable para nombre
+  inputErrorVacioNombre: any;
+  inputErrorApellido: any;
+  inputValidoNombre: any;
+  // Variables para apodo
+  inputApodoValido: any;
+  // Variables para rut
+  inputErrorVacioRut: any;
+  inputValidoRut: any;
+  // Variables para numero cuenta
+  inputErrorVacioNumeroCuenta: any;
+  inputValidoNumeroCuenta: any;
+  // Variables para email
+  inputErrorVacioEmail: any;
+  inputValidoEmail: any;
+  // Variables para celular
+  inputErrorCelularInvalido: any;
+  inputCelularValido: any;
+  // Variables para telefono fijo
+  inputErrorTelefonoFijoInvalido: any;
+  inputTelefonoFijoValido: any;
+
+  // Variables para banco
+  banco: any;
+  valorBancoInicial: any | undefined;
+  nuevoValorBanco: string | null = null;
+  bancoSeleccionado: any | undefined;
+  bancoValido: any;
+  bancoInvalido: any;
+  bancoInvalidoMensaje: any;
+
+  // Variables para tipo cuenta
+  tipoCuenta: any;
+  valorTipoCuentaInicial: any | undefined;
+  nuevoValorTipoCuenta: string | null = null;
+  tipoCuentaSeleccionada: any | undefined;
+  cuentaValida: any;
+  cuentaInvalida: any;
+  cuentaInvalidaMensaje: any;
+
+  botonGuardarDisabled = false;
+
 
   constructor(
-    private agendaService: AgendaService
+    private agendaService: AgendaService,
+    private formatoEmailService: FormatoEmailService,
+    private rutPipe: RutPipe,
+    private celularPipe: CelularPipe,
+    private telefonoFijoPipe: TelefonoFijoPipe
    ) {}
 
   ngOnInit(): void {
@@ -109,6 +158,205 @@ export class AgregarDestinatarioComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  validaNombre(): void {
+    const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombreDestinatario');
+    if (nombreDestinatarioControl) {
+      const nombreDestinatario = nombreDestinatarioControl.value as string;
+      const palabras = nombreDestinatario.trim().split(' ');
+  
+      if (nombreDestinatario.trim() === '') {
+        nombreDestinatarioControl.setErrors({ 'inputErrorVacioNombre': true });
+      } else if (palabras.length === 1) {
+        nombreDestinatarioControl.setErrors({ 'inputErrorApellido': true });
+      } else {
+        nombreDestinatarioControl.setErrors(null);
+      }
+  
+      this.inputErrorVacioNombre = nombreDestinatarioControl.errors?.['inputErrorVacioNombre'];
+      this.inputErrorApellido = nombreDestinatarioControl.errors?.['inputErrorApellido'];
+      this.inputValidoNombre = nombreDestinatarioControl.valid;
+    }
+  }
+
+  validaApodo(): void {
+    const control = this.crearDestinatarioForm.get('apodoDestinatario');
+  
+    if (control) {
+      // Si el campo está vacío, no hacer nada
+      if (control.value === '') {
+        this.inputApodoValido = false;
+        return;
+      }
+  
+      const isValid = control.value.length > 0;
+      this.inputApodoValido = isValid;
+    }
+  }
+
+  validaRut(): void {
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
+    if (rutDestinatarioControl) {
+      const rutDestinatario = rutDestinatarioControl.value as any;
+  
+      if (rutDestinatario.trim() === '') {
+        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
+      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 9) {
+        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+      } else {
+        rutDestinatarioControl.setErrors(null);
+        rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+      }
+  
+      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
+      this.inputValidoRut = rutDestinatarioControl.valid;
+    }
+  }
+
+  validaBanco(): void {
+    if (this.nuevoValorBanco === '0') {
+      this.bancoValido = false;
+      this.bancoInvalido = true;
+      this.bancoInvalidoMensaje = true;
+    } else {
+      this.bancoValido = true;
+      this.bancoInvalido = false;
+      this.bancoInvalidoMensaje = false;
+    }
+  }
+  
+  validaTipoCuenta(): void {
+    if (this.nuevoValorTipoCuenta === '0') {
+      this.cuentaValida = false;
+      this.cuentaInvalida = true;
+      this.cuentaInvalidaMensaje = true;
+    } else {
+      this.cuentaValida = true;
+      this.cuentaInvalida = false;
+      this.cuentaInvalidaMensaje = false;
+    }
+  }
+
+  validaNumeroCuenta(): void {
+    const numeroCuentaDestinatarioControl = this.crearDestinatarioForm.get('numeroCuentaDestinatario');
+    if (numeroCuentaDestinatarioControl) {
+      const numeroCuentaDestinatario = numeroCuentaDestinatarioControl.value as string;
+  
+      if (numeroCuentaDestinatario.trim() === '') {
+        numeroCuentaDestinatarioControl.setErrors({ 'inputErrorVacioNumeroCuenta': true });
+      } else {
+        numeroCuentaDestinatarioControl.setErrors(null);
+      }
+  
+      this.inputErrorVacioNumeroCuenta = numeroCuentaDestinatarioControl.errors?.['inputErrorVacioNumeroCuenta'];
+      this.inputValidoNumeroCuenta = numeroCuentaDestinatarioControl.valid;
+    }
+    
+  }
+
+  validaEmail(emailDestinatario: string) {
+    const emailControl = this.crearDestinatarioForm.controls[emailDestinatario];
+    emailControl.setValidators([Validators.required, Validators.email, this.formatoEmailService.formatoEmail]);
+    emailControl.updateValueAndValidity();
+  
+    if (emailControl.value.trim() !== '') {
+      emailControl.markAsTouched();
+  
+      if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
+        emailControl.setErrors({ 'customEmail': true });
+      } else {
+        emailControl.setErrors(null);
+      }
+  
+      this.inputValidoEmail = emailControl.valid;
+    } else {
+      emailControl.markAsUntouched();
+      emailControl.setErrors(null);
+      this.inputValidoEmail = null;
+    }
+  
+    this.verificarFormulario();
+  }
+
+  validaCelular(): void {
+    const celularDestinatarioControl = this.crearDestinatarioForm.get('celularDestinatario');
+    if (celularDestinatarioControl) {
+      let value = celularDestinatarioControl.value as string;
+  
+      // Si el campo está vacío, no hacer nada
+      if (value === '') {
+        return;
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorCelularInvalido = true;
+        this.inputCelularValido = false;
+      } else {
+        this.inputErrorCelularInvalido = false;
+        this.inputCelularValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.celularPipe.transform(value);
+        celularDestinatarioControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputCelularValido) {
+        celularDestinatarioControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        celularDestinatarioControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      celularDestinatarioControl.updateValueAndValidity();
+      celularDestinatarioControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+    }
+  }
+
+  validaTelefono(): void {
+    const telefonoDestinatarioControl = this.crearDestinatarioForm.get('telefonoDestinatario');
+    if (telefonoDestinatarioControl) {
+      let value = telefonoDestinatarioControl.value as string;
+  
+      // Si el campo está vacío, no hacer nada
+      if (value === '') {
+        return;
+      }
+  
+      // Verificar la longitud del valor
+      if (value.length < 9) {
+        this.inputErrorTelefonoFijoInvalido = true;
+        this.inputTelefonoFijoValido = false;
+      } else {
+        this.inputErrorTelefonoFijoInvalido = false;
+        this.inputTelefonoFijoValido = true;
+        // Aplicar el pipe solo cuando el campo es válido y tiene los 9 caracteres necesarios
+        value = this.telefonoFijoPipe.transform(value);
+        telefonoDestinatarioControl.setValue(value);
+      }
+  
+      // Cambiar la cantidad de caracteres del input de 9 a 11 después de aplicar el pipe
+      if (this.inputTelefonoFijoValido) {
+        telefonoDestinatarioControl.setValidators([Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        telefonoDestinatarioControl.setValidators([Validators.minLength(9), Validators.maxLength(9)]);
+      }
+  
+      telefonoDestinatarioControl.updateValueAndValidity();
+      telefonoDestinatarioControl.markAsTouched(); // Marcar el campo como 'touched' después de la validación
+    }
+  }
+
+  verificarFormulario(): void {
+    const { nombre, rut, banco, tipo_cuenta, numero_cuenta, email } = this.crearDestinatarioForm.controls;
+
+    // Si todos los campos han sido tocados y son válidos, habilitar el botón de guardar
+    if (nombre.touched && rut.touched && banco.touched && tipo_cuenta.touched && numero_cuenta.touched && email.touched &&
+      nombre.valid && rut.valid && numero_cuenta.valid && email.valid) {
+      this.botonGuardarDisabled = false;
+    } else {
+      this.botonGuardarDisabled = true;
+    }
   }
 
   guardaNuevoDestinatario(): void {
