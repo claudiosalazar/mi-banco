@@ -204,7 +204,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   eliminarDestinatario(): void {
     if (this.id) {
-      this.agendaService.eliminarAgenda(this.id).subscribe(
+      this.agendaService.eliminarIdDestinatario(this.id).subscribe(
         () => {
           console.log('El destinatario fue eliminado correctamente');
           this.usuarioEliminado = true;

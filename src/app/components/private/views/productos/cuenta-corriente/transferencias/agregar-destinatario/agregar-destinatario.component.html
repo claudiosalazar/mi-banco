@@ -1,4 +1,4 @@
-<form [formGroup]="crearDestinatarioForm" (ngSubmit)="validaFormulario()">
+<form [formGroup]="crearDestinatarioForm" (ngSubmit)="guardaNuevoDestinatario()">
 
   <div class="offcanvas-header">
     <div class="contenido-offcanvas-header d-flex align-items-start justify-content-between">
@@ -20,9 +20,10 @@
     
         <!-- Nombre -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();">
+          <!-- <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();"> -->
+          <input type="text" class="form-control" formControlName="nombre" >
           <label for="nombre">Nombre y Apellido <span class="obligatorio">*</span></label>
-          <div *ngIf="crearDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && crearDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
+          <!-- <div *ngIf="crearDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && crearDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
           <div *ngIf="crearDestinatarioForm.get('nombre')?.errors?.['inputErrorApellido'] && crearDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
@@ -30,20 +31,22 @@
           </div>
           <div *ngIf="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" class="valid-feedback">
             <span>El nombre es válido.</span>
-          </div>
+          </div> -->
         </div>
     
         <!-- Apodo -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="apodoDestinatario" [class.is-valid]="inputApodoValido" (blur)="validaApodo();">
+          <!-- <input type="text" class="form-control" formControlName="apodoDestinatario" [class.is-valid]="inputApodoValido" (blur)="validaApodo();"> -->
+          <input type="text" class="form-control" formControlName="apodoDestinatario">
           <label for="apodoDestinatario">Apodo</label>
         </div>
     
         <!-- rut -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="rut" [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
+          <!-- <input type="text" class="form-control" formControlName="rut" [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);"> -->
+          <input type="text" class="form-control" formControlName="rut">
           <label for="rut">Rut <span class="obligatorio">*</span></label>
-          <div *ngIf="crearDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
+          <!-- <div *ngIf="crearDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
           <div *ngIf="crearDestinatarioForm.get('rut')?.errors?.['inputErrorFormatoRut'] && crearDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
@@ -51,42 +54,53 @@
           </div>
           <div *ngIf="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" class="valid-feedback">
             <span>El rut es válido.</span>
-          </div>
+          </div> -->
         </div>
     
         <!-- banco -->
         <div class="form-floating mb-4">
-          <mb-custom-select [control]="crearDestinatarioForm.get('banco')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></mb-custom-select>
-          <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
+          <!-- <mb-custom-select [control]="editarDestinatarioForm.get('banco')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></mb-custom-select> -->
+          <mb-custom-select [control]="crearDestinatarioForm.get('banco')" 
+          [options]="listaBancos" 
+          [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" 
+          
+           ></mb-custom-select>
+          <!-- <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
             Debes seleccionar un banco.
-          </div>
+          </div> -->
         </div>
     
         <!-- Tipo cuenta -->
         <div class="form-floating mb-4">
-          <mb-custom-select [control]="crearDestinatarioForm.get('tipo_cuenta')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></mb-custom-select>
-          <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
+          <!-- <mb-custom-select [control]="editarDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></mb-custom-select> -->
+          <mb-custom-select [control]="crearDestinatarioForm.get('tipo_cuenta')" [options]="tiposCuenta" 
+          [zIndex]="5000" [submitted]="submitted" 
+          [labelSelect]="'Tipo de cuenta *'" 
+          ></mb-custom-select>
+          <!-- <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
             Debes seleccionar un tipo de cuenta.
-          </div>
+          </div> -->
         </div>
     
         <!-- Numero cuenta -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="tipo_cuenta" [class.is-invalid]="crearDestinatarioForm.get('tipo_cuenta')?.invalid && crearDestinatarioForm.get('tipo_cuenta')?.touched" [class.is-valid]="crearDestinatarioForm.get('tipo_cuenta')?.valid && crearDestinatarioForm.get('tipo_cuenta')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
-          <label for="tipo_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
-          <div *ngIf="crearDestinatarioForm.get('tipo_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && crearDestinatarioForm.get('tipo_cuenta')?.touched" class="invalid-feedback">
+          <!-- <input type="text" class="form-control" formControlName="tipo_cuenta" [class.is-invalid]="crearDestinatarioForm.get('tipo_cuenta')?.invalid && crearDestinatarioForm.get('tipo_cuenta')?.touched" [class.is-valid]="crearDestinatarioForm.get('tipo_cuenta')?.valid && crearDestinatarioForm.get('tipo_cuenta')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)"> -->
+          <input type="text" class="form-control" formControlName="numero_cuenta" >
+          <label for="numero_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
+          <!-- <div *ngIf="crearDestinatarioForm.get('tipo_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && crearDestinatarioForm.get('tipo_cuenta')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
           <div *ngIf="crearDestinatarioForm.get('tipo_cuenta')?.valid && crearDestinatarioForm.get('tipo_cuenta')?.touched" class="valid-feedback">
             <span>El número de cuenta es válido.</span>
-          </div>
+          </div> -->
         </div>
     
         <!-- Email -->
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" formControlName="email" [class.is-invalid]="crearDestinatarioForm.controls['email'].invalid && crearDestinatarioForm.controls['email'].touched" [class.is-valid]="inputValidoEmail" (blur)="validaEmail('email')">
+          <!-- <input type="text" class="form-control" formControlName="email" [class.is-invalid]="crearDestinatarioForm.controls['email'].invalid && crearDestinatarioForm.controls['email'].touched" [class.is-valid]="inputValidoEmail" (blur)="validaEmail('email')"> -->
+          <input type="text" class="form-control" formControlName="email" >
           <label for="email">Email<span class="obligatorio">*</span></label>
-          <div *ngIf="crearDestinatarioForm.controls['email'].errors?.['required'] && crearDestinatarioForm.controls['email'].touched" class="invalid-feedback">
+          <!-- <div *ngIf="crearDestinatarioForm.controls['email'].errors?.['required'] && crearDestinatarioForm.controls['email'].touched" class="invalid-feedback">
             El campo Email no puede quedar vacío.
           </div>
           <div *ngIf="crearDestinatarioForm.controls['email'].errors?.['customEmail'] && crearDestinatarioForm.controls['email'].touched" class="invalid-feedback">
@@ -94,26 +108,28 @@
           </div>
           <div *ngIf="inputValidoEmail" class="valid-feedback">
             El email es valido.
-          </div>
+          </div> -->
         </div>
     
         <!-- Celular -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="celular" [class.is-invalid]="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" [class.is-valid]="inputCelularValido && crearDestinatarioForm.get('celular')?.touched && crearDestinatarioForm.get('celular')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9">
+          <!-- <input type="text" class="form-control celular" formControlName="celular" [class.is-invalid]="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" [class.is-valid]="inputCelularValido && crearDestinatarioForm.get('celular')?.touched && crearDestinatarioForm.get('celular')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9"> -->
+          <input type="text" class="form-control celular" formControlName="celular">
           <label for="celular">Celular</label>
           <div class="prefijo-chile"></div>
-          <div *ngIf="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" class="invalid-feedback">
+          <!-- <div *ngIf="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" class="invalid-feedback">
             <span>El número ingresado no es válido.</span>
-          </div>
+          </div> -->
         </div>
     
         <!-- Telefono -->
         <div class="form-floating">
-          <input type="text" class="form-control" formControlName="telefono" [class.is-invalid]="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" [class.is-valid]="inputTelefonoFijoValido && crearDestinatarioForm.get('telefono')?.touched && crearDestinatarioForm.get('telefono')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9">
+          <!-- <input type="text" class="form-control" formControlName="telefono" [class.is-invalid]="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" [class.is-valid]="inputTelefonoFijoValido && crearDestinatarioForm.get('telefono')?.touched && crearDestinatarioForm.get('telefono')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9"> -->
+          <input type="text" class="form-control" formControlName="telefono">
           <label for="telefono">Teléfono Fijo</label>
-          <div *ngIf="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" class="invalid-feedback">
+          <!-- <div *ngIf="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" class="invalid-feedback">
             <span>El número ingresado no es válido.</span>
-          </div>
+          </div> -->
         </div>
     </div>
   </div>
@@ -122,6 +138,7 @@
     <!-- Botones -->
     <div class="d-flex flex-md-column">
       <button type="submit" class="btn btn-primario mb-3" data-bs-dismiss="offcanvas" aria-label="Close" [class.disabled]="!botonGuardarDisabled">Guardar destinatario</button>
+      <!-- <button type="button" class="btn btn-secundario" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button> -->
       <button type="button" class="btn btn-secundario" data-bs-dismiss="offcanvas" aria-label="Close" (click)="cancelar()">Cancelar</button>
     </div>
   </div>

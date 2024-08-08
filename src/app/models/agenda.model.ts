@@ -1,5 +1,5 @@
 export interface Agenda {
-  id: number,
+  id: any,
   nombre: any,
   apodo: any,
   rut: any,
