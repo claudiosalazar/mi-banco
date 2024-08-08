@@ -9,9 +9,9 @@ import { TransferenciasComponent } from './components/private/views/productos/cu
 import { MovimientosComponent } from './components/private/views/productos/cuenta-corriente/movimientos/movimientos.component';
 import { TransferenciaATercerosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/transferencia-a-terceros/transferencia-a-terceros.component';
 import { UltimasTransferenciasComponent } from './components/private/views/productos/cuenta-corriente/transferencias/ultimas-transferencias/ultimas-transferencias.component';
-import { AgendaDestinatariosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda-destinatarios/agenda-destinatarios.component';
-import { AgregarDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agregar-destinatario/agregar-destinatario.component';
-import { EditarDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/editar-destinatario/editar-destinatario.component';
+import { AgendaDestinatariosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/agenda-destinatarios/agenda-destinatarios.component';
+import { AgregarDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/agregar-destinatario/agregar-destinatario.component';
+import { EditarDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/editar-destinatario/editar-destinatario.component';
 import { CuentaCorrienteComponent } from './components/private/views/productos/cuenta-corriente/cuenta-corriente.component';
 import { CartolaHistoricaComponent } from './components/private/views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 import { ComprobanteTransferenciaComponent } from './components/private/views/productos/cuenta-corriente/transferencias/comprobante-transferencia/comprobante-transferencia.component';

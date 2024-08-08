@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormatoEmailService } from '../../../../../../../services/formatoEmail.service';
-import { AgendaService } from '../../../../../../../services/agenda.service';
-import { Agenda } from '../../../../../../../models/agenda.model';
-import { RutPipe } from '../../../../../../../shared/pipes/rut.pipe';
-import { CelularPipe } from '../../../../../../../shared/pipes/celular.pipe';
-import { TelefonoFijoPipe } from '../../../../../../../shared/pipes/telefono-fijo.pipe';
+import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
+import { AgendaService } from '../../../../../../../../services/agenda.service';
+import { Agenda } from '../../../../../../../../models/agenda.model';
+import { RutPipe } from '../../../../../../../../shared/pipes/rut.pipe';
+import { CelularPipe } from '../../../../../../../../shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-fijo.pipe';
 
 @Component({
   selector: 'mb-agregar-destinatario',

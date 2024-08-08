@@ -1,10 +1,10 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { RutPipe } from '../../../../../../../shared/pipes/rut.pipe';
-import { CelularPipe } from '../../../../../../../shared/pipes/celular.pipe';
-import { TelefonoFijoPipe } from '../../../../../../../shared/pipes/telefono-fijo.pipe';
-import { FormatoEmailService } from '../../../../../../../services/formatoEmail.service';
-import { AgendaService } from '../../../../../../../services/agenda.service';
+import { RutPipe } from '../../../../../../../../shared/pipes/rut.pipe';
+import { CelularPipe } from '../../../../../../../../shared/pipes/celular.pipe';
+import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-fijo.pipe';
+import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
+import { AgendaService } from '../../../../../../../../services/agenda.service';
 
 declare var bootstrap: any;
 
