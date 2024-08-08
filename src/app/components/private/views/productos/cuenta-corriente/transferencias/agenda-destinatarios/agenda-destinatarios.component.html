@@ -7,8 +7,7 @@
       </form>
     </div>
     <hr class="d-md-none my-4">
-    <!-- <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()"> -->
-    <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas">
+    <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#crearDestinatarioCanvas" (click)="abrirOffcanvas()">
       Agregar nuevo destinatario
     </button>
   </div>
@@ -126,7 +125,7 @@
               <div class="contenedor-acciones d-flex align-content-start justify-content-md-between">
                 <!-- Editar datos destinatario -->
                 <!-- <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="datosDestinarioId(destinatario.id); abrirOffcanvas()"> -->
-                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="abrirOffcanvas(agenda.id)">
+                <button data-bs-toggle="offcanvas" data-bs-target="#editarDestinatarioCanvas" aria-controls="staticBackdrop" (click)="abrirOffcanvasEdicion(agenda.id)">
                   <span class="material-symbols-outlined">
                     edit
                   </span>
@@ -149,12 +148,12 @@
   </div>
 </div>
 
-<!-- Sidenav para crear nuevo destinatario
+<!-- Sidenav para crear nuevo destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <div class="contenido-offcanvas">
     <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-agregar-destinatario>
   </div>
-</div> -->
+</div>
 
 <!-- Sidenav para editar destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">

@@ -24,6 +24,7 @@ declare var bootstrap: any;
 })
 export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
+  @ViewChild('crearDestinatarioCanvas', { static: false }) crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('modalEliminarDestinatario') modalEliminarDestinatario: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
@@ -190,7 +191,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.backdropService.show();
   }
 
-  abrirOffcanvas(id: number): void {
+  abrirOffcanvas(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.mostrarBackdropCustomOffcanvasEstado = true;
+  }
+
+  abrirOffcanvasEdicion(id: number): void {
     this.mostrarBackdropCustomOffcanvas.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;
     
