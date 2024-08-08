@@ -41,7 +41,7 @@ import { VisaComprobanteComponent } from './components/private/views/productos/v
 import { VisaPagoComponent } from './components/private/views/productos/visa/visa-pago/visa-pago.component';
 import { AyudaComponent } from './components/private/views/ayuda/ayuda.component';
 import { DatosUsuarioComponent } from './components/private/views/datos-usuario/datos-usuario.component';
-import { AgendaDestinatariosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/agenda-destinatarios/agenda-destinatarios.component';
+import { AgendaDestinatariosComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/agenda-destinatarios.component';
 import { TransferenciasComponent } from './components/private/views/productos/cuenta-corriente/transferencias/transferencias.component';
 import { CartolaHistoricaComponent } from './components/private/views/productos/cuenta-corriente/cartola-historica/cartola-historica.component';
 import { CuentaCorrienteComponent } from './components/private/views/productos/cuenta-corriente/cuenta-corriente.component';

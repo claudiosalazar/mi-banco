@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { AgendaService } from '../../../../../../../../services/agenda.service';
-import { BackdropService } from '../../../../../../../../services/backdrop.service';
+import { AgendaService } from '../../../../../../../services/agenda.service';
+import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { FormControl } from '@angular/forms';
 import { of, Subscription, switchMap } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -8,7 +8,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-agenda-destinatarios',
+  selector: 'mb-agenda-destinatarios',
   templateUrl: './agenda-destinatarios.component.html',
   animations: [
     trigger('fadeInOut', [
