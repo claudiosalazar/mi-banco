@@ -54,7 +54,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;
-  id: number | undefined;
+  id: any | undefined;
+  nombre: string | undefined;
 
   busquedaDestinatarios = new FormControl('');
   datosOrdenados = new EventEmitter<void>();
@@ -62,6 +63,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   enviandoDestinatarioEditado: boolean = true;
   datosGuardadosDestinatarioEditado: boolean = false;
   errorServerDestinatarioEditado: boolean = false;
+
+  destinatarioEliminado: boolean = false;
+  consultaEliminacionDestinatario: boolean = true;
 
   constructor(
     private agendaService: AgendaService,
@@ -186,9 +190,34 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirModalEliminar(id: number): void {
     this.id = id;
     console.log(this.id);
+
+    // Suponiendo que tienes una lista de destinatarios en el componente
+    const destinatario = this.agenda.find(d => d.id === id);
+    if (destinatario) {
+        this.nombre = destinatario.nombre;
+    }
+
     var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
     modalEliminarDestinatario.show();
     this.backdropService.show();
+  }
+
+  eliminarDestinatario(): void {
+    if (this.id) {
+      this.agendaService.eliminarAgenda(this.id).subscribe(
+        () => {
+          console.log('El destinatario fue eliminado correctamente');
+          this.usuarioEliminado = true;
+          // Eliminar el destinatario de la lista local
+          this.agenda = this.agenda.filter(d => d.id !== this.id);
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+        },
+        error => console.error('Hubo un error al eliminar el destinatario', error)
+      );
+    }
+    this.consultaEliminacionDestinatario = false;
+    this.destinatarioEliminado = true;
   }
 
   abrirOffcanvas(): void {
@@ -199,9 +228,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirOffcanvasEdicion(id: number): void {
     this.mostrarBackdropCustomOffcanvas.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;
-    
-    // Aquí puedes enviar el ID al componente 'editar-destinatario'
-    // Supongamos que tienes un servicio para compartir datos entre componentes
     this.agendaService.setId(id);
   }
 

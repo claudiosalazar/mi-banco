@@ -8,7 +8,7 @@ import { Agenda } from '../models/agenda.model';
 })
 export class AgendaService {
 
-  private URL = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000';
 
   private datosFiltradosSource = new Subject<any[]>();
   private idSource = new BehaviorSubject<number | null>(null);
@@ -18,6 +18,8 @@ export class AgendaService {
   paginationData$ = this.paginationData.asObservable();
   id: any;
 
+  destinatarioEliminado = new Subject<any>();
+
   private idDestinatarioAeditarSource = new BehaviorSubject(null);
   idDestinatarioAeditar = this.idDestinatarioAeditarSource.asObservable();
   datosEditadosDestinatario = new Subject<any>();
@@ -25,7 +27,7 @@ export class AgendaService {
   constructor(private http: HttpClient) { }
 
   getAgenda(): Observable<Agenda[]> {
-    return this.http.get<Agenda[]>(`${this.URL}/mibanco/agenda`);
+    return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`);
   }
 
   filtrarAgenda(valorBusqueda: string): Observable<any[]> {
@@ -59,7 +61,11 @@ export class AgendaService {
   }
 
   getDestinatarioById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.URL}/mibanco/agenda/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
+  }
+
+  eliminarAgenda(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
   }
 
   

@@ -178,13 +178,11 @@
               warning
             </span>
             <p class="mb-0">
-              <!-- Estas seguro de que quieres eliminar al destinatario <strong>{{ destinatarioSeleccionado?.nombre }}</strong>. -->
-              ¿Estas seguro de que quieres eliminar al destinatario?
+              ¿Estas seguro de que quieres eliminar a <strong>{{ nombre }}</strong> de tu agenda?
             </p>
           </div>
         </div>
         <div id="usuarioEliminado" *ngIf="usuarioEliminado">
-          <!-- Usuario eliminado correctamente -->
           <div class="d-flex align-items-center mb-2" id="eliminado" *ngIf="!errorServer">
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
               done
@@ -193,8 +191,7 @@
               El usuario fue eliminado correctamente.
             </h4>
           </div>
-          <!-- Error en server -->
-          <div id="errorServer" id="errorServer" *ngIf="errorServer">
+          <div id="errorServer" *ngIf="errorServer">
             <div class="d-flex align-items-center mb-2">
               <span class="icono material-symbols-outlined d-block me-3 mensajes error">
                 Error
@@ -207,17 +204,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <!-- <div class="d-flex justify-content-end flex-row" *ngIf="!usuarioEliminado"> -->
         <div class="d-flex justify-content-end flex-row">
-          <!-- <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cancelar</button> -->
-          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
-          <!-- <button type="button" class="btn btn-primario ms-3" (click)="eliminarDestinatario(); ocultaBackDrop()">Eliminar</button> -->
-          <button type="button" class="btn btn-primario ms-3">Eliminar</button>
-        </div>
-        <!-- <div class="d-flex justify-content-end flex-row" *ngIf="errorServer"> -->
-        <div class="d-flex justify-content-end flex-row">
-          <!-- <button type="button" class="btn btn-primario ms-3" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button> -->
-          <button type="button" class="btn btn-primario ms-3" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" *ngIf="consultaEliminacionDestinatario">Cancelar</button>
+          <button type="button" class="btn btn-primario ms-3" (click)="eliminarDestinatario()" *ngIf="consultaEliminacionDestinatario">Eliminar</button>
+          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" *ngIf="destinatarioEliminado">Cerrar</button>
         </div>
       </div>
     </div>
