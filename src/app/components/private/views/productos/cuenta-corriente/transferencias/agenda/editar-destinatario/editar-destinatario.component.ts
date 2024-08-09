@@ -24,25 +24,19 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   agenda: any[] = [];
   submitted: boolean = false;
   botonGuardarDisabled: boolean | undefined;
-  // Variable para nombre
+  // Variable validaciones
   inputErrorVacioNombre: any;
   inputErrorApellido: any;
   inputValidoNombre: any;
-  // Variables para apodo
   inputApodoValido: any;
-  // Variables para rut
   inputErrorVacioRut: any;
   inputValidoRut: any;
-  // Variables para numero cuenta
   inputErrorVacioNumeroCuenta: any;
   inputValidoNumeroCuenta: any;
-  // Variables para email
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
-  // Variables para celular
   inputErrorCelularInvalido: any;
   inputCelularValido: any;
-  // Variables para telefono fijo
   inputErrorTelefonoFijoInvalido: any;
   inputTelefonoFijoValido: any
 
@@ -55,7 +49,6 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   bancoValido: any;
   bancoInvalido: any;
   bancoInvalidoMensaje: any;
-
   bancoInicio: any;
   tipoCuentaInicio: any;
 
@@ -149,7 +142,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataLoaded.subscribe(() => {
       this.editarDestinatarioForm.valueChanges.subscribe(() => {
-        this.botonGuardarDisabled = !this.observaDatosCargados();
+        const hasChanges = this.observaDatosCargados();
+        this.botonGuardarDisabled = !hasChanges;
         this.cdr.detectChanges();
       });
     });
@@ -188,12 +182,9 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   observaDatosCargados(): boolean {
     const initialValues = this.editarDestinatarioForm.getRawValue();
     const currentValues = this.editarDestinatarioForm.getRawValue();
-    console.log('Valores iniciales:', initialValues);
-    console.log('Valores actuales:', currentValues);
     for (const key in initialValues) {
       if (initialValues.hasOwnProperty(key)) {
         if (initialValues[key] !== currentValues[key]) {
-          console.log(`Cambio detectado en el campo: ${key}`);
           return true;
         }
       }
@@ -412,6 +403,42 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     }
     return true;
   }
+
+  actualizarDestinatario(): void {
+    if (this.editarDestinatarioForm.valid) {
+      const destinatarioData = this.editarDestinatarioForm.getRawValue();
+  
+      // Eliminar caracteres '.' y '-' del campo 'rut'
+      if (destinatarioData.rut) {
+        destinatarioData.rut = destinatarioData.rut.replace(/[.-]/g, '');
+      }
+  
+      console.log('Datos enviados al servicio:', destinatarioData);
+      if (this.id !== null) {
+        console.log('ID del destinatario:', this.id); // Verifica el ID antes de enviar
+        this.agendaService.actualizarIdDestinatario(this.id, destinatarioData).subscribe(
+          response => {
+            console.log('Destinatario actualizado:', response);
+            // Lógica adicional después de la actualización
+            // alert('Destinatario actualizado exitosamente');
+            // this.router.navigate(['/ruta-deseada']);
+          },
+          error => {
+            console.error('Error al actualizar destinatario:', error);
+            // alert('Hubo un error al actualizar el destinatario. Por favor, inténtelo de nuevo.');
+          }
+        );
+      } else {
+        console.error('ID del destinatario no encontrado');
+        // alert('No se pudo encontrar el ID del destinatario. Por favor, inténtelo de nuevo.');
+      }
+    } else {
+      console.error('Formulario inválido');
+      // alert('El formulario contiene errores. Por favor, corríjalos antes de enviar.');
+    }
+    this.mostrarBackdropCustomChange.emit(false);
+  }
+  
 
   cancelar(): void {
     this.editarDestinatarioForm.reset();
