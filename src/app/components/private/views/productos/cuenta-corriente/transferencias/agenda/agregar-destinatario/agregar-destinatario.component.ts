@@ -398,6 +398,7 @@ export class AgregarDestinatarioComponent implements OnInit {
 
           // Aquí cambias el valor de mostrarBackdropCustomChange a false
           this.mostrarBackdropCustomChange.emit(false);
+          this.cancelar();
         });
       });
     }
@@ -412,9 +413,6 @@ export class AgregarDestinatarioComponent implements OnInit {
         control.updateValueAndValidity();
       }
     });
-
-    this.crearDestinatarioForm.get('banco')?.setValue(0);
-    this.crearDestinatarioForm.get('tipo_cuenta')?.setValue(0);
 
     this.mostrarBackdropCustomChange.emit(false);
     this.cancelarEvent.emit();
