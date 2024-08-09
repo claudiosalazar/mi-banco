@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../../services/agenda.service';
@@ -11,9 +11,10 @@ import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-
   selector: 'mb-agregar-destinatario',
   templateUrl: './agregar-destinatario.component.html'
 })
-export class AgregarDestinatarioComponent implements OnInit, OnDestroy {
+export class AgregarDestinatarioComponent implements OnInit {
 
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
+  @Output() renderizarAgregarDestinatario = new EventEmitter<boolean>();
 
   agenda: any[] = [];
   datosNuevoDestinatario: any;
@@ -402,16 +403,6 @@ export class AgregarDestinatarioComponent implements OnInit, OnDestroy {
     }
   }
 
-  destruirComponente(): void {
-    this.mostrarFormulario = false;
-    this.ngOnDestroy();
-  }
-
-  ngOnDestroy(): void {
-    // Lógica adicional de limpieza si es necesario
-    console.log('Componente destruido');
-  }
-
   cancelar(): void {
     this.crearDestinatarioForm.reset();
     Object.keys(this.crearDestinatarioForm.controls).forEach(key => {
@@ -422,7 +413,7 @@ export class AgregarDestinatarioComponent implements OnInit, OnDestroy {
       }
     });
     this.mostrarBackdropCustomChange.emit(false);
-    this.destruirComponente();
+    this.renderizarAgregarDestinatario.emit(false);
   }
 
 }

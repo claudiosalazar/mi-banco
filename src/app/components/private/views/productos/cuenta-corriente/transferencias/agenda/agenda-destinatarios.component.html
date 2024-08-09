@@ -150,7 +150,7 @@
 <!-- Sidenav para crear nuevo destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <div class="contenido-offcanvas">
-    <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-agregar-destinatario>
+    <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event" *ngIf="renderizarAgregarDestinatarioEstado"></mb-agregar-destinatario>
   </div>
 </div>
 

@@ -24,7 +24,7 @@ declare var bootstrap: any;
 })
 export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
-  @ViewChild('crearDestinatarioCanvas', { static: false }) crearDestinatarioCanvas: ElementRef | undefined;
+  @ViewChild('crearDestinatarioCanvas') crearDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @ViewChild('modalEliminarDestinatario') modalEliminarDestinatario: ElementRef | undefined;
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
@@ -34,10 +34,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
   public columnaSeleccionada: string | undefined;
   public isRotatedIn: boolean = false;
+
   mostrarBackdropCustomModal = false;
   modales: any[] = [];
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
+  renderizarAgregarDestinatario = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
+  renderizarAgregarDestinatarioEstado = false;
+  
   usuarioEliminado = false;
   errorServer = false;
 
@@ -100,6 +104,10 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
       this.mostrarBackdropCustomOffcanvasEstado = valor;
+    });
+
+    this.renderizarAgregarDestinatario.subscribe(valor => {
+      this.renderizarAgregarDestinatarioEstado = valor;
     });
 
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
@@ -254,7 +262,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   abrirOffcanvas(): void {
     this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.renderizarAgregarDestinatario.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;
+    this.renderizarAgregarDestinatarioEstado = true;
   }
 
   abrirOffcanvasEdicion(id: number): void {
