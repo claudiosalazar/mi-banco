@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { RutPipe } from '../../../../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../../../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-fijo.pipe';
 import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../../services/agenda.service';
+import { Subject } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -12,15 +13,17 @@ declare var bootstrap: any;
   selector: 'mb-editar-destinatario',
   templateUrl: './editar-destinatario.component.html'
 })
-export class EditarDestinatarioComponent implements OnInit {
+export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
 
+  private dataLoaded = new Subject<void>();
+
   editarDestinatarioForm: FormGroup = new FormGroup({});
   agenda: any[] = [];
   submitted: boolean = false;
-  botonGuardarDisabled = false;
+  botonGuardarDisabled: boolean | undefined;
   // Variable para nombre
   inputErrorVacioNombre: any;
   inputErrorApellido: any;
@@ -140,37 +143,18 @@ export class EditarDestinatarioComponent implements OnInit {
       telefono: new FormControl(''),
     });
 
-    this.observaBancoInicio();
-    this.observaCuentaInicio();
+    this.observaDatosCargados();
   }
 
-  observaBancoInicio(): void {
-    const bancoControl = this.editarDestinatarioForm.get('banco');
-    if (bancoControl) {
-      bancoControl.valueChanges.subscribe(nuevoBanco => {
-        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
-        if (bancoSeleccionado) {
-          this.bancoInicio = bancoSeleccionado.label;
-          console.log('Nuevo Banco Inicio:', this.bancoInicio);
-        }
+  ngAfterViewInit() {
+    this.dataLoaded.subscribe(() => {
+      this.editarDestinatarioForm.valueChanges.subscribe(() => {
+        this.botonGuardarDisabled = !this.observaDatosCargados();
+        this.cdr.detectChanges();
       });
-    }
+    });
   }
 
-  observaCuentaInicio(): void {
-    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
-    if (cuentaControl) {
-      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
-        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
-        if (cuentaSeleccionada) {
-          this.tipoCuentaInicio = cuentaSeleccionada.label;
-          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
-        }
-      });
-    }
-  }
-
-  
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       console.log('Agenda:', agenda);
@@ -197,6 +181,49 @@ export class EditarDestinatarioComponent implements OnInit {
       this.bancoInicio = destinatario.banco;
       this.tipoCuentaInicio = destinatario.tipo_cuenta;
       console.log('Banco:', this.bancoInicio);
+      this.dataLoaded.next(); // Emitir el evento indicando que los datos han sido cargados
+    }
+  }
+
+  observaDatosCargados(): boolean {
+    const initialValues = this.editarDestinatarioForm.getRawValue();
+    const currentValues = this.editarDestinatarioForm.getRawValue();
+    console.log('Valores iniciales:', initialValues);
+    console.log('Valores actuales:', currentValues);
+    for (const key in initialValues) {
+      if (initialValues.hasOwnProperty(key)) {
+        if (initialValues[key] !== currentValues[key]) {
+          console.log(`Cambio detectado en el campo: ${key}`);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  observaBancoInicio(): void {
+    const bancoControl = this.editarDestinatarioForm.get('banco');
+    if (bancoControl) {
+      bancoControl.valueChanges.subscribe(nuevoBanco => {
+        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
+        if (bancoSeleccionado) {
+          this.bancoInicio = bancoSeleccionado.label;
+          console.log('Nuevo Banco Inicio:', this.bancoInicio);
+        }
+      });
+    }
+  }
+
+  observaCuentaInicio(): void {
+    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
+    if (cuentaControl) {
+      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
+        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
+        if (cuentaSeleccionada) {
+          this.tipoCuentaInicio = cuentaSeleccionada.label;
+          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
+        }
+      });
     }
   }
 
@@ -252,6 +279,20 @@ export class EditarDestinatarioComponent implements OnInit {
       this.inputErrorVacioRut = rutControl.errors?.['inputErrorVacioRut'];
       this.inputValidoRut = rutControl.valid;
     }
+  }
+
+  formatoRut(event: KeyboardEvent): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    const value = (event.target as HTMLInputElement).value;
+  
+    // Permitir solo números
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      if (charCode === 75 || charCode === 107) {
+        return value.length === 8;
+      }
+      return false;
+    }
+    return true;
   }
 
   validaNumeroCuenta(): void {
@@ -364,7 +405,6 @@ export class EditarDestinatarioComponent implements OnInit {
     };
   }
   
-  // Solo permite ingresar números en los campos de texto
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -373,40 +413,16 @@ export class EditarDestinatarioComponent implements OnInit {
     return true;
   }
 
-  // Solo permite numeros y letra K en el ultimo digito
-  formatoRut(event: KeyboardEvent): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    const value = (event.target as HTMLInputElement).value;
-  
-    // Permitir solo números
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      // Si el carácter no es un número, permitir solo 'K' como último carácter
-      if (charCode === 75 || charCode === 107) { // 75 y 107 son los códigos de tecla para 'K' y 'k' respectivamente
-        return value.length === 8; // Permitir 'K' solo si ya hay 8 caracteres
-      }
-      return false;
-    }
-    return true;
-  }
-
   cancelar(): void {
-    // Emite el evento para ocultar el backdrop
-    this.mostrarBackdropCustomChange.emit(false);
-  
-    // Resetea el formulario
     this.editarDestinatarioForm.reset();
-  
-    // Recorre cada control del formulario
     Object.keys(this.editarDestinatarioForm.controls).forEach(key => {
-      // Obtiene el control
       const control = this.editarDestinatarioForm.get(key);
-  
-      // Elimina las validaciones del control
-    if (control !== null) {
-      control.clearValidators();
-      control.updateValueAndValidity();
-    }
+      if (control !== null) {
+        control.clearValidators();
+        control.updateValueAndValidity();
+      }
     });
+    this.mostrarBackdropCustomChange.emit(false);
   }
 
 }

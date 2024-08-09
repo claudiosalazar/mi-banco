@@ -64,12 +64,15 @@ export class AgendaService {
     return this.http.get<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
   }
 
-  eliminarIdDestinatario(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
-  }
-
-  // Nueva función para guardar un nuevo destinatario
   guardarNuevoDestinatario(agenda: Agenda): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/mibanco/agenda`, agenda);
+  }
+
+  actualizarIdDestinatario(id: number, agenda: Agenda): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda);
+  }
+  
+  eliminarIdDestinatario(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
   }
 }

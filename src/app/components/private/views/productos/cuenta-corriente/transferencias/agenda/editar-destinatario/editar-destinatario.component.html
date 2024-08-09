@@ -16,129 +16,128 @@
 
   <div class="offcanvas-body">
     <div class="col-12">
-        <!-- Nombre -->
-        <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="nombre" 
-          [class.is-invalid]="editarDestinatarioForm.get('nombre')?.invalid && editarDestinatarioForm.get('nombre')?.touched" 
-          [class.is-valid]="editarDestinatarioForm.get('nombre')?.valid && editarDestinatarioForm.get('nombre')?.touched" 
-          (blur)="validaNombre();">
-          <label for="nombre">Nombre y Apellido <span class="obligatorio">*</span></label>
-          <div *ngIf="editarDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && editarDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
-            <span>El campo no puede quedar vacío.</span>
-          </div>
-          <div *ngIf="editarDestinatarioForm.get('nombre')?.errors?.['inputErrorApellido'] && editarDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
-            <span>Debes agregar un apellido.</span>
-          </div>
-          <div *ngIf="editarDestinatarioForm.get('nombre')?.valid && editarDestinatarioForm.get('nombre')?.touched" class="valid-feedback">
-            <span>El nombre es válido.</span>
-          </div>
+      <!-- Nombre -->
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control" formControlName="nombre" 
+        [class.is-invalid]="editarDestinatarioForm.get('nombre')?.invalid && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('nombre')?.valid && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)">
+        <label for="nombre">Nombre y Apellido <span class="obligatorio">*</span></label>
+        <div *ngIf="editarDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" class="invalid-feedback">
+          <span>El campo no puede quedar vacío.</span>
         </div>
-    
-        <!-- Apodo -->
-        <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="apodo" 
-          [class.is-invalid]="editarDestinatarioForm.get('apodo')?.invalid && editarDestinatarioForm.get('apodo')?.touched && editarDestinatarioForm.get('apodo')?.value" 
-          [class.is-valid]="editarDestinatarioForm.get('apodo')?.valid && editarDestinatarioForm.get('apodo')?.touched && editarDestinatarioForm.get('apodo')?.value" 
-          (blur)="validaTelefono()" (keypress)="soloNumeros($event)">
-          <label for="apodo">Apodo</label>
+        <div *ngIf="editarDestinatarioForm.get('nombre')?.errors?.['inputErrorApellido'] && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" class="invalid-feedback">
+          <span>Debes agregar un apellido.</span>
         </div>
-    
-        <!-- rut -->
-        <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="rut" [class.is-invalid]="editarDestinatarioForm.get('rut')?.invalid && editarDestinatarioForm.get('rut')?.touched" [class.is-valid]="editarDestinatarioForm.get('rut')?.valid && editarDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
-          <label for="rut">Rut <span class="obligatorio">*</span></label>
-          <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && editarDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
-            <span>El campo no puede quedar vacío.</span>
-          </div>
-          <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorFormatoRut'] && editarDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
-            <span>El rut ingresado no es válido.</span>
-          </div>
-          <div *ngIf="editarDestinatarioForm.get('rut')?.valid && editarDestinatarioForm.get('rut')?.touched" class="valid-feedback">
-            <span>El rut es válido.</span>
-          </div>
+        <div *ngIf="editarDestinatarioForm.get('nombre')?.valid && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" class="valid-feedback">
+          <span>El nombre es válido.</span>
         </div>
-    
-        <!-- banco -->
-        <div class="form-floating mb-4">
-          <!-- <mb-custom-select [control]="editarDestinatarioForm.get('banco')" [options]="listaBancos" [selectedValue]="bancoSeleccionado" [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" [isValid]="bancoValido" [isInvalid]="bancoInvalido" (click)="editarDatos()"></mb-custom-select> -->
-          <mb-custom-select [control]="editarDestinatarioForm.get('banco')" 
-          [options]="listaBancos" 
-          [selectedValue]="bancoInicio" 
-          [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" 
-          [isValid]="bancoValido" [isInvalid]="bancoInvalido"
-           ></mb-custom-select>
-          <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
-            Debes seleccionar un banco.
-          </div>
+      </div>
+  
+      <!-- Apodo -->
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control" formControlName="apodo" 
+        [class.is-invalid]="editarDestinatarioForm.get('apodo')?.invalid && (editarDestinatarioForm.get('apodo')?.touched || editarDestinatarioForm.get('apodo')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('apodo')?.valid && (editarDestinatarioForm.get('apodo')?.touched || editarDestinatarioForm.get('apodo')?.dirty)">
+        <label for="apodo">Apodo</label>
+      </div>
+  
+      <!-- Rut -->
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control" formControlName="rut" 
+        [class.is-invalid]="editarDestinatarioForm.get('rut')?.invalid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('rut')?.valid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)">
+        <label for="rut">Rut <span class="obligatorio">*</span></label>
+        <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" class="invalid-feedback">
+          <span>El campo no puede quedar vacío.</span>
         </div>
-    
-        <!-- Tipo cuenta -->
-        <div class="form-floating mb-4">
-          <!-- <mb-custom-select [control]="editarDestinatarioForm.get('cuentaDestinatario')" [options]="tiposCuenta" [selectedValue]="tipoCuentaSeleccionada" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" [isInvalid]="cuentaInvalida" (click)="editarDatos()"></mb-custom-select> -->
-          <mb-custom-select [control]="editarDestinatarioForm.get('tipo_cuenta')" [options]="tiposCuenta" 
-          [selectedValue]="tipoCuentaInicio" [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" [isValid]="cuentaValida" 
-          [isInvalid]="cuentaInvalida"></mb-custom-select>
-          <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
-            Debes seleccionar un tipo de cuenta.
-          </div>
+        <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorFormatoRut'] && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" class="invalid-feedback">
+          <span>El rut ingresado no es válido.</span>
         </div>
-        
-    
-        <!-- Numero cuenta -->
-        <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="numero_cuenta" [class.is-invalid]="editarDestinatarioForm.get('numero_cuenta')?.invalid && editarDestinatarioForm.get('numero_cuenta')?.touched" [class.is-valid]="editarDestinatarioForm.get('numeroCuentaDestinatario')?.valid && editarDestinatarioForm.get('numeroCuentaDestinatario')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
-          <label for="numero_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
-          <div *ngIf="editarDestinatarioForm.get('numero_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && editarDestinatarioForm.get('numero_cuenta')?.touched" class="invalid-feedback">
-            <span>El campo no puede quedar vacío.</span>
-          </div>
-          <div *ngIf="editarDestinatarioForm.get('numero_cuenta')?.valid && editarDestinatarioForm.get('numero_cuenta')?.touched" class="valid-feedback">
-            <span>El número de cuenta es válido.</span>
-          </div>
+        <div *ngIf="editarDestinatarioForm.get('rut')?.valid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" class="valid-feedback">
+          <span>El rut es válido.</span>
         </div>
-    
-        <!-- Email -->
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" formControlName="email" 
-          [class.is-invalid]="editarDestinatarioForm.get('email')?.invalid && editarDestinatarioForm.get('email')?.touched" 
-          [class.is-valid]="editarDestinatarioForm.get('email')?.valid && editarDestinatarioForm.get('email')?.touched" 
-          (blur)="validaEmail('email')">
-          <label for="email">Email<span class="obligatorio">*</span></label>
-          <div *ngIf="editarDestinatarioForm.controls['email'].errors?.['required'] && editarDestinatarioForm.controls['email'].touched" class="invalid-feedback">
-            El campo Email no puede quedar vacío.
-          </div>
-          <div *ngIf="editarDestinatarioForm.controls['email'].errors?.['customEmail'] && editarDestinatarioForm.controls['email'].touched" class="invalid-feedback">
-            Debe ser un email válido.
-          </div>
-          <div *ngIf="inputValidoEmail" class="valid-feedback">
-            El email es valido.
-          </div>
+      </div>
+  
+      <!-- Banco -->
+      <div class="form-floating mb-4">
+        <mb-custom-select [control]="editarDestinatarioForm.get('banco')" 
+        [options]="listaBancos" 
+        [selectedValue]="bancoInicio" 
+        [zIndex]="6000" [submitted]="submitted" [labelSelect]="'Banco *'" 
+        [isValid]="bancoValido" [isInvalid]="bancoInvalido"></mb-custom-select>
+        <div *ngIf="bancoInvalidoMensaje" class="invalid-feedback d-block">
+          Debes seleccionar un banco.
         </div>
-    
-        <!-- Celular -->
-        <div class="form-floating mb-4">
-          <input type="text" class="form-control celular" formControlName="celular" 
-          [class.is-invalid]="editarDestinatarioForm.get('celular')?.invalid && editarDestinatarioForm.get('celular')?.touched && editarDestinatarioForm.get('celular')?.value" 
-          [class.is-valid]="editarDestinatarioForm.get('celular')?.valid && editarDestinatarioForm.get('celular')?.touched && editarDestinatarioForm.get('celular')?.value" 
-          (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
-          <label for="celular">Celular</label>
-          <div class="prefijo-chile"></div>
-          <div *ngIf="inputErrorCelularInvalido && editarDestinatarioForm.get('celular')?.touched" class="invalid-feedback">
-            <span>El número ingresado no es válido.</span>
-          </div>
+      </div>
+  
+      <!-- Tipo cuenta -->
+      <div class="form-floating mb-4">
+        <mb-custom-select [control]="editarDestinatarioForm.get('tipo_cuenta')" 
+        [options]="tiposCuenta" 
+        [selectedValue]="tipoCuentaInicio" 
+        [zIndex]="5000" [submitted]="submitted" [labelSelect]="'Tipo de cuenta *'" 
+        [isValid]="cuentaValida" [isInvalid]="cuentaInvalida"></mb-custom-select>
+        <div *ngIf="cuentaInvalidaMensaje" class="invalid-feedback d-block">
+          Debes seleccionar un tipo de cuenta.
         </div>
-    
-        <!-- Telefono -->
-        <div class="form-floating">
-          <input type="text" class="form-control" formControlName="telefono" 
-          [class.is-invalid]="editarDestinatarioForm.get('telefono')?.invalid && editarDestinatarioForm.get('telefono')?.touched && editarDestinatarioForm.get('telefono')?.value" 
-          [class.is-valid]="editarDestinatarioForm.get('telefono')?.valid && editarDestinatarioForm.get('telefono')?.touched && editarDestinatarioForm.get('telefono')?.value" 
-          (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
-          <label for="telefono">Teléfono Fijo</label>
-          <div *ngIf="inputErrorTelefonoFijoInvalido && editarDestinatarioForm.get('telefono')?.touched" class="invalid-feedback">
-            <span>El número ingresado no es válido.</span>
-          </div>
+      </div>
+      
+      <!-- Numero cuenta -->
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control" formControlName="numero_cuenta" 
+        [class.is-invalid]="editarDestinatarioForm.get('numero_cuenta')?.invalid && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('numero_cuenta')?.valid && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)">
+        <label for="numero_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
+        <div *ngIf="editarDestinatarioForm.get('numero_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)" class="invalid-feedback">
+          <span>El campo no puede quedar vacío.</span>
         </div>
-    </div>
+        <div *ngIf="editarDestinatarioForm.get('numero_cuenta')?.valid && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)" class="valid-feedback">
+          <span>El número de cuenta es válido.</span>
+        </div>
+      </div>
+  
+      <!-- Email -->
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" formControlName="email" 
+        [class.is-invalid]="editarDestinatarioForm.get('email')?.invalid && (editarDestinatarioForm.get('email')?.touched || editarDestinatarioForm.get('email')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('email')?.valid && (editarDestinatarioForm.get('email')?.touched || editarDestinatarioForm.get('email')?.dirty)">
+        <label for="email">Email<span class="obligatorio">*</span></label>
+        <div *ngIf="editarDestinatarioForm.controls['email'].errors?.['required'] && (editarDestinatarioForm.controls['email'].touched || editarDestinatarioForm.controls['email'].dirty)" class="invalid-feedback">
+          El campo Email no puede quedar vacío.
+        </div>
+        <div *ngIf="editarDestinatarioForm.controls['email'].errors?.['customEmail'] && (editarDestinatarioForm.controls['email'].touched || editarDestinatarioForm.controls['email'].dirty)" class="invalid-feedback">
+          Debe ser un email válido.
+        </div>
+        <div *ngIf="inputValidoEmail" class="valid-feedback">
+          El email es valido.
+        </div>
+      </div>
+  
+      <!-- Celular -->
+      <div class="form-floating mb-4">
+        <input type="text" class="form-control celular" formControlName="celular" 
+        [class.is-invalid]="editarDestinatarioForm.get('celular')?.invalid && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('celular')?.valid && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" 
+        (keypress)="soloNumeros($event)" maxlength="11">
+        <label for="celular">Celular</label>
+        <div class="prefijo-chile"></div>
+        <div *ngIf="inputErrorCelularInvalido && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" class="invalid-feedback">
+          <span>El número ingresado no es válido.</span>
+        </div>
+      </div>
+  
+      <!-- Telefono -->
+      <div class="form-floating">
+        <input type="text" class="form-control" formControlName="telefono" 
+        [class.is-invalid]="editarDestinatarioForm.get('telefono')?.invalid && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" 
+        [class.is-valid]="editarDestinatarioForm.get('telefono')?.valid && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" 
+        (keypress)="soloNumeros($event)" maxlength="11">
+        <label for="telefono">Teléfono Fijo</label>
+        <div *ngIf="inputErrorTelefonoFijoInvalido && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" class="invalid-feedback">
+          <span>El número ingresado no es válido.</span>
+        </div>
+      </div>
+  </div>
   </div>
 
   <div class="offcanvas-footer">
