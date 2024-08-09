@@ -130,6 +130,16 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       return modal;
     });
 
+    this.subscription = this.agendaService.destinatarioActualizado$.subscribe(() => {
+      this.loadData();
+    });
+
+    this.subscription.add(
+      this.agendaService.destinatarioAgregado$.subscribe(() => {
+        this.loadData();
+      })
+    );
+
     /*this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
       this.datosCapturados = datos;
       this.abrirModalNuevoDestinatario();
@@ -218,6 +228,28 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     }
     this.consultaEliminacionDestinatario = false;
     this.destinatarioEliminado = true;
+  }
+
+  // Nuevo método para manejar la actualización de destinatarios
+  actualizarDestinatario(id: number, datos: any): void {
+    this.agendaService.actualizarIdDestinatario(id, datos).subscribe(
+      () => {
+        console.log('El destinatario fue actualizado correctamente');
+        this.loadData();
+      },
+      error => console.error('Hubo un error al actualizar el destinatario', error)
+    );
+  }
+
+  // Nuevo método para manejar la adición de destinatarios
+  agregarDestinatario(datos: any): void {
+    this.agendaService.guardarNuevoDestinatario(datos).subscribe(
+      () => {
+        console.log('El destinatario fue agregado correctamente');
+        this.loadData();
+      },
+      error => console.error('Hubo un error al agregar el destinatario', error)
+    );
   }
 
   abrirOffcanvas(): void {

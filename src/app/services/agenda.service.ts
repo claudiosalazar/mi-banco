@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Agenda } from '../models/agenda.model';
 
 @Injectable({
@@ -12,7 +13,14 @@ export class AgendaService {
 
   private datosFiltradosSource = new Subject<any[]>();
   private idSource = new BehaviorSubject<number | null>(null);
-  currentId = this.idSource.asObservable()
+
+  private destinatarioActualizado = new BehaviorSubject<void>(undefined);
+  destinatarioActualizado$ = this.destinatarioActualizado.asObservable();
+
+  private destinatarioAgregado = new BehaviorSubject<void>(undefined);
+  destinatarioAgregado$ = this.destinatarioAgregado.asObservable();
+
+  currentId = this.idSource.asObservable();
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
   paginationData$ = this.paginationData.asObservable();
@@ -27,7 +35,9 @@ export class AgendaService {
   constructor(private http: HttpClient) { }
 
   getAgenda(): Observable<Agenda[]> {
-    return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`);
+    return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`).pipe(
+      map(agenda => agenda.sort((a, b) => a.nombre.localeCompare(b.nombre)))
+    );
   }
 
   filtrarAgenda(valorBusqueda: string): Observable<any[]> {
@@ -65,11 +75,15 @@ export class AgendaService {
   }
 
   guardarNuevoDestinatario(agenda: Agenda): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/mibanco/agenda`, agenda);
+    return this.http.post<any>(`${this.apiUrl}/mibanco/agenda`, agenda).pipe(
+      tap(() => this.destinatarioAgregado.next())
+    );
   }
 
   actualizarIdDestinatario(id: number, agenda: Agenda): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda);
+    return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda).pipe(
+      tap(() => this.destinatarioActualizado.next())
+    );
   }
   
   eliminarIdDestinatario(id: number): Observable<any> {
