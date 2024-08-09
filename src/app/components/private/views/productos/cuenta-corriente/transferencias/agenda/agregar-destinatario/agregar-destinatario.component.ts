@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../../services/agenda.service';
@@ -11,7 +11,7 @@ import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-
   selector: 'mb-agregar-destinatario',
   templateUrl: './agregar-destinatario.component.html'
 })
-export class AgregarDestinatarioComponent implements OnInit {
+export class AgregarDestinatarioComponent implements OnInit, OnDestroy {
 
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
 
@@ -106,6 +106,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   cuentaInvalidaMensaje: any;
 
   botonGuardarDisabled = false;
+  mostrarFormulario = true;
 
 
   constructor(
@@ -401,8 +402,27 @@ export class AgregarDestinatarioComponent implements OnInit {
     }
   }
 
+  destruirComponente(): void {
+    this.mostrarFormulario = false;
+    this.ngOnDestroy();
+  }
+
+  ngOnDestroy(): void {
+    // Lógica adicional de limpieza si es necesario
+    console.log('Componente destruido');
+  }
+
   cancelar(): void {
+    this.crearDestinatarioForm.reset();
+    Object.keys(this.crearDestinatarioForm.controls).forEach(key => {
+      const control = this.crearDestinatarioForm.get(key);
+      if (control !== null) {
+        control.clearValidators();
+        control.updateValueAndValidity();
+      }
+    });
     this.mostrarBackdropCustomChange.emit(false);
+    this.destruirComponente();
   }
 
 }

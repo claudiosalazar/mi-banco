@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { RutPipe } from '../../../../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../../../../shared/pipes/celular.pipe';
@@ -13,7 +13,7 @@ declare var bootstrap: any;
   selector: 'mb-editar-destinatario',
   templateUrl: './editar-destinatario.component.html'
 })
-export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
+export class EditarDestinatarioComponent implements OnInit, OnDestroy,  AfterViewInit {
 
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
@@ -64,6 +64,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   bancoSeleccionadoLabel: string | undefined;
 
   id: number | null = null;
+  mostrarFormulario = true;
 
   listaBancos = [
     { value: '0', label: '-' },
@@ -422,6 +423,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
             // Lógica adicional después de la actualización
             // alert('Destinatario actualizado exitosamente');
             // this.router.navigate(['/ruta-deseada']);
+            this.destruirComponente();
           },
           error => {
             console.error('Error al actualizar destinatario:', error);
@@ -450,6 +452,17 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
       }
     });
     this.mostrarBackdropCustomChange.emit(false);
+    this.destruirComponente();
+  }
+
+  destruirComponente(): void {
+    this.mostrarFormulario = false;
+    this.ngOnDestroy();
+  }
+
+  ngOnDestroy(): void {
+    // Lógica adicional de limpieza si es necesario
+    console.log('Componente destruido');
   }
 
 }
