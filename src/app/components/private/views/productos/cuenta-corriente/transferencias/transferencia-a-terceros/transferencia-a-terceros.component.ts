@@ -338,13 +338,15 @@ export class TransferenciaATercerosComponent implements OnInit {
     // this.tablaDestinatarios = true;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
+    this.mostrarBackdropCustomModal = false;
 
     // Cierra el modal y oculta el backdrop-custom
     const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
+      this.mostrarBackdropCustomModal = true;
     }
-    this.mostrarBackdropCustomModal = false;
+    
   }
 
   abrirModalCambioDestinatario(): void {

@@ -72,21 +72,24 @@ export class HomeComponent implements OnInit {
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte) {
         this.transaccionesCtaCte = transaccionesCtaCte;
-        this.saldoUltimaTransaccionCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
+        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
       }
     });
-
+  
     this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre) {
         this.transaccionesLineaCre = transaccionesLineaCre;
-        this.saldoUltimaTransaccionLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo : null;
+        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
       }
     });
-
+  
     this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
       if (transaccionesVisa) {
         this.transaccionesVisa = transaccionesVisa;
-        this.saldoUltimaTransaccionVisa = transaccionesVisa.length > 0 ? transaccionesVisa[transaccionesVisa.length - 1].saldo : null;
+        this.transaccionesVisa.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionVisa = this.transaccionesVisa.length > 0 ? this.transaccionesVisa[0].saldo : null;
       }
     });
   }

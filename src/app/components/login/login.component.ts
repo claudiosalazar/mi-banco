@@ -13,7 +13,7 @@ import { RutPipe } from '../../shared/pipes/rut.pipe';
 export class LoginComponent implements OnInit {
 
   formularioLogin: FormGroup;
-  botonLoginDisabled = false;
+  botonLoginDisabled = true;
   mensajeError = false;
 
   constructor(

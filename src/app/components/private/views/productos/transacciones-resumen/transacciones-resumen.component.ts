@@ -28,9 +28,6 @@ export class TransaccionesResumenComponent implements OnInit {
   totalPages: any;
 
   saldo: number | null = null;
-  saldoCtaCte: any;
-  saldoLineaCredito: any;
-  saldoVisa: any;
 
   saldoUltimaTransaccionCtaCte: number | null = null;
   saldoUltimaTransaccionLineaCredito: number | null = null;
@@ -68,21 +65,27 @@ export class TransaccionesResumenComponent implements OnInit {
     });
 
     // Valor para imprimir saldo en las card
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[] ) => {
+    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte) {
-        this.saldoCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
+        this.transaccionesCtaCte = transaccionesCtaCte;
+        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
       }
     });
-
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[] ) => {
+  
+    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre) {
-        this.saldoLineaCredito = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo : null;
+        this.transaccionesLineaCre = transaccionesLineaCre;
+        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
       }
     });
-
-    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[] ) => {
+  
+    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
       if (transaccionesVisa) {
-        this.saldoVisa = transaccionesVisa.length > 0 ? transaccionesVisa[transaccionesVisa.length - 1].saldo : null;
+        this.transaccionesVisa = transaccionesVisa;
+        this.transaccionesVisa.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionVisa = this.transaccionesVisa.length > 0 ? this.transaccionesVisa[0].saldo : null;
       }
     });
 

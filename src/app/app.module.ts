@@ -58,6 +58,7 @@ import { PaginadorComponent } from './shared/components/tables/paginador/paginad
 import { DatosFiltradosService } from './services/datosFiltrados.service';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
 import { AgendaService } from './services/agenda.service';
+import { ModalNuevoDestinatarioComponent } from './components/private/views/productos/cuenta-corriente/transferencias/agenda/modal-nuevo-destinatario/modal-nuevo-destinatario.component';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { AgendaService } from './services/agenda.service';
     PaginadorComponent,
     CustomSelectComponent,
     CelularPipe,
-    TelefonoFijoPipe
+    TelefonoFijoPipe,
+    ModalNuevoDestinatarioComponent,
   ],
   imports: [
     BrowserModule,
