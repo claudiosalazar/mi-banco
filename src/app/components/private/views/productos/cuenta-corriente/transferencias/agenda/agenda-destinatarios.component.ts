@@ -267,6 +267,11 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.renderizarAgregarDestinatarioEstado = true;
   }
 
+  onCancelar(): void {
+    this.renderizarAgregarDestinatarioEstado = false;
+    this.renderizarAgregarDestinatario.emit(false);
+  }
+
   abrirOffcanvasEdicion(id: number): void {
     this.mostrarBackdropCustomOffcanvas.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;

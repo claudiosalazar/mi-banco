@@ -14,7 +14,7 @@ import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-
 export class AgregarDestinatarioComponent implements OnInit {
 
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
-  @Output() renderizarAgregarDestinatario = new EventEmitter<boolean>();
+  @Output() cancelarEvent = new EventEmitter<void>();
 
   agenda: any[] = [];
   datosNuevoDestinatario: any;
@@ -412,8 +412,16 @@ export class AgregarDestinatarioComponent implements OnInit {
         control.updateValueAndValidity();
       }
     });
+
+    this.crearDestinatarioForm.get('banco')?.setValue(0);
+    this.crearDestinatarioForm.get('tipo_cuenta')?.setValue(0);
+
     this.mostrarBackdropCustomChange.emit(false);
-    this.renderizarAgregarDestinatario.emit(false);
+    this.cancelarEvent.emit();
+  }
+
+  ngOnDestroy(): void {
+    console.log('Componente AgregarDestinatario destruido');
   }
 
 }
