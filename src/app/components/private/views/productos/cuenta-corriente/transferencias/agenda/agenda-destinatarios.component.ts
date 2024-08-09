@@ -238,6 +238,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.destinatarioEliminado = true;
   }
 
+  usuarioEliminadoConfirmado(): void {
+    this.usuarioEliminado = false;
+    this.consultaEliminacionDestinatario = true;
+    this.destinatarioEliminado = false;
+  }
+
   // Nuevo método para manejar la actualización de destinatarios
   actualizarDestinatario(id: number, datos: any): void {
     this.agendaService.actualizarIdDestinatario(id, datos).subscribe(

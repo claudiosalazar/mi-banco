@@ -206,7 +206,7 @@
         <div class="d-flex justify-content-end flex-row">
           <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" *ngIf="consultaEliminacionDestinatario">Cancelar</button>
           <button type="button" class="btn btn-primario ms-3" (click)="eliminarDestinatario()" *ngIf="consultaEliminacionDestinatario">Eliminar</button>
-          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" *ngIf="destinatarioEliminado">Cerrar</button>
+          <button type="button" class="btn btn-secundario" data-bs-dismiss="modal" *ngIf="destinatarioEliminado" (click)="usuarioEliminadoConfirmado()">Cerrar</button>
         </div>
       </div>
     </div>
