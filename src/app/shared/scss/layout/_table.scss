@@ -224,24 +224,27 @@
   &.tabla-agenda {
     th, td {
       &:nth-child(1) {
-        width: 14.2%;
+        width: 14%;
       }
       &:nth-child(2) {
-        width: 10.2%;
+        width: 10%;
       }
       &:nth-child(3) {
-        width: 14.2%;
+        width: 9%;
       }
       &:nth-child(4) {
-        width: 20%;
-      }
-      &:nth-child(5) {
-        width: 19%;
-      }
-      &:nth-child(6) {
         width: 16%;
       }
+      &:nth-child(5) {
+        width: 15%;
+      }
+      &:nth-child(6) {
+        width: 14%;
+      }
       &:nth-child(7) {
+        width: 14%;
+      }
+      &:nth-child(8) {
         width: 8%;
       }
       @media (max-width: $lg) {
@@ -282,6 +285,9 @@
           content: "N° Cuenta";
         }
         td:nth-of-type(7):before {
+          content: "N° Cuenta";
+        }
+        td:nth-of-type(8):before {
           content: "Acciones";
           margin-top: 14px;
         }

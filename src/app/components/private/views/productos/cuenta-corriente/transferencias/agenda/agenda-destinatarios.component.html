@@ -52,6 +52,18 @@
               </span>
             </div>
           </th>
+          <th role="columnheader" (click)="ordenarDatos('email'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Email
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'email'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'email'">
+                expand_more
+              </span>
+            </div>
+          </th>
           <th role="columnheader" (click)="ordenarDatos('banco'); onHeaderClick()">
             <div class="d-flex align-items-center">
               <span class="ancho">
@@ -110,6 +122,9 @@
           </td>
           <td role="cell" class="ancho">
             <span class="contenido-celda">{{ agenda.rut | rut }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ agenda.email }}</span>
           </td>
           <td role="cell" class="ancho">
             <span class="contenido-celda">{{ agenda.banco }}</span>
