@@ -10,6 +10,7 @@ import { CuentaCorriente } from '../../../../../../../models/cuenta-corriente.mo
 // Pipes
 import { DatePipe } from '@angular/common';
 import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
+import { delay, Observable, of, Subscription } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -43,6 +44,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   @ViewChild('paso3') paso3: ElementRef | undefined;
   @ViewChild('formTransferencia') formTransferencia: ElementRef | undefined;
   @ViewChild('tablaDestinatarioSeleccionado') tablaDestinatarioSeleccionado: ElementRef | undefined;
+  @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
   @Output() datosOrdenados = new EventEmitter<void>();
 
   private pesosPipe = new PesosPipe();
@@ -81,7 +83,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   btnConfirmar = true;
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any;
-  destinatarioSeleccionado: { id: any, nombre?: string } | undefined;
+  destinatarioSeleccionado: { id_destinatario: any, nombre: any, rut_destinatario:any } | undefined;
   selectedId: any = null;
   nombreDestinatario: any;
   buscadorAgenda = true;
@@ -93,6 +95,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   error1: boolean = false;
   error2: boolean = false;
   montoValido: boolean = false;
+  montoATransferirOk: any;
 
   // Variables para input
   inputErrorVacioEmail: any;
@@ -108,8 +111,14 @@ export class TransferenciaATercerosComponent implements OnInit {
   errorServer = false;
   destinatarioSeleccionadoTabla = false;
   destinatarioId: any;
+  id_destinatario: any;
+  rut_destinatario: any;
 
   alertaAyuda: boolean = true;
+
+  datosTransferencia: any;
+  transferenciaOk: boolean = true;
+  tranferenciaError: boolean = false;
 
   constructor(
     private formatoEmailService: FormatoEmailService,
@@ -136,8 +145,8 @@ export class TransferenciaATercerosComponent implements OnInit {
     // Aplica pipe pesos
     this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
-      this.transferenciaATercerosForm.controls['montoATransferir'].setValue(transformedValue, {emitEvent: false});
-    });  
+      this.transferenciaATercerosForm.controls['montoATransferirOk'].setValue(transformedValue, {emitEvent: false});
+    });
   }
 
   loadData(): void {
@@ -150,47 +159,55 @@ export class TransferenciaATercerosComponent implements OnInit {
 
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte) {
-        this.saldoUltimaTransaccionCtaCte = transaccionesCtaCte.length > 0 ? transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo : null;
+        this.transaccionesCtaCte = transaccionesCtaCte;
+        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
         console.log('Saldo última transacción:', this.saldoUltimaTransaccionCtaCte);
       }
     });
   }
 
 
-  seleccionarDestinatario(id: any): void {
-    this.destinatarioSeleccionado = { id: id };
-    this.destinatarioId = id;
-    this.selectedId = id;
-    this.pasosTransferencia = true;
-    this.ingresarDatos = true;
-    this.destinatarioSeleccionadoTabla = true;
-    /*if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
-      this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
-    }*/
-  
+  seleccionarDestinatario(id_destinatario: any): void {
     // Encuentra el destinatario seleccionado en la lista de destinatarios
-    this.destinatarioATransferirSeleccionado = this.agenda.find(agenda => agenda.id === id);
+    this.destinatarioATransferirSeleccionado = this.agenda.find(agenda => agenda.id === id_destinatario);
   
     // Si no se encontró un destinatario con el ID dado, selecciona el último destinatario
     if (!this.destinatarioATransferirSeleccionado) {
       this.destinatarioATransferirSeleccionado = this.agenda[this.agenda.length - 1];
     }
   
-    // Llama a getClassForDestinatario con el ID del destinatario seleccionado
-    //this.getClassForDestinatario(this.destinatarioATransferirSeleccionado.id);
-  
-    // Imprime los datos del destinatario seleccionado en la consola
-    this.destinatarioATransferirSeleccionado = this.agenda.find(agenda => agenda.id === id);
-
-    // Asigna el nombre del destinatario seleccionado a nombreDestinatario
+    // Asigna el nombre y rut del destinatario seleccionado
     this.nombreDestinatario = this.destinatarioATransferirSeleccionado.nombre;
-
+    this.rut_destinatario = this.destinatarioATransferirSeleccionado.rut;
+  
     // Actualiza los campos del formulario
     this.transferenciaATercerosForm.patchValue({
       montoATransferir: 'Ingresa el monto a transferir', // Vacía el campo 'montoATransferir'
       mensaje: '', // Vacía el campo 'mensaje'
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
     });
+  
+    // Asigna los valores a las propiedades de la clase
+    this.destinatarioSeleccionado = {
+      id_destinatario: id_destinatario,
+      nombre: this.nombreDestinatario,
+      rut_destinatario: this.rut_destinatario
+    };
+    this.destinatarioId = id_destinatario;
+    this.selectedId = id_destinatario;
+    this.pasosTransferencia = true;
+    this.ingresarDatos = true;
+    this.destinatarioSeleccionadoTabla = true;
+    this.id_destinatario = this.destinatarioSeleccionado.id_destinatario;
+  
+    if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
+      this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
+    }
+  
+    console.log('Destinatario seleccionado:', this.destinatarioATransferirSeleccionado);
+    console.log('ID Destinatario:', this.id_destinatario);
+    console.log('RUT Destinatario:', this.rut_destinatario);
   }
 
   vaciarMontoATransferir(): void {
@@ -271,7 +288,6 @@ export class TransferenciaATercerosComponent implements OnInit {
       return;
     }
   
-    const montoATransferir = Number(controlMontoATransferir.value);
     const emailDestinatario = controlEmailDestinatario.value;
   
     // Habilita el botón si montoATransferir es válido y emailDestinatario no está vacío
@@ -322,11 +338,9 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.confirmarDatos = false;
     this.transferenciaARealizar = false;
     this.destinatarioSeleccionadoTabla = false;
-    this.destinatarioSeleccionado = { id: null, nombre: undefined };
+    this.destinatarioSeleccionado = { id_destinatario: undefined, nombre: undefined, rut_destinatario: undefined };
     this.agendaService.getAgenda().subscribe(data => {
-      // Hacer una copia de los datos
       this.agenda = [...data];
-      this.ordenarDatos('nombre');
       this.paginatedAgenda = this.agenda.slice(0, this.itemsPerPage).map(agenda => ({
         ...agenda,
         selected: false
@@ -335,10 +349,13 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.selectedId = null;
-    // this.tablaDestinatarios = true;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
     this.mostrarBackdropCustomModal = false;
+
+    if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
+      this.tablaDestinatarioSeleccionado.nativeElement.classList.remove('paso-ok');
+    }
 
     // Cierra el modal y oculta el backdrop-custom
     const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
@@ -347,24 +364,6 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.mostrarBackdropCustomModal = true;
     }
     
-  }
-
-  abrirModalCambioDestinatario(): void {
-    var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
-    modalCambiosDestinatario.show();
-  }
-
-  abrirModalCancelarTransferencia(): void {
-    var modalCancelarTransferencia = new bootstrap.Modal(document.getElementById('modalCancelarTransferencia'), {});
-    modalCancelarTransferencia.show();
-  }
-
-  ocultaBackDrop(): void {
-    this.backdropService.hide();
-  }
-
-  ocultaMensaje() {
-    this.alertaAyuda = false;
   }
 
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -437,7 +436,7 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.confirmarDatos = false;
     this.transferenciaARealizar = false;
     this.destinatarioSeleccionadoTabla = false;
-    this.destinatarioSeleccionado = { id: null, nombre: undefined };
+    this.destinatarioSeleccionado = { id_destinatario: undefined, nombre: undefined, rut_destinatario: undefined };
     this.agendaService.getAgenda().subscribe(data => {
       // Hacer una copia de los datos
       this.agenda = [...data];
@@ -479,6 +478,7 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.btnContinuar = true;
   }
 
+
   // Paginación de transacciones
   paginarAgenda(): void {
     const start = (this.currentPage - 1) * this.itemsPerPage;
@@ -493,6 +493,86 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.currentPage = pagina;
     this.paginarAgenda();
     this.cdr.detectChanges();
+  }
+
+  abrirModalCambioDestinatario(): void {
+    var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
+    modalCambiosDestinatario.show();
+  }
+
+  abrirModalCancelarTransferencia(): void {
+    var modalCancelarTransferencia = new bootstrap.Modal(document.getElementById('modalCancelarTransferencia'), {});
+    modalCancelarTransferencia.show();
+  }
+
+  ocultaBackDrop(): void {
+    this.backdropService.hide();
+  }
+
+  ocultaMensaje() {
+    this.alertaAyuda = false;
+  }
+
+  abrirModalTransferencia(): void {
+    var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
+    modalTransferencia.show();
+    this.realizarTransferencia();
+    /*this.realizarTransferencia().subscribe(datosTransferencia => {
+      this.transaccionesService.guardarNuevaTransferencia(datosTransferencia);
+      of(null).pipe(
+        delay(1500)
+      ).subscribe(() => this.backdropService.hide());
+    });*/
+  }
+
+  calculoTransferencia(): any {
+    let montoATransferir: any = this.transferenciaATercerosForm.get('montoATransferir')?.value;
+    montoATransferir = montoATransferir.replace(/\D/g, ''); // Asegúrate de que sea un número
+    
+    // Convertir montoATransferir a número
+    montoATransferir = Number(montoATransferir);
+    
+    // Resta montoATransferir a cupoCtaCte
+    if (this.saldoUltimaTransaccionCtaCte !== null) {
+      this.saldoUltimaTransaccionCtaCte -= montoATransferir;
+      console.log('Saldo última transacción:', this.saldoUltimaTransaccionCtaCte);
+    }
+  
+    return {
+      montoTransferido: montoATransferir,
+      saldoUltimaTransaccionCtaCte: this.saldoUltimaTransaccionCtaCte,
+      montoParaTransferencia: montoATransferir
+    };
+  }
+
+  // Envia datos de transferencia
+  realizarTransferencia(): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+
+    const result = this.calculoTransferencia();
+
+    let montoTransferido = result.montoTransferido;
+
+    this.datosTransferencia = {
+      id_trans_cta_cte: this.transaccionesCtaCte.length + 1,
+      fecha: fechaFormateada,
+      detalle: 'Transferencia a ' + this.nombreDestinatario,
+      transferencia: 1,
+      id_destinatario: this.id_destinatario,
+      nombre_destinatario: this.nombreDestinatario,
+      rut_destinatario: this.rut_destinatario,
+      mensaje: this.transferenciaATercerosForm.get('mensaje')?.value,
+      cargo: montoTransferido,
+      saldo: this.saldoUltimaTransaccionCtaCte
+    };
+  
+    console.table(this.datosTransferencia);
+    return of(this.datosTransferencia);
+  
+    // Llamar al servicio para guardar la nueva transferencia
+    //return this.transaccionesService.guardarNuevaTransferencia(this.datosTransferencia, montoATransferirOkNum);
   }
 }
 

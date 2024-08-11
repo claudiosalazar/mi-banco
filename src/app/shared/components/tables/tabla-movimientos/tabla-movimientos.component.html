@@ -121,7 +121,7 @@
           <span class="contenido-celda" *ngIf="mostrarColumnaDestinatario">{{ transaccion.nombre_destinatario }}</span>
         </td>
         <td role="cell" class="ancho" *ngIf="mostrarColumnaRut">
-          <span class="contenido-celda" *ngIf="mostrarColumnaRut">{{ transaccion.rut_destinatario }}</span>
+          <span class="contenido-celda" *ngIf="mostrarColumnaRut">{{ transaccion.rut_destinatario | rut}}</span>
         </td>
         <td role="cell" class="ancho" *ngIf="mostrarColumnaNombreProducto">
           <span class="contenido-celda"><strong>{{ transaccion.nombre_producto_trans }}</strong></span>
