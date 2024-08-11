@@ -8,15 +8,15 @@
             <h2 class="mb-3 mt-0 text-center comprobante px-3">La tranferencia se realizo con exito</h2>
             <p class="mb-4 text-center px-3">
               <!-- Se transfirio a <strong>{{ nombre_destinatario }}</strong>, un monto de: -->
-              Se transfirio a <strong>nombre</strong>, un monto de:
+              Se transfirio a <strong>{{nombreDestinatarioUltimaTransaccionCtaCte}}</strong>, un monto de:
             </p>
             <hr>
             <span class="p-0 text-center monto-transferido d-block">
-              <!-- <strong>{{ cargo | pesos }}</strong> -->
-              <strong>0000</strong>
+              <strong>{{ cargoUltimaTransaccionCtaCte | pesos }}</strong>
             </span>
             <hr>
-            <!-- <p class="text-center ps-5 pe-5 mb-4">Enviamos el comprobante de pago a email <strong class="tinto">{{ email }}</strong> de {{ nombreDestinatario }}, y tambien a tu email <strong class="tinto">{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p> -->
+            <p class="text-center ps-5 pe-5 mb-4">Enviamos el comprobante de transferencia al email <strong class="tinto">{{ emailDestinatario }}</strong> de 
+              {{ nombreDestinatarioUltimaTransaccionCtaCte }}, y tambien a tu email <strong class="tinto">{{ email }}</strong></p>
           </div>
           <div class="col-12 mt-3 mb-5 px-5 d-flex justify-content-end flex-column flex-md-row justify-content-center">
             <button type="button" class="btn btn-secundario me-0 me-md-3 mb-3 mb-md-0" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">
@@ -35,7 +35,7 @@
                   picture_as_pdf
                 </div>
                 <div>
-                  Descargo comprobante
+                  Descargar comprobante
                 </div>
               </div>
             </button>

@@ -6,6 +6,7 @@ import { AgendaService } from '../../../../../../../services/agenda.service';
 import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { TransaccionesService } from '../../../../../../../services/transacciones.service';
 import { CuentaCorriente } from '../../../../../../../models/cuenta-corriente.model';
+import { UrlBrowserService } from '../../../../../../../services/urlBrowser.service';
 
 // Pipes
 import { DatePipe } from '@angular/common';
@@ -125,7 +126,8 @@ export class TransferenciaATercerosComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private agendaService: AgendaService,
     private backdropService: BackdropService,
-    private transaccionesService: TransaccionesService
+    private transaccionesService: TransaccionesService,
+    private urlBrowserService: UrlBrowserService
   ) { }
 
   ngOnInit() {
@@ -528,6 +530,7 @@ export class TransferenciaATercerosComponent implements OnInit {
           ).subscribe(() => {
             this.backdropService.hide();
             modalTransferencia.hide();
+            this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
           });
         },
         (error) => {
