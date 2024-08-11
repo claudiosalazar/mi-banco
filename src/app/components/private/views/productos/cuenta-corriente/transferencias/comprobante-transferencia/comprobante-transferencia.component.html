@@ -1,3 +1,47 @@
-<p>
-  comprobante-transferencia works!
-</p>
+<div class="container pb-5">
+  <div class="row">
+    <div class="col-12 col-xl-10 px-4 mx-auto">
+      <div class="card mt-4 mt-md-5">
+        <div class="row">
+          <div class="col-12 columna-transferencia-realizada"></div>
+          <div class="col-12">
+            <h2 class="mb-3 mt-0 text-center comprobante px-3">La tranferencia se realizo con exito</h2>
+            <p class="mb-4 text-center px-3">
+              <!-- Se transfirio a <strong>{{ nombre_destinatario }}</strong>, un monto de: -->
+              Se transfirio a <strong>nombre</strong>, un monto de:
+            </p>
+            <hr>
+            <span class="p-0 text-center monto-transferido d-block">
+              <!-- <strong>{{ cargo | pesos }}</strong> -->
+              <strong>0000</strong>
+            </span>
+            <hr>
+            <!-- <p class="text-center ps-5 pe-5 mb-4">Enviamos el comprobante de pago a email <strong class="tinto">{{ email }}</strong> de {{ nombreDestinatario }}, y tambien a tu email <strong class="tinto">{{ datosUsuarioActual?.datosUsuario?.email }}</strong></p> -->
+          </div>
+          <div class="col-12 mt-3 mb-5 px-5 d-flex justify-content-end flex-column flex-md-row justify-content-center">
+            <button type="button" class="btn btn-secundario me-0 me-md-3 mb-3 mb-md-0" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  chevron_left
+                </div>
+                <div>
+                  Volver
+                </div>
+              </div>
+            </button>
+            <button type="button" class="btn btn-primario" >
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  picture_as_pdf
+                </div>
+                <div>
+                  Descargo comprobante
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

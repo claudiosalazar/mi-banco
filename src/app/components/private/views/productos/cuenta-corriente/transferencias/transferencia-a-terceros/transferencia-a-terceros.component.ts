@@ -516,13 +516,27 @@ export class TransferenciaATercerosComponent implements OnInit {
   abrirModalTransferencia(): void {
     var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
     modalTransferencia.show();
-    this.realizarTransferencia();
-    /*this.realizarTransferencia().subscribe(datosTransferencia => {
-      this.transaccionesService.guardarNuevaTransferencia(datosTransferencia);
-      of(null).pipe(
-        delay(1500)
-      ).subscribe(() => this.backdropService.hide());
-    });*/
+    this.realizarTransferencia().subscribe(datosTransferencia => {
+      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
+      this.transaccionesService.guardarNuevaTransferencia(datosTransferencia).subscribe(
+        (response) => {
+          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
+          this.transferenciaOk = true;
+          this.tranferenciaError = false;
+          of(null).pipe(
+            delay(1500)
+          ).subscribe(() => {
+            this.backdropService.hide();
+            modalTransferencia.hide();
+          });
+        },
+        (error) => {
+          console.error('Error al guardar la transferencia:', error); // Manejar errores
+          this.transferenciaOk = false;
+          this.tranferenciaError = true;
+        }
+      );
+    });
   }
 
   calculoTransferencia(): any {
@@ -569,10 +583,10 @@ export class TransferenciaATercerosComponent implements OnInit {
     };
   
     console.table(this.datosTransferencia);
-    return of(this.datosTransferencia);
+    
   
     // Llamar al servicio para guardar la nueva transferencia
-    //return this.transaccionesService.guardarNuevaTransferencia(this.datosTransferencia, montoATransferirOkNum);
+    return of (this.datosTransferencia);
   }
 }
 

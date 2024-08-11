@@ -69,38 +69,11 @@ export class TransaccionesService {
       });
     }
 
-    guardarNuevaTransferencia() {
-      
-    }
+  guardarNuevaTransferencia(datosTransferencia: any): Observable<any> {
+    console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
+    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(
+      tap(() => console.log('Transferencia guardada correctamente'))
+    );
+  }
 
-    /*guardarNuevaTransferencia(nuevaTransferencia: CuentaCorriente, montoATransferir: number): Observable<CuentaCorriente> {
-      // Obtener el último saldo de la base de datos
-      return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
-        map(transacciones => {
-          // Ordenar las transacciones por fecha descendente y obtener la más reciente
-          const ultimaTransaccion = transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
-          return {
-            ultimoSaldo: ultimaTransaccion.saldo,
-            nuevoId: transacciones.length + 1 // Asignar un nuevo ID basado en la longitud de las transacciones
-          };
-        }),
-        map(({ ultimoSaldo, nuevoId }) => {
-          // Restar el monto a transferir del último saldo
-          const nuevoSaldo = ultimoSaldo - montoATransferir;
-          // Asignar el nuevo saldo y el nuevo ID a la nueva transferencia
-          nuevaTransferencia.saldo = nuevoSaldo;
-          nuevaTransferencia.id_trans_cta_cte = nuevoId;
-          return nuevaTransferencia;
-        }),
-        // Guardar la nueva transferencia en la base de datos
-        switchMap(nuevaTrans => this.http.post<CuentaCorriente>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, nuevaTrans)),
-        tap(response => {
-          console.log('Nueva transferencia guardada:', response);
-        }),
-        catchError(error => {
-          console.error('Error al guardar la nueva transferencia:', error);
-          return throwError(error);
-        })
-      );
-    }*/
 }
