@@ -94,6 +94,9 @@ export class VisaPagoComponent implements OnInit {
   saldo: any;
   abono: any;
   cupo: any;
+  saldoCtaCte: any;
+  saldoLineaCredito: any;
+  cupoLineaCredito: any;
 
   nombreCuenta: string | undefined;
   datosTransaccion: any = {};
@@ -102,8 +105,12 @@ export class VisaPagoComponent implements OnInit {
   montoPagoMinimo = '';
 
   datosPagoVisa: any;
+  datosTransaccionCtaCte: any;
+  datosTransaccionLineaCredito: any;
 
   ultimoIdTransVisa: any;
+  ultimoIdTransCtaCte: any;
+  ultimoIdTransLineaCre: any;
   
 
 
@@ -151,48 +158,38 @@ export class VisaPagoComponent implements OnInit {
         this.ultimoIdTransVisa = ultimoIdTransVisa;
         this.saldoUltimaTransaccionVisa = saldoUltimaTransaccionVisa;
         this.cupoUsadoUltimaTransaccionVisa = cupoUsadoUltimaTransaccionVisa;
-        
-        console.log('Último id_trans_visa:', this.ultimoIdTransVisa);
-      } else {
-        console.log('No hay transacciones disponibles.');
       }
     });
 
-    /*this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
-      if (transaccionesVisa && transaccionesVisa.length > 0) {
-        // Ordenar las transacciones por ID en orden descendente
-        transaccionesVisa.sort((a, b) => b.id_trans_visa - a.id_trans_visa);
-    
-        // Obtener la última transacción (primer elemento después de ordenar)
-        const ultimaTransaccion = transaccionesVisa[0];
-    
-        this.saldoUltimaTransaccionVisa = ultimaTransaccion.saldo;
-        this.cupoUsadoUltimaTransaccionVisa = ultimaTransaccion.cupo_usado;
-    
-        // Actualizar el valor del campo inputMontoPagoTotal
-        this.pagoVisaForm.patchValue({
-          inputMontoPagoTotal: this.cupoUsadoUltimaTransaccionVisa
-        });
-      } else {
-        this.saldoUltimaTransaccionVisa = null;
-        this.cupoUltimaTransaccionVisa = null;
-      }
-    });*/
-
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
-      if (transaccionesCtaCte) {
-        this.transaccionesCtaCte = transaccionesCtaCte;
-        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
+      if (transaccionesCtaCte.length > 0) {
+        // Ordenar las transacciones por id_trans_visa en orden ascendente
+        transaccionesCtaCte.sort((a, b) => a.id_trans_cta_cte - b.id_trans_cta_cte);
+        
+        // Obtener el último valor de id_trans_visa
+        const ultimoIdTransCtaCte = transaccionesCtaCte[transaccionesCtaCte.length - 1].id_trans_cta_cte;
+        const saldoUltimaTransaccionCtaCte = transaccionesCtaCte[transaccionesCtaCte.length - 1].saldo;
+        
+        // Guardar el valor en una variable
+        this.ultimoIdTransCtaCte = ultimoIdTransCtaCte;
+        this.saldoUltimaTransaccionCtaCte = saldoUltimaTransaccionCtaCte;
       }
     });
   
     this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
-      if (transaccionesLineaCre) {
-        this.transaccionesLineaCre = transaccionesLineaCre;
-        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
-        this.cupoUsadoUltimaTransaccionLineaCre = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].cupo_usado : null;
+      if (transaccionesLineaCre.length > 0) {
+        // Ordenar las transacciones por id_trans_visa en orden ascendente
+        transaccionesLineaCre.sort((a, b) => a.id_trans_linea_cre - b.id_trans_linea_cre);
+        
+        // Obtener el último valor de id_trans_visa
+        const ultimoIdTransLineaCre = transaccionesLineaCre[transaccionesLineaCre.length - 1].id_trans_linea_cre;
+        const saldoUltimaTransaccionLineaCredito = transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo;
+        const cupoUsadoUltimaTransaccionLineaCre = transaccionesLineaCre[transaccionesLineaCre.length - 1].cupo_usado;
+        
+        // Guardar el valor en una variable
+        this.ultimoIdTransLineaCre = ultimoIdTransLineaCre;
+        this.saldoUltimaTransaccionLineaCredito = saldoUltimaTransaccionLineaCredito;
+        this.cupoUsadoUltimaTransaccionLineaCre = cupoUsadoUltimaTransaccionLineaCre;
       }
     });
 
@@ -476,6 +473,7 @@ export class VisaPagoComponent implements OnInit {
     modalPago.show();
     this.realizarPagoVisa().subscribe(datosPagoVisa => {
       console.log('Datos de pago visa capturados:', datosPagoVisa); // Verificar datos capturados
+      this.transaccionesService.getTransCuentaCorriente();
       this.transaccionesService.guardarPagoVisa(datosPagoVisa).subscribe(
         (response) => {
           console.log('Pago visa correcto:', response); // Verificar respuesta del servicio
@@ -541,19 +539,28 @@ export class VisaPagoComponent implements OnInit {
     const abono: any = montoTotal || montoOtro;
     const saldo: any = this.saldoUltimaTransaccionVisa;
     const cupo: any = this.cupoUsadoUltimaTransaccionVisa;
+    const saldoCtaCte: any = this.saldoUltimaTransaccionCtaCte;
+    const saldoLineaCredito: any = this.saldoUltimaTransaccionLineaCredito;
+    const cupoLineaCredito: any = this.cupoUsadoUltimaTransaccionLineaCre;
     let productoParaPagoValue = this.pagoVisaForm.get('productoParaPago')?.value;
 
     // Convertir abono, saldo y cupo a número
     const abonoNumero = Number(abono.replace(/\D/g, ''));
     const saldoNumero = Number(saldo);
     const cupoNumero = Number(cupo);
+    const saldoCtaCteNumero = Number(saldoCtaCte);
+    const saldoLineaCreditoeNumero = Number(saldoLineaCredito);
+    const cupoLineaCreditoNumero = Number(cupoLineaCredito);
   
     if (productoParaPagoValue === '1') {
       this.saldo = saldoNumero + abonoNumero;
+      this.saldoCtaCte = saldoCtaCteNumero - abonoNumero;
       this.cupo = cupoNumero + abonoNumero;
       this.abono = abonoNumero;
     } else if (productoParaPagoValue === '2') {
       this.saldo = saldoNumero + abonoNumero;
+      this.saldoLineaCredito = saldoLineaCreditoeNumero - abonoNumero;
+      this.cupoLineaCredito = cupoLineaCreditoNumero - abonoNumero;
       this.cupo = cupoNumero + abonoNumero;
       this.abono = abonoNumero;
     }
@@ -594,6 +601,8 @@ export class VisaPagoComponent implements OnInit {
     }
 
     const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
+    const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
+    const nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
 
     this.datosPagoVisa = {
       id_trans_visa: nuevoIdTransVisa,
@@ -605,10 +614,78 @@ export class VisaPagoComponent implements OnInit {
       cupo_usado: this.cupo
     };
 
-    console.table(this.datosPagoVisa);
+    if (productoParaPagoValue === '1') {
+      this.datosTransaccionCtaCte = {
+        id_trans_cta_cte: nuevoIdTransCtaCte,
+        fecha: fechaFormateada,
+        detalle: 'Pago a Visa',
+        abono: null,
+        cargo: this.abono,
+        saldo: this.saldo,
+      };
+    } else if (productoParaPagoValue === '2') {
+      this.datosTransaccionLineaCredito = {
+        id_trans_linea_cre: nuevoIdTransLineaCre,
+        fecha: fechaFormateada,
+        detalle: 'Pago a Visa',
+        abono: null,
+        cargo: this.abono,
+        saldo: this.saldo,
+        cupo_usado: this.cupo
+      };
+    }
 
-    // Llamar al servicio para guardar la nueva transferencia
+    console.table(this.datosPagoVisa);
     return of(this.datosPagoVisa);
   }
+
+  /*pagoConCtaCte(): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+
+    const result = this.calculoPago();
+    console.log('Resultado del cálculo:', result);
+
+    const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
+
+    this.datosTransaccionCtaCte = {
+      id_trans_cta_cte: nuevoIdTransCtaCte,
+      fecha: fechaFormateada,
+      detalle: 'Pago a Visa',
+      transferencia: 0,
+      id_destinatario: null,
+      nombre_destinatario: null,
+      rut_destinatario: null,
+      mensaje: null,
+      cargo: this.abono,
+      abono: null,
+      saldo: this.saldoCtaCte,
+    };
+    return of(this.datosTransaccionCtaCte);
+  }
+
+  pagoConLineaCredito(): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
+
+    const result = this.calculoPago();
+    console.log('Resultado del cálculo:', result);
+
+    const nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
+
+    this.datosTransaccionLineaCredito = {
+      id_trans_linea_Cre: nuevoIdTransLineaCre,
+      fecha: fechaFormateada,
+      detalle: 'Pago a Visa',
+      mensaje: null,
+      cargo: this.abono,
+      abono: null,
+      saldo: this.saldoLineaCredito,
+      cupo_usado: this.cupoLineaCredito
+    };
+    return of(this.datosTransaccionLineaCredito);
+  }*/
 
 }
