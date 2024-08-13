@@ -136,7 +136,6 @@ export class AgregarDestinatarioComponent implements OnInit {
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       this.agenda = agenda;
-      console.log('Agenda:', this.agenda);
     });
   }
 
@@ -163,7 +162,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   validaNombre(): void {
-    const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombreDestinatario');
+    const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombre');
     if (nombreDestinatarioControl) {
       const nombreDestinatario = nombreDestinatarioControl.value as string;
       const palabras = nombreDestinatario.trim().split(' ');
@@ -198,7 +197,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   validaRut(): void {
-    const rutDestinatarioControl = this.crearDestinatarioForm.get('rutDestinatario');
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
     if (rutDestinatarioControl) {
       const rutDestinatario = rutDestinatarioControl.value as any;
   
@@ -241,7 +240,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   validaNumeroCuenta(): void {
-    const numeroCuentaDestinatarioControl = this.crearDestinatarioForm.get('numeroCuentaDestinatario');
+    const numeroCuentaDestinatarioControl = this.crearDestinatarioForm.get('numero_cuenta');
     if (numeroCuentaDestinatarioControl) {
       const numeroCuentaDestinatario = numeroCuentaDestinatarioControl.value as string;
   
@@ -265,8 +264,8 @@ export class AgregarDestinatarioComponent implements OnInit {
     if (emailControl.value.trim() !== '') {
       emailControl.markAsTouched();
   
-      if (emailControl.errors?.['email'] || emailControl.errors?.['customEmail']) {
-        emailControl.setErrors({ 'customEmail': true });
+      if (emailControl.errors?.['email'] || emailControl.errors?.['email']) {
+        emailControl.setErrors({ 'email': true });
       } else {
         emailControl.setErrors(null);
       }
@@ -282,7 +281,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   validaCelular(): void {
-    const celularDestinatarioControl = this.crearDestinatarioForm.get('celularDestinatario');
+    const celularDestinatarioControl = this.crearDestinatarioForm.get('celular');
     if (celularDestinatarioControl) {
       let value = celularDestinatarioControl.value as string;
   
@@ -316,7 +315,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   validaTelefono(): void {
-    const telefonoDestinatarioControl = this.crearDestinatarioForm.get('telefonoDestinatario');
+    const telefonoDestinatarioControl = this.crearDestinatarioForm.get('telefono');
     if (telefonoDestinatarioControl) {
       let value = telefonoDestinatarioControl.value as string;
   
@@ -394,8 +393,6 @@ export class AgregarDestinatarioComponent implements OnInit {
 
         // Enviar los datos al servicio para guardarlos en la base de datos
         this.agendaService.guardarNuevoDestinatario(datosNuevoDestinatario).subscribe(response => {
-          console.log('Datos enviados al servicio:', response);
-
           // Aquí cambias el valor de mostrarBackdropCustomChange a false
           this.mostrarBackdropCustomChange.emit(false);
           this.cancelar();
