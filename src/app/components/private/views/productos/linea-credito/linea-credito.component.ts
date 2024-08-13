@@ -11,10 +11,9 @@ import { DatosFiltradosService } from '../../../../../services/datosFiltrados.se
 })
 export class LineaCreditoComponent implements OnInit {
 
+  productos: Productos[] = [];
   transaccionesFiltradas: LineaCredito[] = [];
   transaccionMasReciente: LineaCredito | null = null;
-
-  productos: Productos[] = [];
   formularioPagoLineaDeCredito = false;
   comprobantePagoLineaDeCredito = false;
   movimientosLineaDeCredito = true;
@@ -28,7 +27,7 @@ export class LineaCreditoComponent implements OnInit {
   paginatedData: any[] | undefined;
   totalPages: any;
   
-  abono: number | null = null;
+  abono: any;
   fecha: any;
   
   constructor(
@@ -47,9 +46,29 @@ export class LineaCreditoComponent implements OnInit {
     this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre) {
         this.fecha = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[0].fecha : null;
-        this.abono = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[0].abono : null;
       }
-      this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+    });
+
+    this.obtenerTransaccionMasRecienteConAbono((ultimoAbono) => {
+      if (ultimoAbono) {
+        this.abono = ultimoAbono.abono;
+      }
+    });
+  }
+
+  obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: LineaCredito | null) => void): void {
+    let ultimoAbono: LineaCredito | null = null;
+
+    this.transaccionesService.getTransLineaCredito().subscribe(transacciones => {
+      const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
+
+      if (transaccionesConAbono.length > 0) {
+        ultimoAbono = transaccionesConAbono.reduce((max, transaccion) => {
+          return (max === null || transaccion.id_trans_linea_cre > max.id_trans_linea_cre) ? transaccion : max;
+        }, null as LineaCredito | null);
+      }
+
+      callback(ultimoAbono);
     });
   }
 
@@ -57,14 +76,6 @@ export class LineaCreditoComponent implements OnInit {
     this.movimientosLineaDeCredito = false;
     this.formularioPagoLineaDeCredito = true;
     this.comprobantePagoLineaDeCredito = false;
-  }
-
-  obtenerTransaccionMasRecienteConAbono(): LineaCredito | null {
-    if (this.transaccionesFiltradas.length === 0) {
-      return null;
-    }
-    return this.transaccionesFiltradas
-      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
   }
 
   // Maneja los datos filtrados

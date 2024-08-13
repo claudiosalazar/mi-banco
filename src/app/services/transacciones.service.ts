@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, forkJoin, map, Observable, switchMap, tap, throwError } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { CuentaCorriente } from '../models/cuenta-corriente.model';
 import { LineaCredito } from '../models/linea-credito.model';
 import { Visa } from '../models/visa.model';
@@ -90,8 +90,8 @@ export class TransaccionesService {
     );
   }
 
-  guardarPagoVisa(datosPagoVisa: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/visa`, datosPagoVisa).pipe(
+  guardarNuevaTransaccionVisa(datosTransaccionVisa: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/visa`, datosTransaccionVisa).pipe(
       tap(() => {
         console.log('Transacción de pago de Visa guardada correctamente');
       })

@@ -28,7 +28,7 @@ export class VisaComponent implements OnInit {
   paginatedData: any[] | undefined;
   totalPages: any;
 
-  abono: number | null = null;
+  abono: any;
   fecha: any;
 
   constructor(
@@ -47,18 +47,30 @@ export class VisaComponent implements OnInit {
     this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
       if (transaccionesVisa) {
         this.fecha = transaccionesVisa.length > 0 ? transaccionesVisa[0].fecha : null;
-        this.abono = transaccionesVisa.length > 0 ? transaccionesVisa[0].abono : null;
       }
-      this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+    });
+
+    this.obtenerTransaccionMasRecienteConAbono((ultimoAbono) => {
+      if (ultimoAbono) {
+        this.abono = ultimoAbono.abono;
+      }
     });
   }
 
-  obtenerTransaccionMasRecienteConAbono(): Visa | null {
-    if (this.transaccionesFiltradas.length === 0) {
-      return null;
-    }
-    return this.transaccionesFiltradas
-      .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
+  obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: Visa | null) => void): void {
+    let ultimoAbono: Visa | null = null;
+
+    this.transaccionesService.getTransVisa().subscribe(transacciones => {
+      const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
+
+      if (transaccionesConAbono.length > 0) {
+        ultimoAbono = transaccionesConAbono.reduce((max, transaccion) => {
+          return (max === null || transaccion.id_trans_visa > max.id_trans_visa) ? transaccion : max;
+        }, null as Visa | null);
+      }
+
+      callback(ultimoAbono);
+    });
   }
 
   mostrarPagoVisa(): void {

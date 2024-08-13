@@ -104,7 +104,7 @@ export class VisaPagoComponent implements OnInit {
   montoFacturado = '';
   montoPagoMinimo = '';
 
-  datosPagoVisa: any;
+  datosTransaccionVisa: any;
   datosTransaccionCtaCte: any;
   datosTransaccionLineaCredito: any;
 
@@ -572,7 +572,7 @@ export class VisaPagoComponent implements OnInit {
     this.mostrarBackdropCustomModal = true;
   
     this.realizarPagoVisa().subscribe(response => {
-      const { datosPagoVisa, pagoConCtaCte, pagoConLineaCredito } = response;
+      const { datosTransaccionVisa, pagoConCtaCte, pagoConLineaCredito } = response;
 
       let datosCapturados: any;
       if (pagoConCtaCte && !pagoConLineaCredito) {
@@ -582,7 +582,7 @@ export class VisaPagoComponent implements OnInit {
       }
   
       // Guardar datos en la base de datos
-      this.transaccionesService.guardarPagoVisa(datosPagoVisa).subscribe(
+      this.transaccionesService.guardarNuevaTransaccionVisa(datosTransaccionVisa).subscribe(
         (_response) => {
           if (pagoConCtaCte && !pagoConLineaCredito) {
             this.transaccionesService.guardarNuevaTransaccionCtaCte(datosCapturados).subscribe(
@@ -667,7 +667,7 @@ export class VisaPagoComponent implements OnInit {
   
     const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
   
-    this.datosPagoVisa = {
+    this.datosTransaccionVisa = {
       id_trans_visa: nuevoIdTransVisa,
       fecha: fechaFormateada,
       detalle: 'Pago realizado desde ' + nombreProducto,
@@ -684,7 +684,7 @@ export class VisaPagoComponent implements OnInit {
     }
   
     return of({
-      datosPagoVisa: this.datosPagoVisa,
+      datosTransaccionVisa: this.datosTransaccionVisa,
       pagoConCtaCte: this.pagoConCtaCte,
       pagoConLineaCredito: this.pagoConLineaCredito
     });
