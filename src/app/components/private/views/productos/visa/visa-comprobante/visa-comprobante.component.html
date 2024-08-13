@@ -1,3 +1,45 @@
-<p>
-  visa-comprobante works!
-</p>
+<div class="container pb-5">
+  <div class="row">
+    <div class="col-12 col-xl-10 px-4 mx-auto">
+      <div class="card mt-4 mt-md-5">
+        <div class="row">
+          <div class="col-12 columna-transferencia-realizada"></div>
+          <div class="col-12">
+            <h2 class="mb-3 mt-0 text-center comprobante px-3">Tu pago se realizo con exito</h2>
+            <p class="mb-4 text-center px-3">
+              Se abono a tu tarjeta de credito<br> <strong>Visa {{ numero_producto | numeroTarjeta }}</strong> un monto de:
+            </p>
+            <hr>
+            <span class="p-0 text-center monto-transferido d-block">
+              <strong>{{ abonoUltimaTransaccionVisa | pesos }}</strong>
+            </span>
+            <hr>
+            <p class="text-center ps-5 pe-5 mb-4">Enviamos el comprobante de pago a email <strong class="tinto">{{ email }}</strong>.</p>
+          </div>
+          <div class="col-12 mt-3 mb-5 px-5 d-flex justify-content-end flex-column flex-md-row justify-content-center">
+            <button type="button" class="btn btn-secundario me-0 me-md-3 mb-3 mb-md-0" routerLink="/mibanco/productos/visa">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  chevron_left
+                </div>
+                <div>
+                  Volver
+                </div>
+              </div>
+            </button>
+            <button type="button" class="btn btn-primario" >
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="material-symbols-outlined">
+                  picture_as_pdf
+                </div>
+                <div>
+                  Descargar comprobante
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

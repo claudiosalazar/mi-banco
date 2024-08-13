@@ -17,7 +17,7 @@ import { UrlBrowserService } from '../../../../../../services/urlBrowser.service
 import { NumeroTarjetaPipe } from '../../../../../../shared/pipes/numero-tarjeta.pipe';
 import { PesosPipe } from './../../../../../../shared/pipes/pesos.pipe';
 import { DatePipe } from '@angular/common';
-import { delay, map, Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -51,7 +51,7 @@ export class VisaPagoComponent implements OnInit {
   saldoUltimaTransaccionVisa: number | undefined;
   saldoUltimaTransaccionCtaCte: number | undefined;
   saldoUltimaTransaccionLineaCredito: number | undefined;
-  cupoUsadoUltimaTransaccionLineaCre: number | undefined;
+  cupoUsadoUltimaTransaccionLineaCredito: number | undefined;
   cupoUsadoUltimaTransaccionVisa: number | undefined;
   cupoUltimaTransaccionVisa: number | undefined;
   montoPagado: any;
@@ -112,7 +112,8 @@ export class VisaPagoComponent implements OnInit {
   ultimoIdTransCtaCte: any;
   ultimoIdTransLineaCre: any;
   
-
+  pagoConCtaCte = false;
+  pagoConLineaCredito = false; 
 
   constructor(
     private productosService: ProductosService,
@@ -142,6 +143,12 @@ export class VisaPagoComponent implements OnInit {
 
         this.actualizarOpcionesDePago();
       }
+
+      this.pagoVisaForm.get('montoPago')?.valueChanges.subscribe(value => {
+        if (value === 'pagoTotal') {
+          this.validaMontoPagoTotal();
+        }
+      });
     });
 
     this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
@@ -159,6 +166,7 @@ export class VisaPagoComponent implements OnInit {
         this.saldoUltimaTransaccionVisa = saldoUltimaTransaccionVisa;
         this.cupoUsadoUltimaTransaccionVisa = cupoUsadoUltimaTransaccionVisa;
       }
+      console.log('Cupo usado en la última transacción Visa:', this.cupoUsadoUltimaTransaccionVisa);
     });
 
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
@@ -184,12 +192,13 @@ export class VisaPagoComponent implements OnInit {
         // Obtener el último valor de id_trans_visa
         const ultimoIdTransLineaCre = transaccionesLineaCre[transaccionesLineaCre.length - 1].id_trans_linea_cre;
         const saldoUltimaTransaccionLineaCredito = transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo;
-        const cupoUsadoUltimaTransaccionLineaCre = transaccionesLineaCre[transaccionesLineaCre.length - 1].cupo_usado;
+        const cupoUsadoUltimaTransaccionLineaCredito = transaccionesLineaCre[transaccionesLineaCre.length - 1].cupo_usado;
+        console.log('Ultimo ID:', ultimoIdTransLineaCre);
         
         // Guardar el valor en una variable
         this.ultimoIdTransLineaCre = ultimoIdTransLineaCre;
         this.saldoUltimaTransaccionLineaCredito = saldoUltimaTransaccionLineaCredito;
-        this.cupoUsadoUltimaTransaccionLineaCre = cupoUsadoUltimaTransaccionLineaCre;
+        this.cupoUsadoUltimaTransaccionLineaCredito = cupoUsadoUltimaTransaccionLineaCredito;
       }
     });
 
@@ -222,7 +231,14 @@ export class VisaPagoComponent implements OnInit {
       const transformedValue = this.pesosPipe.transform(value);
       this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(transformedValue, { emitEvent: false });
     });
-
+  
+    // Suscribirse a los cambios del control montoPago
+    this.pagoVisaForm.controls['montoPago'].valueChanges.subscribe((value) => {
+      if (value === 'pagoTotal') {
+        this.pagoVisaForm.controls['inputMontoPagoTotal'].setValue(this.cupoUsadoUltimaTransaccionVisa);
+      }
+    });
+  
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
@@ -233,7 +249,7 @@ export class VisaPagoComponent implements OnInit {
       });
       return modal;
     });
-
+  
     this.validaFormulario();
   }
 
@@ -252,6 +268,12 @@ export class VisaPagoComponent implements OnInit {
       const isInvalid = control.value === '0';
       return isInvalid ? { 'productoInvalido': { value: control.value } } : null;
     };
+  }
+
+  onMontoPagoChange(event: any): void {
+    if (event.target.value === 'pagoTotal') {
+      console.log(this.cupoUsadoUltimaTransaccionVisa);
+    }
   }
 
   // Valida que el mail tengo un punto y al menos dos caracteres después del punto
@@ -285,12 +307,6 @@ export class VisaPagoComponent implements OnInit {
     } else {
       this.pagoVisaForm.controls['montoPago'].disable();
       this.pagoVisaForm.controls['inputOtroMonto'].disable();
-    }
-  }
-
-  onMontoPagoChange(event: any): void {
-    if (event.target.value === 'pagoTotal') {
-      console.log(this.cupoUsadoUltimaTransaccionVisa);
     }
   }
 
@@ -403,12 +419,21 @@ export class VisaPagoComponent implements OnInit {
         return; // Detener validaciones si hay error3
       } else {
         this.error3 = false;
+      }
+  
+      // Validación 3: Comparar con cupoUsadoUltimaTransaccionVisa
+      if (this.cupoUsadoUltimaTransaccionVisa !== undefined && numericInputMontoPagoTotal > this.cupoUsadoUltimaTransaccionVisa) {
+        this.error3 = true;
+        this.pagoTotalValido = false;
+        console.log('valor superior al cupo usado');
+        return; // Detener validaciones si hay error3
+      } else {
+        this.error3 = false;
         this.pagoTotalValido = true;
         console.log('valido');
       }
     }
   }
-
 
   resetValidacionesInputOtroMonto() {
     // Limpia el valor ingresado en inputOtroMonto
@@ -467,38 +492,6 @@ export class VisaPagoComponent implements OnInit {
     
   }
 
-  abrirModalPagoVisa(): void {
-    var modalPago = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {});
-    this.mostrarBackdropCustomModal = true;
-    modalPago.show();
-    this.realizarPagoVisa().subscribe(datosPagoVisa => {
-      console.log('Datos de pago visa capturados:', datosPagoVisa); // Verificar datos capturados
-      this.transaccionesService.getTransCuentaCorriente();
-      this.transaccionesService.guardarPagoVisa(datosPagoVisa).subscribe(
-        (response) => {
-          console.log('Pago visa correcto:', response); // Verificar respuesta del servicio
-          this.pagoCorrecto = true;
-          this.errorServer = false;
-          of(null).pipe(
-            delay(1500)
-          ).subscribe(() => {
-            this.mostrarBackdropCustomModal = false;
-            modalPago.hide();
-            //this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
-          });
-        },
-        (error) => {
-          console.error('Error al guardar el pago:', error); // Manejar errores
-          if (error.status === 500) {
-            console.error('Error 500: Problema en el servidor');
-          }
-          this.pagoCorrecto = false;
-          this.errorServer = true;
-        }
-      );
-    });
-  }
-
   // Permite ingresar solo caracteres numéricos en el input
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -532,7 +525,7 @@ export class VisaPagoComponent implements OnInit {
     console.log('inputOtroMonto:', montoOtroControl);
   
     // Asignar los valores de los controles a las variables correspondientes
-    const montoTotal = montoTotalControl ? montoTotalControl.value : '';
+    const montoTotal = montoTotalControl ? montoTotalControl.value : this.cupoUsadoUltimaTransaccionVisa;
     const montoOtro = montoOtroControl ? montoOtroControl.value : '';
   
     // Calcular el monto pagado
@@ -541,9 +534,9 @@ export class VisaPagoComponent implements OnInit {
     const cupo: any = this.cupoUsadoUltimaTransaccionVisa;
     const saldoCtaCte: any = this.saldoUltimaTransaccionCtaCte;
     const saldoLineaCredito: any = this.saldoUltimaTransaccionLineaCredito;
-    const cupoLineaCredito: any = this.cupoUsadoUltimaTransaccionLineaCre;
+    const cupoLineaCredito: any = this.cupoUsadoUltimaTransaccionLineaCredito;
     let productoParaPagoValue = this.pagoVisaForm.get('productoParaPago')?.value;
-
+  
     // Convertir abono, saldo y cupo a número
     const abonoNumero = Number(abono.replace(/\D/g, ''));
     const saldoNumero = Number(saldo);
@@ -572,9 +565,77 @@ export class VisaPagoComponent implements OnInit {
       cupoUsadoUltimaTransaccionVisa: this.cupo,
       saldoUltimaTransaccionVisa: this.saldo,
     };
-}
+  }
 
+  abrirModalPagoVisa(): void {
+    var modalPago = new bootstrap.Modal(document.getElementById('modalPagoVisa'), {});
+    this.mostrarBackdropCustomModal = true;
   
+    this.realizarPagoVisa().subscribe(response => {
+      const { datosPagoVisa, pagoConCtaCte, pagoConLineaCredito } = response;
+
+      let datosCapturados: any;
+      if (pagoConCtaCte && !pagoConLineaCredito) {
+        datosCapturados = this.datosTransaccionCtaCte;
+      } else if (!pagoConCtaCte && pagoConLineaCredito) {
+        datosCapturados = this.datosTransaccionLineaCredito;
+      }
+  
+      // Guardar datos en la base de datos
+      this.transaccionesService.guardarPagoVisa(datosPagoVisa).subscribe(
+        (_response) => {
+          if (pagoConCtaCte && !pagoConLineaCredito) {
+            this.transaccionesService.guardarNuevaTransaccionCtaCte(datosCapturados).subscribe(
+              (_response) => {
+                this.pagoCorrecto = true;
+                this.errorServer = false;
+                this.ocultarModalDespuesDeRetraso(modalPago);
+              },
+              (error) => {
+                this.manejarErrorGuardarPago(error);
+              }
+            );
+          } else if (!pagoConCtaCte && pagoConLineaCredito) {
+            this.transaccionesService.guardarNuevaTransaccionLineaCredito(datosCapturados).subscribe(
+              (_response) => {
+                this.pagoCorrecto = true;
+                this.errorServer = false;
+                this.ocultarModalDespuesDeRetraso(modalPago);
+              },
+              (error) => {
+                this.manejarErrorGuardarPago(error);
+              }
+            );
+          }
+        },
+        (error) => {
+          this.manejarErrorGuardarPago(error);
+        }
+      );
+  
+      modalPago.show();
+    });
+  }
+  
+  private ocultarModalDespuesDeRetraso(modalPago: any): void {
+    of(null).pipe(
+      delay(1500)
+    ).subscribe(() => {
+      this.mostrarBackdropCustomModal = false;
+      modalPago.hide();
+      this.urlBrowserService.navegarAComprobanteVisa();
+    });
+  }
+  
+  private manejarErrorGuardarPago(error: any): void {
+    console.error('Error al guardar el pago:', error); // Manejar errores
+    if (error.status === 500) {
+      console.error('Error 500: Problema en el servidor');
+    }
+    this.pagoCorrecto = false;
+    this.errorServer = true;
+    this.mostrarBackdropCustomModal = false;
+  }
 
   realizarPagoVisa(): Observable<any> {
     const datePipe = new DatePipe('en-US');
@@ -584,62 +645,52 @@ export class VisaPagoComponent implements OnInit {
     const productoLineaCredito = '2';
     const nombreProducto1 = 'Cuenta Corriente';
     const nombreProducto2 = 'Línea de Crédito';
-
+  
     const result = this.calculoPago();
     console.log('Resultado del cálculo:', result);
     
     let nombreProducto = '';
     let tipoProducto = '';
-
+  
     const productoParaPagoValue = this.pagoVisaForm.get('productoParaPago')?.value;
     if (productoParaPagoValue === productoCtaCte) {
       nombreProducto = nombreProducto1;
       tipoProducto = 'Cuenta Corriente';
+      this.pagoConCtaCte = true;
+      this.pagoConLineaCredito = false;
     } else if (productoParaPagoValue === productoLineaCredito) {
       nombreProducto = nombreProducto2;
       tipoProducto = 'Línea de Crédito';
+      this.pagoConCtaCte = false;
+      this.pagoConLineaCredito = true;
     }
-
+  
     const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
-    const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
-    const nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
-
+  
     this.datosPagoVisa = {
       id_trans_visa: nuevoIdTransVisa,
       fecha: fechaFormateada,
       detalle: 'Pago realizado desde ' + nombreProducto,
-      abono: this.abono,
+      abono: result.abono, // Utiliza el valor retornado por calculoPago()
       cargo: null,
-      saldo: this.saldo,
-      cupo_usado: this.cupo
+      saldo: result.saldoUltimaTransaccionVisa, // Utiliza el valor retornado por calculoPago()
+      cupo_usado: result.cupoUsadoUltimaTransaccionVisa // Utiliza el valor retornado por calculoPago()
     };
-
-    if (productoParaPagoValue === '1') {
-      this.datosTransaccionCtaCte = {
-        id_trans_cta_cte: nuevoIdTransCtaCte,
-        fecha: fechaFormateada,
-        detalle: 'Pago a Visa',
-        abono: null,
-        cargo: this.abono,
-        saldo: this.saldo,
-      };
-    } else if (productoParaPagoValue === '2') {
-      this.datosTransaccionLineaCredito = {
-        id_trans_linea_cre: nuevoIdTransLineaCre,
-        fecha: fechaFormateada,
-        detalle: 'Pago a Visa',
-        abono: null,
-        cargo: this.abono,
-        saldo: this.saldo,
-        cupo_usado: this.cupo
-      };
+  
+    if (this.pagoConCtaCte) {
+      this.realizarPagoConCtaCte();
+    } else if (this.pagoConLineaCredito) {
+      this.realizarPagoConLineaCredito();
     }
-
-    console.table(this.datosPagoVisa);
-    return of(this.datosPagoVisa);
+  
+    return of({
+      datosPagoVisa: this.datosPagoVisa,
+      pagoConCtaCte: this.pagoConCtaCte,
+      pagoConLineaCredito: this.pagoConLineaCredito
+    });
   }
 
-  /*pagoConCtaCte(): Observable<any> {
+  realizarPagoConCtaCte(): Observable<any> {
     const datePipe = new DatePipe('en-US');
     const fecha = new Date();
     const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
@@ -662,10 +713,11 @@ export class VisaPagoComponent implements OnInit {
       abono: null,
       saldo: this.saldoCtaCte,
     };
+    //console.table(this.datosTransaccionCtaCte);
     return of(this.datosTransaccionCtaCte);
   }
 
-  pagoConLineaCredito(): Observable<any> {
+  realizarPagoConLineaCredito(): Observable<any> {
     const datePipe = new DatePipe('en-US');
     const fecha = new Date();
     const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
@@ -676,16 +728,21 @@ export class VisaPagoComponent implements OnInit {
     const nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
 
     this.datosTransaccionLineaCredito = {
-      id_trans_linea_Cre: nuevoIdTransLineaCre,
+      id_trans_linea_cre: nuevoIdTransLineaCre,
       fecha: fechaFormateada,
       detalle: 'Pago a Visa',
+      transferencia: 0,
+      id_destinatario: null,
+      nombre_destinatario: null,
+      rut_destinatario: null,
       mensaje: null,
       cargo: this.abono,
       abono: null,
       saldo: this.saldoLineaCredito,
       cupo_usado: this.cupoLineaCredito
     };
+    console.table(this.datosTransaccionLineaCredito);
     return of(this.datosTransaccionLineaCredito);
-  }*/
+  }
 
 }

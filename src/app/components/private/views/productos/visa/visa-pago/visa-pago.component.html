@@ -23,9 +23,6 @@
                 <h4 class="tinto">Datos de pago</h4>
               </div>
 
-
-
-
               <!-- Inicio formulario -->
               <form [formGroup]="pagoVisaForm">
                 <!-- Producto para pago -->
@@ -41,8 +38,6 @@
                       (change)="onProductoSeleccionado($event); resetValidacionesInputPagoTotal()"
                       >
                     </mb-custom-select>
-                    <!-- <small class="pt-2 d-block" *ngIf="productoSeleccionado === '0' && productoSeleccionado !== '1'">Saldo: <strong>{{ saldoUltimaTransaccionCtaCte | pesos }}</strong></small>
-                    <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1' && productoSeleccionado !== '0'">Saldo: <strong>{{ saldoUltimaTransaccionLineaCredito | pesos }}</strong></small> -->
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoUltimaTransaccionCtaCte | pesos }}</strong></small>
                     <small class="pt-2 d-block" *ngIf="productoSeleccionado === '2'">Saldo: <strong>{{ saldoUltimaTransaccionLineaCredito | pesos }}</strong></small>
                     <div *ngIf="submitted && pagoVisaForm.get('productoParaPago')?.errors?.['productoInvalido']"
@@ -80,7 +75,7 @@
                       [class.is-valid]="pagoTotalValido">
                     <label for="inputMontoPagoTotal">Pago Total</label>
                     <div *ngIf="error3" class="invalid-feedback">
-                      <span>El monto para el pago es superior al saldo.</span>
+                      <span>El monto para el pago es superior al saldo o al cupo usado.</span>
                     </div>
                     <div *ngIf="pagoTotalValido" class="valid-feedback">
                       <span>El monto es correcto.</span>
