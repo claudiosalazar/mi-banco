@@ -20,6 +20,9 @@ export class AgendaService {
   private destinatarioAgregado = new BehaviorSubject<void>(undefined);
   destinatarioAgregado$ = this.destinatarioAgregado.asObservable();
 
+  private datosNuevoDestinatarioSource = new Subject<any>();
+  nuevoDestinatarioGuardado = new Subject<void>();
+
   currentId = this.idSource.asObservable();
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
@@ -72,6 +75,17 @@ export class AgendaService {
 
   getDestinatarioById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
+  }
+
+  emitirDatosNuevoDestinatario(datos: any): void {
+    if (datos !== undefined) {
+      console.log('Datos recibidos en emitirDatosNuevoDestinatario:', datos);
+      this.datosNuevoDestinatarioSource.next(datos);
+    }
+  }
+
+  getDatosNuevoDestinatario(): Observable<any> {
+    return this.datosNuevoDestinatarioSource.asObservable();
   }
 
   guardarNuevoDestinatario(agenda: Agenda): Observable<any> {

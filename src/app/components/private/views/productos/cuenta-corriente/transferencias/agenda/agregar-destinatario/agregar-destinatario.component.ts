@@ -14,6 +14,7 @@ import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-
 export class AgregarDestinatarioComponent implements OnInit {
 
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
+  @Output() nuevoDestinatarioGuardado = new EventEmitter<void>();
   @Output() cancelarEvent = new EventEmitter<void>();
 
   agenda: any[] = [];
@@ -360,7 +361,7 @@ export class AgregarDestinatarioComponent implements OnInit {
     }
   }
 
-  guardaNuevoDestinatario(): void {
+  enviarDatosNuevoDestinatario(): void {
     this.submitted = true;
 
     // Verifica que todos los campos del formulario estén llenos
@@ -391,12 +392,13 @@ export class AgregarDestinatarioComponent implements OnInit {
         const nuevoId = Math.max(...ids) + 1;
         datosNuevoDestinatario.id = nuevoId;
 
-        // Enviar los datos al servicio para guardarlos en la base de datos
-        this.agendaService.guardarNuevoDestinatario(datosNuevoDestinatario).subscribe(response => {
-          // Aquí cambias el valor de mostrarBackdropCustomChange a false
-          this.mostrarBackdropCustomChange.emit(false);
-          this.cancelar();
-        });
+        console.log('Datos que se enviarán:', datosNuevoDestinatario);
+  
+        // Envía los datos al servicio
+        this.agendaService.emitirDatosNuevoDestinatario(datosNuevoDestinatario);
+  
+        // Aquí cambias el valor de mostrarBackdropCustomChange a false
+        this.mostrarBackdropCustomChange.emit(false);
       });
     }
   }

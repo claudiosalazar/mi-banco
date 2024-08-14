@@ -229,7 +229,60 @@
 </div>
 
 <!-- Modal nuevo destinatario -->
-<mb-modal-nuevo-destinatario></mb-modal-nuevo-destinatario>
+<div class="modal posicion fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body" *ngIf="enviandoNuevoDestinatario">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined mensajes cargando me-3">
+            sync
+          </span>
+          <span class="mb-3 titulo-modal">Se estan guardando los nuevos datos del nuevo destinatario.</span>
+        </div>
+        <div class="w-100 text-center mt-3 pb-3">
+          <span>Espera un momento por favor.</span>
+        </div>
+      </div>
+
+      <div *ngIf="datosGuardadosNuevoDestinatario">
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
+              done
+            </span>
+            <span class="titulo-modal">El nuevo destinatario se guardo con éxito.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="errorServerNuevoDestinatario">
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <span class="icono material-symbols-outlined d-block me-3 mensajes error">
+              Error
+            </span>
+            <div>
+              <span class="titulo-modal mb-3">Hubo un error al intentar guardar el nuevo destinatario.</span>
+              <span>Intento mas tarde.</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- Modal edición destinatario -->
 <div class="modal posicion fade" id="modalEdicionDestinatario" tabindex="-1" aria-labelledby="modalEdicionDestinatario" aria-hidden="true" >

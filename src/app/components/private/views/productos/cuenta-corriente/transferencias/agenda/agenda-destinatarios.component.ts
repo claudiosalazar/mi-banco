@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { AgendaService } from '../../../../../../../services/agenda.service';
 import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { FormControl } from '@angular/forms';
@@ -63,6 +63,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   busquedaDestinatarios = new FormControl('');
   datosOrdenados = new EventEmitter<void>();
+
+  // Variables para modal nuevo destinatario
+  datosNuevoDestinatario: any;
+  enviandoNuevoDestinatario: boolean = true;
+  datosGuardadosNuevoDestinatario: boolean = false;
+  errorServerNuevoDestinatario: boolean = false;
+  datosCapturados: any;
+
 
   enviandoDestinatarioEditado: boolean = true;
   datosGuardadosDestinatarioEditado: boolean = false;
@@ -148,11 +156,13 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       })
     );
 
-    /*this.subscription = this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
-      this.datosCapturados = datos;
-      this.abrirModalNuevoDestinatario();
-    });*/
-
+    this.subscription.add(
+      this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
+        this.datosCapturados = datos;
+        console.log('Datos capturados desde el servicio:', this.datosCapturados); // Verificación en consola
+        this.abrirModalNuevoDestinatario();
+      })
+    );
   }
 
   loadData(): void {
@@ -292,6 +302,47 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
   ocultaBackDrop(): void {
     this.backdropService.hide();
+  }
+
+  abrirModalNuevoDestinatario(): void {
+    var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
+    modalNuevoDestinatario.show();
+    this.backdropService.show();
+    this.enviandoNuevoDestinatario = true;
+
+    // Envía los datos al servicio
+    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(nuevoDestinatario => {
+
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.datosGuardadosNuevoDestinatario = true;
+      }, 2000);
+
+      // Ensure destinatarios is an array before pushing
+      if (!this.agenda) {
+        this.agenda = [];
+      }
+      this.agenda.push(nuevoDestinatario);
+
+      // Ordena los destinatarios por nombre en orden ascendente
+      this.agenda = this.agenda?.sort((a, b) => {
+        if (a.nombre && b.nombre) {
+          return a.nombre.localeCompare(b.nombre);
+        } else {
+          return 0;
+        }
+      });
+
+      // Forzar la actualización de los datos en la tabla
+      this.agenda = [...this.agenda];
+      this.cdr.detectChanges();
+
+    }, _error => {
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.errorServerNuevoDestinatario = true;
+      }, 2000);
+    });
   }
 
 }
