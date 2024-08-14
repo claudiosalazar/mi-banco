@@ -43,18 +43,12 @@ export class AgendaService {
     );
   }
 
-  filtrarAgenda(valorBusqueda: string): Observable<any[]> {
+  filtrarAgenda(valorBusqueda: any): Observable<Agenda[]> {
+    const searchStr = String(valorBusqueda).toLowerCase(); // Convertir valorBusqueda a cadena y a minúsculas
+  
     return this.getAgenda().pipe(
-      map(agenda => agenda.filter((agenda: { nombre: string; apodo: string; rut: string; banco: string; tipo_cuenta: string; numero_cuenta: string; email: string; celular: string; telefono: string; }) =>
-        agenda.nombre.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.apodo.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.rut.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.banco.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.tipo_cuenta.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.numero_cuenta.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.email.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.celular.toLowerCase().includes(valorBusqueda.toLowerCase()) ||
-        agenda.telefono.toLowerCase().includes(valorBusqueda.toLowerCase())
+      map(agenda => agenda.filter((item: any) => 
+        Object.values(item).some(value => String(value).toLowerCase().includes(searchStr))
       ))
     );
   }
