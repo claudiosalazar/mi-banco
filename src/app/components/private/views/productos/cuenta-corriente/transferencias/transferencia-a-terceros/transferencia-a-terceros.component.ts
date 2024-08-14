@@ -11,7 +11,7 @@ import { UrlBrowserService } from '../../../../../../../services/urlBrowser.serv
 // Pipes
 import { DatePipe } from '@angular/common';
 import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
-import { delay, Observable, of, Subscription } from 'rxjs';
+import { delay, Observable, of, switchMap } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -52,6 +52,7 @@ export class TransferenciaATercerosComponent implements OnInit {
 
   // Fomularios
   busquedaDestinatarios = new FormControl('');
+  resultados: any[] = [];
   transferenciaATercerosForm: FormGroup = new FormGroup({});
   transaccionesCtaCte: CuentaCorriente[] = [];
   saldoUltimaTransaccionCtaCte: number | null = null;
@@ -148,6 +149,27 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferirOk'].setValue(transformedValue, {emitEvent: false});
+    });
+
+    this.busquedaDestinatarios.valueChanges
+    .pipe(
+      switchMap(valorBusqueda => {
+        if (valorBusqueda) {
+          return this.agendaService.filtrarAgenda(valorBusqueda);
+        } else {
+          this.currentPage = 1;
+          this.agenda = [...this.originalData];
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+          return of(this.originalData);
+        }
+      })
+    )
+    .subscribe(datosFiltrados => {
+      this.agenda = datosFiltrados;
+      this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+      this.paginarAgenda();
+      this.cdr.detectChanges();
     });
   }
 
