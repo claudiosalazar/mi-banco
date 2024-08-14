@@ -7,21 +7,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class BackdropService {
   // BehaviorSubject que emite un valor cada vez que el estado del backdrop cambia
   private _mostrarBackdropCustomModal: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _mostrarBackdropOffcanvas: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   // Observable al que los componentes pueden suscribirse para saber cuándo cambia el estado del backdrop
   public get mostrarBackdropCustomModal$(): Observable<boolean> {
     return this._mostrarBackdropCustomModal.asObservable();
   }
 
+  public get mostrarBackdropOffcanvas$(): Observable<boolean> {
+    return this._mostrarBackdropOffcanvas.asObservable();
+  }
+
   private observer: MutationObserver | undefined;
   
   constructor() { }
 
-  /**
-   * Inicia la observación de mutaciones en el cuerpo del documento.
-   * Cada vez que se agrega o se elimina un nodo del cuerpo del documento,
-   * verifica si hay un backdrop modal y, si lo hay, lo elimina.
-   */
   public startObserving(): void {
     this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
@@ -29,6 +29,11 @@ export class BackdropService {
           const backdropModal = document.querySelector('.modal-backdrop.fade.show');
           if (backdropModal && backdropModal.parentNode) {
             backdropModal.parentNode.removeChild(backdropModal);
+          }
+
+          const backdropOffcanvas = document.querySelector('.offcanvas-backdrop.fade.show');
+          if (backdropOffcanvas && backdropOffcanvas.parentNode) {
+            backdropOffcanvas.parentNode.removeChild(backdropOffcanvas);
           }
         }
       });
@@ -46,17 +51,23 @@ export class BackdropService {
     }
   }
 
-  /**
-   * Muestra el backdrop.
-   */
-  public show(): void {
+  // Muestra el backdrop modal.
+  public showModalBackdrop(): void {
     this._mostrarBackdropCustomModal.next(true);
   }
 
-  /**
-   * Oculta el backdrop.
-   */
-  public hide(): void {
+  // Oculta el backdrop modal.
+  public hideModalBackdrop(): void {
     this._mostrarBackdropCustomModal.next(false);
+  }
+
+  // Muestra el backdrop offcanvas.
+  public showOffcanvasBackdrop(): void {
+    this._mostrarBackdropOffcanvas.next(true);
+  }
+
+  // Oculta el backdrop offcanvas.
+  public hideOffcanvasBackdrop(): void {
+    this._mostrarBackdropOffcanvas.next(false);
   }
 }

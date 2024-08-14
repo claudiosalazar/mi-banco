@@ -508,7 +508,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   }
 
   ocultaBackDrop(): void {
-    this.backdropService.hide();
+    this.backdropService.hideModalBackdrop();
   }
 
   ocultaMensaje() {
@@ -528,7 +528,7 @@ export class TransferenciaATercerosComponent implements OnInit {
           of(null).pipe(
             delay(1500)
           ).subscribe(() => {
-            this.backdropService.hide();
+            this.backdropService.hideModalBackdrop();
             modalTransferencia.hide();
             this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
           });

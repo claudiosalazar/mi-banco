@@ -242,10 +242,10 @@ export class VisaPagoComponent implements OnInit {
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.backdropService.show();
+        this.backdropService.showModalBackdrop();
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.backdropService.hide();
+        this.backdropService.hideModalBackdrop();
       });
       return modal;
     });
@@ -515,7 +515,7 @@ export class VisaPagoComponent implements OnInit {
 
   ngOnDestroy() {
     this.cancelacionConfirmada.emit();
-    this.backdropService.hide();
+    this.backdropService.hideModalBackdrop();
   }
 
   calculoPago(): any {

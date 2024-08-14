@@ -1,11 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild, HostListener, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener, Renderer2, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { BackdropService } from '../../../services/backdrop.service';
 import { filter } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
-
 import { DatosUsuarioService } from '../../../services/datosUsuario.service';
 import { DatosUsuario } from '../../../models/datos-usuario.model';
 
@@ -46,7 +45,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild('navbarToggler') navbarToggler: ElementRef | undefined;
   @ViewChild('header') headerElement: ElementRef | undefined;
 
-  //datosUsuario: any;
+  private backdropSubscription: Subscription | undefined;
+  private subscription: Subscription | undefined;
+  public modalConsultaAbierto = false;
+  public modalEjecutivoAbierto = false;
+
   primer_nombre: any;
   segundo_nombre: any;
   apellido_paterno: any;
@@ -54,11 +57,11 @@ export class HeaderComponent implements OnInit {
 
   currentState = 'initial';
   currentUrl: any;
-  public modalConsultaAbierto = false;
-  private backdropSubscription: Subscription | undefined;
+
   mostrarBackdropMenuMobile: boolean = false;
-  mostrarBackdropCustomModal = false;
   modales: any[] = [];
+
+  mostrarBackdropCustomModal = false;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -78,7 +81,6 @@ export class HeaderComponent implements OnInit {
     this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
       if (datos.length > 0) {
         const usuario = datos[0];
-        // console.log('Datos del usuario:', usuario);
         this.primer_nombre = usuario.primer_nombre;
         this.segundo_nombre = usuario.segundo_nombre;
         this.apellido_paterno = usuario.apellido_paterno;
@@ -92,6 +94,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     if (this.backdropSubscription) {
       this.backdropSubscription.unsubscribe();
     }
@@ -104,14 +109,14 @@ export class HeaderComponent implements OnInit {
       header.style.paddingBottom = '16px';
       header.style.backgroundColor = 'rgba(116, 45, 72, 1)';
     }
-    
+
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.backdropService.show();
+        this.backdropService.showModalBackdrop();
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.backdropService.hide();
+        this.backdropService.hideModalBackdrop();
       });
       return modal;
     });
@@ -149,11 +154,17 @@ export class HeaderComponent implements OnInit {
     this.modalConsultaAbierto = true;
     var modalConsultas = new bootstrap.Modal(document.getElementById('modalConsultas'), {});
     modalConsultas.show();
-    this.backdropService.show();
+    this.backdropService.showModalBackdrop();
+  }
+
+  abrirModalEjecutivo(): void {
+    this.modalEjecutivoAbierto = true;
+    var modalEjecutivo = new bootstrap.Modal(document.getElementById('modalEjecutivo'), {});
+    modalEjecutivo.show();
+    this.backdropService.showModalBackdrop();
   }
 
   logout() {
     this.authService.logout();
   }
-
 }

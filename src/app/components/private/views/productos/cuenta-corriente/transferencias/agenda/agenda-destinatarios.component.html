@@ -165,14 +165,16 @@
 <!-- Sidenav para crear nuevo destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <div class="contenido-offcanvas">
-    <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event" *ngIf="renderizarAgregarDestinatarioEstado" (cancelarEvent)="onCancelar()"></mb-agregar-destinatario>
+    <!-- <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event" *ngIf="renderizarAgregarDestinatarioEstado" (cancelarEvent)="onCancelar()"></mb-agregar-destinatario> -->
+    <mb-agregar-destinatario *ngIf="renderizarAgregarDestinatarioEstado" (cancelarEvent)="onCancelar()"></mb-agregar-destinatario>
   </div>
 </div>
 
 <!-- Sidenav para editar destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-2" id="editarDestinatarioCanvas">
   <div class="contenido-offcanvas">
-    <mb-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-editar-destinatario>
+    <!-- <mb-editar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-editar-destinatario> -->
+    <mb-editar-destinatario (cancelarEvent)="onCancelar()"></mb-editar-destinatario>
   </div>
 </div>
 

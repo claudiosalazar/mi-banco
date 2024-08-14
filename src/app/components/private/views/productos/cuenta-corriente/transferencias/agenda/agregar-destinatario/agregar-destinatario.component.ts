@@ -13,7 +13,6 @@ import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-
 })
 export class AgregarDestinatarioComponent implements OnInit {
 
-  @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
   @Output() nuevoDestinatarioGuardado = new EventEmitter<void>();
   @Output() cancelarEvent = new EventEmitter<void>();
 
@@ -396,9 +395,6 @@ export class AgregarDestinatarioComponent implements OnInit {
   
         // Envía los datos al servicio
         this.agendaService.emitirDatosNuevoDestinatario(datosNuevoDestinatario);
-  
-        // Aquí cambias el valor de mostrarBackdropCustomChange a false
-        this.mostrarBackdropCustomChange.emit(false);
       });
     }
   }
@@ -413,7 +409,6 @@ export class AgregarDestinatarioComponent implements OnInit {
       }
     });
 
-    this.mostrarBackdropCustomChange.emit(false);
     this.cancelarEvent.emit();
   }
 

@@ -17,6 +17,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
   @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
+  @Output() cancelarEvent = new EventEmitter<void>();
 
   private dataLoaded = new Subject<void>();
 
@@ -449,7 +450,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         control.updateValueAndValidity();
       }
     });
-    this.mostrarBackdropCustomChange.emit(false);
+
+    this.cancelarEvent.emit();
   }
 
 }

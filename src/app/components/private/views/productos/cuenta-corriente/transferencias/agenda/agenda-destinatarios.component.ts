@@ -71,7 +71,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   errorServerNuevoDestinatario: boolean = false;
   datosCapturados: any;
 
-
   enviandoDestinatarioEditado: boolean = true;
   datosGuardadosDestinatarioEditado: boolean = false;
   errorServerDestinatarioEditado: boolean = false;
@@ -94,7 +93,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         if (valorBusqueda) {
           return this.agendaService.filtrarAgenda(valorBusqueda);
         } else {
-          // Resetear a los datos originales y la página a 1
           this.currentPage = 1;
           this.agenda = [...this.originalData];
           this.paginarAgenda();
@@ -138,10 +136,10 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
       el.addEventListener('show.bs.modal', () => {
-        this.backdropService.show();  // Muestra el backdrop
+        this.backdropService.showModalBackdrop();  // Muestra el backdrop
       });
       el.addEventListener('hide.bs.modal', () => {
-        this.backdropService.hide();  // Oculta el backdrop
+        this.backdropService.hideModalBackdrop();  // Oculta el backdrop
       });
       return modal;
     });
@@ -159,7 +157,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
         this.datosCapturados = datos;
-        console.log('Datos capturados desde el servicio:', this.datosCapturados); // Verificación en consola
+        // this.backdropService.hide();
         this.abrirModalNuevoDestinatario();
       })
     );
@@ -227,7 +225,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
     modalEliminarDestinatario.show();
-    this.backdropService.show();
+    this.backdropService.showModalBackdrop();
   }
 
   eliminarDestinatario(): void {
@@ -278,12 +276,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   abrirOffcanvas(): void {
     this.mostrarBackdropCustomOffcanvas.emit(true);
-    this.renderizarAgregarDestinatario.emit(true);
     this.mostrarBackdropCustomOffcanvasEstado = true;
+    this.renderizarAgregarDestinatario.emit(true);
     this.renderizarAgregarDestinatarioEstado = true;
   }
 
   onCancelar(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
     this.renderizarAgregarDestinatarioEstado = false;
     this.renderizarAgregarDestinatario.emit(false);
   }
@@ -297,17 +297,17 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   abrirModalEdicionDestinatario(): void {
     var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
     modalEdicionDestinatario.show();
-    this.backdropService.show();
+    this.backdropService.showModalBackdrop();
   }
   
   ocultaBackDrop(): void {
-    this.backdropService.hide();
+    this.backdropService.hideModalBackdrop();
   }
 
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
-    this.backdropService.show();
+    // this.backdropService.show();
     this.enviandoNuevoDestinatario = true;
 
     // Envía los datos al servicio
