@@ -228,10 +228,8 @@ export class TransferenciaATercerosComponent implements OnInit {
     if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
       this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
     }
-  
-    console.log('Destinatario seleccionado:', this.destinatarioATransferirSeleccionado);
-    console.log('ID Destinatario:', this.id_destinatario);
-    console.log('RUT Destinatario:', this.rut_destinatario);
+
+    this.busquedaDestinatarios.disable();
   }
 
   vaciarMontoATransferir(): void {
@@ -357,6 +355,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   }
 
   cambiarDestinatario(): void {
+    this.busquedaDestinatarios.enable();
     this.pasosTransferencia = false;
     this.ingresarDatos = false;
     this.confirmarDatos = false;
