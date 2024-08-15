@@ -1,9 +1,10 @@
 <div class="col-12">
-  <div class="px-4 pt-0">
+  <!-- <div class="px-4 pt-0">
     <mb-buscador-tabla [tituloBuscador]="'Buscar transferencia'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
+    <mb-buscador-tabla [tituloBuscador]="'Buscar transferencia'"></mb-buscador-tabla>
   </div>
   <mb-tabla-movimientos 
-    [id]="transaccionesFiltradas" 
+    
     [claseTabla]="'tabla-ultimas-transferencias'" 
     [mostrarColumnaDestinatario]="true"
     [mostrarColumnaRut]="true"
@@ -14,5 +15,106 @@
     [mostrarColumnaSaldo]="false"
     [transProducto]="'ctaCte'"
     >
-  </mb-tabla-movimientos>
+  </mb-tabla-movimientos> -->
+
+
+  <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-4 px-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center">
+      <p class="mb-3 mb-md-0 me-3">Buscar transferencia</p>
+      <form class="d-flex ml-5" role="search" >
+        <input class="form-control me-2 buscador" type="search" aria-label="Search" [formControl]="busquedaTransferencia">
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="contenedor-tabla">
+    <table class="table table-striped tabla-ultimas-transferencias" role="table">
+      <thead role="columnheader" role="rowgroup">
+        <tr role="row">
+          <th role="columnheader" (click)="ordenarDatos('fecha'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Fecha
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'fecha'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'fecha'">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <th role="columnheader" (click)="ordenarDatos('nombre_destinatario'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Destinatario
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'nombre_destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'nombre_destinatario'">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <th role="columnheader" (click)="ordenarDatos('rut_destinatario'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Rut
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'rut_destinatario'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'rut_destinatario'">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <th role="columnheader" (click)="ordenarDatos('mensaje'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Mensaje
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'mensaje'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'mensaje'">
+                expand_more
+              </span>
+            </div>
+          </th>
+          <th role="columnheader" (click)="ordenarDatos('cargo'); onHeaderClick()">
+            <div class="d-flex align-items-center">
+              <span class="ancho">
+                <div class="contenido-celda">
+                  Cargo
+                </div>
+              </span>
+              <span class="material-symbols-outlined animar-icono" [class.rotated-in]="isRotatedIn && columnaSeleccionada === 'cargo'" [class.rotated-out]="!isRotatedIn && columnaSeleccionada === 'cargo'">
+                expand_more
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr *ngFor="let transferencia of paginatedTransferencias">
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transferencia.fecha | date:"dd / MM / yyyy"}}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transferencia.nombre_destinatario }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transferencia.rut_destinatario | rut }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transferencia.mensaje }}</span>
+          </td>
+          <td role="cell" class="ancho">
+            <span class="contenido-celda">{{ transferencia.cargo | pesos }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <mb-paginador [datosPaginador]="transferencias" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedTransferencias = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
+  </div>
 </div>

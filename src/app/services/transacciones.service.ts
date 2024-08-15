@@ -69,6 +69,28 @@ export class TransaccionesService {
     });
   }
 
+  filtrarTransferencias(transacciones: (CuentaCorriente | LineaCredito)[], valorBusqueda: string): (CuentaCorriente | LineaCredito)[] {
+    const valorBusquedaLower = valorBusqueda.toLowerCase();
+    return transacciones.filter(transaccion => {
+      // Verificar si la transacción tiene el valor 1 en la columna transferencia
+      if (transaccion.transferencia !== 1) {
+        return false;
+      }
+
+      const fecha = transaccion.fecha ? String(transaccion.fecha).toLowerCase() : '';
+      const nombre_destinatario = 'nombre_destinatario' in transaccion ? String(transaccion.nombre_destinatario).toLowerCase() : '';
+      const rut_destinatario = transaccion.rut_destinatario ? String(transaccion.rut_destinatario).toLowerCase() : '';
+      const mensaje = transaccion.mensaje ? String(transaccion.mensaje).toLowerCase() : '';
+      const cargo = transaccion.cargo ? String(transaccion.cargo).toLowerCase() : '';
+
+      return fecha.includes(valorBusquedaLower) ||
+              nombre_destinatario.includes(valorBusquedaLower) ||
+              rut_destinatario.includes(valorBusquedaLower) ||
+              mensaje.includes(valorBusquedaLower) ||
+              cargo.includes(valorBusquedaLower);
+    });
+}
+
   
   // Function para guardar transferencias
   guardarNuevaTransferencia(datosTransferencia: any): Observable<any> {

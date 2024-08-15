@@ -43,6 +43,30 @@ export class DatosFiltradosService {
     });
   }
 
+  buscarDatosTransferencias(valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito)[]> {
+    return new Observable(observer => {
+      // Obtener transacciones de CuentaCorriente y LineaCredito
+      const transaccionesObservables = [
+        this.transaccionesService.getTransCuentaCorriente(),
+        this.transaccionesService.getTransLineaCredito()
+      ];
+
+      // Combinar las transacciones en un solo array
+      forkJoin(transaccionesObservables).subscribe(
+        (value: (CuentaCorriente[] | LineaCredito[])[]) => {
+          const [cuentaCorriente, lineaCredito] = value;
+          const todasTransacciones = [...cuentaCorriente, ...lineaCredito];
+          const datosFiltrados = this.transaccionesService.filtrarTransferencias(todasTransacciones, valorBusqueda);
+          observer.next(datosFiltrados);
+          observer.complete();
+        },
+        _error => {
+          observer.error('Error al obtener transacciones');
+        }
+      );
+    });
+  }
+
   actualizarDatosFiltrados(datosFiltrados: any[]) {
     console.log('Datos filtrados recibidos:', datosFiltrados); // Verifica que los datos se reciben
     this.datosFiltradosSource.next(datosFiltrados);

@@ -60,6 +60,7 @@ export class TransferenciaATercerosComponent implements OnInit {
 
   // Variable para animacion de icono en th
   agenda: any[] = [];
+  modales: any[] = [];
   paginatedAgenda: any[] = [];
   originalData: any[] = [];
   itemsPerPage = 5;
@@ -103,11 +104,14 @@ export class TransferenciaATercerosComponent implements OnInit {
   inputErrorVacioEmail: any;
   inputValidoEmail: any;
 
-  // Variables para modal
-  mostrarBackdropCustomModal = false;
-  modales: any[] = [];
+  // Variable para backdrop offcanvas
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
-  mostrarBackdropCustomOffcanvasEstado: boolean = false;;
+  mostrarBackdropCustomOffcanvasEstado: boolean = false;
+  
+  // Variables para backdrop modal
+  mostrarBackdropCustomModal = new EventEmitter<boolean>();
+  mostrarBackdropCustomModalEstado: boolean = false;
+
   // Variable para mensajes de modal eliminar
   usuarioEliminado = false;
   errorServer = false;
@@ -374,7 +378,7 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.selectedId = null;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
-    this.mostrarBackdropCustomModal = false;
+    this.mostrarBackdropCustomModalEstado = false;
 
     if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
       this.tablaDestinatarioSeleccionado.nativeElement.classList.remove('paso-ok');
@@ -384,7 +388,7 @@ export class TransferenciaATercerosComponent implements OnInit {
     const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
-      this.mostrarBackdropCustomModal = true;
+      this.mostrarBackdropCustomModalEstado = true;
     }
     
   }
@@ -481,7 +485,7 @@ export class TransferenciaATercerosComponent implements OnInit {
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
     }
-    this.mostrarBackdropCustomModal = false;
+    this.mostrarBackdropCustomModalEstado = false;
 
     if (this.paso1 && this.paso1.nativeElement && this.paso2 && this.paso2.nativeElement) {
       this.paso1.nativeElement.classList.remove('paso-ok');
@@ -521,6 +525,8 @@ export class TransferenciaATercerosComponent implements OnInit {
   abrirModalCambioDestinatario(): void {
     var modalCambiosDestinatario = new bootstrap.Modal(document.getElementById('modalCambiosDestinatario'), {});
     modalCambiosDestinatario.show();
+    this.mostrarBackdropCustomModal.emit(true);
+    this.mostrarBackdropCustomModalEstado = true;
   }
 
   abrirModalCancelarTransferencia(): void {
@@ -611,6 +617,11 @@ export class TransferenciaATercerosComponent implements OnInit {
   
     // Llamar al servicio para guardar la nueva transferencia
     return of (this.datosTransferencia);
+  }
+
+  onCancelar(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
   }
 }
 

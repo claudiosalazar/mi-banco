@@ -335,7 +335,7 @@
 <!-- Sidenav para crear nuevo destinatario -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="crearDestinatarioCanvas">
   <!-- <mb-agregar-destinatario (mostrarBackdropCustomChange)="mostrarBackdropCustomOffcanvasEstado = $event"></mb-agregar-destinatario> -->
-  <mb-agregar-destinatario></mb-agregar-destinatario>
+  <mb-agregar-destinatario (cancelarEvent)="onCancelar()"></mb-agregar-destinatario>
 </div>
 
 <!-- Modal cancelar transferencia -->
@@ -461,8 +461,10 @@
             <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </div>
+
+<div class="backdrop-custom" *ngIf="!mostrarBackdropCustomModal" [@fadeInOut]></div>
+<div class="backdrop-custom" *ngIf="mostrarBackdropCustomOffcanvasEstado" [@fadeInOut]></div>
