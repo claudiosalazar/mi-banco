@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="col-12">
-      <div class="contenedor-tabla mb-0 pb-0">
+      <div class="contenedor-tabla mb-0 pb-0" *ngIf="tablaConDatos">
         <table class="table table-striped tabla-agenda-transferencias mb-0 mb-md-2" role="table" #tablaDestinatarioSeleccionado>
           <thead role="columnheader" role="rowgroup">
             <tr role="row">
@@ -130,6 +130,10 @@
         <div class="pb-2" *ngIf="!pasosTransferencia" >
           <mb-paginador [datosPaginador]="agenda" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedAgenda = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
         </div>
+      </div>
+
+      <div *ngIf="mostrarAlerta" class="p-3">
+        <mb-alertas [icono]="true" [tipoAlerta]="'warning'" [mensajeTitulo]="'No se encontraron resultados.'" [textoBoton]="'Ocultar'" [boton]="false" [tipoBoton]="'btn-secundario'"></mb-alertas>
       </div>
     </div>
 

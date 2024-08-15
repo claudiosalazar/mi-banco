@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef,
 import { AgendaService } from '../../../../../../../services/agenda.service';
 import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { FormControl } from '@angular/forms';
-import { of, Subscription, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, of, Subscription, switchMap } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 declare var bootstrap: any;
@@ -81,6 +81,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   destinatarioEliminado: boolean = false;
   consultaEliminacionDestinatario: boolean = true;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
   constructor(
     private agendaService: AgendaService,
     private cdr: ChangeDetectorRef,
@@ -89,56 +92,18 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadData();
-
-    this.busquedaDestinatarios.valueChanges
-    .pipe(
-      switchMap(valorBusqueda => {
-        if (valorBusqueda) {
-          return this.agendaService.filtrarAgenda(valorBusqueda);
-        } else {
-          this.currentPage = 1;
-          this.agenda = [...this.originalData];
-          this.paginarAgenda();
-          this.cdr.detectChanges();
-          return of(this.originalData);
-        }
-      })
-    )
-    .subscribe(datosFiltrados => {
-      this.agenda = datosFiltrados;
-      this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-      this.paginarAgenda();
-      this.cdr.detectChanges();
-    });
-
+  
+    
+  
     this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
       this.mostrarBackdropCustomOffcanvasEstado = valor;
     });
-
+  
     this.renderizarAgregarDestinatario.subscribe(valor => {
       this.renderizarAgregarDestinatarioEstado = valor;
     });
-
-    /*this.mostrarBackdropCustomModal.subscribe(valor => {
-      this.mostrarBackdropCustomModalEstado = false;
-    });
-
-    this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
-      mostrar => this.mostrarBackdropCustomModal = mostrar
-    );*/
-  }
-
-  ngOnDestroy(): void {
-    // Es importante cancelar la suscripción para evitar fugas de memoria
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    if (this.backdropSubscription) {
-      this.backdropSubscription.unsubscribe();
-    }
   }
   
-
   ngAfterViewInit(_e: Event): void {
     this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
       const modal = new bootstrap.Modal(el);
@@ -150,17 +115,17 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       });
       return modal;
     });
-
+  
     this.subscription = this.agendaService.destinatarioActualizado$.subscribe(() => {
       this.loadData();
     });
-
+  
     this.subscription.add(
       this.agendaService.destinatarioAgregado$.subscribe(() => {
         this.loadData();
       })
     );
-
+  
     this.subscription.add(
       this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
         this.datosCapturados = datos;
@@ -168,15 +133,67 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         this.abrirModalNuevoDestinatario();
       })
     );
-  }
 
+    this.busquedaDestinatarios.valueChanges
+      .pipe(
+        debounceTime(300), // Añadir un debounce para evitar llamadas excesivas
+        distinctUntilChanged(), // Evitar llamadas repetidas con el mismo valor
+        switchMap(valorBusqueda => {
+          if (valorBusqueda) {
+            return this.agendaService.filtrarAgenda(valorBusqueda);
+          } else {
+            this.currentPage = 1;
+            this.agenda = [...this.originalData];
+            this.paginarAgenda();
+            this.cdr.detectChanges();
+            return of(this.originalData);
+          }
+        })
+      )
+      .subscribe(datosFiltrados => {
+        this.agenda = datosFiltrados;
+        this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+        this.paginarAgenda();
+        this.cdr.detectChanges();
+  
+        // Aplicar la lógica de verificación de datos
+        if (this.agenda.length === 0) {
+          this.tablaConDatos = false;
+          this.mostrarAlerta = true;
+        } else {
+          this.loadData();
+          this.tablaConDatos = true;
+          this.mostrarAlerta = false;
+        }
+      });
+  }
+  
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       this.agenda = agenda;
       this.originalData = [...this.agenda];
       this.paginarAgenda();
       this.cdr.detectChanges();
+  
+      // Aplicar la lógica de verificación de datos
+      if (this.agenda.length === 0) {
+        this.tablaConDatos = false;
+        this.mostrarAlerta = true;
+      } else {
+        this.tablaConDatos = true;
+        this.mostrarAlerta = false;
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    // Es importante cancelar la suscripción para evitar fugas de memoria
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
   }
 
   public onHeaderClick(): void {

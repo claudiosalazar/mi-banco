@@ -33,6 +33,10 @@ export class UltimasTransferenciasComponent implements OnInit {
   paginatedData: any[] | undefined;
   totalPages: any;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
+
   constructor(
     private transaccionesService: TransaccionesService,
     private cdr: ChangeDetectorRef,
@@ -61,6 +65,16 @@ export class UltimasTransferenciasComponent implements OnInit {
         this.totalPages = this.transferencias ? Math.ceil(this.transferencias.length / this.itemsPerPage) : 0;
         this.paginarTransferencias();
         this.cdr.detectChanges();
+
+        // Aplicar la lógica de verificación de datos
+        if (this.transferencias.length === 0) {
+          this.tablaConDatos = false;
+          this.mostrarAlerta = true;
+        } else {
+          this.loadData();
+          this.tablaConDatos = true;
+          this.mostrarAlerta = false;
+        }
       });
   }
 
@@ -70,6 +84,15 @@ export class UltimasTransferenciasComponent implements OnInit {
       this.transferencias = transferencias;
       this.originalData = [...transferencias]; // Guardar los datos originales
       this.paginarTransferencias();
+
+      // Aplicar la lógica de verificación de datos
+      if (this.transferencias.length === 0) {
+        this.tablaConDatos = false;
+        this.mostrarAlerta = true;
+      } else {
+        this.tablaConDatos = true;
+        this.mostrarAlerta = false;
+      }
     });
   }
 

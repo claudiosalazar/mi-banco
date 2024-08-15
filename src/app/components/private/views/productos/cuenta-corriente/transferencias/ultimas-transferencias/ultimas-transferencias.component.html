@@ -1,23 +1,4 @@
 <div class="col-12">
-  <!-- <div class="px-4 pt-0">
-    <mb-buscador-tabla [tituloBuscador]="'Buscar transferencia'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
-    <mb-buscador-tabla [tituloBuscador]="'Buscar transferencia'"></mb-buscador-tabla>
-  </div>
-  <mb-tabla-movimientos 
-    
-    [claseTabla]="'tabla-ultimas-transferencias'" 
-    [mostrarColumnaDestinatario]="true"
-    [mostrarColumnaRut]="true"
-    [mostrarColumnaNombreProducto]="false"
-    [mostrarColumnaMensaje]="true" 
-    [mostrarColumnaDetalle]="false" 
-    [mostrarColumnaAbono]="false" 
-    [mostrarColumnaSaldo]="false"
-    [transProducto]="'ctaCte'"
-    >
-  </mb-tabla-movimientos> -->
-
-
   <div class="d-flex align-items-md-center flex-column flex-md-row justify-content-md-between mb-4 px-4">
     <div class="d-flex flex-column flex-md-row align-items-md-center">
       <p class="mb-3 mb-md-0 me-3">Buscar transferencia</p>
@@ -28,7 +9,7 @@
   </div>
 
   <!-- Tabla -->
-  <div class="contenedor-tabla">
+  <div class="contenedor-tabla" *ngIf="tablaConDatos">
     <table class="table table-striped tabla-ultimas-transferencias" role="table">
       <thead role="columnheader" role="rowgroup">
         <tr role="row">
@@ -117,4 +98,9 @@
   
     <mb-paginador [datosPaginador]="transferencias" [itemsPerPage]="5" [currentPage]="1" (paginatedData)="paginatedTransferencias = $event" [datosOrdenados]="datosOrdenados"></mb-paginador>
   </div>
+
+  <div *ngIf="mostrarAlerta" class="ps-4 pe-4 pb-4">
+    <mb-alertas [icono]="true" [tipoAlerta]="'warning'" [mensajeTitulo]="'No se encontraron resultados.'" [textoBoton]="'Ocultar'" [boton]="false" [tipoBoton]="'btn-secundario'"></mb-alertas>
+  </div>
+  
 </div>

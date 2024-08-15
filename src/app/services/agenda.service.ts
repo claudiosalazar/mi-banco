@@ -44,11 +44,14 @@ export class AgendaService {
   }
 
   filtrarAgenda(valorBusqueda: any): Observable<Agenda[]> {
-    const searchStr = String(valorBusqueda).toLowerCase(); // Convertir valorBusqueda a cadena y a minúsculas
+    // Convertir valorBusqueda a cadena, a minúsculas y eliminar espacios en blanco
+    const searchStr = String(valorBusqueda).toLowerCase().replace(/\s+/g, '');
   
     return this.getAgenda().pipe(
       map(agenda => agenda.filter((item: any) => 
-        Object.values(item).some(value => String(value).toLowerCase().includes(searchStr))
+        Object.values(item).some(value => 
+          String(value).toLowerCase().replace(/\s+/g, '').includes(searchStr)
+        )
       ))
     );
   }

@@ -11,7 +11,7 @@ import { UrlBrowserService } from '../../../../../../../services/urlBrowser.serv
 // Pipes
 import { DatePipe } from '@angular/common';
 import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
-import { delay, Subscription, Observable, of, switchMap } from 'rxjs';
+import { delay, Subscription, Observable, of, switchMap, debounceTime, distinctUntilChanged } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -135,6 +135,9 @@ export class TransferenciaATercerosComponent implements OnInit {
   transferenciaOk: boolean = true;
   tranferenciaError: boolean = false;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
   constructor(
     private formatoEmailService: FormatoEmailService,
     private cdr: ChangeDetectorRef,
@@ -162,27 +165,6 @@ export class TransferenciaATercerosComponent implements OnInit {
     this.transferenciaATercerosForm.controls['montoATransferir'].valueChanges.subscribe((value) => {
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferirOk'].setValue(transformedValue, {emitEvent: false});
-    });
-
-    this.busquedaDestinatarios.valueChanges
-    .pipe(
-      switchMap(valorBusqueda => {
-        if (valorBusqueda) {
-          return this.agendaService.filtrarAgenda(valorBusqueda);
-        } else {
-          this.currentPage = 1;
-          this.agenda = [...this.originalData];
-          this.paginarAgenda();
-          this.cdr.detectChanges();
-          return of(this.originalData);
-        }
-      })
-    )
-    .subscribe(datosFiltrados => {
-      this.agenda = datosFiltrados;
-      this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-      this.paginarAgenda();
-      this.cdr.detectChanges();
     });
   }
 
@@ -225,6 +207,39 @@ export class TransferenciaATercerosComponent implements OnInit {
         this.abrirModalNuevoDestinatario();
       })
     );
+
+    this.busquedaDestinatarios.valueChanges
+      .pipe(
+        debounceTime(300), // Añadir un debounce para evitar llamadas excesivas
+        distinctUntilChanged(), // Evitar llamadas repetidas con el mismo valor
+        switchMap(valorBusqueda => {
+          if (valorBusqueda) {
+            return this.agendaService.filtrarAgenda(valorBusqueda);
+          } else {
+            this.currentPage = 1;
+            this.agenda = [...this.originalData];
+            this.paginarAgenda();
+            this.cdr.detectChanges();
+            return of(this.originalData);
+          }
+        })
+      )
+      .subscribe(datosFiltrados => {
+        this.agenda = datosFiltrados;
+        this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+        this.paginarAgenda();
+        this.cdr.detectChanges();
+  
+        // Aplicar la lógica de verificación de datos
+        if (this.agenda.length === 0) {
+          this.tablaConDatos = false;
+          this.mostrarAlerta = true;
+        } else {
+          this.loadData();
+          this.tablaConDatos = true;
+          this.mostrarAlerta = false;
+        }
+      });
   }
 
   loadData(): void {
@@ -233,6 +248,15 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.originalData = [...this.agenda];
       this.paginarAgenda();
       this.cdr.detectChanges();
+
+      // Aplicar la lógica de verificación de datos
+      if (this.agenda.length === 0) {
+        this.tablaConDatos = false;
+        this.mostrarAlerta = true;
+      } else {
+        this.tablaConDatos = true;
+        this.mostrarAlerta = false;
+      }
     });
 
     this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
