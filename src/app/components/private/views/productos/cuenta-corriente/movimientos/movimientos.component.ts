@@ -25,6 +25,9 @@ export class MovimientosComponent implements OnInit {
   campoBusqueda = new FormControl('');
   mostrarPaginador: boolean | undefined;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
   constructor(
     private transaccionesService: TransaccionesService,
     @Inject(DatosFiltradosService) private datosFiltradosService: DatosFiltradosService
@@ -59,6 +62,14 @@ export class MovimientosComponent implements OnInit {
     
     // Actualizar los datos filtrados en el servicio
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+
+    if (this.transaccionesCuentaCorriente.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
   }
 
 }

@@ -9,8 +9,9 @@
   <div class="px-4 pt-0">
     <mb-buscador-tabla [tituloBuscador]="'Buscar transaccion'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
   </div>
-  <!-- <mb-tabla-movimientos [id]="transaccionesCuentaCorriente" [mostrarPaginador]="mostrarPaginador" [claseTabla]="'tabla-movimientos'" [transProducto]="'ctaCte'"></mb-tabla-movimientos> -->
-  <mb-tabla-movimientos 
+  
+  <div *ngIf="tablaConDatos">
+    <mb-tabla-movimientos 
     [claseTabla]="'tabla-movimientos'"
     [id]="transaccionesCuentaCorriente" 
     [mostrarColumnaDestinatario]="false"
@@ -23,4 +24,10 @@
     [mostrarPaginador]="mostrarPaginador"
     [transProducto]="'ctaCte'">
   </mb-tabla-movimientos>
+  </div>
+  
+
+  <div *ngIf="mostrarAlerta" class="p-4">
+    <mb-alertas [icono]="true" [tipoAlerta]="'warning'" [mensajeTitulo]="'No se encontraron resultados.'" [textoBoton]="'Ocultar'" [boton]="false" [tipoBoton]="'btn-secundario'"></mb-alertas>
+  </div>
 </div>

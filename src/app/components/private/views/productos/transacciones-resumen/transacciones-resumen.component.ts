@@ -33,6 +33,9 @@ export class TransaccionesResumenComponent implements OnInit {
   saldoUltimaTransaccionLineaCredito: number | null = null;
   saldoUltimaTransaccionVisa: number | null = null;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
   constructor(
     private productosService: ProductosService,
     private transaccionesService: TransaccionesService,
@@ -49,51 +52,42 @@ export class TransaccionesResumenComponent implements OnInit {
     this.transaccionesService.getTransCuentaCorriente().subscribe((transacciones: CuentaCorriente[] ) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
+        this.transaccionesCtaCte = transacciones;
+        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
       }
     });
     
     this.transaccionesService.getTransLineaCredito().subscribe((transacciones: LineaCredito[]) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
+        this.transaccionesLineaCre = transacciones;
+        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
       }
     });
     
     this.transaccionesService.getTransVisa().subscribe((transacciones: Visa[]) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
-      }
-    });
-
-    // Valor para imprimir saldo en las card
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
-      if (transaccionesCtaCte) {
-        this.transaccionesCtaCte = transaccionesCtaCte;
-        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
-      }
-    });
-  
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
-      if (transaccionesLineaCre) {
-        this.transaccionesLineaCre = transaccionesLineaCre;
-        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
-      }
-    });
-  
-    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
-      if (transaccionesVisa) {
-        this.transaccionesVisa = transaccionesVisa;
+        this.transaccionesVisa = transacciones;
         this.transaccionesVisa.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
         this.saldoUltimaTransaccionVisa = this.transaccionesVisa.length > 0 ? this.transaccionesVisa[0].saldo : null;
       }
     });
-
   }
 
   // Maneja los datos filtrados
   handleDatosFiltrados(datosFiltrados: any[]) {
     this.transaccionesFiltradas = datosFiltrados; // Actualizar solo transaccionesFiltradas
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltrados);
+
+    if (this.transaccionesFiltradas.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
   }
 }

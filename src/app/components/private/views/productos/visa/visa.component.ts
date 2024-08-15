@@ -31,6 +31,9 @@ export class VisaComponent implements OnInit {
   abono: any;
   fecha: any;
 
+  tablaConDatos: boolean = true;
+  mostrarAlerta: boolean = false;
+
   constructor(
     private productosService: ProductosService,
     private transaccionesService: TransaccionesService,
@@ -92,6 +95,14 @@ export class VisaComponent implements OnInit {
     
     // Actualizar los datos filtrados en el servicio
     this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+
+    if (this.transaccionesVisa.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
   }
 
   onCancelacionConfirmada() {
