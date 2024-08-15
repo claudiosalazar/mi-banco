@@ -11,7 +11,7 @@ import { UrlBrowserService } from '../../../../../../../services/urlBrowser.serv
 // Pipes
 import { DatePipe } from '@angular/common';
 import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
-import { delay, Observable, of, switchMap } from 'rxjs';
+import { delay, Subscription, Observable, of, switchMap } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -49,6 +49,8 @@ export class TransferenciaATercerosComponent implements OnInit {
   @Output() datosOrdenados = new EventEmitter<void>();
 
   private pesosPipe = new PesosPipe();
+  private backdropSubscription: Subscription | undefined;
+  private subscription: Subscription | undefined;
 
   // Fomularios
   busquedaDestinatarios = new FormControl('');
@@ -120,6 +122,13 @@ export class TransferenciaATercerosComponent implements OnInit {
   id_destinatario: any;
   rut_destinatario: any;
 
+  // Variables para modal nuevo destinatario
+  datosNuevoDestinatario: any;
+  enviandoNuevoDestinatario: boolean = true;
+  datosGuardadosNuevoDestinatario: boolean = false;
+  errorServerNuevoDestinatario: boolean = false;
+  datosCapturados: any;
+
   alertaAyuda: boolean = true;
 
   datosTransferencia: any;
@@ -175,6 +184,47 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.paginarAgenda();
       this.cdr.detectChanges();
     });
+  }
+
+  ngOnDestroy(): void {
+    // Es importante cancelar la suscripción para evitar fugas de memoria
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    if (this.backdropSubscription) {
+      this.backdropSubscription.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(_e: Event): void {
+    this.modales = Array.from(document.querySelectorAll('.modal')).map(el => {
+      const modal = new bootstrap.Modal(el);
+      el.addEventListener('show.bs.modal', () => {
+        this.backdropService.showModalBackdrop();  // Muestra el backdrop
+      });
+      el.addEventListener('hide.bs.modal', () => {
+        this.backdropService.hideModalBackdrop();  // Oculta el backdrop
+      });
+      return modal;
+    });
+
+    this.subscription = this.agendaService.destinatarioActualizado$.subscribe(() => {
+      this.loadData();
+    });
+
+    this.subscription.add(
+      this.agendaService.destinatarioAgregado$.subscribe(() => {
+        this.loadData();
+      })
+    );
+
+    this.subscription.add(
+      this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
+        this.datosCapturados = datos;
+        this.backdropService.hideOffcanvasBackdrop();
+        this.abrirModalNuevoDestinatario();
+      })
+    );
   }
 
   loadData(): void {
@@ -535,7 +585,8 @@ export class TransferenciaATercerosComponent implements OnInit {
   }
 
   ocultaBackDrop(): void {
-    this.backdropService.hideModalBackdrop();
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
   }
 
   ocultaMensaje() {
@@ -566,6 +617,48 @@ export class TransferenciaATercerosComponent implements OnInit {
           this.tranferenciaError = true;
         }
       );
+    });
+  }
+
+  abrirModalNuevoDestinatario(): void {
+    var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
+    modalNuevoDestinatario.show();
+    this.ocultaBackDrop();
+    //this.backdropService.showModalBackdrop();
+    // this.backdropService.hideOffcanvasBackdrop();
+    this.enviandoNuevoDestinatario = true;
+
+    // Envía los datos al servicio
+    this.agendaService.guardarNuevoDestinatario(this.datosCapturados).subscribe(nuevoDestinatario => {
+
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.datosGuardadosNuevoDestinatario = true;
+      }, 2000);
+
+      // Ensure destinatarios is an array before pushing
+      if (!this.agenda) {
+        this.agenda = [];
+      }
+      this.agenda.push(nuevoDestinatario);
+
+      // Ordena los destinatarios por nombre en orden ascendente
+      this.agenda = this.agenda?.sort((a, b) => {
+        if (a.nombre && b.nombre) {
+          return a.nombre.localeCompare(b.nombre);
+        } else {
+          return 0;
+        }
+      });
+
+      // Forzar la actualización de los datos en la tabla
+      this.agenda = [...this.agenda];
+      this.cdr.detectChanges();
+    }, _error => {
+      setTimeout(() => {
+        this.enviandoNuevoDestinatario = false;
+        this.errorServerNuevoDestinatario = true;
+      }, 2000);
     });
   }
 

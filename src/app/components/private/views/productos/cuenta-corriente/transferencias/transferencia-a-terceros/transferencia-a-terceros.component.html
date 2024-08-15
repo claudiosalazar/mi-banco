@@ -383,53 +383,61 @@
 </div>
 
 <!-- Modal nuevo destinatario -->
-<!-- <div class="modal posicion fade" id="modalNuevoDestinatario" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
+<div class="modal posicion fade" id="modalNuevoDestinatario" tabindex="-1" aria-labelledby="modalNuevoDestinatario" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-body">
 
-        <div *ngIf="enviandoNuevoDestinatario">
-          <div class="d-flex">
-            <span class="icono material-symbols-outlined mensajes cargando ms-2">
-              sync
-            </span>
-            <h4 class="mb-3 ms-3 text-starts">Se estan guardando los nuevos datos del nuevo agenda.</h4>
-          </div>
-          <div class="w-100 text-center">
-            <span>Espera un momento por favor.</span>
-          </div>
+      <div class="modal-body" *ngIf="enviandoNuevoDestinatario">
+        <div class="d-flex">
+          <span class="icono material-symbols-outlined mensajes cargando me-3">
+            sync
+          </span>
+          <span class="mb-3 titulo-modal">Se estan guardando los nuevos datos del nuevo destinatario.</span>
         </div>
+        <div class="w-100 text-center mt-3 pb-3">
+          <span>Espera un momento por favor.</span>
+        </div>
+      </div>
 
-        <div *ngIf="datosGuardadosNuevoDestinatario">
-          <div class="d-flex">
+      <div *ngIf="datosGuardadosNuevoDestinatario">
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
             <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
               done
             </span>
-            <h4 class="mb-3 text-starts">El nuevo destinatario se guardo con éxito.</h4>
-          </div>
-          <div class="w-100">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="cambiarANuevoDestinatarios(); ocultaBackDrop()">Cerrar</button>
+            <span class="titulo-modal">El nuevo destinatario se guardo con éxito.</span>
           </div>
         </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+          </div>
+        </div>
+      </div>
 
-        <div *ngIf="errorServerNuevoDestinatario">
-          <div class="d-flex">
+      <div *ngIf="errorServerNuevoDestinatario">
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
             <span class="icono material-symbols-outlined d-block me-3 mensajes error">
               Error
             </span>
             <div>
-              <h4 class="mb-2 text-starts">Hubo un error al intentar guardar el nuevo agenda.</h4>
+              <span class="titulo-modal mb-3">Hubo un error al intentar guardar el nuevo destinatario.</span>
               <span>Intento mas tarde.</span>
             </div>
           </div>
-          <div class="w-100 mt-3">
-            <button type="button" class="btn btn-primary mx-auto" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex justify-content-end flex-row">
+            <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="ocultaBackDrop()">Cerrar</button>
           </div>
         </div>
       </div>
+
     </div>
   </div>
-</div> -->
+</div>
+
 
 <!-- Modal transferencia -->
 <div class="modal posicion fade" id="modalTransferencia" aria-labelledby="modalTransferencia" aria-hidden="true">

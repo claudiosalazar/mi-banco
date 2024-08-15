@@ -35,13 +35,16 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   public columnaSeleccionada: string | undefined;
   public isRotatedIn: boolean = false;
 
-  mostrarBackdropCustomModal = false;
   modales: any[] = [];
   mostrarBackdropCustomOffcanvas = new EventEmitter<boolean>();
-  renderizarAgregarDestinatario = new EventEmitter<boolean>();
   mostrarBackdropCustomOffcanvasEstado: boolean = false;
+  
+  renderizarAgregarDestinatario = new EventEmitter<boolean>();
   renderizarAgregarDestinatarioEstado = false;
   
+  mostrarBackdropCustomModal = new EventEmitter<boolean>();
+  mostrarBackdropCustomModalEstado = false;
+
   usuarioEliminado = false;
   errorServer = false;
 
@@ -116,9 +119,13 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       this.renderizarAgregarDestinatarioEstado = valor;
     });
 
+    /*this.mostrarBackdropCustomModal.subscribe(valor => {
+      this.mostrarBackdropCustomModalEstado = false;
+    });
+
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
       mostrar => this.mostrarBackdropCustomModal = mostrar
-    );
+    );*/
   }
 
   ngOnDestroy(): void {
@@ -213,45 +220,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.agendaService.actualizarDatosFiltrados(datosFiltradosPorProducto);
   }
 
-  abrirModalEliminar(id: number): void {
-    this.id = id;
-    console.log(this.id);
-
-    // Suponiendo que tienes una lista de destinatarios en el componente
-    const destinatario = this.agenda.find(d => d.id === id);
-    if (destinatario) {
-        this.nombre = destinatario.nombre;
-    }
-
-    var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
-    modalEliminarDestinatario.show();
-    this.backdropService.showModalBackdrop();
-  }
-
-  eliminarDestinatario(): void {
-    if (this.id) {
-      this.agendaService.eliminarIdDestinatario(this.id).subscribe(
-        () => {
-          console.log('El destinatario fue eliminado correctamente');
-          this.usuarioEliminado = true;
-          // Eliminar el destinatario de la lista local
-          this.agenda = this.agenda.filter(d => d.id !== this.id);
-          this.paginarAgenda();
-          this.cdr.detectChanges();
-        },
-        error => console.error('Hubo un error al eliminar el destinatario', error)
-      );
-    }
-    this.consultaEliminacionDestinatario = false;
-    this.destinatarioEliminado = true;
-  }
-
-  usuarioEliminadoConfirmado(): void {
-    this.usuarioEliminado = false;
-    this.consultaEliminacionDestinatario = true;
-    this.destinatarioEliminado = false;
-  }
-
   // Nuevo método para manejar la actualización de destinatarios
   actualizarDestinatario(id: number, datos: any): void {
     this.agendaService.actualizarIdDestinatario(id, datos).subscribe(
@@ -284,8 +252,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   onCancelar(): void {
     this.mostrarBackdropCustomOffcanvas.emit(false);
     this.mostrarBackdropCustomOffcanvasEstado = false;
-    this.renderizarAgregarDestinatarioEstado = false;
     this.renderizarAgregarDestinatario.emit(false);
+    this.renderizarAgregarDestinatarioEstado = false;
   }
 
   abrirOffcanvasEdicion(id: number): void {
@@ -300,9 +268,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.backdropService.showModalBackdrop();
   }
   
-  ocultaBackDrop(): void {
-    this.backdropService.hideModalBackdrop();
-  }
+  
 
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
@@ -343,6 +309,52 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         this.errorServerNuevoDestinatario = true;
       }, 2000);
     });
+  }
+
+  eliminarDestinatario(): void {
+    if (this.id) {
+      this.agendaService.eliminarIdDestinatario(this.id).subscribe(
+        () => {
+          console.log('El destinatario fue eliminado correctamente');
+          this.usuarioEliminado = true;
+          // Eliminar el destinatario de la lista local
+          this.agenda = this.agenda.filter(d => d.id !== this.id);
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+        },
+        error => console.error('Hubo un error al eliminar el destinatario', error)
+      );
+    }
+    this.consultaEliminacionDestinatario = false;
+    this.destinatarioEliminado = true;
+  }
+
+  usuarioEliminadoConfirmado(): void {
+    this.usuarioEliminado = false;
+    this.consultaEliminacionDestinatario = true;
+    this.destinatarioEliminado = false;
+  }
+
+  abrirModalEliminar(id: number): void {
+    this.id = id;
+    console.log(this.id);
+
+    // Suponiendo que tienes una lista de destinatarios en el componente
+    const destinatario = this.agenda.find(d => d.id === id);
+    if (destinatario) {
+        this.nombre = destinatario.nombre;
+    }
+
+    var modalEliminarDestinatario = new bootstrap.Modal(document.getElementById('modalEliminarDestinatario'), {});
+    modalEliminarDestinatario.show();
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
+  }
+
+  ocultaBackDrop(): void {
+    this.backdropService.hideModalBackdrop();
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
   }
 
 }
