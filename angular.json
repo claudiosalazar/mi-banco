@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mi-banco-mysql": {
+    "mi-banco": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mi-banco-mysql",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -52,6 +52,14 @@
                   "maximumError": "4kb"
                 }
               ],
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+            },
               "outputHashing": "all"
             },
             "development": {
@@ -69,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "mi-banco-mysql:build:production"
+              "browserTarget": "mi-banco:build:production"
             },
             "development": {
-              "browserTarget": "mi-banco-mysql:build:development"
+              "browserTarget": "mi-banco:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mi-banco-mysql:build"
+            "browserTarget": "mi-banco:build"
           }
         },
         "test": {
