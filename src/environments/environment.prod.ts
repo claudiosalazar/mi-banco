@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://www.claudiosalazar.cl/mi-banco/'
+  baseUrl: 'https://mi-banco.claudiosalazar.cl/'
 };

@@ -9,7 +9,7 @@ import { Localidades } from '../models/localidades.model';
 export class LocalidadesService {
 
   //private apiUrl = 'http://localhost:3000';
-  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
+  private apiUrl = 'https://mi-banco.claudiosalazar.cl';
 
   constructor(private http: HttpClient) { }
 

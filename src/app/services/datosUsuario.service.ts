@@ -9,7 +9,7 @@ import { DatosUsuario } from '../models/datos-usuario.model'; // Asegúrate de q
 export class DatosUsuarioService {
 
   //private apiUrl = 'http://localhost:3000';
-private apiUrl = 'https://claudiosalazar.cl/mi-banco';
+private apiUrl = 'https://mi-banco.claudiosalazar.cl';
   private usuarioActualizado = new BehaviorSubject<void>(undefined);
 
   constructor(private http: HttpClient) { }

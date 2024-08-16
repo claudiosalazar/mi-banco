@@ -9,7 +9,7 @@ import { Productos } from '../models/productos.model';
 export class ProductosService {
 
   //private apiUrl = 'http://localhost:3000';
-  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
+  private apiUrl = 'https://mi-banco.claudiosalazar.cl';
 
   constructor(private http: HttpClient) { }
 

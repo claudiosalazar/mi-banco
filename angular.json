@@ -67,7 +67,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/mi-banco/"
+              "baseHref": "/"
             },
             "development": {
               "buildOptimizer": false,
@@ -76,7 +76,7 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "baseHref": "/mi-banco/"
+              "baseHref": "/"
             }
           },
           "defaultConfiguration": "production"
