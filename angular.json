@@ -59,8 +59,15 @@
                   "inlineCritical": false
                 },
                 "fonts": true
-            },
-              "outputHashing": "all"
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "baseHref": "/mi-banco/"
             },
             "development": {
               "buildOptimizer": false,
@@ -68,7 +75,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "baseHref": "/mi-banco/"
             }
           },
           "defaultConfiguration": "production"
