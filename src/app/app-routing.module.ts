@@ -53,19 +53,26 @@ const routes: Routes = [
             ]
           },
           { path: 'cuenta-corriente/comprobante-transferencia', component: ComprobanteTransferenciaComponent, canActivate: [AuthGuard]},
-          { path: 'linea-credito', component: LineaCreditoComponent, canActivate: [AuthGuard]},
-          { path: 'linea-credito/pago', component: LineaCreditoPagoComponent, canActivate: [AuthGuard]},
-          { path: 'linea-credito/comprobante', component: LineaCreditoComprobanteComponent, canActivate: [AuthGuard]},
-          { path: 'visa', component: VisaComponent, canActivate: [AuthGuard] },
-          { path: 'visa/pago', component: VisaPagoComponent, canActivate: [AuthGuard] },
-          { path: 'visa/comprobante', component: VisaComprobanteComponent, canActivate: [AuthGuard] },
-          { path: 'seguros', component: SegurosComponent },
         ]
       },
-      { path: 'mis-datos', component: DatosUsuarioComponent, canActivate: [AuthGuard] },
-      { path: 'ayuda/:id', component: AyudaComponent, canActivate: [AuthGuard] }
+      { path: 'linea-credito', component: LineaCreditoComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'pago', component: LineaCreditoPagoComponent, canActivate: [AuthGuard]},
+          { path: 'comprobante', component: LineaCreditoComprobanteComponent, canActivate: [AuthGuard]},
+        ]
+      },
+      { path: 'visa', component: VisaComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'pago', component: VisaPagoComponent, canActivate: [AuthGuard]},
+          { path: 'comprobante', component: VisaComprobanteComponent, canActivate: [AuthGuard]},
+        ]
+      },
+      { path: 'seguros', component: SegurosComponent, canActivate: [AuthGuard]},
+      { path: 'ayuda', component: AyudaComponent, canActivate: [AuthGuard]},
+      { path: 'datos-usuario', component: DatosUsuarioComponent, canActivate: [AuthGuard]},
     ]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
