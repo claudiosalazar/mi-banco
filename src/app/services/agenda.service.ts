@@ -9,7 +9,8 @@ import { Agenda } from '../models/agenda.model';
 })
 export class AgendaService {
 
-  private apiUrl = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   private datosFiltradosSource = new Subject<any[]>();
   private idSource = new BehaviorSubject<number | null>(null);

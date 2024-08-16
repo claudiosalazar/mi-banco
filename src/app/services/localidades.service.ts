@@ -8,19 +8,20 @@ import { Localidades } from '../models/localidades.model';
 })
 export class LocalidadesService {
 
-  private URL = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
   getCiudades(): Observable<Localidades[]> {
-    return this.http.get<Localidades[]>(`${this.URL}/mibanco/localidades/ciudades`);
+    return this.http.get<Localidades[]>(`${this.apiUrl}/mibanco/localidades/ciudades`);
   }
 
   getComunas(): Observable<Localidades[]> {
-    return this.http.get<Localidades[]>(`${this.URL}/mibanco/localidades/comunas`);
+    return this.http.get<Localidades[]>(`${this.apiUrl}/mibanco/localidades/comunas`);
   }
 
   getRegiones(): Observable<Localidades[]> {
-    return this.http.get<Localidades[]>(`${this.URL}/mibanco/localidades/regiones`);
+    return this.http.get<Localidades[]>(`${this.apiUrl}/mibanco/localidades/regiones`);
   }
 }

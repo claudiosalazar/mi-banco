@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000';
-  // private apiUrl = 'https://claudiosalazar.cl/mibanco';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(
     private http: HttpClient,

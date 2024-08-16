@@ -8,12 +8,13 @@ import { Cartolas } from '../models/cartolas.model';
 })
 export class CartolasService {
 
-  private URL = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
   getCartolas(): Observable<Cartolas[]> {
-    return this.http.get<Cartolas[]>(`${this.URL}/mibanco/cartolas`);
+    return this.http.get<Cartolas[]>(`${this.apiUrl}/mibanco/cartolas`);
   }
 
 }

@@ -8,11 +8,12 @@ import { Ofertas } from '../models/ofertas.model';
 })
 export class OfertasService {
 
-  private URL = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
   getOfertas(): Observable<Ofertas[]> {
-    return this.http.get<Ofertas[]>(`${this.URL}/mibanco/ofertas`);
+    return this.http.get<Ofertas[]>(`${this.apiUrl}/mibanco/ofertas`);
   }
 }

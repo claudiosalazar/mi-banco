@@ -8,11 +8,12 @@ import { Productos } from '../models/productos.model';
 })
 export class ProductosService {
 
-  private URL = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
   getProductos(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(`${this.URL}/mibanco/productos`);
+    return this.http.get<Productos[]>(`${this.apiUrl}/mibanco/productos`);
   }
 }

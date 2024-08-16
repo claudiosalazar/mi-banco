@@ -8,11 +8,12 @@ import { Seguros } from '../models/seguros.model';
 })
 export class SegurosService {
 
-  private URL = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
   getSeguros(): Observable<Seguros[]> {
-    return this.http.get<Seguros[]>(`${this.URL}/mibanco/seguros`);
+    return this.http.get<Seguros[]>(`${this.apiUrl}/mibanco/seguros`);
   }
 }

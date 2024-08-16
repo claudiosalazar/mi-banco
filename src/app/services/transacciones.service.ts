@@ -9,7 +9,8 @@ import { Visa } from '../models/visa.model';
   providedIn: 'root'
 })
 export class TransaccionesService {
-  private apiUrl = 'http://localhost:3000';
+  //private apiUrl = 'http://localhost:3000';
+private apiUrl = 'https://claudiosalazar.cl/mi-banco';
 
   constructor(private http: HttpClient) { }
 
