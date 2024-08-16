@@ -19,10 +19,10 @@
     <div class="col-12">
       <!-- Nombre -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="nombre" 
+        <input type="text" class="form-control" formControlName="nombre" id="nombredestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('nombre')?.invalid && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('nombre')?.valid && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)">
-        <label for="nombre">Nombre y Apellido <span class="obligatorio">*</span></label>
+        <label for="nombredestinatario">Nombre y Apellido <span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && (editarDestinatarioForm.get('nombre')?.touched || editarDestinatarioForm.get('nombre')?.dirty)" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
         </div>
@@ -36,18 +36,18 @@
   
       <!-- Apodo -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="apodo" 
+        <input type="text" class="form-control" formControlName="apodo" id="apododestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('apodo')?.invalid && (editarDestinatarioForm.get('apodo')?.touched || editarDestinatarioForm.get('apodo')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('apodo')?.valid && (editarDestinatarioForm.get('apodo')?.touched || editarDestinatarioForm.get('apodo')?.dirty)">
-        <label for="apodo">Apodo</label>
+        <label for="apododestinatario">Apodo</label>
       </div>
   
       <!-- Rut -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="rut" 
+        <input type="text" class="form-control" formControlName="rut" id="rutdestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('rut')?.invalid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('rut')?.valid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)">
-        <label for="rut">Rut <span class="obligatorio">*</span></label>
+        <label for="rutdestinatario">Rut <span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
         </div>
@@ -85,10 +85,10 @@
       
       <!-- Numero cuenta -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="numero_cuenta" 
+        <input type="text" class="form-control" formControlName="numero_cuenta" id="numerocuenta"
         [class.is-invalid]="editarDestinatarioForm.get('numero_cuenta')?.invalid && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('numero_cuenta')?.valid && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)">
-        <label for="numero_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
+        <label for="numerocuenta">Número de cuenta <span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.get('numero_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && (editarDestinatarioForm.get('numero_cuenta')?.touched || editarDestinatarioForm.get('numero_cuenta')?.dirty)" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
         </div>
@@ -99,10 +99,10 @@
   
       <!-- Email -->
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" formControlName="email" 
+        <input type="email" class="form-control" formControlName="email" id="emaildestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('email')?.invalid && (editarDestinatarioForm.get('email')?.touched || editarDestinatarioForm.get('email')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('email')?.valid && (editarDestinatarioForm.get('email')?.touched || editarDestinatarioForm.get('email')?.dirty)">
-        <label for="email">Email<span class="obligatorio">*</span></label>
+        <label for="emaildestinatario">Email<span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.controls['email'].errors?.['required'] && (editarDestinatarioForm.controls['email'].touched || editarDestinatarioForm.controls['email'].dirty)" class="invalid-feedback">
           El campo Email no puede quedar vacío.
         </div>
@@ -116,11 +116,11 @@
   
       <!-- Celular -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control celular" formControlName="celular" 
+        <input type="text" class="form-control celular" formControlName="celular" id="celulardestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('celular')?.invalid && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('celular')?.valid && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" 
         (keypress)="soloNumeros($event)" maxlength="11">
-        <label for="celular">Celular</label>
+        <label for="celulardestinatario">Celular</label>
         <div class="prefijo-chile"></div>
         <div *ngIf="inputErrorCelularInvalido && (editarDestinatarioForm.get('celular')?.touched || editarDestinatarioForm.get('celular')?.dirty)" class="invalid-feedback">
           <span>El número ingresado no es válido.</span>
@@ -129,11 +129,11 @@
   
       <!-- Telefono -->
       <div class="form-floating">
-        <input type="text" class="form-control" formControlName="telefono" 
+        <input type="text" class="form-control" formControlName="telefono" id="telefonodestinatario"
         [class.is-invalid]="editarDestinatarioForm.get('telefono')?.invalid && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" 
         [class.is-valid]="editarDestinatarioForm.get('telefono')?.valid && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" 
         (keypress)="soloNumeros($event)" maxlength="11">
-        <label for="telefono">Teléfono Fijo</label>
+        <label for="telefonodestinatario">Teléfono Fijo</label>
         <div *ngIf="inputErrorTelefonoFijoInvalido && (editarDestinatarioForm.get('telefono')?.touched || editarDestinatarioForm.get('telefono')?.dirty)" class="invalid-feedback">
           <span>El número ingresado no es válido.</span>
         </div>

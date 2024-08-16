@@ -20,8 +20,8 @@
     
         <!-- Nombre -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();">
-          <label for="nombre">Nombre y Apellido <span class="obligatorio">*</span></label>
+          <input type="text" class="form-control" formControlName="nombre" id="nombredestinatario" [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();">
+          <label for="nombredestinatario">Nombre y Apellido <span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && crearDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
@@ -35,14 +35,14 @@
     
         <!-- Apodo -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="apodo" [class.is-valid]="inputApodoValido" (blur)="validaApodo();">
-          <label for="apodo">Apodo</label>
+          <input type="text" class="form-control" formControlName="apodo" id="apododestinatario" [class.is-valid]="inputApodoValido" (blur)="validaApodo();">
+          <label for="apododestinatario">Apodo</label>
         </div>
     
         <!-- rut -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="rut" [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
-          <label for="rut">Rut <span class="obligatorio">*</span></label>
+          <input type="text" class="form-control" formControlName="rut" id="rutdestinatario" [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
+          <label for="rutdestinatario">Rut <span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
@@ -72,8 +72,8 @@
     
         <!-- Numero cuenta -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="numero_cuenta" [class.is-invalid]="crearDestinatarioForm.get('numero_cuenta')?.invalid && crearDestinatarioForm.get('numero_cuenta')?.touched" [class.is-valid]="crearDestinatarioForm.get('numero_cuenta')?.valid && crearDestinatarioForm.get('numero_cuenta')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
-          <label for="numero_cuenta">Número de cuenta <span class="obligatorio">*</span></label>
+          <input type="text" class="form-control" formControlName="numero_cuenta" id="numerocuenta" [class.is-invalid]="crearDestinatarioForm.get('numero_cuenta')?.invalid && crearDestinatarioForm.get('numero_cuenta')?.touched" [class.is-valid]="crearDestinatarioForm.get('numero_cuenta')?.valid && crearDestinatarioForm.get('numero_cuenta')?.touched" (blur)="validaNumeroCuenta();" (keypress)="soloNumeros($event)">
+          <label for="numerocuenta">Número de cuenta <span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.get('numero_cuenta')?.errors?.['inputErrorVacioNumeroCuenta'] && crearDestinatarioForm.get('numero_cuenta')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
           </div>
@@ -84,8 +84,8 @@
     
         <!-- Email -->
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" formControlName="email" [class.is-invalid]="crearDestinatarioForm.controls['email'].invalid && crearDestinatarioForm.controls['email'].touched" [class.is-valid]="inputValidoEmail" (blur)="validaEmail('email')">
-          <label for="email">Email<span class="obligatorio">*</span></label>
+          <input type="text" class="form-control" formControlName="email" id="emaildestinatario" [class.is-invalid]="crearDestinatarioForm.controls['email'].invalid && crearDestinatarioForm.controls['email'].touched" [class.is-valid]="inputValidoEmail" (blur)="validaEmail('email')">
+          <label for="emaildestinatario">Email<span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.controls['email'].errors?.['required'] && crearDestinatarioForm.controls['email'].touched" class="invalid-feedback">
             El campo Email no puede quedar vacío.
           </div>
@@ -99,8 +99,8 @@
     
         <!-- Celular -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control celular" formControlName="celular" [class.is-invalid]="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" [class.is-valid]="inputCelularValido && crearDestinatarioForm.get('celular')?.touched && crearDestinatarioForm.get('celular')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9">
-          <label for="celular">Celular</label>
+          <input type="text" class="form-control celular" formControlName="celular" id="celulardestinatario" [class.is-invalid]="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" [class.is-valid]="inputCelularValido && crearDestinatarioForm.get('celular')?.touched && crearDestinatarioForm.get('celular')?.value !== ''" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="9">
+          <label for="celulardestinatario">Celular</label>
           <div class="prefijo-chile"></div>
           <div *ngIf="inputErrorCelularInvalido && crearDestinatarioForm.get('celular')?.touched" class="invalid-feedback">
             <span>El número ingresado no es válido.</span>
@@ -109,8 +109,8 @@
     
         <!-- Telefono -->
         <div class="form-floating">
-          <input type="text" class="form-control" formControlName="telefono" [class.is-invalid]="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" [class.is-valid]="inputTelefonoFijoValido && crearDestinatarioForm.get('telefono')?.touched && crearDestinatarioForm.get('telefono')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9">
-          <label for="telefono">Teléfono Fijo</label>
+          <input type="text" class="form-control" formControlName="telefono" id="telefonodestinatario" [class.is-invalid]="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" [class.is-valid]="inputTelefonoFijoValido && crearDestinatarioForm.get('telefono')?.touched && crearDestinatarioForm.get('telefono')?.value !== ''" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="9">
+          <label for="telefonodestinatario">Teléfono Fijo</label>
           <div *ngIf="inputErrorTelefonoFijoInvalido && crearDestinatarioForm.get('telefono')?.touched" class="invalid-feedback">
             <span>El número ingresado no es válido.</span>
           </div>

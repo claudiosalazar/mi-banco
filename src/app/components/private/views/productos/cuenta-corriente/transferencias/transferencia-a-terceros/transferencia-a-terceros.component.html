@@ -185,11 +185,11 @@
                 <div class="d-flex flex-column-reverse flex-lg-row">
                   <div class="col-12 col-lg-7 pe-3" [ngClass]="{'paso-transferencia-oculto': !ingresarDatos, 'paso-transferencia': ingresarDatos}">
                     <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" 
+                      <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" id="montoatransferir"
                       #inputMontoATransferir [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
                       (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()"
                       [value]="transferenciaATercerosForm.controls['montoATransferirOk'].value">
-                      <label for="montoATransferir" class="form-label">Monto <span class="obligatorio">*</span></label>
+                      <label for="montoatransferir" class="form-label">Monto <span class="obligatorio">*</span></label>
                       <div *ngIf="error1" class="invalid-feedback">
                         <span>Debes ingresar un monto superior a 0.</span>
                       </div>
@@ -203,17 +203,17 @@
         
                     <!-- Mensaje textarea -->
                     <div class="form-floating mb-3">
-                      <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje" style="height: 100px;" #mensaje></textarea>
-                      <label for="mensaje" class="form-label">Mensaje</label>
+                      <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje" id="mensajetransferencia" style="height: 100px;" #mensaje></textarea>
+                      <label for="mensajetransferencia" class="form-label">Mensaje</label>
                     </div>
         
                     <!-- Email -->
                     <div class="input-group form-floating mb-3">
-                      <input type="email" class="form-control " formControlName="emailDestinatario" 
+                      <input type="email" class="form-control " formControlName="emailDestinatario" id="emaildestinatario"
                       [class.is-invalid]="transferenciaATercerosForm.get('email')?.invalid && transferenciaATercerosForm.get('email')?.touched" 
                       [class.is-valid]="transferenciaATercerosForm.get('email')?.valid && transferenciaATercerosForm.get('email')?.touched" 
                       (blur)="validaEmail('email')" (input)="continuarTransferencia = false"> 
-                      <label for="emailDestinatario" class="form-label emailTransferencia">Email <span class="obligatorio">*</span></label>
+                      <label for="emaildestinatario" class="form-label emailTransferencia">Email <span class="obligatorio">*</span></label>
                       <div class="contenedor-btn-editar">
                         <button class="btn-editar-email" type="button" id="button-addon2" (click)="vaciarEmailDestinatario()">
                           <span class="material-symbols-outlined">

@@ -26,11 +26,11 @@
             <h5>Información personal</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="primer_nombre"
+              <input type="text" class="form-control" formControlName="primer_nombre" id="primernombre"
                 [class.is-invalid]="misDatosForm.get('primer_nombre')?.invalid && misDatosForm.get('primer_nombre')?.dirty"
                 [class.is-valid]="misDatosForm.get('primer_nombre')?.valid && misDatosForm.get('primer_nombre')?.dirty"
                 (blur)="validaInput('primer_nombre');">
-              <label for="primer_nombre">Primera nombre</label>
+              <label for="primernombre">Primer nombre</label>
               <div
                 *ngIf="misDatosForm.get('primer_nombre')?.errors?.['required'] && misDatosForm.get('primer_nombre')?.dirty"
                 class="invalid-feedback">
@@ -39,11 +39,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="segundo_nombre"
+              <input type="text" class="form-control" formControlName="segundo_nombre" id="segundonombre"
                 [class.is-invalid]="misDatosForm.get('segundo_nombre')?.invalid && misDatosForm.get('segundo_nombre')?.dirty"
                 [class.is-valid]="misDatosForm.get('segundo_nombre')?.valid && misDatosForm.get('segundo_nombre')?.dirty"
                 (blur)="validaInput('segundo_nombre');">
-              <label for="segundo_nombre">Segundo nombre</label>
+              <label for="segundonombre">Segundo nombre</label>
               <div
                 *ngIf="misDatosForm.get('segundo_nombre')?.errors?.['required'] && misDatosForm.get('segundo_nombre')?.dirty"
                 class="invalid-feedback">
@@ -52,11 +52,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="apellido_paterno"
+              <input type="text" class="form-control" formControlName="apellido_paterno" id="apellidopaterno"
                 [class.is-invalid]="misDatosForm.get('apellido_paterno')?.invalid && misDatosForm.get('apellido_paterno')?.dirty"
                 [class.is-valid]="misDatosForm.get('apellido_paterno')?.valid && misDatosForm.get('apellido_paterno')?.dirty"
                 (blur)="validaInput('apellido_paterno');">
-              <label for="apellido_paterno">Apellido Paterno</label>
+              <label for="apellidopaterno">Apellido Paterno</label>
               <div
                 *ngIf="misDatosForm.get('apellido_paterno')?.errors?.['required'] && misDatosForm.get('apellido_paterno')?.dirty"
                 class="invalid-feedback">
@@ -65,10 +65,10 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="apellido_materno"
+              <input type="text" class="form-control" formControlName="apellido_materno" id="apellidomaterno"
                 [class.is-invalid]="misDatosForm.get('apellido_materno')?.invalid && misDatosForm.get('apellido_materno')?.dirty"
                 [class.is-valid]="misDatosForm.get('apellido_materno')?.valid && misDatosForm.get('apellido_materno')?.dirty"
-                (blur)="validaInput('apellido_materno');">
+                (blur)="validaInput('apellidomaterno');">
               <label for="apellido_materno">Apellido Materno</label>
               <div
                 *ngIf="misDatosForm.get('apellido_materno')?.errors?.['required'] && misDatosForm.get('apellido_materno')?.dirty"
@@ -78,8 +78,8 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="rut">
-              <label for="rut">Rut</label>
+              <input type="text" class="form-control" formControlName="rut" id="rutusuario">
+              <label for="rutusuario">Rut</label>
             </div>
 
           </div>
@@ -91,11 +91,11 @@
 
             <div class="form-floating mb-4">
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="email"
+                <input type="email" class="form-control" formControlName="email" id="emailpersonal"
                   [class.is-invalid]="misDatosForm.get('email')?.invalid && misDatosForm.get('email')?.dirty"
                   [class.is-valid]="misDatosForm.get('email')?.valid && misDatosForm.get('email')?.dirty"
                   (blur)="validaEmailPersonal('email')">
-                <label for="email">Email</label>
+                <label for="emailpersonal">Email</label>
                 <div *ngIf="misDatosForm.controls['email'].errors?.['required'] && misDatosForm.controls['email'].dirty"
                   class="invalid-feedback">
                   El campo Email no puede quedar vacío.
@@ -113,11 +113,11 @@
 
             <div class="form-floating mb-4">
               <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="email_comercial"
+                <input type="email" class="form-control" formControlName="email_comercial" id="emailcomercial"
                   [class.is-invalid]="misDatosForm.get('email_comercial')?.invalid && misDatosForm.get('email_comercial')?.dirty"
                   [class.is-valid]="misDatosForm.get('email_comercial')?.valid && misDatosForm.get('email_comercial')?.dirty"
                   (blur)="validaEmailPersonal('email_comercial')">
-                <label for="email_comercial">Email comercial</label>
+                <label for="emailcomercial">Email comercial</label>
                 <div
                   *ngIf="misDatosForm.controls['email_comercial'].errors?.['required'] && misDatosForm.controls['email_comercial'].dirty"
                   class="invalid-feedback">
@@ -135,11 +135,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control celular" formControlName="celular"
+              <input type="text" class="form-control celular" formControlName="celular" id="celularusuario"
                 [class.is-invalid]="inputErrorCelularVacio || (misDatosForm.get('celular')?.invalid && misDatosForm.get('celular')?.touched)"
                 [class.is-valid]="misDatosForm.get('celular')?.valid && misDatosForm.get('celular')?.dirty && misDatosForm.get('celular')?.value"
                 (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
-              <label for="celular">Celular</label>
+              <label for="celularusuario">Celular</label>
               <div class="prefijo-chile"></div>
               <div *ngIf="inputErrorCelularVacio && misDatosForm.get('celular')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
@@ -150,11 +150,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="telefono"
+              <input type="text" class="form-control" formControlName="telefono" id="telefonousuario"
                 [class.is-invalid]="inputErrorTelefonoVacio || (misDatosForm.get('telefono')?.invalid && misDatosForm.get('telefono')?.touched)"
                 [class.is-valid]="misDatosForm.get('telefono')?.valid && misDatosForm.get('telefono')?.dirty && misDatosForm.get('telefono')?.value"
                 (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
-              <label for="telefono">Teléfono</label>
+              <label for="telefonousuario">Teléfono</label>
               <div *ngIf="inputErrorTelefonoVacio && misDatosForm.get('telefono')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>
               </div>
@@ -171,11 +171,11 @@
             <h5 class="mt-3 mt-md-auto">Dirección personal</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="calle"
+              <input type="text" class="form-control" formControlName="calle" id="calleusuario"
                 [class.is-invalid]="misDatosForm.get('calle')?.invalid && misDatosForm.get('calle')?.dirty"
                 [class.is-valid]="misDatosForm.get('calle')?.valid && misDatosForm.get('calle')?.dirty"
                 (blur)="validaInput('calle');">
-              <label for="calle">Calle</label>
+              <label for="calleusuario">Calle</label>
               <div
                 *ngIf="misDatosForm.get('calle')?.errors?.['required'] && misDatosForm.get('calle')?.dirty"
                 class="invalid-feedback">
@@ -184,11 +184,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="numero_calle"
+              <input type="text" class="form-control" formControlName="numero_calle" id="numerocalle"
                 [class.is-invalid]="misDatosForm.get('numero_calle')?.invalid && misDatosForm.get('numero_calle')?.dirty"
                 [class.is-valid]="misDatosForm.get('numero_calle')?.valid && misDatosForm.get('numero_calle')?.dirty"
                 (blur)="validaInput('numero_calle');" (keypress)="soloNumeros($event)">
-              <label for="numero_calle">Número</label>
+              <label for="numerocalle">Número</label>
               <div
                 *ngIf="misDatosForm.get('numero_calle')?.errors?.['required'] && misDatosForm.get('numero_calle')?.dirty"
                 class="invalid-feedback">
@@ -197,11 +197,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="depto_villa_block"
+              <input type="text" class="form-control" formControlName="depto_villa_block" id="deptovillablock"
                 [class.is-invalid]="misDatosForm.get('depto_villa_block')?.invalid && misDatosForm.get('depto_villa_block')?.dirty"
                 [class.is-valid]="misDatosForm.get('depto_villa_block')?.valid && misDatosForm.get('depto_villa_block')?.dirty"
                 (blur)="validaInput('depto_villa_block');">
-              <label for="depto_villa_block">Depto / Villa / Block</label>
+              <label for="deptovillablock">Depto / Villa / Block</label>
               <div
                 *ngIf="misDatosForm.get('depto_villa_block')?.errors?.['required'] && misDatosForm.get('depto_villa_block')?.dirty"
                 class="invalid-feedback">
@@ -250,11 +250,11 @@
             <h5 class="mt-3 mt-md-auto">Dirección comercial</h5>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="calle_comercial"
+              <input type="text" class="form-control" formControlName="calle_comercial" id="callecomercial"
                 [class.is-invalid]="misDatosForm.get('calle_comercial')?.invalid && misDatosForm.get('calle_comercial')?.dirty"
                 [class.is-valid]="misDatosForm.get('calle_comercial')?.valid && misDatosForm.get('calle_comercial')?.dirty"
                 (blur)="validaInput('calle_comercial');">
-              <label for="calle_comercial">Calle</label>
+              <label for="callecomercial">Calle</label>
               <div
                 *ngIf="misDatosForm.get('calle_comercial')?.errors?.['required'] && misDatosForm.get('calle_comercial')?.dirty"
                 class="invalid-feedback">
@@ -263,11 +263,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="numero_calle_comercial"
+              <input type="text" class="form-control" formControlName="numero_calle_comercial" id="numerocallecomercial"
                 [class.is-invalid]="misDatosForm.get('numero_calle_comercial')?.invalid && misDatosForm.get('numero_calle_comercial')?.dirty"
                 [class.is-valid]="misDatosForm.get('numero_calle_comercial')?.valid && misDatosForm.get('numero_calle_comercial')?.dirty"
                 (blur)="validaInput('numero_calle_comercial');" (keypress)="soloNumeros($event)">
-              <label for="numero_calle_comercial">Número</label>
+              <label for="numerocallecomercial">Número</label>
               <div
                 *ngIf="misDatosForm.get('numero_calle_comercial')?.errors?.['required'] && misDatosForm.get('numero_calle_comercial')?.dirty"
                 class="invalid-feedback">
@@ -276,11 +276,11 @@
             </div>
 
             <div class="form-floating mb-4">
-              <input type="text" class="form-control" formControlName="oficina"
+              <input type="text" class="form-control" formControlName="oficina" id="oficinacomercial"
                 [class.is-invalid]="misDatosForm.get('oficina')?.invalid && misDatosForm.get('oficina')?.dirty"
                 [class.is-valid]="misDatosForm.get('oficina')?.valid && misDatosForm.get('oficina')?.dirty"
                 (blur)="validaInput('oficina');">
-              <label for="oficina">Oficina</label>
+              <label for="oficinacomercial">Oficina</label>
               <div *ngIf="misDatosForm.get('oficina')?.errors?.['required'] && misDatosForm.get('oficina')?.dirty"
                 class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>

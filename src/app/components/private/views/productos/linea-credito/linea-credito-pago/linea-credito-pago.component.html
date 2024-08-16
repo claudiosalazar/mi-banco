@@ -73,10 +73,10 @@
 
                   <!-- Input pago total -->
                   <div class="form-floating mb-3" id="contenedorPagoTotal" *ngIf="pagoLineaCreditoForm.controls['montoPago'].value === 'pagoTotal'">
-                    <input type="text" class="form-control" id="inputMontoPagoTotal"
+                    <input type="text" class="form-control" id="inputmontopagototal"
                       formControlName="inputMontoPagoTotal" [class.is-invalid]="error3"
                       [class.is-valid]="pagoTotalValido">
-                    <label for="inputMontoPagoTotal">Pago Total</label>
+                    <label for="inputmontopagototal">Pago Total</label>
                     <div *ngIf="error3" class="invalid-feedback">
                       <span>El monto para el pago es superior al saldo.</span>
                     </div>
@@ -87,11 +87,11 @@
 
                   <!-- Input otro monto -->
                   <div class="form-floating" id="contenedorOtroPago" *ngIf="pagoLineaCreditoForm.controls['montoPago'].value === 'otroMonto'">
-                    <input type="text" class="form-control" id="inputOtroMonto" formControlName="inputOtroMonto"
+                    <input type="text" class="form-control" id="inputotromonto" formControlName="inputOtroMonto"
                       placeholder="Ingrese un monto a pagar" [class.is-invalid]="error1 || error2 || error4"
                       [class.is-valid]="montoValido" (keypress)="soloNumeros($event)" (blur)="validaMontoOtroMonto();"
                       (focus)="resetValidacionesInputOtroMonto()" (input)="resetValidacionesInputOtroMonto();">
-                    <label for="inputOtroMonto">Ingrese un monto a pagar</label>
+                    <label for="inputotromonto">Ingrese un monto a pagar</label>
                     <div *ngIf="error1" class="invalid-feedback">
                       <span>Debes ingresar un monto superior a 0.</span>
                     </div>
@@ -114,10 +114,10 @@
                 <div class="col-12 mb-4">
                   <h6>Enviar comprobante a:</h6>
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="inputEmail" formControlName="inputEmail" 
+                    <input type="text" class="form-control" id="email" formControlName="inputEmail" 
                      [ngClass]="{ 'is-invalid': pagoLineaCreditoForm.controls['inputEmail'].invalid && (pagoLineaCreditoForm.controls['inputEmail'].dirty || submitted), 'is-valid': pagoLineaCreditoForm.controls['inputEmail'].valid }" 
                      (input)="emailValido('inputEmail')">
-                    <label for="inputEmail">Email</label>
+                    <label for="email">Email</label>
 
                     <!-- Mensaje valido -->
                     <div *ngIf="pagoLineaCreditoForm.controls['inputEmail'].valid" class="valid-feedback">

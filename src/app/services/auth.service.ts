@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private URL = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000';
+  // private apiUrl = 'https://claudiosalazar.cl/mibanco';
 
   constructor(
     private http: HttpClient,
@@ -17,7 +18,7 @@ export class AuthService {
   ) { }
 
   mibanco(user: any) { 
-    return this.http.post(`${this.URL}/user/mibanco`, user);
+    return this.http.post(`${this.apiUrl}/user/mibanco`, user);
   }
 
   isAuth(): boolean {
