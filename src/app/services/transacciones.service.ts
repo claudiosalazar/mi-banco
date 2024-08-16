@@ -4,13 +4,14 @@ import { map, Observable, tap } from 'rxjs';
 import { CuentaCorriente } from '../models/cuenta-corriente.model';
 import { LineaCredito } from '../models/linea-credito.model';
 import { Visa } from '../models/visa.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransaccionesService {
-  //private apiUrl = 'http://localhost:3000';
-private apiUrl = 'https://mi-banco.claudiosalazar.cl';
+  
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

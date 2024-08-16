@@ -2,15 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { DatosUsuario } from '../models/datos-usuario.model'; // Asegúrate de que la ruta sea correcta
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatosUsuarioService {
 
-  //private apiUrl = 'http://localhost:3000';
-private apiUrl = 'https://mi-banco.claudiosalazar.cl';
-  private usuarioActualizado = new BehaviorSubject<void>(undefined);
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

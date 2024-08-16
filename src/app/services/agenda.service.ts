@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Agenda } from '../models/agenda.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgendaService {
 
-  //private apiUrl = 'http://localhost:3000';
-  private apiUrl = 'https://mi-banco.claudiosalazar.cl';
+  private apiUrl = environment.apiUrl;
 
   private datosFiltradosSource = new Subject<any[]>();
   private idSource = new BehaviorSubject<number | null>(null);
