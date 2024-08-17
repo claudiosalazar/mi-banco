@@ -67,7 +67,7 @@ export class AgendaService {
   }
 
   setId(id: number): void {
-    console.log('id', id);
+    // console.log('id', id);
     this.idSource.next(id);
   }
 

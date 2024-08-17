@@ -93,8 +93,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadData();
   
-    
-  
     this.mostrarBackdropCustomOffcanvas.subscribe(valor => {
       this.mostrarBackdropCustomOffcanvasEstado = valor;
     });
@@ -284,8 +282,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     modalEdicionDestinatario.show();
     this.backdropService.showModalBackdrop();
   }
-  
-  
 
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});

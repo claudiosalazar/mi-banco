@@ -43,26 +43,26 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   // Variables para banco
   banco: any;
-  tipo_cuenta: any;
-  valorBancoInicial: any | undefined;
-  nuevoValorBanco: string | null = null;
-  bancoSeleccionado: any | undefined;
+  bancoInicio: string | undefined;
+  nuevoValorBanco: any;
+
   bancoValido: any;
   bancoInvalido: any;
   bancoInvalidoMensaje: any;
-  bancoInicio: any;
-  tipoCuentaInicio: any;
+
+  tipo_cuenta: any;
+  tipoCuentaInicio: string | undefined;
+  nuevoValorTipoCuenta: any;
+  
+  bancoSeleccionado: any;
+  bancoSeleccionadoLabel: any;
 
   // Variables para tipo cuenta
-  tipoCuenta: any;
-  valorTipoCuentaInicial: any | undefined;
-  nuevoValorTipoCuenta: string | null = null;
-  tipoCuentaSeleccionada: any | undefined;
+  tipoCuentaSeleccionada: any;
   cuentaValida: any;
   cuentaInvalida: any;
   cuentaInvalidaMensaje: any;
-
-  bancoSeleccionadoLabel: string | undefined;
+  
 
   id: number | null = null;
 
@@ -120,11 +120,15 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadData();
+
     this.agendaService.currentId.subscribe(id => {
-      console.log('ID:', id);
+      // console.log('ID:', id);
       this.id = id ?? 0;
       this.loadDestinatarioData(this.id);
+      console.log('Banco Inicio:', this.bancoInicio);
+      console.log('Cuenta Inicio:', this.tipoCuentaInicio);
     });
+
     this.editarDestinatarioForm = new FormGroup({
       nombre: new FormControl(''),
       apodo: new FormControl(''),
@@ -154,18 +158,21 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   }
 
   observaBancoInicio(): void {
-    const bancoControl = this.editarDestinatarioForm.get('banco');
+    const bancoControl = this.editarDestinatarioForm.get('');
     if (bancoControl) {
-      bancoControl.valueChanges.subscribe(nuevoBanco => {
-        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
-        if (bancoSeleccionado) {
-          this.bancoInicio = bancoSeleccionado.label;
-          console.log('Nuevo Banco Inicio:', this.bancoInicio);
-        }
-      });
+      this.bancoInicio = bancoControl.value;
+      this.nuevoValorBanco = bancoControl.value; // Guardar el texto del label
     }
   }
-
+  
+  observaCuentaInicio(): void {
+    const cuentaControl = this.editarDestinatarioForm.get('');
+    if (cuentaControl) {
+      this.tipoCuentaInicio = cuentaControl.value;
+      this.nuevoValorTipoCuenta = cuentaControl.value;
+    }
+  }
+  
   activarSeleccionBanco(): void {
     const bancoControl = this.editarDestinatarioForm.get('banco');
     if (bancoControl) {
@@ -173,26 +180,12 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         const selectedBanco = this.listaBancos.find(banco => banco.value === value);
         if (selectedBanco) {
           this.bancoInicio = selectedBanco.label;
-          this.nuevoValorBanco = selectedBanco.label; // Guardar el valor seleccionado
-          console.log('Banco seleccionado:', this.nuevoValorBanco);
+          this.nuevoValorBanco = selectedBanco.label;
         }
       });
     }
   }
-
-  observaCuentaInicio(): void {
-    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
-    if (cuentaControl) {
-      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
-        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
-        if (cuentaSeleccionada) {
-          this.tipoCuentaInicio = cuentaSeleccionada.label;
-          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
-        }
-      });
-    }
-  }
-
+  
   activarSeleccionCuenta(): void {
     const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
     if (cuentaControl) {
@@ -200,8 +193,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         const selecteCuenta = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === value);
         if (selecteCuenta) {
           this.tipoCuentaInicio = selecteCuenta.label;
-          this.nuevoValorTipoCuenta = selecteCuenta.label; // Guardar el valor seleccionado
-          console.log('Cuenta seleccionado:', this.nuevoValorTipoCuenta);
+          this.nuevoValorTipoCuenta = selecteCuenta.label; // Guardar el texto del label
+          console.log('Cuenta seleccionada:', this.nuevoValorTipoCuenta);
         }
       });
     }
@@ -209,7 +202,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
-      console.log('Agenda:', agenda);
+      // console.log('Agenda:', agenda);
       this.agenda = agenda;
       this.cdr.detectChanges();
     });
@@ -232,7 +225,6 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
       this.bancoInicio = destinatario.banco;
       this.tipoCuentaInicio = destinatario.tipo_cuenta;
-      console.log('Banco:', this.bancoInicio);
       this.dataLoaded.next(); // Emitir el evento indicando que los datos han sido cargados
     }
   }
@@ -439,34 +431,27 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   actualizarDestinatario(): void {
     if (this.editarDestinatarioForm.valid) {
       const destinatarioData = this.editarDestinatarioForm.getRawValue();
-  
-      // Eliminar caracteres '.' y '-' del campo 'rut'
+
       if (destinatarioData.rut) {
         destinatarioData.rut = destinatarioData.rut.replace(/[.-]/g, '');
       }
   
       console.log('Datos enviados al servicio:', destinatarioData);
       if (this.id !== null) {
-        console.log('ID del destinatario:', this.id); // Verifica el ID antes de enviar
+        console.log('ID del destinatario:', this.id); 
         this.agendaService.actualizarIdDestinatario(this.id, destinatarioData).subscribe(
           response => {
             console.log('Destinatario actualizado:', response);
-            // Lógica adicional después de la actualización
-            // alert('Destinatario actualizado exitosamente');
-            // this.router.navigate(['/ruta-deseada']);
           },
           error => {
             console.error('Error al actualizar destinatario:', error);
-            // alert('Hubo un error al actualizar el destinatario. Por favor, inténtelo de nuevo.');
           }
         );
       } else {
         console.error('ID del destinatario no encontrado');
-        // alert('No se pudo encontrar el ID del destinatario. Por favor, inténtelo de nuevo.');
       }
     } else {
       console.error('Formulario inválido');
-      // alert('El formulario contiene errores. Por favor, corríjalos antes de enviar.');
     }
     this.mostrarBackdropCustomChange.emit(false);
   }
