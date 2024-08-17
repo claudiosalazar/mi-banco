@@ -44,13 +44,13 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   // Variables para banco
   banco: any;
   bancoInicio: string | undefined;
-  nuevoValorBanco: any;
+  nuevoValorBanco: string | undefined;;
 
   bancoValido: any;
   bancoInvalido: any;
   bancoInvalidoMensaje: any;
 
-  tipo_cuenta: any;
+  tipo_cuenta: string | undefined;
   tipoCuentaInicio: string | undefined;
   nuevoValorTipoCuenta: any;
   
@@ -431,10 +431,15 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   actualizarDestinatario(): void {
     if (this.editarDestinatarioForm.valid) {
       const destinatarioData = this.editarDestinatarioForm.getRawValue();
-
+  
+      // Reemplazar caracteres no deseados en el RUT
       if (destinatarioData.rut) {
         destinatarioData.rut = destinatarioData.rut.replace(/[.-]/g, '');
       }
+  
+      // Asignar el texto del label de banco y tipo de cuenta
+      destinatarioData.banco = this.nuevoValorBanco;
+      destinatarioData.tipo_cuenta = this.nuevoValorTipoCuenta;
   
       console.log('Datos enviados al servicio:', destinatarioData);
       if (this.id !== null) {
