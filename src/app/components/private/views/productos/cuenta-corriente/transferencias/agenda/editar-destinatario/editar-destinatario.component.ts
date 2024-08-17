@@ -438,8 +438,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
       }
   
       // Asignar el texto del label de banco y tipo de cuenta
-      destinatarioData.banco = this.nuevoValorBanco;
-      destinatarioData.tipo_cuenta = this.nuevoValorTipoCuenta;
+      destinatarioData.banco = this.nuevoValorBanco || this.bancoInicio;
+      destinatarioData.tipo_cuenta = this.nuevoValorTipoCuenta || this.tipoCuentaInicio;
   
       console.log('Datos enviados al servicio:', destinatarioData);
       if (this.id !== null) {
