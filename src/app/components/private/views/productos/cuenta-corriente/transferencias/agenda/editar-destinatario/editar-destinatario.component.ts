@@ -148,6 +148,63 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         this.cdr.detectChanges();
       });
     });
+
+    this.activarSeleccionBanco();
+    this.activarSeleccionCuenta();
+  }
+
+  observaBancoInicio(): void {
+    const bancoControl = this.editarDestinatarioForm.get('banco');
+    if (bancoControl) {
+      bancoControl.valueChanges.subscribe(nuevoBanco => {
+        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
+        if (bancoSeleccionado) {
+          this.bancoInicio = bancoSeleccionado.label;
+          console.log('Nuevo Banco Inicio:', this.bancoInicio);
+        }
+      });
+    }
+  }
+
+  activarSeleccionBanco(): void {
+    const bancoControl = this.editarDestinatarioForm.get('banco');
+    if (bancoControl) {
+      bancoControl.valueChanges.subscribe(value => {
+        const selectedBanco = this.listaBancos.find(banco => banco.value === value);
+        if (selectedBanco) {
+          this.bancoInicio = selectedBanco.label;
+          this.nuevoValorBanco = selectedBanco.label; // Guardar el valor seleccionado
+          console.log('Banco seleccionado:', this.nuevoValorBanco);
+        }
+      });
+    }
+  }
+
+  observaCuentaInicio(): void {
+    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
+    if (cuentaControl) {
+      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
+        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
+        if (cuentaSeleccionada) {
+          this.tipoCuentaInicio = cuentaSeleccionada.label;
+          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
+        }
+      });
+    }
+  }
+
+  activarSeleccionCuenta(): void {
+    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
+    if (cuentaControl) {
+      cuentaControl.valueChanges.subscribe(value => {
+        const selecteCuenta = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === value);
+        if (selecteCuenta) {
+          this.tipoCuentaInicio = selecteCuenta.label;
+          this.nuevoValorTipoCuenta = selecteCuenta.label; // Guardar el valor seleccionado
+          console.log('Cuenta seleccionado:', this.nuevoValorTipoCuenta);
+        }
+      });
+    }
   }
 
   loadData(): void {
@@ -191,32 +248,6 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
       }
     }
     return false;
-  }
-
-  observaBancoInicio(): void {
-    const bancoControl = this.editarDestinatarioForm.get('banco');
-    if (bancoControl) {
-      bancoControl.valueChanges.subscribe(nuevoBanco => {
-        const bancoSeleccionado = this.listaBancos.find(banco => banco.value === nuevoBanco);
-        if (bancoSeleccionado) {
-          this.bancoInicio = bancoSeleccionado.label;
-          console.log('Nuevo Banco Inicio:', this.bancoInicio);
-        }
-      });
-    }
-  }
-
-  observaCuentaInicio(): void {
-    const cuentaControl = this.editarDestinatarioForm.get('tipo_cuenta');
-    if (cuentaControl) {
-      cuentaControl.valueChanges.subscribe(nuevaCuenta => {
-        const cuentaSeleccionada = this.tiposCuenta.find(tipo_cuenta => tipo_cuenta.value === nuevaCuenta);
-        if (cuentaSeleccionada) {
-          this.tipoCuentaInicio = cuentaSeleccionada.label;
-          console.log('Nuevo Banco Inicio:', this.tipoCuentaInicio);
-        }
-      });
-    }
   }
 
   validaNombre(): void {
