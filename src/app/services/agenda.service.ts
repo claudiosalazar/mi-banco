@@ -15,8 +15,8 @@ export class AgendaService {
   private datosFiltradosSource = new Subject<any[]>();
   private idSource = new BehaviorSubject<number | null>(null);
 
-  private destinatarioActualizado = new BehaviorSubject<void>(undefined);
-  destinatarioActualizado$ = this.destinatarioActualizado.asObservable();
+  private destinatarioActualizado = new Subject<any>();
+  public destinatarioActualizado$ = this.destinatarioActualizado.asObservable();
 
   private destinatarioAgregado = new BehaviorSubject<void>(undefined);
   destinatarioAgregado$ = this.destinatarioAgregado.asObservable();
@@ -45,9 +45,7 @@ export class AgendaService {
   }
 
   filtrarAgenda(valorBusqueda: any): Observable<Agenda[]> {
-    // Convertir valorBusqueda a cadena, a minúsculas y eliminar espacios en blanco
     const searchStr = String(valorBusqueda).toLowerCase().replace(/\s+/g, '');
-  
     return this.getAgenda().pipe(
       map(agenda => agenda.filter((item: any) => 
         Object.values(item).some(value => 
@@ -62,12 +60,7 @@ export class AgendaService {
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
 
-  getDatosEditadosDestinatario(): Observable<any> {
-    return this.datosEditadosDestinatario.asObservable();
-  }
-
   setId(id: number): void {
-    // console.log('id', id);
     this.idSource.next(id);
   }
 
@@ -77,7 +70,6 @@ export class AgendaService {
 
   emitirDatosNuevoDestinatario(datos: any): void {
     if (datos !== undefined) {
-      console.log('Datos recibidos en emitirDatosNuevoDestinatario:', datos);
       this.datosNuevoDestinatarioSource.next(datos);
     }
   }
@@ -92,10 +84,15 @@ export class AgendaService {
     );
   }
 
-  actualizarIdDestinatario(id: number, agenda: Agenda): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda).pipe(
-      tap(() => this.destinatarioActualizado.next())
-    );
+  guardarDestinatarioEditado(id: number, agenda: Agenda): Observable<any> {
+      return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda).pipe(
+        tap((value) => this.destinatarioActualizado.next(value))
+      );
+  }
+
+  actualizarDestinatario(datosEditados: any) {
+    console.log('Emitiendo datos editados:', datosEditados);
+    this.destinatarioActualizado.next(datosEditados);
   }
   
   eliminarIdDestinatario(id: number): Observable<any> {

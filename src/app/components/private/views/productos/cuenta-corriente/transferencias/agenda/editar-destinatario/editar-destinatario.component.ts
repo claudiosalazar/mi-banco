@@ -16,7 +16,7 @@ declare var bootstrap: any;
 export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   @ViewChild('editarDestinatarioCanvas') editarDestinatarioCanvas: ElementRef | undefined;
-  @Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
+  //@Output() mostrarBackdropCustomChange = new EventEmitter<boolean>();
   @Output() cancelarEvent = new EventEmitter<void>();
 
   private dataLoaded = new Subject<void>();
@@ -444,7 +444,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
       console.log('Datos enviados al servicio:', destinatarioData);
       if (this.id !== null) {
         console.log('ID del destinatario:', this.id); 
-        this.agendaService.actualizarIdDestinatario(this.id, destinatarioData).subscribe(
+        this.agendaService.guardarDestinatarioEditado(this.id, destinatarioData).subscribe(
           response => {
             console.log('Destinatario actualizado:', response);
           },
@@ -458,7 +458,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     } else {
       console.error('Formulario inválido');
     }
-    this.mostrarBackdropCustomChange.emit(false);
+    //this.mostrarBackdropCustomChange.emit(false);
   }
   
 

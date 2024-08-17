@@ -31,7 +31,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   @ViewChild('modalEdicionDestinatario') modalEdicionDestinatario: ElementRef | undefined;
 
   private backdropSubscription: Subscription | undefined;
-  private subscription: Subscription | undefined;
+  private subscriptions: Subscription = new Subscription();
   public columnaSeleccionada: string | undefined;
   public isRotatedIn: boolean = false;
 
@@ -84,6 +84,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   tablaConDatos: boolean = true;
   mostrarAlerta: boolean = false;
 
+  cambios: any;
+  datosEditados: any;
+
   constructor(
     private agendaService: AgendaService,
     private cdr: ChangeDetectorRef,
@@ -100,6 +103,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.renderizarAgregarDestinatario.subscribe(valor => {
       this.renderizarAgregarDestinatarioEstado = valor;
     });
+
   }
   
   ngAfterViewInit(_e: Event): void {
@@ -114,24 +118,23 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       return modal;
     });
   
-    this.subscription = this.agendaService.destinatarioActualizado$.subscribe(() => {
-      this.loadData();
-    });
-  
-    this.subscription.add(
+    this.subscriptions.add(
       this.agendaService.destinatarioAgregado$.subscribe(() => {
         this.loadData();
       })
     );
+
+    this.subscriptions = this.agendaService.destinatarioActualizado$.subscribe((datosEditados: any) => {
+      this.abrirModalEdicion();
+    });
   
-    this.subscription.add(
+    this.subscriptions.add(
       this.agendaService.getDatosNuevoDestinatario().subscribe(datos => {
         this.datosCapturados = datos;
-        // this.backdropService.hide();
         this.abrirModalNuevoDestinatario();
       })
     );
-
+  
     this.busquedaDestinatarios.valueChanges
       .pipe(
         debounceTime(300), // Añadir un debounce para evitar llamadas excesivas
@@ -172,6 +175,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       this.originalData = [...this.agenda];
       this.paginarAgenda();
       this.cdr.detectChanges();
+      this.mostrarBackdropCustomOffcanvas.emit(false);
+      this.mostrarBackdropCustomOffcanvasEstado = false;
   
       // Aplicar la lógica de verificación de datos
       if (this.agenda.length === 0) {
@@ -186,9 +191,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Es importante cancelar la suscripción para evitar fugas de memoria
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
     if (this.backdropSubscription) {
       this.backdropSubscription.unsubscribe();
     }
@@ -237,7 +240,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   // Nuevo método para manejar la actualización de destinatarios
   actualizarDestinatario(id: number, datos: any): void {
-    this.agendaService.actualizarIdDestinatario(id, datos).subscribe(
+    this.agendaService.guardarDestinatarioEditado(id, datos).subscribe(
       () => {
         console.log('El destinatario fue actualizado correctamente');
         this.loadData();
@@ -277,16 +280,27 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.agendaService.setId(id);
   }
 
-  abrirModalEdicionDestinatario(): void {
+  abrirModalEdicion(): void {
+    console.log('Modal de edición abierto');
     var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
     modalEdicionDestinatario.show();
-    this.backdropService.showModalBackdrop();
+    this.mostrarBackdropCustomOffcanvas.emit(false);
+    this.mostrarBackdropCustomOffcanvasEstado = false;
+
+    // Mostrar el primer div
+    this.enviandoDestinatarioEditado = true;
+    this.datosGuardadosDestinatarioEditado = false;
+
+    // Después de 2 segundos, mostrar el segundo div
+    setTimeout(() => {
+      this.enviandoDestinatarioEditado = false;
+      this.datosGuardadosDestinatarioEditado = true;
+    }, 2000);
   }
 
   abrirModalNuevoDestinatario(): void {
     var modalNuevoDestinatario = new bootstrap.Modal(document.getElementById('modalNuevoDestinatario'), {});
     modalNuevoDestinatario.show();
-    // this.backdropService.show();
     this.enviandoNuevoDestinatario = true;
 
     // Envía los datos al servicio
