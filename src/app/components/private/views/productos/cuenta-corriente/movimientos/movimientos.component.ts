@@ -71,5 +71,6 @@ export class MovimientosComponent implements OnInit {
       this.mostrarAlerta = false;
     }
   }
+  
 
 }

@@ -24,6 +24,7 @@ export class TablaMovimientosComponent implements OnInit {
   @Input() mostrarColumnaAbono = true;
   @Input() mostrarColumnaSaldo = true;
   @Input() claseTabla: string = 'tabla-movimientos';
+  
 
   transacciones: any[] = [];
   paginatedTransacciones: any[] = [];
@@ -53,25 +54,26 @@ export class TablaMovimientosComponent implements OnInit {
   ngOnInit() {
     this.loadData();
   }
-
+  
   loadData(): void {
     this.datosFiltradosService.datosFiltrados$.subscribe(
       datosFiltrados => {
         this.transacciones = datosFiltrados;
-        this.transacciones = [...this.transacciones];
         this.originalData = [...this.transacciones];
+        this.paginarTransacciones();
         this.cdr.detectChanges();
       }
     );
-
+  
     this.datosFiltradosService.paginationData$.subscribe(
       paginationData => {
         this.itemsPerPage = paginationData.itemsPerPage;
         this.currentPage = paginationData.currentPage;
+        this.paginarTransacciones();
         this.cdr.detectChanges();
       }
     );
-
+  
     if (this.transProducto === 'ctaCte') {
       this.transaccionesService.getTransCuentaCorriente().subscribe(
         (transacciones: CuentaCorriente[]) => {
@@ -127,6 +129,7 @@ export class TablaMovimientosComponent implements OnInit {
   handleTransacciones(transacciones: any[]): void {
     if (transacciones) {
       this.transacciones = transacciones.filter(transaccion => transaccion);
+      this.originalData = [...this.transacciones];
       this.paginarTransacciones();
       this.cdr.detectChanges();
     }
@@ -140,7 +143,24 @@ export class TablaMovimientosComponent implements OnInit {
     this.transaccionesFiltradas = event;
   }
 
-  // Ordena los datos de la tabla
+  buscarTransacciones(termino: string): void {
+    if (!termino) {
+      this.transacciones = [...this.originalData];
+    } else {
+      this.transacciones = this.originalData.filter(transaccion => {
+        return Object.values(transaccion).some((value: unknown) =>
+          (value as string).toString().toLowerCase().includes(termino.toLowerCase())
+        );
+      });
+    }
+    this.currentPage = 1; // Reiniciar a la primera página
+    this.paginarTransacciones();
+  }
+
+  onBuscar(termino: string): void {
+    this.buscarTransacciones(termino);
+  }
+
   ordenarDatos(column: string): void {
     this.columnaSeleccionada = column;
     if (this.sortedColumn === column) {
@@ -176,4 +196,6 @@ export class TablaMovimientosComponent implements OnInit {
     this.paginarTransacciones();
     this.cdr.detectChanges();
   }
+
+  
 }
