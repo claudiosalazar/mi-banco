@@ -169,3 +169,20 @@
     box-shadow: none !important;
   }
 }
+
+.pass-view {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  top: 50%;
+  height: 58px;
+  width: 58px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 1000;
+  border: none;
+  color: $gris-40;
+}

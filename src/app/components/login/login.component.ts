@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   formularioLogin: FormGroup;
   botonLoginDisabled = true;
   mensajeError = false;
+  isPasswordVisible: boolean = false; // Nueva propiedad
 
   constructor(
     private authService: AuthService,
@@ -85,6 +86,10 @@ export class LoginComponent implements OnInit {
     if (passControl) {
       passControl.reset();
     }
+  }
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   logIn() {

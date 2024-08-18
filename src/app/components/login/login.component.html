@@ -26,8 +26,16 @@
             </div>
             
             <div class="form-floating mb-4">
-              <input formControlName="pass" type="password" class="form-control" id="clave" placeholder="Clave" (focus)="resetPass()">
+              <input formControlName="pass" [type]="isPasswordVisible ? 'text' : 'password'" class="form-control" id="clave" placeholder="Clave" (focus)="resetPass()">
               <label for="clave" class="form-label">Clave</label>
+              <button class="pass-view" type="button" id="ver-pass" (click)="togglePasswordVisibility()">
+                <span class="material-symbols-outlined" *ngIf="!isPasswordVisible">
+                  visibility_off
+                </span>
+                <span class="material-symbols-outlined" *ngIf="isPasswordVisible">
+                  visibility
+                </span>
+              </button>
             </div>
           
             <button class="w-100 btn btn-login mb-4" type="submit" [class.disabled]="botonLoginDisabled">Entrar</button>
