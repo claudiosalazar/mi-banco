@@ -73,7 +73,6 @@ export class AgregarDestinatarioComponent implements OnInit {
   // Variables para apodo
   inputApodoValido: any;
   // Variables para rut
-  inputErrorVacioRut: any;
   inputValidoRut: any;
   // Variables para numero cuenta
   inputErrorVacioNumeroCuenta: any;
@@ -151,15 +150,97 @@ export class AgregarDestinatarioComponent implements OnInit {
   // Solo permite numeros y letra K en el ultimo digito
   formatoRut(event: KeyboardEvent): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
-    const value = (event.target as HTMLInputElement).value;
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+  
+    // Verificar si el valor contiene '.' o '-'
+    if (value.includes('.') || value.includes('-')) {
+      // Permitir la entrada sin restricciones adicionales
+      return true;
+    }
+  
+    // Aplicar restricciones de entrada de caracteres
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      if (charCode === 75 || charCode === 107) {
+      if (charCode === 75 || charCode === 107) { // 'K' o 'k'
         return value.length === 8;
+      }
+      if (charCode === 46 || charCode === 45) { // '.' o '-'
+        return true;
       }
       return false;
     }
+  
+    // Aplicar la lógica de validación del RUT
+    setTimeout(() => {
+      const rut = this.rutPipe.transform(value);
+      const digitos = rut.replace(/[^0-9]/g, '').length;
+      if (digitos < 8 || digitos > 9) {
+        inputElement.setCustomValidity('RUT inválido');
+      } else {
+        inputElement.value = rut;
+        inputElement.setCustomValidity('');
+      }
+    }, 0);
+  
     return true;
   }
+
+  resetRut(): void {
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      rutDestinatarioControl.setValue(''); // Limpiar el campo de entrada
+      rutDestinatarioControl.markAsPristine(); // Marcar como pristine
+      rutDestinatarioControl.markAsUntouched(); // Marcar como untouched
+      rutDestinatarioControl.updateValueAndValidity(); // Actualizar el estado del control
+    }
+  }
+  
+  validaRut(): void {
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      const rutDestinatario = rutDestinatarioControl.value as any;
+  
+      if (rutDestinatario.trim() === '') {
+        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
+      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 12) {
+        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+      } else {
+        rutDestinatarioControl.setErrors(null);
+        if (!rutDestinatario.includes('.') && !rutDestinatario.includes('-')) {
+          rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+        }
+      }
+  
+      this.inputValidoRut = rutDestinatarioControl.valid;
+    }
+  }
+  
+  /*validaRut(): void {
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      const rutDestinatario = rutDestinatarioControl.value as any;
+  
+      if (rutDestinatario.trim() === '') {
+        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
+      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 12) {
+        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+      } else {
+        rutDestinatarioControl.setErrors(null);
+        if (!rutDestinatario.includes('.') && !rutDestinatario.includes('-')) {
+          rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+        }
+      }
+  
+      this.inputValidoRut = rutDestinatarioControl.valid;
+    }
+  }
+
+  resetRut(): void {
+    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      rutDestinatarioControl.setValue('');
+    }
+  }*/
 
   validaNombre(): void {
     const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombre');
@@ -193,25 +274,6 @@ export class AgregarDestinatarioComponent implements OnInit {
   
       const isValid = control.value.length > 0;
       this.inputApodoValido = isValid;
-    }
-  }
-
-  validaRut(): void {
-    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
-    if (rutDestinatarioControl) {
-      const rutDestinatario = rutDestinatarioControl.value as any;
-  
-      if (rutDestinatario.trim() === '') {
-        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
-      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 9) {
-        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
-      } else {
-        rutDestinatarioControl.setErrors(null);
-        rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
-      }
-  
-      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
-      this.inputValidoRut = rutDestinatarioControl.valid;
     }
   }
 

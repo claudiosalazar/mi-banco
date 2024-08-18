@@ -44,6 +44,11 @@ export class LoginComponent implements OnInit {
     const userNameControl = this.formularioLogin.get('userName');
     if (userNameControl) {
       const value = userNameControl.value;
+      // Verificar si el valor contiene '.' o '-'
+      if (value.includes('.') || value.includes('-')) {
+        // No aplicar la lógica si contiene '.' o '-'
+        return;
+      }
       // Aplicar el pipe de RUT
       const rut = this.rutPipe.transform(value);
       // Contar los dígitos

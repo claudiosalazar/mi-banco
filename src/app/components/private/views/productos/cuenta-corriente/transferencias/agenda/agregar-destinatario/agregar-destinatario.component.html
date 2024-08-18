@@ -20,7 +20,9 @@
     
         <!-- Nombre -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="nombre" id="nombredestinatario" [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();">
+          <input type="text" class="form-control" formControlName="nombre" id="nombredestinatario" 
+          [class.is-invalid]="crearDestinatarioForm.get('nombre')?.invalid && crearDestinatarioForm.get('nombre')?.touched" 
+          [class.is-valid]="crearDestinatarioForm.get('nombre')?.valid && crearDestinatarioForm.get('nombre')?.touched" (blur)="validaNombre();">
           <label for="nombredestinatario">Nombre y Apellido <span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.get('nombre')?.errors?.['inputErrorVacioNombre'] && crearDestinatarioForm.get('nombre')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>
@@ -41,7 +43,10 @@
     
         <!-- rut -->
         <div class="form-floating mb-4">
-          <input type="text" class="form-control" formControlName="rut" id="rutdestinatario" [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" (blur)="validaRut();" (keypress)="formatoRut($event);">
+          <input type="text" class="form-control" formControlName="rut" id="rutdestinatario" 
+                 [class.is-invalid]="crearDestinatarioForm.get('rut')?.invalid && crearDestinatarioForm.get('rut')?.touched" 
+                 [class.is-valid]="crearDestinatarioForm.get('rut')?.valid && crearDestinatarioForm.get('rut')?.touched" 
+                 (blur)="validaRut()" (focus)="resetRut()">
           <label for="rutdestinatario">Rut <span class="obligatorio">*</span></label>
           <div *ngIf="crearDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && crearDestinatarioForm.get('rut')?.touched" class="invalid-feedback">
             <span>El campo no puede quedar vacío.</span>

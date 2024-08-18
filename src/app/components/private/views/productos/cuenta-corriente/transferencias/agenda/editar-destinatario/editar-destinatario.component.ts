@@ -277,37 +277,71 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     }
   }
 
-  validaRut(): void {
-    const rutControl = this.editarDestinatarioForm.get('rut');
-    if (rutControl) {
-      const rutDestinatario = rutControl.value as any;
-  
-      if (rutDestinatario.trim() === '') {
-        rutControl.setErrors({ 'inputErrorVacioRut': true });
-      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 9) {
-        rutControl.setErrors({ 'inputErrorFormatoRut': true });
-      } else {
-        rutControl.setErrors(null);
-        rutControl.setValue(this.rutPipe.transform(rutDestinatario));
-      }
-  
-      this.inputErrorVacioRut = rutControl.errors?.['inputErrorVacioRut'];
-      this.inputValidoRut = rutControl.valid;
-    }
-  }
-
+  // Solo permite numeros y letra K en el ultimo digito
   formatoRut(event: KeyboardEvent): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
-    const value = (event.target as HTMLInputElement).value;
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
   
-    // Permitir solo números
+    // Verificar si el valor contiene '.' o '-'
+    if (value.includes('.') || value.includes('-')) {
+      // Permitir la entrada sin restricciones adicionales
+      return true;
+    }
+  
+    // Aplicar restricciones de entrada de caracteres
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      if (charCode === 75 || charCode === 107) {
+      if (charCode === 75 || charCode === 107) { // 'K' o 'k'
         return value.length === 8;
+      }
+      if (charCode === 46 || charCode === 45) { // '.' o '-'
+        return true;
       }
       return false;
     }
+  
+    // Aplicar la lógica de validación del RUT
+    setTimeout(() => {
+      const rut = this.rutPipe.transform(value);
+      const digitos = rut.replace(/[^0-9]/g, '').length;
+      if (digitos < 8 || digitos > 9) {
+        inputElement.setCustomValidity('RUT inválido');
+      } else {
+        inputElement.value = rut;
+        inputElement.setCustomValidity('');
+      }
+    }, 0);
+  
     return true;
+  }
+
+  validaRut(): void {
+    const rutDestinatarioControl = this.editarDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      const rutDestinatario = rutDestinatarioControl.value as any;
+  
+      if (rutDestinatario.trim() === '') {
+        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
+      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 12) {
+        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+      } else {
+        rutDestinatarioControl.setErrors(null);
+        if (!rutDestinatario.includes('.') && !rutDestinatario.includes('-')) {
+          rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+        }
+      }
+  
+      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
+      this.inputValidoRut = rutDestinatarioControl.valid;
+    }
+  }
+
+  resetRut(): void {
+    const userNameControl = this.editarDestinatarioForm.get('rut');
+    if (userNameControl) {
+      userNameControl.setErrors(null);
+      userNameControl.reset();
+    }
   }
 
   validaNumeroCuenta(): void {

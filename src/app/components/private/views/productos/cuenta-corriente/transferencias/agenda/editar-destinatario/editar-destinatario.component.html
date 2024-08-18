@@ -44,9 +44,10 @@
   
       <!-- Rut -->
       <div class="form-floating mb-4">
-        <input type="text" class="form-control" formControlName="rut" id="rutdestinatario"
-        [class.is-invalid]="editarDestinatarioForm.get('rut')?.invalid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" 
-        [class.is-valid]="editarDestinatarioForm.get('rut')?.valid && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)">
+        <input type="text" class="form-control" formControlName="rut" id="rutdestinatario" 
+          [class.is-invalid]="editarDestinatarioForm.get('rut')?.invalid && editarDestinatarioForm.get('rut')?.touched" 
+          [class.is-valid]="editarDestinatarioForm.get('rut')?.valid && editarDestinatarioForm.get('rut')?.touched" 
+          (blur)="validaRut()" (keypress)="formatoRut($event)" (focus)="resetRut()">
         <label for="rutdestinatario">Rut <span class="obligatorio">*</span></label>
         <div *ngIf="editarDestinatarioForm.get('rut')?.errors?.['inputErrorVacioRut'] && (editarDestinatarioForm.get('rut')?.touched || editarDestinatarioForm.get('rut')?.dirty)" class="invalid-feedback">
           <span>El campo no puede quedar vacío.</span>
