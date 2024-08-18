@@ -315,6 +315,16 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     return true;
   }
 
+  resetRut(): void {
+    const rutDestinatarioControl = this.editarDestinatarioForm.get('rut');
+    if (rutDestinatarioControl) {
+      rutDestinatarioControl.setValue(''); // Limpiar el campo de entrada
+      rutDestinatarioControl.markAsPristine(); // Marcar como pristine
+      rutDestinatarioControl.markAsUntouched(); // Marcar como untouched
+      rutDestinatarioControl.updateValueAndValidity(); // Actualizar el estado del control
+    }
+  }
+  
   validaRut(): void {
     const rutDestinatarioControl = this.editarDestinatarioForm.get('rut');
     if (rutDestinatarioControl) {
@@ -331,16 +341,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         }
       }
   
-      this.inputErrorVacioRut = rutDestinatarioControl.errors?.['inputErrorVacioRut'];
       this.inputValidoRut = rutDestinatarioControl.valid;
-    }
-  }
-
-  resetRut(): void {
-    const userNameControl = this.editarDestinatarioForm.get('rut');
-    if (userNameControl) {
-      userNameControl.setErrors(null);
-      userNameControl.reset();
     }
   }
 

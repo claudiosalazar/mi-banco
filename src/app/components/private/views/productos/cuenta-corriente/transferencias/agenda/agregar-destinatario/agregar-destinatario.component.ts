@@ -214,33 +214,6 @@ export class AgregarDestinatarioComponent implements OnInit {
       this.inputValidoRut = rutDestinatarioControl.valid;
     }
   }
-  
-  /*validaRut(): void {
-    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
-    if (rutDestinatarioControl) {
-      const rutDestinatario = rutDestinatarioControl.value as any;
-  
-      if (rutDestinatario.trim() === '') {
-        rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
-      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 12) {
-        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
-      } else {
-        rutDestinatarioControl.setErrors(null);
-        if (!rutDestinatario.includes('.') && !rutDestinatario.includes('-')) {
-          rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
-        }
-      }
-  
-      this.inputValidoRut = rutDestinatarioControl.valid;
-    }
-  }
-
-  resetRut(): void {
-    const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
-    if (rutDestinatarioControl) {
-      rutDestinatarioControl.setValue('');
-    }
-  }*/
 
   validaNombre(): void {
     const nombreDestinatarioControl = this.crearDestinatarioForm.get('nombre');
