@@ -4,21 +4,19 @@
     <div class="col-lg-6 fondo-login d-none d-lg-block"></div>
 
     <!-- Formulario login -->
-    <div class="col-12 col-lg-6 formulario-login d-flex justify-content-center align-items-center">
-      <div class="row d-flex justify-content-center align-items-center">
+    <div class="col-12 col-lg-6 formulario-login d-lg-flex justify-content-lg-center align-items-lg-center">
+      <div class="row d-flex justify-content-center align-items-center align-items-sm-start">
 
-        <div class="col-10 col-md-8">
-          <div class="logo-login mb-3 mb-md-5"></div>
+        <div class="col-10 col-sm-4 col-md-10 col-lg-8 d-sm-flex d-md-block">
+          <div class="logo-login mt-4 mt-sm-0 mb-3 mb-md-5"></div>
         </div>
 
-        <div class="col-10 col-md-8">
+        <div class="col-10 col-sm-7 col-md-10 col-lg-8">
           <h1 class="titulo-login mt-0">Bienvenido a Mi Banco</h1>
-          <p>Ingrese a sus datos.</p>
+          <p class="d-none d-md-block">Ingrese a sus datos.</p>
           <form [formGroup]="formularioLogin" (ngSubmit)="logIn()">
-            <div class="form-floating mb-4">
-              <input formControlName="userName" type="text" class="form-control" id="usuario" placeholder="Rut" 
-                     [ngClass]="{'is-invalid': formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']}" 
-                     (blur)="formatoRut()" (focus)="resetUserName()">
+            <div class="form-floating mb-4 mt-md-5 mt-lg-0">
+              <input formControlName="userName" type="text" class="form-control" id="usuario" placeholder="Rut" [ngClass]="{'is-invalid': formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']}" (blur)="formatoRut()" (focus)="resetUserName()">
               <label for="usuario">Rut</label>
               <div *ngIf="formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']" class="invalid-feedback">
                 <span>El rut ingresado no es válido.</span>

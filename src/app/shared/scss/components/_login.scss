@@ -2,7 +2,6 @@
   background-image: url('../../../../assets/images/bg-login.jpg');
   background-size: cover;
   background-position: center center;
-  //
   height: 100vh;
 }
 
@@ -12,12 +11,24 @@ h1 {
     background: none;
     padding-left: 0;
   }
+  @media (min-width: $sm)  {
+    display: none;
+  }
+  @media (min-width: $md)  {
+    display: block;
+  }
 }
 
 .formulario-login {
   background-color: $tinto;
   color: $blanco;
   height: 100vh;
+
+  @media (min-width: $sm)  {
+    height: auto;
+    min-height: 100vh;
+    padding-top: 40px;
+  }
   .logo-login {
     width: 200px;
     height: 83px;
@@ -25,7 +36,17 @@ h1 {
     background-size: 200px 83px;
     background-position: 0 0;
     background-repeat: no-repeat;
+    @media (min-width: $sm)  {
+      width: 150px;
+      height: 63px;
+      background-size: 150px auto;
+    }
     @media (min-width: $md)  {
+      width: 200px;
+      height: 83px;
+      background-size: 200px auto;
+    }
+    @media (min-width: $lg)  {
       width: 300px;
       height: 124px;
       background-size: 300px 124px;
