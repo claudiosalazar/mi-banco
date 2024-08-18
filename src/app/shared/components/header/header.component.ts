@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
   private subscription: Subscription | undefined;
   public modalConsultaAbierto = false;
   public modalEjecutivoAbierto = false;
+  public modalTimeOutAbierto = false;
 
   primer_nombre: any;
   segundo_nombre: any;
@@ -62,6 +63,12 @@ export class HeaderComponent implements OnInit {
   modales: any[] = [];
 
   mostrarBackdropCustomModal = false;
+
+  // Definir la variable modalConsultas
+  private modalConsultas: any;
+
+  // Variable para almacenar el identificador del temporizador
+  private timeoutId: any;
 
   constructor(
     private datosUsuarioService: DatosUsuarioService,
@@ -91,6 +98,9 @@ export class HeaderComponent implements OnInit {
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
       mostrar => this.mostrarBackdropCustomModal = mostrar
     );
+
+    // Iniciar el temporizador
+    this.resetTimeout();
   }
 
   ngOnDestroy(): void {
@@ -120,6 +130,12 @@ export class HeaderComponent implements OnInit {
       });
       return modal;
     });
+
+    // Inicializar el modalConsultas
+    const modalElement = document.getElementById('modalConsultas');
+    if (modalElement) {
+      this.modalConsultas = new bootstrap.Modal(modalElement, {});
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -152,9 +168,12 @@ export class HeaderComponent implements OnInit {
 
   abrirModalConsulta(): void {
     this.modalConsultaAbierto = true;
-    var modalConsultas = new bootstrap.Modal(document.getElementById('modalConsultas'), {});
-    modalConsultas.show();
-    this.backdropService.showModalBackdrop();
+    if (this.modalConsultas) {
+      this.modalConsultas.show();
+      this.backdropService.showModalBackdrop();
+    } else {
+      console.error('El modal modalConsultas no está inicializado.');
+    }
   }
 
   abrirModalEjecutivo(): void {
@@ -164,7 +183,62 @@ export class HeaderComponent implements OnInit {
     this.backdropService.showModalBackdrop();
   }
 
+  cerrarModalConsulta(): void {
+    this.modalConsultaAbierto = false;
+    if (this.modalConsultas) {
+      this.modalConsultas.hide();
+      this.backdropService.hideModalBackdrop();
+    } else {
+      console.error('El modal modalConsultas no está inicializado.');
+    }
+  }
+
+  abrirModalTimeOut(): void {
+    this.modalTimeOutAbierto = true;
+    const modalElement = document.getElementById('modalTimeOut');
+    if (modalElement) {
+      const modalTimeOut = new bootstrap.Modal(modalElement, {});
+      modalTimeOut.show();
+      this.backdropService.showModalBackdrop();
+
+      // Inicializar el contador
+      let contador = 30;
+      const contadorElement = document.getElementById('contador');
+      if (contadorElement) {
+        contadorElement.textContent = contador.toString();
+        const intervalId = setInterval(() => {
+          contador--;
+          contadorElement.textContent = contador.toString();
+          if (contador <= 0) {
+            clearInterval(intervalId);
+            this.logout(); // Cerrar sesión automáticamente cuando el contador llegue a 0
+          }
+        }, 1000); // Actualizar cada segundo
+      }
+    } else {
+      console.error('El elemento modalTimeOut no se encontró en el DOM.');
+    }
+  }
+
+  resetTimeout(): void {
+    // Limpiar el temporizador anterior si existe
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+
+    // Iniciar un nuevo temporizador
+    this.timeoutId = setTimeout(() => {
+      this.abrirModalTimeOut();
+    }, 1800000); // 5000 milisegundos = 5 segundos
+  }
+
+  mantenerSesion(): void {
+    this.resetTimeout();
+  }
+
   logout() {
     this.authService.logout();
+    // Lógica adicional para eliminar el token de sesión
+    localStorage.removeItem('token'); // Ejemplo de eliminación de token
   }
 }

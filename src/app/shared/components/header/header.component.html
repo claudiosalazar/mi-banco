@@ -195,5 +195,30 @@
   </div>
 </div>
 
+<!-- Modal timeout -->
+<div class="modal posicion fade" id="modalTimeOut" tabindex="-1" aria-labelledby="modalTimeOut" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex align-items-center">
+          <div class="icono material-symbols-outlined d-block me-3 mensaje advertencia">
+            warning
+          </div>
+          <div>
+            <strong class="d-block">Por el tiempo transcurrido se cerrar tu sesión</strong>
+            <small class="d-block">Tu sesión se cerrará en <strong><span id="contador" class="dorado">30</span></strong> segundos.</small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-end flex-md-row">
+          <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="ocultaDropdownMobile(); mantenerSesion();">Mantener sesión abierta</button>
+          <button type="button" class="btn btn-primario" data-bs-dismiss="modal" (click)="logout();">Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="backdrop-custom-menu-mobile" *ngIf="mostrarBackdropMenuMobile" [@fadeInOut]></div>
 <div class="backdrop-custom" *ngIf="mostrarBackdropCustomModal" [@fadeInOut]></div>
