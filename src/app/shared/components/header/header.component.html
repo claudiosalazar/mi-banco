@@ -14,10 +14,10 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown" #navbarNavDropdown>
         <ul class="navbar-nav me-auto d-md-flex">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco" routerLinkActive="active">Inicio</a>
+            <a class="nav-link" routerLink="/mibanco" routerLinkActive="active" (click)="ocultaDropdownMobile();">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" routerLinkActive="active">Transferencias</a>
+            <a class="nav-link" routerLink="/mibanco/productos/cuenta-corriente/transferencias" routerLinkActive="active" (click)="ocultaDropdownMobile();">Transferencias</a>
           </li>
           <li class="nav-item menu-productos">
             <a class="nav-link d-flex" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,21 +28,21 @@
             </a>
             <ul class="dropdown-menu p-0 animate slideIn">
               <li>
-                <a class="dropdown-item" routerLink="/mibanco/productos/resumen" routerLinkActive="active">Mis Productos</a>
+                <a class="dropdown-item" routerLink="/mibanco/productos/resumen" routerLinkActive="active" (click)="ocultaDropdownMobile();">Mis Productos</a>
               </li>
               <li>
-                <a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" routerLinkActive="active">Cuenta Corriente</a>
+                <a class="dropdown-item" routerLink="/mibanco/productos/cuenta-corriente/ultimos-movimientos" routerLinkActive="active" (click)="ocultaDropdownMobile();">Cuenta Corriente</a>
               </li>
               <li>
-                <a class="dropdown-item" routerLink="/mibanco/productos/linea-credito" routerLinkActive="active">Línea de Crédito</a>
+                <a class="dropdown-item" routerLink="/mibanco/productos/linea-credito" routerLinkActive="active" (click)="ocultaDropdownMobile();">Línea de Crédito</a>
               </li>
               <li>
-                <a class="dropdown-item" routerLink="/mibanco/productos/visa" routerLinkActive="active">Visa</a>
+                <a class="dropdown-item" routerLink="/mibanco/productos/visa" routerLinkActive="active" (click)="ocultaDropdownMobile();">Visa</a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/mibanco/productos/seguros" routerLinkActive="active">Seguros</a>
+            <a class="nav-link" routerLink="/mibanco/productos/seguros" routerLinkActive="active" (click)="ocultaDropdownMobile();">Seguros</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="javascript:void(0);" (click)="ocultaDropdownMobile(); abrirModalConsulta()">Consultas</a>
@@ -69,16 +69,16 @@
           <hr class="d-block">
           <ul class="dropdown-menu dropdown-menu-end dropdown-usuario p-0 animate slideIn" aria-labelledby="dropdownMenuLink">
             <li>
-              <a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos">Mis datos</a>
+              <a class="dropdown-item text-uppercase" routerLink="/mibanco/mis-datos" (click)="ocultaDropdownMobile();">Mis datos</a>
             </li>
             <li>
-              <a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo">Mi ejecutivo</a>
+              <a class="dropdown-item text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalEjecutivo" (click)="ocultaDropdownMobile();">Mi ejecutivo</a>
             </li>
             <li>
-              <a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias">Emergencias</a>
+              <a class="dropdown-item text-uppercase" routerLink="/mibanco/ayuda/emergencias-bancarias" (click)="ocultaDropdownMobile();">Emergencias</a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut">
+              <a class="dropdown-item d-flex align-items-center text-uppercase" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalLogOut" (click)="ocultaDropdownMobile();">
                 <span class="ico-cerrar-sesion"></span>
                 <span>
                   Cerrar sesión
