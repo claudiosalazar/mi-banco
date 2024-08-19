@@ -1,5 +1,6 @@
 export interface Ofertas {
-  id: number,
+  id_oferta: number,
+  id_user: number;
   producto_oferta: any,
   monto_preaprobado: any,
 }

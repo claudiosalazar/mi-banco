@@ -53,7 +53,7 @@ export class ComprobanteTransferenciaComponent implements OnInit {
     return this.agendaService.getAgenda().pipe(
       map((agenda: any[]) => {
         this.agenda = agenda;
-        return this.agenda.map(item => item.id);
+        return this.agenda.map(item => item.id_agenda);
       })
     );
   }
@@ -61,7 +61,7 @@ export class ComprobanteTransferenciaComponent implements OnInit {
   procesarIdsAgenda() {
     this.loadDataAgenda().subscribe((ids: number[]) => {
       console.log('IDs de la agenda:', ids);
-      const coincidencia = this.agenda.find(item => item.id === this.idDestinatarioUltimaTransaccionCtaCte);
+      const coincidencia = this.agenda.find(item => item.id_agenda === this.idDestinatarioUltimaTransaccionCtaCte);
       if (coincidencia !== undefined) {
         this.emailDestinatario = coincidencia.email;
       }

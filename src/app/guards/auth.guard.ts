@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -13,14 +12,14 @@ export class AuthGuard implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-
-    if (!this.authService.isAuth()) {
-      console.log('Token no es válido o expiró'); 
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('id_user');
+    if (!token || !this.authService.isAuth() || !userId) {
+      console.log('Token no es válido o expiró o id_user no está presente'); 
       this.router.navigate(['login']);
       return false;
     }
 
     return true;
   }
-  
 }

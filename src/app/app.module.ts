@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -118,6 +119,11 @@ import { AgendaService } from './services/agenda.service';
   ],
   providers: [
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     JwtHelperService,
     DatosUsuarioService,
     DatosFiltradosService,

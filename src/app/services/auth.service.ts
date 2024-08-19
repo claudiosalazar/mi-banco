@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,18 @@ export class AuthService {
   ) { }
 
   mibanco(user: any) { 
-    return this.http.post(`${this.apiUrl}/user/mibanco`, user);
+    return this.http.post(`${this.apiUrl}/user/mibanco`, user).pipe(
+      tap((res: any) => {
+        // Almacenar el id_user en el localStorage
+        localStorage.setItem('id_user', res.id_user);
+      })
+    );
   }
 
   isAuth(): boolean {
     const token = localStorage.getItem('token');
-    if (this.jwtHelper.isTokenExpired(token) || !localStorage.getItem('token')) {
+    const userId = localStorage.getItem('id_user');
+    if (this.jwtHelper.isTokenExpired(token) || !token || !userId) {
       return false;
     } 
     return true;
@@ -31,6 +38,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('id_user'); // Eliminar el id_user del localStorage
     this.router.navigate(['/login']);
   }
 }

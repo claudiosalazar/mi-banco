@@ -1,5 +1,6 @@
 export interface Seguros {
-  id: number,
+  id_seguro: number,
+  id_user: number;
   plan: any,
   cuota_mensual: any,
   cuotas: any,

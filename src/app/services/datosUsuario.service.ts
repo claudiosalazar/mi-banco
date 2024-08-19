@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DatosUsuario } from '../models/datos-usuario.model'; // Asegúrate de que la ruta sea correcta
 import { environment } from '../../environments/environment';
 
@@ -14,12 +14,15 @@ export class DatosUsuarioService {
   constructor(private http: HttpClient) { }
 
   getDatosUsuario(): Observable<DatosUsuario[]> {
-    return this.http.get<DatosUsuario[]>(`${this.apiUrl}/mibanco/datos_usuario`).pipe();
+    const idUser = localStorage.getItem('id_user') || '';
+    const params = new HttpParams().set('id_user', idUser);
+    return this.http.get<DatosUsuario[]>(`${this.apiUrl}/mibanco/datos_usuario`, { params });
   }
 
-  guardarUsuarioEditado(id: number, datosUsuarioEditado: any): Observable<any> {
+  guardarUsuarioEditado(id_datos_usuario: number, datosUsuarioEditado: any): Observable<any> {
+    const idUser = localStorage.getItem('id_user') || '';
+    const params = new HttpParams().set('id_user', idUser);
     console.table(datosUsuarioEditado);
-    return this.http.put<any>(`${this.apiUrl}/mibanco/datos_usuario/${id}`, datosUsuarioEditado);
-}
-
+    return this.http.put<any>(`${this.apiUrl}/mibanco/datos_usuario/${id_datos_usuario}`, datosUsuarioEditado, { params });
+  }
 }

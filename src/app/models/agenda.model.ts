@@ -1,5 +1,6 @@
 export interface Agenda {
-  id: any,
+  id_agenda: any,
+  id_user: number;
   nombre: any,
   apodo: any,
   rut: any,

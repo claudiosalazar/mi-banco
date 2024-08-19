@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Productos } from '../models/productos.model';
@@ -14,6 +14,8 @@ export class ProductosService {
   constructor(private http: HttpClient) { }
 
   getProductos(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(`${this.apiUrl}/mibanco/productos`);
+    const idUser = localStorage.getItem('id_user') || '';
+    const params = new HttpParams().set('id_user', idUser);
+    return this.http.get<Productos[]>(`${this.apiUrl}/mibanco/productos`, { params });
   }
 }

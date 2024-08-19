@@ -408,7 +408,8 @@ export class AgregarDestinatarioComponent implements OnInit {
       // Elimina los puntos y el guión del RUT
       const rutSinFormato = formValues.rut.replace(/\./g, '').replace(/-/g, '');
       const datosNuevoDestinatario: Agenda = {
-        id: null,
+        id_agenda: null,
+        id_user: 1,
         nombre: formValues.nombre,
         apodo: formValues.apodo,
         rut: rutSinFormato,
@@ -422,9 +423,9 @@ export class AgregarDestinatarioComponent implements OnInit {
 
       // Obtener todos los IDs existentes y generar un nuevo ID
       this.agendaService.getAgenda().subscribe(agenda => {
-        const ids = agenda.map((item: Agenda) => item.id);
+        const ids = agenda.map((item: Agenda) => item.id_agenda);
         const nuevoId = Math.max(...ids) + 1;
-        datosNuevoDestinatario.id = nuevoId;
+        datosNuevoDestinatario.id_agenda = nuevoId;
 
         console.log('Datos que se enviarán:', datosNuevoDestinatario);
   

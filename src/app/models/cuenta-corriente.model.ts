@@ -1,5 +1,6 @@
 export interface CuentaCorriente {
   id_trans_cta_cte: number,
+  id_user: number;
   fecha: any,
   detalle: any,
   id_destinatario: any,

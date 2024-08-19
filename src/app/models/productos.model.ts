@@ -1,5 +1,6 @@
 export interface Productos {
-  id: number,
+  id_producto: number,
+  id_user: number;
   nombre_producto: any,
   numero_producto: any,
   cupo: any,

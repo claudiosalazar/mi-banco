@@ -185,7 +185,7 @@ export class DatosUsuarioComponent implements OnInit {
     this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
       if (datos.length > 0) {
         const usuario = datos[0];
-        this.usuarioId = usuario.id; // Almacenar el ID del usuario
+        this.usuarioId = usuario.id_datos_usuario; // Almacenar el ID del usuario
         usuario.rut = this.rutPipe.transform(usuario.rut);
         usuario.celular = this.celularPipe.transform(usuario.celular);
         usuario.telefono = this.telefonoFijoPipe.transform(usuario.telefono);

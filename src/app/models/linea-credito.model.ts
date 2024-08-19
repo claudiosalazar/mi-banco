@@ -1,5 +1,6 @@
 export interface LineaCredito {
   id_trans_linea_cre: number,
+  id_user: number;
   fecha: any,
   detalle: any,
   id_destinatario: any,

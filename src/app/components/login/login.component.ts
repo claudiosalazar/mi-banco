@@ -118,6 +118,7 @@ export class LoginComponent implements OnInit {
           (res: any) => {
             console.log(res);
             localStorage.setItem('token', res.token);
+            localStorage.setItem('id_user', res.id_user); // Guardar id_user en localStorage
             this.router.navigate(['mibanco']);
           },
           (err) => {

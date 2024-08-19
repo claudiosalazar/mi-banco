@@ -130,13 +130,13 @@ export class VisaPagoComponent implements OnInit {
         this.productos = productos;
   
         // Guardar el numero_producto del id 0 en numero_cta_cte
-        const productoCtaCte = productos.find(producto => producto.id === 0);
+        const productoCtaCte = productos.find(producto => producto.id_producto === 0);
         if (productoCtaCte) {
           this.numero_cta_cte = productoCtaCte.numero_producto;
         }
   
         // Guardar el numero_producto del id 2 en numero_visa
-        const productoLineaCredito = productos.find(producto => producto.id === 1);
+        const productoLineaCredito = productos.find(producto => producto.id_producto === 1);
         if (productoLineaCredito) {
           this.numero_linea_credito = productoLineaCredito.numero_producto;
         }
