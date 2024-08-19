@@ -65,7 +65,7 @@ export class TransferenciaATercerosComponent implements OnInit {
   modales: any[] = [];
   paginatedAgenda: any[] = [];
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;

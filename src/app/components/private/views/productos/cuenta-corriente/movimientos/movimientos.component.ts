@@ -17,7 +17,7 @@ export class MovimientosComponent implements OnInit {
   transacciones: any[] | undefined;
   productos: any[] = [];
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;

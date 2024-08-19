@@ -22,7 +22,7 @@ export class LineaCreditoComponent implements OnInit {
   transaccionesLineaCre: string[] = [];
   mostrarPaginador: boolean | undefined;
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;

@@ -22,7 +22,7 @@ export class TransaccionesResumenComponent implements OnInit {
   transaccionesVisa: Visa[] = [];
   mostrarPaginador: boolean = true;
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;

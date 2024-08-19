@@ -29,7 +29,7 @@ export class TablaMovimientosComponent implements OnInit {
   transacciones: any[] = [];
   paginatedTransacciones: any[] = [];
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;

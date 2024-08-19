@@ -28,7 +28,7 @@ export class UltimasTransferenciasComponent implements OnInit {
   // Variables para busqueda y tabla
   mostrarPaginador: boolean | undefined;
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;

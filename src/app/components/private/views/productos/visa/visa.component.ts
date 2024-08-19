@@ -23,7 +23,7 @@ export class VisaComponent implements OnInit {
   transacciones: any[] | undefined;
   mostrarPaginador: boolean | undefined;
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] | undefined;
   totalPages: any;

@@ -57,7 +57,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   sortAscending: boolean = true;
 
   originalData: any[] = [];
-  itemsPerPage = 5;
+  itemsPerPage: any;
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;
