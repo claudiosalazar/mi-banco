@@ -10,7 +10,6 @@ import { combineLatest } from 'rxjs';
 export class BuscadorTablaComponent implements OnInit {
 
   @Output() datosFiltradosEvent = new EventEmitter<any[]>();
-  @Output() reiniciarPaginacionEvent = new EventEmitter<void>();
   @Input() tituloBuscador: string | undefined;
 
   paginatedData: any[] | undefined;
@@ -30,7 +29,6 @@ export class BuscadorTablaComponent implements OnInit {
       this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
         if (Array.isArray(datosFiltrados)) {
           this.datosFiltradosEvent.emit(datosFiltrados);
-          this.reiniciarPaginacionEvent.emit(); // Emitir evento para reiniciar la paginación
         }
       });
     });
