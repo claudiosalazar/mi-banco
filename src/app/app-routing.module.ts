@@ -37,24 +37,19 @@ const routes: Routes = [
           { path: 'resumen', component: TransaccionesResumenComponent, canActivate: [AuthGuard] },
           { path: 'cuenta-corriente', component: CuentaCorrienteComponent, canActivate: [AuthGuard],
             children: [
-              { path: 'resumen', component: TransaccionesResumenComponent },
-              { path: 'cuenta-corriente', component: CuentaCorrienteComponent,
+              { path: '', pathMatch: 'full', redirectTo: 'ultimos-movimientos'},
+              { path: 'ultimos-movimientos', component: MovimientosComponent },
+              { path: 'transferencias', component: TransferenciasComponent,
                 children: [
-                  { path: '', pathMatch: 'full', redirectTo: 'ultimos-movimientos'},
-                  { path: 'ultimos-movimientos', component: MovimientosComponent },
-                  { path: 'transferencias', component: TransferenciasComponent,
-                    children: [
-                      { path: '', pathMatch: 'full', redirectTo: 'transferencia-a-terceros'},
-                      { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent},
-                      { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent},
-                      { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent},
-                      { path: 'agregar-destinatario', component: AgregarDestinatarioComponent},
-                      { path: 'editar-destinatario', component: EditarDestinatarioComponent},
-                    ]
-                  },
-                  { path: 'cartola-historica', component: CartolaHistoricaComponent },
+                  { path: '', pathMatch: 'full', redirectTo: 'transferencia-a-terceros'},
+                  { path: 'transferencia-a-terceros', component: TransferenciaATercerosComponent},
+                  { path: 'ultimas-transferencias', component: UltimasTransferenciasComponent},
+                  { path: 'agenda-destinatarios', component: AgendaDestinatariosComponent},
+                  { path: 'agregar-destinatario', component: AgregarDestinatarioComponent},
+                  { path: 'editar-destinatario', component: EditarDestinatarioComponent},
                 ]
               },
+              { path: 'cartola-historica', component: CartolaHistoricaComponent },
             ]
           },
           { path: 'cuenta-corriente/comprobante-transferencia', component: ComprobanteTransferenciaComponent},
