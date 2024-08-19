@@ -144,8 +144,17 @@ export class ModalConsultasComponent implements OnInit {
   enviaConsulta(): any {
     this.submitted = true;
     this.formularioConsultas = false;
-    this.envioConsultaCorrecta = true;
-    this.errorEnvioConsulta = false;
+  
+    // Forzar un error
+    const envioExitoso = true; // Forzar un error
+  
+    if (envioExitoso) {
+      this.envioConsultaCorrecta = true;
+      this.errorEnvioConsulta = false;
+    } else {
+      this.envioConsultaCorrecta = false;
+      this.errorEnvioConsulta = true;
+    }
   }
 
   cancelarConsulta(): any {

@@ -63,7 +63,7 @@
   
     <!-- Mensaje enviado -->
     <div *ngIf="envioConsultaCorrecta">
-      <div class="w-100 mx-5 mt-4">
+      <div class="mx-4 mt-3">
         <div class="d-flex">
           <span class="icono material-symbols-outlined d-block me-3 mensajes valido">
             done
@@ -74,15 +74,11 @@
           </div>
         </div>
       </div>
-      <div class="w-100">
-        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormularioConsultas()">Cerrar</button>
-      </div>
     </div>
   
     <!-- Mensaje error -->
     <div *ngIf="errorEnvioConsulta">
-  
-      <div class="w-100 mx-5 mt-4">
+      <div class="mx-4 mt-3">
         <div class="d-flex">
           <span class="icono material-symbols-outlined d-block me-3 mensajes error">
             Error
@@ -93,20 +89,21 @@
           </div>
         </div>
       </div>
-      <div class="w-100">
-        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal">Cerrar</button>
-        <!-- <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button> -->
-      </div>
     </div>
   </div>
 
-  <div class="modal-footer">
+  <div class="modal-footer mt-5">
     <!-- Botones -->
     <div class="d-flex justify-content-end flex-row">
-      <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" >Cancelar</button>
-      <button type="button" class="btn btn-primario">Enviar consulta</button>
-      <!-- <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="cancelarConsulta()">Cancelar</button>
-      <button type="button" class="btn btn-primario" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()">Enviar consulta</button> -->
+      <!-- Botón de Cerrar que se muestra solo si hay un error -->
+      <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="cerrarModalFormularioConsultas()" *ngIf="errorEnvioConsulta">Cerrar</button>
+      
+      <!-- Botones que se ocultan si hay un error -->
+      <ng-container *ngIf="!errorEnvioConsulta">
+        <button type="button" class="btn btn-primario mx-auto" data-bs-dismiss="modal" (click)="cerrarModalFormularioConsultas()" *ngIf="envioConsultaCorrecta">Cerrar</button>
+        <button type="button" class="btn btn-secundario me-3" data-bs-dismiss="modal" (click)="cancelarConsulta()" *ngIf="!envioConsultaCorrecta">Cancelar</button>
+        <button type="button" class="btn btn-primario" [class.disabled]="!botonEnvioConsulta" (click)="enviaConsulta()" *ngIf="!envioConsultaCorrecta">Enviar consulta</button>
+      </ng-container>
     </div>
   </div>
 
