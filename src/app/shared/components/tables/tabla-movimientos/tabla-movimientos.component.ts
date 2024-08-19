@@ -126,6 +126,10 @@ export class TablaMovimientosComponent implements OnInit {
     }
   }
 
+  public onHeaderClick(): void {
+    this.isRotatedIn = !this.isRotatedIn;
+  }
+
   handleTransacciones(transacciones: any[]): void {
     if (transacciones) {
       this.transacciones = transacciones.filter(transaccion => transaccion);
@@ -133,10 +137,6 @@ export class TablaMovimientosComponent implements OnInit {
       this.paginarTransacciones();
       this.cdr.detectChanges();
     }
-  }
-
-  public onHeaderClick(): void {
-    this.isRotatedIn = !this.isRotatedIn;
   }
 
   handleDatosFiltrados(event: any) {
@@ -196,6 +196,4 @@ export class TablaMovimientosComponent implements OnInit {
     this.paginarTransacciones();
     this.cdr.detectChanges();
   }
-
-  
 }

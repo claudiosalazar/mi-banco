@@ -136,56 +136,27 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     );
   
     this.busquedaDestinatarios.valueChanges
-      .pipe(
-        debounceTime(300), // Añadir un debounce para evitar llamadas excesivas
-        distinctUntilChanged(), // Evitar llamadas repetidas con el mismo valor
-        switchMap(valorBusqueda => {
-          if (valorBusqueda) {
-            return this.agendaService.filtrarAgenda(valorBusqueda);
-          } else {
-            this.currentPage = 1;
-            this.agenda = [...this.originalData];
-            this.paginarAgenda();
-            this.cdr.detectChanges();
-            return of(this.originalData);
-          }
-        })
-      )
-      .subscribe(datosFiltrados => {
-        this.agenda = datosFiltrados;
-        this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-        this.paginarAgenda();
-        this.cdr.detectChanges();
-  
-        // Aplicar la lógica de verificación de datos
-        if (this.agenda.length === 0) {
-          this.tablaConDatos = false;
-          this.mostrarAlerta = true;
+    .pipe(
+      switchMap(valorBusqueda => {
+        if (valorBusqueda) {
+          return this.agendaService.filtrarAgenda(valorBusqueda);
         } else {
-          this.loadData();
-          this.tablaConDatos = true;
-          this.mostrarAlerta = false;
+          this.currentPage = 1;
+          this.agenda = [...this.originalData];
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+          return of(this.originalData);
         }
-      });
+      })
+    )
+    .subscribe(datosFiltrados => {
+      this.handleDatosFiltrados(datosFiltrados);
+    });
   }
   
-  loadData(): void {
-    this.agendaService.getAgenda().subscribe((agenda: any) => {
-      this.agenda = agenda;
-      this.originalData = [...this.agenda];
-      this.paginarAgenda();
-      this.cdr.detectChanges();
-      this.mostrarBackdropCustomOffcanvas.emit(false);
-      this.mostrarBackdropCustomOffcanvasEstado = false;
-  
-      // Aplicar la lógica de verificación de datos
-      if (this.agenda.length === 0) {
-        this.tablaConDatos = false;
-        this.mostrarAlerta = true;
-      } else {
-        this.tablaConDatos = true;
-        this.mostrarAlerta = false;
-      }
+  loadData() {
+    this.agendaService.getAgenda().subscribe((agenda: any[]) => {
+      this.handleAgenda(agenda);
     });
   }
 
@@ -231,11 +202,29 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
+  handleAgenda(transacciones: any[]): void {
+    if (transacciones) {
+      this.agenda = transacciones.filter(agenda => agenda);
+      this.originalData = [...this.agenda];
+      this.paginarAgenda();
+      this.cdr.detectChanges();
+    }
+  }
+
   handleDatosFiltrados(datosFiltrados: any[]) {
-    const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_producto === 1);
-    this.agenda = datosFiltradosPorProducto;
-    this.originalData = [...this.agenda];
-    this.agendaService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+    this.agenda = datosFiltrados;
+    this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+    this.paginarAgenda();
+    this.cdr.detectChanges();
+
+    // Aplicar la lógica de verificación de datos
+    if (this.agenda.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
   }
 
   // Nuevo método para manejar la actualización de destinatarios

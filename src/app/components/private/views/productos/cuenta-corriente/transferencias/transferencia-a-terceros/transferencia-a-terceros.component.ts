@@ -209,64 +209,53 @@ export class TransferenciaATercerosComponent implements OnInit {
     );
 
     this.busquedaDestinatarios.valueChanges
-      .pipe(
-        debounceTime(300), // Añadir un debounce para evitar llamadas excesivas
-        distinctUntilChanged(), // Evitar llamadas repetidas con el mismo valor
-        switchMap(valorBusqueda => {
-          if (valorBusqueda) {
-            return this.agendaService.filtrarAgenda(valorBusqueda);
-          } else {
-            this.currentPage = 1;
-            this.agenda = [...this.originalData];
-            this.paginarAgenda();
-            this.cdr.detectChanges();
-            return of(this.originalData);
-          }
-        })
-      )
-      .subscribe(datosFiltrados => {
-        this.agenda = datosFiltrados;
-        this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-        this.paginarAgenda();
-        this.cdr.detectChanges();
-  
-        // Aplicar la lógica de verificación de datos
-        if (this.agenda.length === 0) {
-          this.tablaConDatos = false;
-          this.mostrarAlerta = true;
+    .pipe(
+      switchMap(valorBusqueda => {
+        if (valorBusqueda) {
+          return this.agendaService.filtrarAgenda(valorBusqueda);
         } else {
-          this.loadData();
-          this.tablaConDatos = true;
-          this.mostrarAlerta = false;
+          this.currentPage = 1;
+          this.agenda = [...this.originalData];
+          this.paginarAgenda();
+          this.cdr.detectChanges();
+          return of(this.originalData);
         }
-      });
+      })
+    )
+    .subscribe(datosFiltrados => {
+      this.handleDatosFiltrados(datosFiltrados);
+    });
   }
 
-  loadData(): void {
-    this.agendaService.getAgenda().subscribe((agenda: any) => {
-      this.agenda = agenda;
+  loadData() {
+    this.agendaService.getAgenda().subscribe((agenda: any[]) => {
+      this.handleAgenda(agenda);
+    });
+  }
+
+  handleAgenda(transacciones: any[]): void {
+    if (transacciones) {
+      this.agenda = transacciones.filter(agenda => agenda);
       this.originalData = [...this.agenda];
       this.paginarAgenda();
       this.cdr.detectChanges();
+    }
+  }
 
-      // Aplicar la lógica de verificación de datos
-      if (this.agenda.length === 0) {
-        this.tablaConDatos = false;
-        this.mostrarAlerta = true;
-      } else {
-        this.tablaConDatos = true;
-        this.mostrarAlerta = false;
-      }
-    });
+  handleDatosFiltrados(datosFiltrados: any[]) {
+    this.agenda = datosFiltrados;
+    this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+    this.paginarAgenda();
+    this.cdr.detectChanges();
 
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
-      if (transaccionesCtaCte) {
-        this.transaccionesCtaCte = transaccionesCtaCte;
-        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
-        console.log('Saldo última transacción:', this.saldoUltimaTransaccionCtaCte);
-      }
-    });
+    // Aplicar la lógica de verificación de datos
+    if (this.agenda.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
   }
 
 

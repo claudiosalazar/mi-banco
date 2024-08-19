@@ -55,8 +55,8 @@ export class DatosFiltradosService {
       forkJoin(transaccionesObservables).subscribe(
         (value: (CuentaCorriente[] | LineaCredito[])[]) => {
           const [cuentaCorriente, lineaCredito] = value;
-          const todasTransacciones = [...cuentaCorriente, ...lineaCredito];
-          const datosFiltrados = this.transaccionesService.filtrarTransferencias(todasTransacciones, valorBusqueda);
+          const todasTransferencias = [...cuentaCorriente, ...lineaCredito];
+          const datosFiltrados = this.transaccionesService.filtrarTransferencias(todasTransferencias, valorBusqueda);
           observer.next(datosFiltrados);
           observer.complete();
         },

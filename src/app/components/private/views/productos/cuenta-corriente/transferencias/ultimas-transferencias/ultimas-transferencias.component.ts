@@ -36,7 +36,6 @@ export class UltimasTransferenciasComponent implements OnInit {
   tablaConDatos: boolean = true;
   mostrarAlerta: boolean = false;
 
-
   constructor(
     private transaccionesService: TransaccionesService,
     private cdr: ChangeDetectorRef,
@@ -61,43 +60,76 @@ export class UltimasTransferenciasComponent implements OnInit {
         })
       )
       .subscribe(datosFiltrados => {
-        this.transferencias = datosFiltrados;
-        this.totalPages = this.transferencias ? Math.ceil(this.transferencias.length / this.itemsPerPage) : 0;
-        this.paginarTransferencias();
-        this.cdr.detectChanges();
-
-        // Aplicar la lógica de verificación de datos
-        if (this.transferencias.length === 0) {
-          this.tablaConDatos = false;
-          this.mostrarAlerta = true;
-        } else {
-          this.loadData();
-          this.tablaConDatos = true;
-          this.mostrarAlerta = false;
-        }
+        this.handleDatosFiltrados(datosFiltrados);
       });
   }
 
   loadData() {
     this.transaccionesService.getTransCuentaCorrienteTransferencia().subscribe((transferencias: any[]) => {
-      console.table(transferencias);
-      this.transferencias = transferencias;
-      this.originalData = [...transferencias]; // Guardar los datos originales
-      this.paginarTransferencias();
-
-      // Aplicar la lógica de verificación de datos
-      if (this.transferencias.length === 0) {
-        this.tablaConDatos = false;
-        this.mostrarAlerta = true;
-      } else {
-        this.tablaConDatos = true;
-        this.mostrarAlerta = false;
-      }
+      this.handleTransacciones(transferencias);
     });
   }
 
-  public onHeaderClick(): void {
-    this.isRotatedIn = !this.isRotatedIn;
+  handleTransacciones(transacciones: any[]): void {
+    if (transacciones) {
+      this.transferencias = transacciones.filter(transaccion => transaccion);
+      this.originalData = [...this.transferencias];
+      this.paginarTransferencias();
+      this.cdr.detectChanges();
+    }
+  }
+
+  handleDatosFiltrados(datosFiltrados: any[]): void {
+    this.transferencias = datosFiltrados;
+    this.totalPages = this.transferencias ? Math.ceil(this.transferencias.length / this.itemsPerPage) : 0;
+    this.paginarTransferencias();
+    this.cdr.detectChanges();
+
+    // Aplicar la lógica de verificación de datos
+    if (this.transferencias.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+    }
+  }
+
+  buscarTransacciones(termino: string): void {
+    if (!termino) {
+      this.transferencias = [...this.originalData];
+    } else {
+      this.transferencias = this.originalData.filter(transaccion => {
+        return Object.values(transaccion).some((value: unknown) =>
+          (value as string).toString().toLowerCase().includes(termino.toLowerCase())
+        );
+      });
+    }
+    this.currentPage = 1; // Reiniciar a la primera página
+    this.paginarTransferencias();
+  }
+
+  onBuscar(termino: string): void {
+    this.buscarTransacciones(termino);
+  }
+
+  ordenarDatos(column: string): void {
+    this.columnaSeleccionada = column;
+    if (this.sortedColumn === column) {
+      this.sortOrder = this.sortOrder === 1 ? -1 : 1;
+      this.sortAscending = !this.sortAscending;
+    } else {
+      this.sortedColumn = column;
+      this.sortAscending = true;
+    }
+
+    this.sortOrder = this.sortAscending ? 1 : -1;
+
+    this.transferencias?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
+      return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
+    });
+    this.paginarTransferencias();
+    this.datosOrdenados.emit();
     this.cdr.detectChanges();
   }
 
@@ -108,25 +140,15 @@ export class UltimasTransferenciasComponent implements OnInit {
     this.totalPages = Math.ceil(this.transferencias.length / this.itemsPerPage);
     this.cdr.detectChanges();
   }
-  
-  // Ordena los datos de la tabla
-  ordenarDatos(column: string): void {
-    this.columnaSeleccionada = column;
-    if (this.sortedColumn === column) {
-      this.sortOrder = this.sortOrder === 1 ? -1 : 1;
-      this.sortAscending = !this.sortAscending;
-    } else {
-      this.sortedColumn = column;
-      this.sortAscending = true;
-    }
-  
-    this.sortOrder = this.sortAscending ? 1 : -1;
-  
-    this.transferencias?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
-      return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
-    });
+
+  cambiarPagina(pagina: number): void {
+    this.currentPage = pagina;
     this.paginarTransferencias();
-    this.datosOrdenados.emit();
+    this.cdr.detectChanges();
+  }
+
+  public onHeaderClick(): void {
+    this.isRotatedIn = !this.isRotatedIn;
     this.cdr.detectChanges();
   }
 }
