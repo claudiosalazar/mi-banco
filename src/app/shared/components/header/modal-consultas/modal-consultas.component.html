@@ -1,13 +1,11 @@
 
 <!-- Formulario consultas -->
-<form >
+<form [formGroup]="consultasForm">
   <div class="modal-body">
-    <!-- <div *ngIf="formularioConsultas"> -->
-    <div>
+    <div *ngIf="formularioConsultas">
       <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center mb-3">
         <span class="titulo-modal">Tus datos de contacto</span>
-        <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" routerLink="/mibanco/mis-datos" type="button" data-bs-dismiss="modal">
-        <!-- <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" routerLink="/mibanco/mis-datos" type="button" data-bs-dismiss="modal" (click)="cancelarConsulta()"> -->
+        <a class="btn-link d-flex align-items-center justify-content-md-end mb-3 mb-md-auto" routerLink="/mibanco/mis-datos" type="button" data-bs-dismiss="modal" (click)="cancelarConsulta()">
           <div>
             Actualizar tus datos
           </div>
@@ -43,21 +41,19 @@
   
         <div class="col-12 mt-4">
           <!-- Lista de consultas -->
-          <!-- <div class="form-floating mb-4">
-            <custom-select-reactivo [control]="consultasForm.get('consulta')" [options]="listaConsultas" [selectedValue]="consultaSeleccionada" [zIndex]="9999" [submitted]="submitted" [labelSelect]="'Selecciona el tipo de consulta *'" [isValid]="consultaValida" [isInvalid]="consultaValidaReset" (click)="activarSeleccionConsultas()"></custom-select-reactivo>
-          </div> -->
+          <div class="form-floating mb-4">
+            <mb-custom-select [control]="consultasForm.get('consulta')" [options]="listaConsultas" [selectedValue]="consultaSeleccionada" [zIndex]="9999" [submitted]="submitted" [labelSelect]="'Selecciona el tipo de consulta *'" [isValid]="consultaValida" [isInvalid]="consultaValidaReset" (click)="activarSeleccionConsultas()"></mb-custom-select>
+          </div>
           <!-- Campos formulario -->
           <div class="form-floating">
-            <textarea class="form-control" id="textoconsulta" placeholder="Consulta" style="height: 150px;"></textarea>
-            <!-- <textarea class="form-control" id="textoConsulta" formControlName="textoConsulta" placeholder="Consulta" [ngClass]="{ 'is-valid': consultasForm.get('textoConsulta')?.valid }" style="height: 150px;"></textarea> -->
+            <textarea class="form-control" id="textoConsulta" formControlName="textoConsulta" placeholder="Consulta" [ngClass]="{ 'is-valid': consultasForm.get('textoConsulta')?.valid }" style="height: 150px;"></textarea>
             <label for="textoconsulta">Consulta</label>
             <div class="d-flex justify-content-between">
               <div class="d-block mt-1">
                 <span class="caracteres-textarea">Debes ingresar una consulta con una cantidad mínima de 50 caracteres y un máximo de 2.000.</span>
               </div>
               <div class="d-block mt-1">
-                <span class="caracteres-textarea">0 / 2000</span>
-                <!-- <span class="caracteres-textarea">{{ longitudTextoConsulta }} / 2000</span> -->
+                <span class="caracteres-textarea">{{ longitudTextoConsulta }} / 2000</span>
               </div>
             </div>
           </div>
@@ -79,8 +75,7 @@
         </div>
       </div>
       <div class="w-100">
-        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal">Cerrar</button>
-        <!-- <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormiarioConsultas()">Cerrar</button> -->
+        <button type="button" class="btn btn-primary mx-auto mb-4" data-bs-dismiss="modal" (click)="cerrarModalFormularioConsultas()">Cerrar</button>
       </div>
     </div>
   
