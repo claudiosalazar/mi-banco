@@ -202,13 +202,18 @@ export class VisaPagoComponent implements OnInit {
       }
     });
 
-    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
-      if (datos.length > 0) {
-        const usuario = datos[0];
-        this.email = usuario.email;
-        this.pagoVisaForm.patchValue({ inputEmail: this.email });
-      }
-    });
+    const idUser = localStorage.getItem('id_user') || '';
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
+        if (datos.length > 0) {
+          const usuario = datos[0];
+          this.email = usuario.email;
+        }
+      });
+    } else {
+      console.error('No se encontró id_user en el localStorage');
+    }
 
     this.pagoVisaForm = new FormGroup({
       productoParaPago: new FormControl('0', [Validators.required, this.validaProductoParaPago()]),

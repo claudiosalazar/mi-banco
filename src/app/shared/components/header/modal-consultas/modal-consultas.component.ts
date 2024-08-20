@@ -27,7 +27,7 @@ export class ModalConsultasComponent implements OnInit {
   segundo_nombre: any;
   apellido_paterno: any;
   apellido_materno: any;
-  email: any
+  email: any;
   celular: any;
   telefono: any;
 
@@ -52,19 +52,26 @@ export class ModalConsultasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
-      if (datos.length > 0) {
-        const usuario = datos[0];
-        console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
-        this.primer_nombre = usuario.primer_nombre;
-        this.segundo_nombre = usuario.segundo_nombre;
-        this.apellido_paterno = usuario.apellido_paterno;
-        this.apellido_materno = usuario.apellido_materno;
-        this.email = usuario.email;
-        this.celular = usuario.celular;
-        this.telefono = usuario.telefono;
-      }
-    });
+    const idUser = localStorage.getItem('id_user') || '';
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
+        if (datos.length > 0) {
+          const usuario = datos[0];
+          console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
+          this.primer_nombre = usuario.primer_nombre;
+          this.segundo_nombre = usuario.segundo_nombre;
+          this.apellido_paterno = usuario.apellido_paterno;
+          this.apellido_materno = usuario.apellido_materno;
+          this.email = usuario.email;
+          this.celular = usuario.celular;
+          this.telefono = usuario.telefono;
+        }
+      });
+    } else {
+      console.error('No se encontró id_user en el localStorage');
+    }
+
     this.consultasForm = new FormGroup({
       consulta: new FormControl('0', [Validators.required]),
       textoConsulta: new FormControl('', [Validators.required]),

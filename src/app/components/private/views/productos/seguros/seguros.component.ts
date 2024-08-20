@@ -21,5 +21,4 @@ export class SegurosComponent implements OnInit {
       }
     });
   }
-
 }

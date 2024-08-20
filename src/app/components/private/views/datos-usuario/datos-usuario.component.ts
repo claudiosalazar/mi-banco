@@ -169,44 +169,81 @@ export class DatosUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.localidadesService.getRegiones().subscribe((regiones: Localidades[]) => {
-      this.listaRegiones = regiones;
-      this.listaRegionesComerciales = regiones;
-    });
-    this.localidadesService.getComunas().subscribe((comunas: Localidades[]) => {
-      this.listaComunas = comunas;
-      this.listaComunasComerciales = comunas;
-    });
-    this.localidadesService.getCiudades().subscribe((ciudades: Localidades[]) => {
-      this.listaCiudades = ciudades;
-      this.listaCiudadesComerciales = ciudades;
-    });
-
-    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
-      if (datos.length > 0) {
-        const usuario = datos[0];
-        this.usuarioId = usuario.id_datos_usuario; // Almacenar el ID del usuario
-        usuario.rut = this.rutPipe.transform(usuario.rut);
-        usuario.celular = this.celularPipe.transform(usuario.celular);
-        usuario.telefono = this.telefonoFijoPipe.transform(usuario.telefono);
-        this.region = usuario.region;
-        this.comuna = usuario.comuna;
-        this.ciudad = usuario.ciudad;
-        this.region_comercial = usuario.region_comercial;
-        this.comuna_comercial = usuario.comuna_comercial;
-        this.ciudad_comercial = usuario.ciudad_comercial;
-        this.misDatosForm.patchValue(usuario);
-
-        // Guardar el valor de la región seleccionada inicialmente
-        this.regionSeleccionadaInicial = this.region;
-        this.comunaSeleccionadaInicial = this.comuna;
-        this.ciudadSeleccionadaInicial = this.ciudad;
-        this.regionSeleccionadaComercialInicial = this.region_comercial;
-        this.comunaSeleccionadaComercialInicial = this.comuna_comercial;
-        this.ciudadSeleccionadaComercialInicial = this.ciudad_comercial;
+    // Obtener regiones
+    this.localidadesService.getRegiones().subscribe({
+      next: (regiones: Localidades[]) => {
+        this.listaRegiones = regiones;
+        this.listaRegionesComerciales = regiones;
+      },
+      error: (error) => {
+        console.error('Error al obtener las regiones', error);
       }
-      console.log('ID Usuario:', this.usuarioId);
     });
+  
+    // Obtener comunas
+    this.localidadesService.getComunas().subscribe({
+      next: (comunas: Localidades[]) => {
+        this.listaComunas = comunas;
+        this.listaComunasComerciales = comunas;
+      },
+      error: (error) => {
+        console.error('Error al obtener las comunas', error);
+      }
+    });
+  
+    // Obtener ciudades
+    this.localidadesService.getCiudades().subscribe({
+      next: (ciudades: Localidades[]) => {
+        this.listaCiudades = ciudades;
+        this.listaCiudadesComerciales = ciudades;
+      },
+      error: (error) => {
+        console.error('Error al obtener las ciudades', error);
+      }
+    });
+  
+    // Obtener id_user del localStorage
+    const idUser = localStorage.getItem('id_user') || '';
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe({
+        next: (datos: DatosUsuario[]) => {
+          if (datos.length > 0) {
+            const usuario = datos[0];
+            this.usuarioId = usuario.id_datos_usuario; // Almacenar el ID del usuario
+  
+            // Asegurarse de que las propiedades sean cadenas antes de aplicar las transformaciones
+            usuario.rut = typeof usuario.rut === 'string' ? this.rutPipe.transform(usuario.rut) : usuario.rut;
+            usuario.celular = typeof usuario.celular === 'string' ? this.celularPipe.transform(usuario.celular) : usuario.celular;
+            usuario.telefono = typeof usuario.telefono === 'string' ? this.telefonoFijoPipe.transform(usuario.telefono) : usuario.telefono;
+  
+            this.region = usuario.region;
+            this.comuna = usuario.comuna;
+            this.ciudad = usuario.ciudad;
+            this.region_comercial = usuario.region_comercial;
+            this.comuna_comercial = usuario.comuna_comercial;
+            this.ciudad_comercial = usuario.ciudad_comercial;
+            this.misDatosForm.patchValue(usuario);
+  
+            // Guardar el valor de la región seleccionada inicialmente
+            this.regionSeleccionadaInicial = this.region;
+            this.comunaSeleccionadaInicial = this.comuna;
+            this.ciudadSeleccionadaInicial = this.ciudad;
+            this.regionSeleccionadaComercialInicial = this.region_comercial;
+            this.comunaSeleccionadaComercialInicial = this.comuna_comercial;
+            this.ciudadSeleccionadaComercialInicial = this.ciudad_comercial;
+          } else {
+            console.warn('No se encontraron datos del usuario');
+          }
+          console.log('ID Usuario:', this.usuarioId);
+        },
+        error: (error) => {
+          console.error('Error al obtener los datos del usuario', error);
+        }
+      });
+    } else {
+      console.error('No se encontró id_user en el localStorage');
+    }
   }
 
   observarCambiosRegion(): void {

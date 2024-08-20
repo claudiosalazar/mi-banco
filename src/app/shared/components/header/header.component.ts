@@ -85,15 +85,21 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datosUsuarioService.getDatosUsuario().subscribe((datos: DatosUsuario[]) => {
-      if (datos.length > 0) {
-        const usuario = datos[0];
+    const idUser = localStorage.getItem('id_user') || '';
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
+        if (datos.length > 0) {
+          const usuario = datos[0];
         this.primer_nombre = usuario.primer_nombre;
         this.segundo_nombre = usuario.segundo_nombre;
         this.apellido_paterno = usuario.apellido_paterno;
         this.apellido_materno = usuario.apellido_materno;
-      }
-    });
+        }
+      });
+    } else {
+      console.error('No se encontró id_user en el localStorage');
+    }
 
     this.backdropSubscription = this.backdropService.mostrarBackdropCustomModal$.subscribe(
       mostrar => this.mostrarBackdropCustomModal = mostrar
