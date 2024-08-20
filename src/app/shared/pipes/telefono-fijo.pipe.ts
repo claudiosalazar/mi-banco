@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TelefonoFijoPipe implements PipeTransform {
 
   transform(value: string): string {
-    if (!value) {
-      return '';
+    if (typeof value !== 'string') {
+      value = String(value);
     }
 
     // Insertar un espacio después del segundo y quinto dígito

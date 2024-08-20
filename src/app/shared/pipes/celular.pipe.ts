@@ -5,13 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CelularPipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): any {
-    if (!value) return value;
+  transform(value: any): string {
+    if (typeof value !== 'string') {
+      value = String(value);
+    }
 
-    // Insertar espacios en los lugares correctos
-    const newValue = value.replace(/(\d{1})(\d{4})(\d{4})/, '$1 $2 $3');
-
-    return newValue;
+    // Asegúrate de que el valor sea una cadena antes de llamar a replace
+    return value.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
   }
 
 }

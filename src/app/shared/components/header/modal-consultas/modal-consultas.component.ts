@@ -66,6 +66,12 @@ export class ModalConsultasComponent implements OnInit {
           this.email = usuario.email;
           this.celular = usuario.celular;
           this.telefono = usuario.telefono;
+
+          // Agregar mensajes de consola para verificar los datos de celular y telefono
+          console.log('Celular:', this.celular);
+          console.log('Telefono:', this.telefono);
+        } else {
+          console.error('No se encontraron datos para el usuario con id:', idUserNumber);
         }
       });
     } else {
