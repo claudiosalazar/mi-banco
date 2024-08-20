@@ -117,14 +117,9 @@ export class LoginComponent implements OnInit {
         this.authService.mibanco(user).subscribe(
           (res: any) => {
             console.log(res);
-            if (res.token && res.id_user) {
-              localStorage.setItem('token', res.token);
-              localStorage.setItem('id_user', res.id_user);
-              this.router.navigate(['mibanco']);
-            } else {
-              console.error('El token o id_user no están presentes en la respuesta');
-              this.mensajeError = true;
-            }
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('id_user', res.id_user);
+            this.router.navigate(['mibanco']);
           },
           (err) => {
             if (err.status === 401) {
