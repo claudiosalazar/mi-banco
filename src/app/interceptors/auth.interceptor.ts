@@ -10,6 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
       const cloned = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)
       });
+      console.log('Token añadido a la solicitud:', cloned); // Depuración
       return next.handle(cloned);
     } else {
       return next.handle(req);

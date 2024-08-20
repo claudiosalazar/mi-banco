@@ -28,7 +28,7 @@ export class AgendaService {
   datosFiltrados$ = this.datosFiltradosSource.asObservable();
   paginationData = new Subject<{ itemsPerPage: number, currentPage: number }>();
   paginationData$ = this.paginationData.asObservable();
-  id: any;
+  id_agenda: number | undefined;
 
   destinatarioEliminado = new Subject<any>();
 
@@ -60,12 +60,12 @@ export class AgendaService {
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
 
-  setId(id: number): void {
-    this.idSource.next(id);
+  setId(id_agenda: number): void {
+    this.idSource.next(id_agenda);
   }
 
-  getDestinatarioById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
+  getDestinatarioById(id_agenda: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/mibanco/agenda/${id_agenda}`);
   }
 
   emitirDatosNuevoDestinatario(datos: any): void {
@@ -84,8 +84,8 @@ export class AgendaService {
     );
   }
 
-  guardarDestinatarioEditado(id: number, agenda: Agenda): Observable<any> {
-      return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id}`, agenda).pipe(
+  guardarDestinatarioEditado(id_agenda: number, agenda: Agenda): Observable<any> {
+      return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id_agenda}`, agenda).pipe(
         tap((value) => this.destinatarioActualizado.next(value))
       );
   }
@@ -95,7 +95,7 @@ export class AgendaService {
     this.destinatarioActualizado.next(datosEditados);
   }
   
-  eliminarIdDestinatario(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/mibanco/agenda/${id}`);
+  eliminarIdDestinatario(id_agenda: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/mibanco/agenda/${id_agenda}`);
   }
 }

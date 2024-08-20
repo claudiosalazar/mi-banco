@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { tap } from 'rxjs';
+import { tap, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +27,13 @@ export class AuthService {
     );
   }
 
-  isAuth(): boolean {
+  isAuth(): Observable<boolean> {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('id_user');
     if (this.jwtHelper.isTokenExpired(token) || !token || !userId) {
-      return false;
+      return of(false);
     } 
-    return true;
+    return of(true);
   }
 
   logout(): void {

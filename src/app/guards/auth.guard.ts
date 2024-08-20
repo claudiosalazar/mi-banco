@@ -1,25 +1,39 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
-  canActivate(): boolean {
+  canActivate: CanActivateFn = (): Observable<boolean> => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('id_user');
-    if (!token || !this.authService.isAuth() || !userId) {
-      console.log('Token no es válido o expiró o id_user no está presente'); 
+    const idUser = localStorage.getItem('id_user');
+    if (!token || !idUser) {
+      console.log('Token no es válido o expiró o id_user no está presente');
       this.router.navigate(['login']);
-      return false;
+      return of(false);
     }
 
-    return true;
+    return this.authService.isAuth().pipe(
+      map(isAuth => {
+        if (!isAuth) {
+          this.router.navigate(['login']);
+          return false;
+        }
+        return true;
+      }),
+      catchError(() => {
+        this.router.navigate(['login']);
+        return of(false);
+      })
+    );
   }
 }

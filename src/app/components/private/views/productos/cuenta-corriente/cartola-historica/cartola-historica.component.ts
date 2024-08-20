@@ -13,20 +13,20 @@ export class CartolaHistoricaComponent implements OnInit {
   public isRotatedIn: boolean = false;
   public columnaSeleccionada: string | undefined;
 
-  cartolas: any[] = [];
-  paginatedCartola: any[] = [];
+  cartolas: Cartolas[] = [];
+  paginatedCartola: Cartolas[] = [];
 
   // Variables para ordenar datos de tabla
   sortOrder = 1;
   sortedColumn: any;
   sortAscending: boolean = true;
 
-  originalData: any[] = [];
-  itemsPerPage: any;
+  originalData: Cartolas[] = [];
+  itemsPerPage: number = 10; // Asigna un valor por defecto
   currentPage = 1;
-  paginatedData: any[] = [];
-  totalPages: any;
-  id: number | undefined;
+  paginatedData: Cartolas[] = [];
+  totalPages: number = 0;
+  id_cartola: number | undefined;
 
   constructor(
     private cartolasService: CartolasService,
@@ -38,12 +38,24 @@ export class CartolaHistoricaComponent implements OnInit {
   }
 
   loadData(): void {
-    this.cartolasService.getCartolas().subscribe((_cartolas: any) => {
-      this.cartolas = _cartolas; // Asigna los datos recibidos a la variable cartolas
-      this.originalData = [...this.cartolas];
-      this.paginaCartola();
-      this.cdr.detectChanges();
-    });
+    const id_user = Number(localStorage.getItem('id_user')); // Convertir el valor de id_user a número
+  
+    if (id_user) {
+      this.cartolasService.getCartolas(id_user).subscribe({
+        next: (cartolas: Cartolas[]) => {
+          this.cartolas = cartolas; // Asigna los datos recibidos a la variable cartolas
+          this.originalData = [...this.cartolas];
+          this.paginaCartola();
+          this.cdr.detectChanges();
+          console.log('CartolaHistoricaComponent inicializado', this.cartolas); // Mover aquí el console.log
+        },
+        error: (error) => {
+          console.error('Error al obtener las cartolas', error);
+        }
+      });
+    } else {
+      console.error('id_user no encontrado en localStorage');
+    }
   }
 
   public onHeaderClick(): void {
@@ -64,7 +76,7 @@ export class CartolaHistoricaComponent implements OnInit {
   
     this.sortOrder = this.sortAscending ? 1 : -1;
   
-    this.cartolas?.sort((a: { [x: string]: number; }, b: { [x: string]: number; }) => {
+    this.cartolas.sort((a: any, b: any) => {
       return a[column] > b[column] ? this.sortOrder : a[column] < b[column] ? -this.sortOrder : 0;
     });
     this.paginaCartola();
