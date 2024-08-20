@@ -13,9 +13,8 @@ export class SegurosService {
 
   constructor(private http: HttpClient) { }
 
-  getSeguros(): Observable<Seguros[]> {
-    const idUser = localStorage.getItem('id_user') || '';
-    const params = new HttpParams().set('id_user', idUser);
+  getSeguros(idUser: number): Observable<Seguros[]> {
+    const params = new HttpParams().set('id_user', idUser.toString());
     return this.http.get<Seguros[]>(`${this.apiUrl}/mibanco/seguros`, { params });
   }
 }

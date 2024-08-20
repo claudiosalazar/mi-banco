@@ -4,7 +4,7 @@
       <h1>Mis Seguros</h1>
 
       <div class="row">
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 mb-5">
           <div class="row" *ngIf="seguros.length > 0">
             
             <!-- Seguro hogar -->
@@ -26,8 +26,8 @@
                     <p class="mb-3">Compañia: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[0].compania }}</strong></p>
                     <p class="mb-3">N° Seguro: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[0].numero_seguro }}</strong></p>
                     <p class="mb-3">Vigencia: <br class="d-none d-md-block"></p>
-                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[0].fecha_inicio }}</strong></p>
-                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[0].fecha_termino }}</strong></p>
+                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[0].fecha_inicio | date:"dd / MM / yyyy" }}</strong></p>
+                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[0].fecha_termino | date:"dd / MM / yyyy" }}</strong></p>
                   </div>
                   <div class="col-12 col-md-4">
                     <p class="mb-3">Póliza: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[0].poliza }}</strong></p>
@@ -56,8 +56,8 @@
                     <p class="mb-3">Compañia: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[1].compania }}</strong></p>
                     <p class="mb-3">N° Seguro: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[1].numero_seguro }}</strong></p>
                     <p class="mb-3">Vigencia: <br class="d-none d-md-block"></p>
-                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[1].fecha_inicio }}</strong></p>
-                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[1].fecha_termino }}</strong></p>
+                    <p class="mb-3">Inicio: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[1].fecha_inicio | date:"dd / MM / yyyy" }}</strong></p>
+                    <p class="mb-3">Termino: <br class="d-none d-md-block"> <strong class="tinto">{{ seguros[1].fecha_termino | date:"dd / MM / yyyy" }}</strong></p>
                   </div>
                   <div class="col-12 col-md-4">
                     <p class="mb-3">Póliza: <br class="d-none d-md-block"><strong class="tinto">{{ seguros[1].poliza }}</strong></p>
@@ -75,7 +75,5 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </div>

@@ -15,10 +15,16 @@ export class SegurosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.segurosService.getSeguros().subscribe((seguros: Seguros[]) => {
-      if (seguros) {
-        this.seguros = seguros;
-      }
-    });
+    const idUser = localStorage.getItem('id_user');
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.segurosService.getSeguros(idUserNumber).subscribe((seguros: Seguros[]) => {
+        if (seguros) {
+          this.seguros = seguros;
+        }
+      });
+    } else {
+      console.error('No se encontró id_user en el localStorage');
+    }
   }
 }
