@@ -17,6 +17,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   @Output() cancelarEvent = new EventEmitter<void>();
 
   agenda: any[] = [];
+  allIds: number[] = [];
   datosNuevoDestinatario: any;
 
   // Array bancos
@@ -133,8 +134,18 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   loadData(): void {
+    // Obtener los datos de la agenda del usuario autenticado
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       this.agenda = agenda;
+      this.allIds = agenda.map((item: Agenda) => item.id_agenda); // Almacena todos los IDs del usuario autenticado
+      console.log('Datos obtenidos del usuario autenticado:', agenda); // Muestra los datos en la consola
+  
+      // Obtener todos los datos de la agenda
+      this.agendaService.getAgendaAll().subscribe((allAgenda: any) => {
+        const allAgendaIds = allAgenda.map((item: Agenda) => item.id_agenda); // Almacena todos los IDs
+        localStorage.setItem('allAgendaIds', JSON.stringify(allAgendaIds)); // Guarda todos los IDs en el almacenamiento local
+        console.log('Todos los datos obtenidos:', allAgenda); // Muestra todos los datos en la consola
+      });
     });
   }
 
@@ -397,19 +408,20 @@ export class AgregarDestinatarioComponent implements OnInit {
 
   enviarDatosNuevoDestinatario(): void {
     this.submitted = true;
-
+  
     // Verifica que todos los campos del formulario estén llenos
     this.crearDestinatarioForm.markAllAsTouched();
-
+  
     // Verifica que el formulario sea válido
     if (this.crearDestinatarioForm.valid) {
       const formValues = this.crearDestinatarioForm.value;
-
+  
       // Elimina los puntos y el guión del RUT
       const rutSinFormato = formValues.rut.replace(/\./g, '').replace(/-/g, '');
+      const id_user = Number(localStorage.getItem('id_user'));
       const datosNuevoDestinatario: Agenda = {
         id_agenda: null,
-        id_user: 1,
+        id_user: id_user,
         nombre: formValues.nombre,
         apodo: formValues.apodo,
         rut: rutSinFormato,
@@ -420,18 +432,18 @@ export class AgregarDestinatarioComponent implements OnInit {
         celular: formValues.celular.replace(/\s/g, ''),
         telefono: formValues.telefono.replace(/\s/g, '')
       };
-
-      // Obtener todos los IDs existentes y generar un nuevo ID
-      this.agendaService.getAgenda().subscribe(agenda => {
-        const ids = agenda.map((item: Agenda) => item.id_agenda);
-        const nuevoId = Math.max(...ids) + 1;
-        datosNuevoDestinatario.id_agenda = nuevoId;
-
-        console.log('Datos que se enviarán:', datosNuevoDestinatario);
   
-        // Envía los datos al servicio
-        this.agendaService.emitirDatosNuevoDestinatario(datosNuevoDestinatario);
-      });
+      // Obtener todos los IDs de agenda desde el almacenamiento local
+      const allAgendaIds = JSON.parse(localStorage.getItem('allAgendaIds') || '[]');
+      
+      // Generar un nuevo ID único
+      const nuevoId = Math.max(...allAgendaIds) + 1;
+      datosNuevoDestinatario.id_agenda = nuevoId;
+  
+      console.log('Datos que se enviarán:', datosNuevoDestinatario);
+  
+      // Envía los datos al servicio
+      this.agendaService.emitirDatosNuevoDestinatario(datosNuevoDestinatario);
     }
   }
 

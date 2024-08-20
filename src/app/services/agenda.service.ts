@@ -44,6 +44,14 @@ export class AgendaService {
     );
   }
 
+  getAgendaAll(): Observable<Agenda[]> {
+    return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`, {
+      params: { all: 'true' }
+    }).pipe(
+      map(agenda => agenda.sort((a, b) => a.nombre.localeCompare(b.nombre)))
+    );
+  }
+
   filtrarAgenda(valorBusqueda: any): Observable<Agenda[]> {
     const searchStr = String(valorBusqueda).toLowerCase().replace(/\s+/g, '');
     return this.getAgenda().pipe(
@@ -85,9 +93,9 @@ export class AgendaService {
   }
 
   guardarDestinatarioEditado(id_agenda: number, agenda: Agenda): Observable<any> {
-      return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id_agenda}`, agenda).pipe(
-        tap((value) => this.destinatarioActualizado.next(value))
-      );
+    return this.http.put<any>(`${this.apiUrl}/mibanco/agenda/${id_agenda}`, agenda).pipe(
+      tap((value) => this.destinatarioActualizado.next(value))
+    );
   }
 
   actualizarDestinatario(datosEditados: any) {

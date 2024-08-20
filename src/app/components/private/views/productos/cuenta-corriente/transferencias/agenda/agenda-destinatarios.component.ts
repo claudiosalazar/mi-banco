@@ -61,7 +61,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   currentPage = 1;
   paginatedData: any[] = [];
   totalPages: any;
-  id: any | undefined;
+  id_agenda: any | undefined;
   nombre: string | undefined;
 
   busquedaDestinatarios = new FormControl('');
@@ -228,8 +228,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   // Nuevo método para manejar la actualización de destinatarios
-  actualizarDestinatario(id: number, datos: any): void {
-    this.agendaService.guardarDestinatarioEditado(id, datos).subscribe(
+  actualizarDestinatario(id_agenda: number, datos: any): void {
+    this.agendaService.guardarDestinatarioEditado(id_agenda, datos).subscribe(
       () => {
         console.log('El destinatario fue actualizado correctamente');
         this.loadData();
@@ -328,13 +328,13 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   eliminarDestinatario(): void {
-    if (this.id) {
-      this.agendaService.eliminarIdDestinatario(this.id).subscribe(
+    if (this.id_agenda) {
+      this.agendaService.eliminarIdDestinatario(this.id_agenda).subscribe(
         () => {
           console.log('El destinatario fue eliminado correctamente');
           this.usuarioEliminado = true;
           // Eliminar el destinatario de la lista local
-          this.agenda = this.agenda.filter(d => d.id !== this.id);
+          this.agenda = this.agenda.filter(d => d.id_agenda !== this.id_agenda);
           this.paginarAgenda();
           this.cdr.detectChanges();
         },
@@ -351,12 +351,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.destinatarioEliminado = false;
   }
 
-  abrirModalEliminar(id: number): void {
-    this.id = id;
-    console.log(this.id);
+  abrirModalEliminar(id_agenda: number): void {
+    this.id_agenda = id_agenda;
+    console.log(this.id_agenda);
 
     // Suponiendo que tienes una lista de destinatarios en el componente
-    const destinatario = this.agenda.find(d => d.id === id);
+    const destinatario = this.agenda.find(d => d.id_agenda === id_agenda);
     if (destinatario) {
         this.nombre = destinatario.nombre;
     }
