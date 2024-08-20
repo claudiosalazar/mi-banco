@@ -126,6 +126,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
     this.subscriptions = this.agendaService.destinatarioActualizado$.subscribe((datosEditados: any) => {
       this.abrirModalEdicion();
+      this.loadData();
     });
   
     this.subscriptions.add(
@@ -371,6 +372,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.backdropService.hideModalBackdrop();
     this.mostrarBackdropCustomOffcanvas.emit(false);
     this.mostrarBackdropCustomOffcanvasEstado = false;
+    this.errorServerNuevoDestinatario = false;
   }
 
 }

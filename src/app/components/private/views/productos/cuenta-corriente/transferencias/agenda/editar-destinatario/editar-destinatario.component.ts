@@ -64,7 +64,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   cuentaInvalidaMensaje: any;
   
 
-  id: number | null = null;
+  id_agenda: number | null = null;
+  id_user: number | null = null;
 
   listaBancos = [
     { value: '0', label: '-' },
@@ -121,10 +122,10 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.loadData();
 
-    this.agendaService.currentId.subscribe(id => {
+    this.agendaService.currentId.subscribe(id_agenda => {
       // console.log('ID:', id);
-      this.id = id ?? 0;
-      this.loadDestinatarioData(this.id);
+      this.id_agenda = id_agenda ?? 0;
+      this.loadDestinatarioData(this.id_agenda);
       console.log('Banco Inicio:', this.bancoInicio);
       console.log('Cuenta Inicio:', this.tipoCuentaInicio);
     });
@@ -208,8 +209,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     });
   }
 
-  loadDestinatarioData(id: number): void {
-    const destinatario = this.agenda.find(item => item.id === id);
+  loadDestinatarioData(id_agenda: number): void {
+    const destinatario = this.agenda.find(item => item.id_agenda === id_agenda);
     if (destinatario) {
       this.editarDestinatarioForm.patchValue({
         nombre: destinatario.nombre,
@@ -476,15 +477,27 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
       destinatarioData.banco = this.nuevoValorBanco || this.bancoInicio;
       destinatarioData.tipo_cuenta = this.nuevoValorTipoCuenta || this.tipoCuentaInicio;
   
+      // Obtener id_user desde el almacenamiento
+      const id_user = localStorage.getItem('id_user');
+      if (id_user) {
+        destinatarioData.id_user = id_user;
+      } else {
+        console.error('ID de usuario no encontrado en el almacenamiento');
+        return;
+      }
+  
       console.log('Datos enviados al servicio:', destinatarioData);
-      if (this.id !== null) {
-        console.log('ID del destinatario:', this.id); 
-        this.agendaService.guardarDestinatarioEditado(this.id, destinatarioData).subscribe(
+      if (this.id_agenda !== null) {
+        console.log('ID del destinatario:', this.id_agenda); 
+        this.agendaService.guardarDestinatarioEditado(this.id_agenda, destinatarioData).subscribe(
           response => {
             console.log('Destinatario actualizado:', response);
           },
           error => {
             console.error('Error al actualizar destinatario:', error);
+            if (error.status === 400) {
+              console.error('Error 400: Solicitud incorrecta. Verifica los datos enviados.');
+            }
           }
         );
       } else {
