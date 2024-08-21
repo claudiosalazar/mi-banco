@@ -245,6 +245,8 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
     // Lógica adicional para eliminar el token de sesión
-    localStorage.removeItem('token'); // Ejemplo de eliminación de token
+    localStorage.removeItem('token');
+    localStorage.removeItem('id_user');
+    this.mostrarBackdropCustomModal = false;
   }
 }
