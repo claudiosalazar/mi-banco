@@ -15,13 +15,11 @@ export class TransaccionesService {
 
   constructor(private http: HttpClient) { }
 
-  getTransCuentaCorrienteTransferencia(): Observable<CuentaCorriente[]> {
+  getTransCuentaCorrienteTransferencia(idUserNumber: number): Observable<CuentaCorriente[]> {
+    console.log('Obteniendo transacciones de cuenta corriente con transferencia para el usuario:', idUserNumber);
     return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
-      map(transacciones => 
-        transacciones
-          .filter(transaccion => transaccion.transferencia === 1)
-          .sort((a, b) => b.fecha.localeCompare(a.fecha))
-      ),
+      map(transacciones => transacciones.filter(transaccion => transaccion.transferencia === 1 && transaccion.id_user === idUserNumber)),
+      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => {
         console.log('Transacciones filtradas y ordenadas:', transacciones);
         transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente');

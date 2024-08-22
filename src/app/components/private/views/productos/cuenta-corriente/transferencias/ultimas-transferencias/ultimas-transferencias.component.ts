@@ -65,7 +65,9 @@ export class UltimasTransferenciasComponent implements OnInit {
   }
 
   loadData() {
-    this.transaccionesService.getTransCuentaCorrienteTransferencia().subscribe((transferencias: any[]) => {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser, 10) : 0; // O sessionStorage.getItem('id_user')
+    this.transaccionesService.getTransCuentaCorrienteTransferencia(idUserNumber).subscribe((transferencias: any[]) => {
       this.handleTransacciones(transferencias);
     });
   }
