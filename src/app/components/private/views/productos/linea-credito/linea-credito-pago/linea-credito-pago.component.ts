@@ -211,7 +211,9 @@ export class LineaCreditoPagoComponent implements OnInit {
         if (datos.length > 0) {
           const usuario = datos[0];
           this.email = usuario.email;
+          this.pagoLineaCreditoForm.patchValue({ inputEmail: this.email });
         }
+        console.log('Email:', this.email);
       });
     } else {
       console.error('No se encontró id_user en el localStorage');
