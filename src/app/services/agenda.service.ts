@@ -44,6 +44,14 @@ export class AgendaService {
     );
   }
 
+  getAgendaIdUser(idUserNumber: number): Observable<Agenda[]> {
+    console.log('idUserNumber:', idUserNumber);
+    return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`).pipe(
+      map(agenda => agenda.filter(item => item.id_user === idUserNumber)),
+      map(agenda => agenda.sort((a, b) => a.nombre.localeCompare(b.nombre)))
+    );
+  }
+
   getAgendaAll(): Observable<Agenda[]> {
     return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`, {
       params: { all: 'true' }
@@ -52,9 +60,9 @@ export class AgendaService {
     );
   }
 
-  filtrarAgenda(valorBusqueda: any): Observable<Agenda[]> {
+  filtrarAgenda(idUserNumber: number, valorBusqueda: any): Observable<Agenda[]> {
     const searchStr = String(valorBusqueda).toLowerCase().replace(/\s+/g, '');
-    return this.getAgenda().pipe(
+    return this.getAgendaIdUser(idUserNumber).pipe(
       map(agenda => agenda.filter((item: any) => 
         Object.values(item).some(value => 
           String(value).toLowerCase().replace(/\s+/g, '').includes(searchStr)

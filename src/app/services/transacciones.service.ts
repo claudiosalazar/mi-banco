@@ -19,11 +19,11 @@ export class TransaccionesService {
     return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
       map(transacciones => 
         transacciones
-          .filter(transaccion => transaccion.transferencia === 1) // Filtrar las transacciones con transferencia = 1
+          .filter(transaccion => transaccion.transferencia === 1)
           .sort((a, b) => b.fecha.localeCompare(a.fecha))
       ),
       tap(transacciones => {
-        console.log('Transacciones filtradas y ordenadas:', transacciones); // Log de las transacciones
+        console.log('Transacciones filtradas y ordenadas:', transacciones);
         transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente');
       })
     );

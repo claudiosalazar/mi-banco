@@ -4,6 +4,7 @@ import { BackdropService } from '../../../../../../../services/backdrop.service'
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, of, Subscription, switchMap } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Agenda } from '../../../../../../../models/agenda.model';
 
 declare var bootstrap: any;
 
@@ -87,6 +88,8 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   cambios: any;
   datosEditados: any;
 
+  idUserNumber: number | undefined;
+
   constructor(
     private agendaService: AgendaService,
     private cdr: ChangeDetectorRef,
@@ -103,7 +106,30 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.renderizarAgregarDestinatario.subscribe(valor => {
       this.renderizarAgregarDestinatarioEstado = valor;
     });
-
+  
+    this.busquedaDestinatarios.valueChanges.pipe(
+      distinctUntilChanged(),
+      switchMap(valorBusqueda => {
+        const storedIdUser = localStorage.getItem('id_user');
+        if (storedIdUser) {
+          const idUserNumber = parseInt(storedIdUser, 10);
+          if (valorBusqueda) {
+            return this.agendaService.filtrarAgenda(idUserNumber, valorBusqueda);
+          } else {
+            this.currentPage = 1;
+            this.agenda = [...this.originalData];
+            this.paginarAgenda();
+            this.cdr.detectChanges();
+            return of(this.originalData);
+          }
+        } else {
+          console.error('No se encontró id_user en el almacenamiento');
+          return of([]);
+        }
+      })
+    ).subscribe(datosFiltrados => {
+      this.handleDatosFiltrados(datosFiltrados);
+    });
   }
   
   ngAfterViewInit(_e: Event): void {
@@ -123,7 +149,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         this.loadData();
       })
     );
-
+  
     this.subscriptions = this.agendaService.destinatarioActualizado$.subscribe((datosEditados: any) => {
       this.abrirModalEdicion();
       this.loadData();
@@ -135,30 +161,46 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
         this.abrirModalNuevoDestinatario();
       })
     );
-  
-    this.busquedaDestinatarios.valueChanges
-    .pipe(
-      switchMap(valorBusqueda => {
-        if (valorBusqueda) {
-          return this.agendaService.filtrarAgenda(valorBusqueda);
-        } else {
-          this.currentPage = 1;
-          this.agenda = [...this.originalData];
-          this.paginarAgenda();
-          this.cdr.detectChanges();
-          return of(this.originalData);
-        }
-      })
-    )
-    .subscribe(datosFiltrados => {
-      this.handleDatosFiltrados(datosFiltrados);
-    });
   }
   
   loadData() {
-    this.agendaService.getAgenda().subscribe((agenda: any[]) => {
-      this.handleAgenda(agenda);
-    });
+    // Obtener el idUserNumber desde el almacenamiento
+    const storedIdUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
+    if (storedIdUser) {
+      const idUserNumber = parseInt(storedIdUser, 10);
+      this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
+        (data: Agenda[]) => {
+          // Aquí capturas los datos de la agenda
+          console.log('Datos de la agenda:', data);
+          // Puedes asignar los datos a una propiedad del componente si es necesario
+          this.agenda = data;
+          this.originalData = [...data]; // Guardar una copia de los datos originales
+          this.paginarAgenda();
+        },
+        (error) => {
+          console.error('Error al obtener la agenda:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró id_user en el almacenamiento');
+    }
+  }
+  
+  handleDatosFiltrados(datosFiltrados: Agenda[]) {
+    this.agenda = datosFiltrados;
+    this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
+    this.paginarAgenda();
+    this.cdr.detectChanges();
+  
+    // Aplicar la lógica de verificación de datos
+    if (this.agenda.length === 0) {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
+    } else {
+      this.tablaConDatos = true;
+      this.mostrarAlerta = false;
+      this.loadData(); // Volver a cargar los datos desde el servicio
+    }
   }
 
   ngOnDestroy(): void {
@@ -201,31 +243,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.paginatedAgenda = this.agenda.slice(start, end);
     this.totalPages = Math.ceil(this.agenda.length / this.itemsPerPage);
     this.cdr.detectChanges();
-  }
-
-  handleAgenda(transacciones: any[]): void {
-    if (transacciones) {
-      this.agenda = transacciones.filter(agenda => agenda);
-      this.originalData = [...this.agenda];
-      this.paginarAgenda();
-      this.cdr.detectChanges();
-    }
-  }
-
-  handleDatosFiltrados(datosFiltrados: any[]) {
-    this.agenda = datosFiltrados;
-    this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-    this.paginarAgenda();
-    this.cdr.detectChanges();
-
-    // Aplicar la lógica de verificación de datos
-    if (this.agenda.length === 0) {
-      this.tablaConDatos = false;
-      this.mostrarAlerta = true;
-    } else {
-      this.tablaConDatos = true;
-      this.mostrarAlerta = false;
-    }
   }
 
   // Nuevo método para manejar la actualización de destinatarios

@@ -39,6 +39,7 @@ export class MovimientosComponent implements OnInit {
         this.transaccionesFiltradas = transaccionesCuentaCorriente;
         this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
       }
+      console.log('Transacciones', transaccionesCuentaCorriente);
     });
   }
 
@@ -53,15 +54,9 @@ export class MovimientosComponent implements OnInit {
   handleDatosFiltrados(datosFiltrados: any[]) {
     // Filtrar las transacciones que tienen un valor definido para id_trans_linea_cre
     const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_trans_cta_cte !== undefined && transaccion.id_trans_cta_cte !== null);
-    
-    // Asignar las transacciones filtradas a transaccionesLineaCre
-    this.transaccionesCuentaCorriente = datosFiltradosPorProducto;
-    
-    // Guardar una copia de los datos originales
-    this.originalData = [...this.transaccionesCuentaCorriente];
-    
-    // Actualizar los datos filtrados en el servicio
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
+    this.transaccionesCuentaCorriente = datosFiltradosPorProducto; // Asignar las transacciones filtradas a transaccionesLineaCre
+    this.originalData = [...this.transaccionesCuentaCorriente]; // Guardar una copia de los datos originales
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto); // Actualizar los datos filtrados en el servicio
 
     if (this.transaccionesCuentaCorriente.length === 0) {
       this.tablaConDatos = false;

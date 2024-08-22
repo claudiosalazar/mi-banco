@@ -11,7 +11,7 @@ import { UrlBrowserService } from '../../../../../../../services/urlBrowser.serv
 // Pipes
 import { DatePipe } from '@angular/common';
 import { PesosPipe } from '../../../../../../../shared/pipes/pesos.pipe';
-import { delay, Subscription, Observable, of, switchMap, debounceTime, distinctUntilChanged } from 'rxjs';
+import { delay, Subscription, Observable, of, switchMap, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 
 declare var bootstrap: any;
 
@@ -208,17 +208,24 @@ export class TransferenciaATercerosComponent implements OnInit {
       })
     );
 
-    this.busquedaDestinatarios.valueChanges
-    .pipe(
+    this.busquedaDestinatarios.valueChanges.pipe(
       switchMap(valorBusqueda => {
-        if (valorBusqueda) {
-          return this.agendaService.filtrarAgenda(valorBusqueda);
+        const storedIdUser = localStorage.getItem('id_user');
+        if (storedIdUser) {
+          const idUserNumber = parseInt(storedIdUser, 10);
+          if (valorBusqueda) {
+            return this.agendaService.filtrarAgenda(idUserNumber, valorBusqueda);
+          } else {
+            this.currentPage = 1;
+            this.agenda = [...this.originalData];
+            this.paginarAgenda();
+            this.cdr.detectChanges();
+            return of(this.originalData);
+          }
         } else {
-          this.currentPage = 1;
-          this.agenda = [...this.originalData];
-          this.paginarAgenda();
-          this.cdr.detectChanges();
-          return of(this.originalData);
+          return of([]).pipe(
+            tap(() => console.error('No se encontró id_user en el almacenamiento'))
+          );
         }
       })
     )
@@ -228,17 +235,12 @@ export class TransferenciaATercerosComponent implements OnInit {
   }
 
   loadData() {
-    this.agendaService.getAgenda().subscribe((agenda: any[]) => {
-      this.handleAgenda(agenda);
-    });
-  }
-
-  handleAgenda(transacciones: any[]): void {
-    if (transacciones) {
-      this.agenda = transacciones.filter(agenda => agenda);
-      this.originalData = [...this.agenda];
-      this.paginarAgenda();
-      this.cdr.detectChanges();
+    const idUser = localStorage.getItem('id_user') || '';
+    if (idUser) {
+      const idUserNumber = Number(idUser); // Convertir a número
+      this.agendaService.getAgendaIdUser(idUserNumber);
+    } else {
+      console.error('No se encontró id_user en el localStorage');
     }
   }
 
