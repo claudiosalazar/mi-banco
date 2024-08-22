@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ChangeDetectorRef,
 import { AgendaService } from '../../../../../../../services/agenda.service';
 import { BackdropService } from '../../../../../../../services/backdrop.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, of, Subscription, switchMap } from 'rxjs';
+import { distinctUntilChanged, of, Subscription, switchMap } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Agenda } from '../../../../../../../models/agenda.model';
 
@@ -120,6 +120,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
             this.agenda = [...this.originalData];
             this.paginarAgenda();
             this.cdr.detectChanges();
+            if (this.mostrarAlerta === true || this.currentPage === 0) {
+              this.loadData();
+            }
             return of(this.originalData);
           }
         } else {
@@ -199,7 +202,6 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     } else {
       this.tablaConDatos = true;
       this.mostrarAlerta = false;
-      this.loadData(); // Volver a cargar los datos desde el servicio
     }
   }
 

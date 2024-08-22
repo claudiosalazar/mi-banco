@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, OnDestroy, Output, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormatoEmailService } from './../../../../../../../services/formatoEmail.service';
@@ -7,6 +7,7 @@ import { BackdropService } from '../../../../../../../services/backdrop.service'
 import { TransaccionesService } from '../../../../../../../services/transacciones.service';
 import { CuentaCorriente } from '../../../../../../../models/cuenta-corriente.model';
 import { UrlBrowserService } from '../../../../../../../services/urlBrowser.service';
+import { Agenda } from '../../../../../../../models/agenda.model';
 
 // Pipes
 import { DatePipe } from '@angular/common';
@@ -30,7 +31,7 @@ declare var bootstrap: any;
     ])
   ]
 })
-export class TransferenciaATercerosComponent implements OnInit {
+export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalNuevoDestinatario') modalNuevoDestinatario: ElementRef | undefined;
   @ViewChild('modalTransferencia') modalTransferencia: ElementRef | undefined;
@@ -166,6 +167,33 @@ export class TransferenciaATercerosComponent implements OnInit {
       const transformedValue = this.pesosPipe.transform(value);
       this.transferenciaATercerosForm.controls['montoATransferirOk'].setValue(transformedValue, {emitEvent: false});
     });
+
+    this.busquedaDestinatarios.valueChanges.pipe(
+      distinctUntilChanged(),
+      switchMap(valorBusqueda => {
+        const storedIdUser = localStorage.getItem('id_user');
+        if (storedIdUser) {
+          const idUserNumber = parseInt(storedIdUser, 10);
+          if (valorBusqueda) {
+            return this.agendaService.filtrarAgenda(idUserNumber, valorBusqueda);
+          } else {
+            this.currentPage = 1;
+            this.agenda = [...this.originalData];
+            this.paginarAgenda();
+            this.cdr.detectChanges();
+            if (this.mostrarAlerta === true || this.currentPage === 0) {
+              this.loadData();
+            }
+            return of(this.originalData);
+          }
+        } else {
+          console.error('No se encontró id_user en el almacenamiento');
+          return of([]);
+        }
+      })
+    ).subscribe(datosFiltrados => {
+      this.handleDatosFiltrados(datosFiltrados);
+    });
   }
 
   ngOnDestroy(): void {
@@ -207,49 +235,36 @@ export class TransferenciaATercerosComponent implements OnInit {
         this.abrirModalNuevoDestinatario();
       })
     );
-
-    this.busquedaDestinatarios.valueChanges.pipe(
-      switchMap(valorBusqueda => {
-        const storedIdUser = localStorage.getItem('id_user');
-        if (storedIdUser) {
-          const idUserNumber = parseInt(storedIdUser, 10);
-          if (valorBusqueda) {
-            return this.agendaService.filtrarAgenda(idUserNumber, valorBusqueda);
-          } else {
-            this.currentPage = 1;
-            this.agenda = [...this.originalData];
-            this.paginarAgenda();
-            this.cdr.detectChanges();
-            return of(this.originalData);
-          }
-        } else {
-          return of([]).pipe(
-            tap(() => console.error('No se encontró id_user en el almacenamiento'))
-          );
-        }
-      })
-    )
-    .subscribe(datosFiltrados => {
-      this.handleDatosFiltrados(datosFiltrados);
-    });
   }
 
   loadData() {
-    const idUser = localStorage.getItem('id_user') || '';
-    if (idUser) {
-      const idUserNumber = Number(idUser); // Convertir a número
-      this.agendaService.getAgendaIdUser(idUserNumber);
+    const storedIdUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
+    if (storedIdUser) {
+      const idUserNumber = parseInt(storedIdUser, 10);
+      this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
+        (data: Agenda[]) => {
+          // Aquí capturas los datos de la agenda
+          console.log('Datos de la agenda:', data);
+          // Puedes asignar los datos a una propiedad del componente si es necesario
+          this.agenda = data;
+          this.originalData = [...data]; // Guardar una copia de los datos originales
+          this.paginarAgenda();
+        },
+        (error) => {
+          console.error('Error al obtener la agenda:', error);
+        }
+      );
     } else {
-      console.error('No se encontró id_user en el localStorage');
+      console.error('No se encontró id_user en el almacenamiento');
     }
   }
 
-  handleDatosFiltrados(datosFiltrados: any[]) {
+  handleDatosFiltrados(datosFiltrados: Agenda[]) {
     this.agenda = datosFiltrados;
     this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
     this.paginarAgenda();
     this.cdr.detectChanges();
-
+  
     // Aplicar la lógica de verificación de datos
     if (this.agenda.length === 0) {
       this.tablaConDatos = false;
@@ -259,7 +274,6 @@ export class TransferenciaATercerosComponent implements OnInit {
       this.mostrarAlerta = false;
     }
   }
-
 
   seleccionarDestinatario(id_destinatario: any): void {
     // Encuentra el destinatario seleccionado en la lista de destinatarios
