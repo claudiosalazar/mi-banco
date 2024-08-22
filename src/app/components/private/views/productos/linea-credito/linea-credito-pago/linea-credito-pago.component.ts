@@ -45,8 +45,9 @@ export class LineaCreditoPagoComponent implements OnInit {
   productos: Productos[] = [];
   usuario: DatosUsuario[] = [];
   transaccionesLineaCre: LineaCredito[] = [];
+  ultimoIdTransLineaCre: number = 0;
   transaccionesCtaCte: CuentaCorriente[] = [];
-  transaccionesVisa: string[] = [];
+  transaccionesVisa: Visa[] = [];
   pagoLineaCreditoForm: FormGroup = new FormGroup({});
   saldoUltimaTransaccionVisa: number | undefined;
   saldoUltimaTransaccionCtaCte: number | undefined;
@@ -110,7 +111,6 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   ultimoIdTransVisa: any;
   ultimoIdTransCtaCte: any;
-  ultimoIdTransLineaCre: any;
   
   pagoConCtaCte = false;
   pagoConVisa = false; 
@@ -205,6 +205,43 @@ export class LineaCreditoPagoComponent implements OnInit {
       }
     });
 
+    this.transaccionesService.getIdTransCtaCte().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+      if (transaccionesCtaCte) {
+        // Obtener todos los valores de id_trans_linea_cre
+        const idsTransCtaCte = transaccionesCtaCte.map(transaccion => transaccion.id_trans_cta_cte);
+        console.log('IDs cta cte:', idsTransCtaCte);
+        
+        // Guardar los valores en una variable
+        this.transaccionesCtaCte = transaccionesCtaCte;
+        this.ultimoIdTransCtaCte = Math.max(...idsTransCtaCte);
+      }
+    });
+
+    this.transaccionesService.getIdTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
+      if (transaccionesLineaCre) {
+        // Extraer los valores de id_trans_linea_cre
+        const idsTransLineaCre = transaccionesLineaCre.map(transaccion => transaccion.id_trans_linea_cre);
+        
+        // Asignar los objetos LineaCredito a la variable transaccionesLineaCre
+        this.transaccionesLineaCre = transaccionesLineaCre;
+        
+        // Calcular el máximo de los IDs
+        this.ultimoIdTransLineaCre = Math.max(...idsTransLineaCre);
+      }
+    });
+
+    this.transaccionesService.getIdTransVisa().subscribe((transaccionesVisa: Visa[]) => {
+      if (transaccionesVisa) {
+        // Obtener todos los valores de id_trans_linea_cre
+        const idsTransVisa = transaccionesVisa.map(transaccion => transaccion.id_trans_visa);
+        console.log('IDs de transacciones:', idsTransVisa);
+        
+        // Guardar los valores en una variable
+        this.transaccionesVisa = transaccionesVisa;
+        this.ultimoIdTransVisa = Math.max(...idsTransVisa);
+      }
+    });
+
     if (idUser) {
       const idUserNumber = Number(idUser); // Convertir a número
       this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
@@ -213,7 +250,6 @@ export class LineaCreditoPagoComponent implements OnInit {
           this.email = usuario.email;
           this.pagoLineaCreditoForm.patchValue({ inputEmail: this.email });
         }
-        console.log('Email:', this.email);
       });
     } else {
       console.error('No se encontró id_user en el localStorage');
@@ -657,7 +693,7 @@ export class LineaCreditoPagoComponent implements OnInit {
   
     const result = this.calculoPago();
     console.log('Resultado del cálculo:', result);
-    
+  
     let nombreProducto = '';
     let tipoProducto = '';
   
@@ -674,10 +710,18 @@ export class LineaCreditoPagoComponent implements OnInit {
       this.pagoConVisa = true;
     }
   
-    const nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
+    // Generar un nuevo ID que no esté en la lista de IDs existentes
+    let nuevoIdTransLineaCre = this.ultimoIdTransLineaCre + 1;
+    while (this.transaccionesLineaCre.some(transaccion => transaccion.id_trans_linea_cre === nuevoIdTransLineaCre)) {
+      nuevoIdTransLineaCre++;
+    }
+  
+    // Obtener el valor de id_user del almacenamiento
+    const idUser = localStorage.getItem('id_user');
   
     this.datosTransaccionLineaCredito = {
       id_trans_linea_cre: nuevoIdTransLineaCre,
+      id_user: idUser,
       fecha: fechaFormateada,
       detalle: 'Pago realizado desde ' + nombreProducto,
       transferencia: 0,
@@ -688,7 +732,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       abono: result.abono,
       cargo: null,
       saldo: result.saldoUltimaTransaccionLineaCredito,
-      cupo_usado: result.cupoUsadoUltimaTransaccionLineaCredito
+      cupo_usado: result.cupoUsadoUltimaTransaccionLineaCredito,
     };
   
     if (this.pagoConCtaCte) {
@@ -712,10 +756,17 @@ export class LineaCreditoPagoComponent implements OnInit {
     const result = this.calculoPago();
     console.log('Resultado del cálculo:', result);
 
-    const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
+    //const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
+    let nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
+    while (this.transaccionesCtaCte.some(transaccion => transaccion.id_trans_cta_cte === nuevoIdTransCtaCte)) {
+      nuevoIdTransCtaCte++;
+    }
+
+    const idUser = localStorage.getItem('id_user');
 
     this.datosTransaccionCtaCte = {
       id_trans_cta_cte: nuevoIdTransCtaCte,
+      id_user: idUser,
       fecha: fechaFormateada,
       detalle: 'Pago a Línea de Crédito',
       transferencia: 0,
@@ -739,10 +790,17 @@ export class LineaCreditoPagoComponent implements OnInit {
     const result = this.calculoPago();
     console.log('Resultado del cálculo:', result);
 
-    const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
+    //const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
+    let nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
+    while (this.transaccionesVisa.some(transaccion => transaccion.id_trans_visa === nuevoIdTransVisa)) {
+      nuevoIdTransVisa++;
+    }
+
+    const idUser = localStorage.getItem('id_user');
 
     this.datosTransaccionVisa = {
       id_trans_visa: nuevoIdTransVisa,
+      id_user: idUser,
       fecha: fechaFormateada,
       detalle: 'Pago a Línea de Crédito',
       abono: null,

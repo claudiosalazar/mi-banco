@@ -34,12 +34,23 @@ export class TransaccionesService {
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente'))
     );
   }
+  getIdTransCtaCte(): Observable<CuentaCorriente[]> {
+    return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
+      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
+    );
+  }
 
   getTransLineaCredito(idUserNumber: number): Observable<LineaCredito[]> {
     return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`).pipe(
       map(transacciones => transacciones.filter(transaccion => transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Línea de Crédito'))
+    );
+  }
+
+  getIdTransLineaCredito(): Observable<LineaCredito[]> {
+    return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`).pipe(
+      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
     );
   }
 
@@ -51,7 +62,13 @@ export class TransaccionesService {
     );
   }
 
-  filtrarTransacciones(idUserNumber: number, transacciones: (CuentaCorriente | LineaCredito | Visa)[], valorBusqueda: string): (CuentaCorriente | LineaCredito | Visa)[] {
+  getIdTransVisa(): Observable<Visa[]> {
+    return this.http.get<Visa[]>(`${this.apiUrl}/mibanco/transacciones/visa`).pipe(
+      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
+    );
+  }
+
+  filtrarTransacciones(_idUserNumber: number, transacciones: (CuentaCorriente | LineaCredito | Visa)[], valorBusqueda: string): (CuentaCorriente | LineaCredito | Visa)[] {
     const valorBusquedaLower = valorBusqueda.toLowerCase();
     return transacciones.filter(transaccion => {
       const fecha = transaccion.fecha ? String(transaccion.fecha).toLowerCase() : '';
@@ -105,18 +122,33 @@ export class TransaccionesService {
 
   // Function para guardar transacciones
   guardarNuevaTransaccionCtaCte(datosTransaccionCtaCte: any): Observable<any> {
+    // Obtener el valor de id_user del almacenamiento
+    const idUser = localStorage.getItem('id_user');
+    // Agregar id_user al objeto de datos de transacción
+    datosTransaccionCtaCte.id_user = idUser;
+  
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransaccionCtaCte).pipe(
       tap(() => console.log('Transferencia guardada correctamente'))
     );
   }
-
+  
   guardarNuevaTransaccionLineaCredito(datosTransaccionLineaCredito: any): Observable<any> {
+    // Obtener el valor de id_user del almacenamiento
+    const idUser = localStorage.getItem('id_user');
+    // Agregar id_user al objeto de datos de transacción
+    datosTransaccionLineaCredito.id_user = idUser;
+  
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/linea-credito`, datosTransaccionLineaCredito).pipe(
       tap(() => console.log('transaccion guardada correctamente'))
     );
   }
-
+  
   guardarNuevaTransaccionVisa(datosTransaccionVisa: any): Observable<any> {
+    // Obtener el valor de id_user del almacenamiento
+    const idUser = localStorage.getItem('id_user');
+    // Agregar id_user al objeto de datos de transacción
+    datosTransaccionVisa.id_user = idUser;
+  
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/visa`, datosTransaccionVisa).pipe(
       tap(() => {
         console.log('Transacción de pago de Visa guardada correctamente');
