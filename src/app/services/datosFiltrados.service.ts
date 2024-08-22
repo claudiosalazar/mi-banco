@@ -43,7 +43,7 @@ export class DatosFiltradosService {
     });
   }
 
-  buscarDatosTransferencias(valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito)[]> {
+  buscarDatosTransferencias(_idUserNumber: number, valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito)[]> {
     return new Observable(observer => {
       // Obtener transacciones de CuentaCorriente y LineaCredito
       const transaccionesObservables = [

@@ -71,9 +71,11 @@ export class TransaccionesService {
 
   filtrarTransferencias(transacciones: (CuentaCorriente | LineaCredito)[], valorBusqueda: string): (CuentaCorriente | LineaCredito)[] {
     const valorBusquedaLower = valorBusqueda.toLowerCase();
+    const idUserNumber = parseInt(localStorage.getItem('id_user') ?? '', 10); // O sessionStorage.getItem('id_user')
+
     return transacciones.filter(transaccion => {
-      // Verificar si la transacción tiene el valor 1 en la columna transferencia
-      if (transaccion.transferencia !== 1) {
+      // Verificar si la transacción tiene el valor 1 en la columna transferencia y coincide con el id_user
+      if (transaccion.transferencia !== 1 || transaccion.id_user !== idUserNumber) {
         return false;
       }
 
@@ -89,7 +91,7 @@ export class TransaccionesService {
               mensaje.includes(valorBusquedaLower) ||
               cargo.includes(valorBusquedaLower);
     });
-}
+  }
 
   
   // Function para guardar transferencias

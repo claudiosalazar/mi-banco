@@ -12,7 +12,7 @@
     </button>
   </div>
   <!-- Tabla -->
-  <div *ngIf="tablaConDatos">
+  <div [ngClass]="{'oculto': !tablaConDatos}">
     <div class="contenedor-tabla">
       <table class="table table-striped tabla-agenda" role="table">
         <thead role="columnheader" role="rowgroup">

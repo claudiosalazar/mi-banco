@@ -132,6 +132,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       })
     ).subscribe(datosFiltrados => {
       this.handleDatosFiltrados(datosFiltrados);
+      this.cdr.detectChanges(); // Forzar la detección de cambios después de actualizar los datos filtrados
     });
   }
   
@@ -191,23 +192,19 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
   handleDatosFiltrados(datosFiltrados: Agenda[]) {
     this.agenda = datosFiltrados;
-    this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
-    this.paginarAgenda();
-    this.cdr.detectChanges();
-  
-    // Aplicar la lógica de verificación de datos
-    if (this.agenda.length === 0) {
-      this.tablaConDatos = false;
-      this.mostrarAlerta = true;
-    } else {
+    if (this.agenda.length >= 1) {
       this.tablaConDatos = true;
       this.mostrarAlerta = false;
+    } else {
+      this.tablaConDatos = false;
+      this.mostrarAlerta = true;
     }
+    this.cdr.detectChanges(); // Forzar la detección de cambios después de actualizar la agenda
   }
 
   ngOnDestroy(): void {
     // Es importante cancelar la suscripción para evitar fugas de memoria
-    this.subscriptions.unsubscribe();
+    // this.subscriptions.unsubscribe();
     if (this.backdropSubscription) {
       this.backdropSubscription.unsubscribe();
     }
@@ -240,11 +237,12 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   paginarAgenda(): void {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    this.paginatedAgenda = this.agenda.slice(start, end);
+    // const start = (this.currentPage - 0) * this.itemsPerPage;
+    // const end = start + this.itemsPerPage;
+    this.paginatedAgenda = this.agenda.slice();
     this.totalPages = Math.ceil(this.agenda.length / this.itemsPerPage);
     this.cdr.detectChanges();
+    console.log('Agenda paginada:', this.paginatedAgenda);
   }
 
   // Nuevo método para manejar la actualización de destinatarios

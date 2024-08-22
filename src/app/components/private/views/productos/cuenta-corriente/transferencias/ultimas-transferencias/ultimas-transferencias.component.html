@@ -9,7 +9,7 @@
   </div>
 
   <!-- Tabla -->
-  <div class="contenedor-tabla" *ngIf="tablaConDatos">
+  <div class="contenedor-tabla" [ngClass]="{'oculto': !tablaConDatos}">
     <table class="table table-striped tabla-ultimas-transferencias" role="table">
       <thead role="columnheader" role="rowgroup">
         <tr role="row">

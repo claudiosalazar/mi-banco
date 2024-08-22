@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, EventEmitter } from '@angular/cor
 import { TransaccionesService } from '../../../../../../../services/transacciones.service';
 import { FormControl } from '@angular/forms';
 import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { DatosFiltradosService } from '../../../../../../../services/datosFiltrados.service'; // Importar el servicio
 
 @Component({
@@ -45,39 +45,56 @@ export class UltimasTransferenciasComponent implements OnInit {
   ngOnInit() {
     this.loadData();
 
-    this.busquedaTransferencia.valueChanges
-      .pipe(
-        switchMap(valorBusqueda => {
+    this.busquedaTransferencia.valueChanges.pipe(
+      distinctUntilChanged(),
+      switchMap(valorBusqueda => {
+        const storedIdUser = localStorage.getItem('id_user');
+        if (storedIdUser) {
+          const idUserNumber = parseInt(storedIdUser, 10);
           if (valorBusqueda) {
-            return this.datosFiltradosService.buscarDatosTransferencias(valorBusqueda);
+            return this.datosFiltradosService.buscarDatosTransferencias(idUserNumber, valorBusqueda);
           } else {
             this.currentPage = 1;
             this.transferencias = [...this.originalData];
             this.paginarTransferencias();
             this.cdr.detectChanges();
+            if (this.mostrarAlerta === true || this.tablaConDatos === false || this.currentPage === 0) {
+              this.loadData();
+            } 
             return of(this.originalData);
           }
-        })
-      )
-      .subscribe(datosFiltrados => {
-        this.handleDatosFiltrados(datosFiltrados);
-      });
+        } else {
+          return of([]);
+        }
+      })
+    ).subscribe(datosFiltrados => {
+      this.handleDatosFiltrados(datosFiltrados);
+    });
   }
 
   loadData() {
     const idUser = localStorage.getItem('id_user');
     const idUserNumber = idUser ? parseInt(idUser, 10) : 0; // O sessionStorage.getItem('id_user')
-    this.transaccionesService.getTransCuentaCorrienteTransferencia(idUserNumber).subscribe((transferencias: any[]) => {
-      this.handleTransacciones(transferencias);
-    });
-  }
+    this.transaccionesService.getTransCuentaCorrienteTransferencia(idUserNumber);
 
-  handleTransacciones(transacciones: any[]): void {
-    if (transacciones) {
-      this.transferencias = transacciones.filter(transaccion => transaccion);
-      this.originalData = [...this.transferencias];
-      this.paginarTransferencias();
-      this.cdr.detectChanges();
+    const storedIdUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
+    if (storedIdUser) {
+      const idUserNumber = parseInt(storedIdUser, 10);
+      this.transaccionesService.getTransCuentaCorrienteTransferencia(idUserNumber).subscribe(
+        (data: any[]) => {
+          // Aquí capturas los datos de la agenda
+          console.log('Datos de la agenda:', data);
+          // Puedes asignar los datos a una propiedad del componente si es necesario
+          this.transferencias = data;
+          this.originalData = [...data]; // Guardar una copia de los datos originales
+          this.paginarTransferencias();
+        },
+        (error) => {
+          console.error('Error al obtener la agenda:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró id_user en el almacenamiento');
     }
   }
 
@@ -141,6 +158,7 @@ export class UltimasTransferenciasComponent implements OnInit {
     this.paginatedTransferencias = this.transferencias.slice(start, end);
     this.totalPages = Math.ceil(this.transferencias.length / this.itemsPerPage);
     this.cdr.detectChanges();
+    console.log('Transferencias paginadas:', this.paginatedTransferencias);
   }
 
   cambiarPagina(pagina: number): void {

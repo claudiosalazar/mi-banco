@@ -71,8 +71,15 @@ export class AgendaService {
     );
   }
   
-  actualizarDatosFiltrados(datosFiltrados: any[]) {
-    this.datosFiltradosSource.next(datosFiltrados);
+  actualizarDatosFiltrados(datosFiltrados: any[], idUserNumber: number) {
+    // Filtrar los datos por id_user
+    const datosFiltradosPorUsuario = datosFiltrados.filter(item => item.id_user === idUserNumber);
+  
+    // Ordenar los datos por nombre
+    const datosOrdenados = datosFiltradosPorUsuario.sort((a, b) => a.nombre.localeCompare(b.nombre));
+  
+    // Emitir los datos filtrados y la información de paginación
+    this.datosFiltradosSource.next(datosOrdenados);
     this.paginationData.next({ itemsPerPage: 5, currentPage: 1 });
   }
 
