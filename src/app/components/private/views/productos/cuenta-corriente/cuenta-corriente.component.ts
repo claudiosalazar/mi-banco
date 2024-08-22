@@ -41,7 +41,10 @@ export class CuentaCorrienteComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
+
+    this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte) {
         this.transaccionesCtaCte = transaccionesCtaCte;
         this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
@@ -49,7 +52,7 @@ export class CuentaCorrienteComponent implements OnInit {
       }
     });
 
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre) {
         this.transaccionesLineaCre = transaccionesLineaCre;
         const transaccionesOrdenadas = transaccionesLineaCre.sort((a, b) => b.id_trans_linea_cre - a.id_trans_linea_cre);

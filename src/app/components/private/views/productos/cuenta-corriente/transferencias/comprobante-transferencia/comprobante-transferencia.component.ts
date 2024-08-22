@@ -30,6 +30,7 @@ export class ComprobanteTransferenciaComponent implements OnInit {
 
   ngOnInit() {
     const idUser = localStorage.getItem('id_user') || '';
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
     if (idUser) {
       const idUserNumber = Number(idUser); // Convertir a número
       this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
@@ -42,7 +43,7 @@ export class ComprobanteTransferenciaComponent implements OnInit {
       console.error('No se encontró id_user en el localStorage');
     }
     
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+    this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte) {
         this.transaccionesCtaCte = transaccionesCtaCte;
         this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());

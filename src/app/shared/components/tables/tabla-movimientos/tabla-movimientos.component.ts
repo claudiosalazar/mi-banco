@@ -56,6 +56,8 @@ export class TablaMovimientosComponent implements OnInit {
   }
   
   loadData(): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
     this.datosFiltradosService.datosFiltrados$.subscribe(
       datosFiltrados => {
         this.transacciones = datosFiltrados;
@@ -75,7 +77,7 @@ export class TablaMovimientosComponent implements OnInit {
     );
   
     if (this.transProducto === 'ctaCte') {
-      this.transaccionesService.getTransCuentaCorriente().subscribe(
+      this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
         (transacciones: CuentaCorriente[]) => {
           this.handleTransacciones(transacciones);
         },
@@ -84,7 +86,7 @@ export class TablaMovimientosComponent implements OnInit {
         }
       );
     } else if (this.transProducto === 'lineaCredito') {
-      this.transaccionesService.getTransLineaCredito().subscribe(
+      this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe(
         (transacciones: LineaCredito[]) => {
           this.handleTransacciones(transacciones);
         },
@@ -93,7 +95,7 @@ export class TablaMovimientosComponent implements OnInit {
         }
       );
     } else if (this.transProducto === 'visa') {
-      this.transaccionesService.getTransVisa().subscribe(
+      this.transaccionesService.getTransVisa(idUserNumber).subscribe(
         (transacciones: Visa[]) => {
           this.handleTransacciones(transacciones);
         },
@@ -103,9 +105,9 @@ export class TablaMovimientosComponent implements OnInit {
       );
     } else if (this.transProducto === 'todos') {
       forkJoin({
-        ctaCteTransacciones: this.transaccionesService.getTransCuentaCorriente(),
-        lineaCreditoTransacciones: this.transaccionesService.getTransLineaCredito(),
-        visaTransacciones: this.transaccionesService.getTransVisa()
+        ctaCteTransacciones: this.transaccionesService.getTransCuentaCorriente(idUserNumber),
+        lineaCreditoTransacciones: this.transaccionesService.getTransLineaCredito(idUserNumber),
+        visaTransacciones: this.transaccionesService.getTransVisa(idUserNumber)
       }).pipe(
         map(({ ctaCteTransacciones, lineaCreditoTransacciones, visaTransacciones }) => {
           const todasTransacciones = [

@@ -169,9 +169,9 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   
   loadData() {
     // Obtener el idUserNumber desde el almacenamiento
-    const storedIdUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
-    if (storedIdUser) {
-      const idUserNumber = parseInt(storedIdUser, 10);
+    const idUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
+    if (idUser) {
+      const idUserNumber = parseInt(idUser, 10);
       this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
         (data: Agenda[]) => {
           // Aquí capturas los datos de la agenda

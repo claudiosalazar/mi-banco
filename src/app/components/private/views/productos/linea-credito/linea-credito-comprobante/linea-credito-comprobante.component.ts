@@ -53,9 +53,11 @@ export class LineaCreditoComprobanteComponent implements OnInit {
   }
   
   obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: LineaCredito | null) => void): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
     let ultimoAbono: LineaCredito | null = null;
 
-    this.transaccionesService.getTransLineaCredito().subscribe(transacciones => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe(transacciones => {
       const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
 
       if (transaccionesConAbono.length > 0) {

@@ -18,13 +18,14 @@ export class DatosFiltradosService {
     private transaccionesService: TransaccionesService
   ) { }
 
-  buscarDatos(valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito | Visa)[]> {
+  buscarDatos(_idUserNumber: number, valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito | Visa)[]> {
+    const idUserNumber = parseInt(localStorage.getItem('id_user') ?? '', 10);
     return new Observable(observer => {
       // Obtener todas las transacciones de los diferentes tipos
       const transaccionesObservables = [
-        this.transaccionesService.getTransCuentaCorriente(),
-        this.transaccionesService.getTransLineaCredito(),
-        this.transaccionesService.getTransVisa()
+        this.transaccionesService.getTransCuentaCorriente(idUserNumber),
+        this.transaccionesService.getTransLineaCredito(idUserNumber),
+        this.transaccionesService.getTransVisa(idUserNumber)
       ];
 
       // Combinar todas las transacciones en un solo array
@@ -32,7 +33,7 @@ export class DatosFiltradosService {
         (value: (CuentaCorriente[] | LineaCredito[] | Visa[])[]) => {
           const [cuentaCorriente, lineaCredito, visa] = value;
           const todasTransacciones = [...cuentaCorriente, ...lineaCredito, ...visa];
-          const datosFiltrados = this.transaccionesService.filtrarTransacciones(todasTransacciones, valorBusqueda);
+          const datosFiltrados = this.transaccionesService.filtrarTransacciones(idUserNumber, todasTransacciones, valorBusqueda);
           observer.next(datosFiltrados);
           observer.complete();
         },
@@ -44,11 +45,12 @@ export class DatosFiltradosService {
   }
 
   buscarDatosTransferencias(_idUserNumber: number, valorBusqueda: string): Observable<(CuentaCorriente | LineaCredito)[]> {
+    const idUserNumber = parseInt(localStorage.getItem('id_user') ?? '', 10);
     return new Observable(observer => {
       // Obtener transacciones de CuentaCorriente y LineaCredito
       const transaccionesObservables = [
-        this.transaccionesService.getTransCuentaCorriente(),
-        this.transaccionesService.getTransLineaCredito()
+        this.transaccionesService.getTransCuentaCorriente(idUserNumber),
+        this.transaccionesService.getTransLineaCredito(idUserNumber)
       ];
 
       // Combinar las transacciones en un solo array

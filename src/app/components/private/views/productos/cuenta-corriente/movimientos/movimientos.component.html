@@ -10,7 +10,7 @@
     <mb-buscador-tabla [tituloBuscador]="'Buscar transaccion'" (datosFiltradosEvent)="handleDatosFiltrados($event)"></mb-buscador-tabla>
   </div>
   
-  <div *ngIf="tablaConDatos">
+  <div [ngClass]="{'oculto': !tablaConDatos}">
     <mb-tabla-movimientos 
     [claseTabla]="'tabla-movimientos'"
     [id]="transaccionesCuentaCorriente" 

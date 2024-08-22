@@ -40,13 +40,16 @@ export class LineaCreditoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
+
     this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }
     });
 
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre) {
         this.fecha = transaccionesLineaCre.length > 0 ? transaccionesLineaCre[0].fecha : null;
       }
@@ -60,9 +63,11 @@ export class LineaCreditoComponent implements OnInit {
   }
 
   obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: LineaCredito | null) => void): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
     let ultimoAbono: LineaCredito | null = null;
 
-    this.transaccionesService.getTransLineaCredito().subscribe(transacciones => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe(transacciones => {
       const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
 
       if (transaccionesConAbono.length > 0) {

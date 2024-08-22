@@ -55,15 +55,19 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // Obtener productos
     this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }
     });
-
-    const idUser = localStorage.getItem('id_user') || '';
+  
+    // Obtener ID del usuario desde localStorage
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
+  
     if (idUser) {
-      const idUserNumber = Number(idUser); // Convertir a número
+      // Obtener datos del usuario
       this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
         if (datos.length > 0) {
           const usuario = datos[0];
@@ -71,33 +75,36 @@ export class HomeComponent implements OnInit {
           this.apellido_paterno = usuario.apellido_paterno;
         }
       });
+  
+      // Obtener transacciones de cuenta corriente
+      this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+        if (transaccionesCtaCte) {
+          this.transaccionesCtaCte = transaccionesCtaCte;
+          this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+          this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
+        }
+      });
+  
+      // Obtener transacciones de línea de crédito
+      this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe((transaccionesLineaCre: LineaCredito[]) => {
+        if (transaccionesLineaCre) {
+          this.transaccionesLineaCre = transaccionesLineaCre;
+          this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+          this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
+        }
+      });
+  
+      // Obtener transacciones de Visa
+      this.transaccionesService.getTransVisa(idUserNumber).subscribe((transaccionesVisa: Visa[]) => {
+        if (transaccionesVisa) {
+          this.transaccionesVisa = transaccionesVisa;
+          this.transaccionesVisa.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
+          this.saldoUltimaTransaccionVisa = this.transaccionesVisa.length > 0 ? this.transaccionesVisa[0].saldo : null;
+        }
+      });
     } else {
       console.error('No se encontró id_user en el localStorage');
     }
-
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
-      if (transaccionesCtaCte) {
-        this.transaccionesCtaCte = transaccionesCtaCte;
-        this.transaccionesCtaCte.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionCtaCte = this.transaccionesCtaCte.length > 0 ? this.transaccionesCtaCte[0].saldo : null;
-      }
-    });
-  
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
-      if (transaccionesLineaCre) {
-        this.transaccionesLineaCre = transaccionesLineaCre;
-        this.transaccionesLineaCre.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionLineaCredito = this.transaccionesLineaCre.length > 0 ? this.transaccionesLineaCre[0].saldo : null;
-      }
-    });
-  
-    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
-      if (transaccionesVisa) {
-        this.transaccionesVisa = transaccionesVisa;
-        this.transaccionesVisa.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
-        this.saldoUltimaTransaccionVisa = this.transaccionesVisa.length > 0 ? this.transaccionesVisa[0].saldo : null;
-      }
-    });
   }
 
   getTransaccionesCtaCte() {

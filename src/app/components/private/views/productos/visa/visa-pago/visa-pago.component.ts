@@ -125,6 +125,9 @@ export class VisaPagoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
+
     this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
@@ -151,7 +154,7 @@ export class VisaPagoComponent implements OnInit {
       });
     });
 
-    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
+    this.transaccionesService.getTransVisa(idUserNumber).subscribe((transaccionesVisa: Visa[]) => {
       if (transaccionesVisa.length > 0) {
         // Ordenar las transacciones por id_trans_visa en orden ascendente
         transaccionesVisa.sort((a, b) => a.id_trans_visa - b.id_trans_visa);
@@ -169,7 +172,7 @@ export class VisaPagoComponent implements OnInit {
       console.log('Cupo usado en la última transacción Visa:', this.cupoUsadoUltimaTransaccionVisa);
     });
 
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
+    this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
       if (transaccionesCtaCte.length > 0) {
         // Ordenar las transacciones por id_trans_visa en orden ascendente
         transaccionesCtaCte.sort((a, b) => a.id_trans_cta_cte - b.id_trans_cta_cte);
@@ -184,7 +187,7 @@ export class VisaPagoComponent implements OnInit {
       }
     });
   
-    this.transaccionesService.getTransLineaCredito().subscribe((transaccionesLineaCre: LineaCredito[]) => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe((transaccionesLineaCre: LineaCredito[]) => {
       if (transaccionesLineaCre.length > 0) {
         // Ordenar las transacciones por id_trans_visa en orden ascendente
         transaccionesLineaCre.sort((a, b) => a.id_trans_linea_cre - b.id_trans_linea_cre);
@@ -202,7 +205,6 @@ export class VisaPagoComponent implements OnInit {
       }
     });
 
-    const idUser = localStorage.getItem('id_user') || '';
     if (idUser) {
       const idUserNumber = Number(idUser); // Convertir a número
       this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {

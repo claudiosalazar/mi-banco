@@ -25,8 +25,9 @@ export class BuscadorTablaComponent implements OnInit {
       this.campoBusqueda.valueChanges,
     ]).subscribe(([valorBusqueda]) => {
       this.valorBusqueda = valorBusqueda;
-  
-      this.datosFiltradosService.buscarDatos(this.valorBusqueda || '').subscribe(datosFiltrados => {
+      const idUserNumber = parseInt(localStorage.getItem('id_user') ?? '', 10);
+
+      this.datosFiltradosService.buscarDatos(idUserNumber, this.valorBusqueda || '').subscribe(datosFiltrados => {
         if (Array.isArray(datosFiltrados)) {
           this.datosFiltradosEvent.emit(datosFiltrados);
         }

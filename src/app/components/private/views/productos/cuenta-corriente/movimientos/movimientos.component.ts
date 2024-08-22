@@ -13,7 +13,7 @@ export class MovimientosComponent implements OnInit {
   transaccionesFiltradas: CuentaCorriente[] = [];
   transaccionMasReciente: CuentaCorriente | null = null;
 
-  transaccionesCuentaCorriente: string[] = [];
+  transaccionesCuentaCorriente: CuentaCorriente[] = [];
   transacciones: any[] | undefined;
   productos: any[] = [];
   originalData: any[] = [];
@@ -34,13 +34,41 @@ export class MovimientosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transaccionesCuentaCorriente: CuentaCorriente[]) => {
-      if (transaccionesCuentaCorriente) {
-        this.transaccionesFiltradas = transaccionesCuentaCorriente;
-        this.transaccionMasReciente = this.obtenerTransaccionMasRecienteConAbono();
+    this.loadData();
+  }
+
+  loadData(): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0;
+    this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
+      (data: CuentaCorriente[]) => {
+        console.log('Datos cuenta corriente:', data);
+        this.transacciones = data;
+        this.originalData = [...data];
+      },
+      (error) => {
+        console.error('Error al obtener la agenda:', error);
       }
-      console.log('Transacciones', transaccionesCuentaCorriente);
-    });
+    );
+  }
+
+  /*loadData() {
+    const idUser = localStorage.getItem('id_user'); 
+    if (idUser) {
+      const idUserNumber = parseInt(idUser, 0);
+      this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
+        (data: CuentaCorriente[]) => {
+          console.log('Datos cuenta corriente:', data);
+          this.transacciones = data;
+          this.originalData = [...data]; // Guardar una copia de los datos originales
+        },
+        (error) => {
+          console.error('Error al obtener la agenda:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró id_user en el almacenamiento');
+    }
   }
 
   obtenerTransaccionMasRecienteConAbono(): CuentaCorriente | null {
@@ -49,14 +77,13 @@ export class MovimientosComponent implements OnInit {
     }
     return this.transaccionesFiltradas
       .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())[0];
-  }
+  }*/
 
   handleDatosFiltrados(datosFiltrados: any[]) {
-    // Filtrar las transacciones que tienen un valor definido para id_trans_linea_cre
     const datosFiltradosPorProducto = datosFiltrados.filter(transaccion => transaccion.id_trans_cta_cte !== undefined && transaccion.id_trans_cta_cte !== null);
-    this.transaccionesCuentaCorriente = datosFiltradosPorProducto; // Asignar las transacciones filtradas a transaccionesLineaCre
-    this.originalData = [...this.transaccionesCuentaCorriente]; // Guardar una copia de los datos originales
-    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto); // Actualizar los datos filtrados en el servicio
+    this.transaccionesCuentaCorriente = datosFiltradosPorProducto;
+    this.originalData = [...this.transaccionesCuentaCorriente];
+    this.datosFiltradosService.actualizarDatosFiltrados(datosFiltradosPorProducto);
 
     if (this.transaccionesCuentaCorriente.length === 0) {
       this.tablaConDatos = false;
@@ -66,6 +93,4 @@ export class MovimientosComponent implements OnInit {
       this.mostrarAlerta = false;
     }
   }
-  
-
 }

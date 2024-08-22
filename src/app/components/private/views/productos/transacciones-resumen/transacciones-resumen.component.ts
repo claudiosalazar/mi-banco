@@ -43,13 +43,16 @@ export class TransaccionesResumenComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
+
     this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }
     });
 
-    this.transaccionesService.getTransCuentaCorriente().subscribe((transacciones: CuentaCorriente[] ) => {
+    this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transacciones: CuentaCorriente[] ) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
         this.transaccionesCtaCte = transacciones;
@@ -58,7 +61,7 @@ export class TransaccionesResumenComponent implements OnInit {
       }
     });
     
-    this.transaccionesService.getTransLineaCredito().subscribe((transacciones: LineaCredito[]) => {
+    this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe((transacciones: LineaCredito[]) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
         this.transaccionesLineaCre = transacciones;
@@ -67,7 +70,7 @@ export class TransaccionesResumenComponent implements OnInit {
       }
     });
     
-    this.transaccionesService.getTransVisa().subscribe((transacciones: Visa[]) => {
+    this.transaccionesService.getTransVisa(idUserNumber).subscribe((transacciones: Visa[]) => {
       if (transacciones) {
         this.transacciones = [...this.transacciones, ...transacciones];
         this.transaccionesVisa = transacciones;

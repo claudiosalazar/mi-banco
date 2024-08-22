@@ -41,13 +41,15 @@ export class VisaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
     this.productosService.getProductos().subscribe((productos: Productos[]) => {
       if (productos) {
         this.productos = productos;
       }
     });
 
-    this.transaccionesService.getTransVisa().subscribe((transaccionesVisa: Visa[]) => {
+    this.transaccionesService.getTransVisa(idUserNumber).subscribe((transaccionesVisa: Visa[]) => {
       if (transaccionesVisa) {
         this.fecha = transaccionesVisa.length > 0 ? transaccionesVisa[0].fecha : null;
       }
@@ -61,9 +63,11 @@ export class VisaComponent implements OnInit {
   }
 
   obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: Visa | null) => void): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
     let ultimoAbono: Visa | null = null;
 
-    this.transaccionesService.getTransVisa().subscribe(transacciones => {
+    this.transaccionesService.getTransVisa(idUserNumber).subscribe(transacciones => {
       const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
 
       if (transaccionesConAbono.length > 0) {

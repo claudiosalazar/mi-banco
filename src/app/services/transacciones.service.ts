@@ -27,28 +27,31 @@ export class TransaccionesService {
     );
   }
 
-  getTransCuentaCorriente(): Observable<CuentaCorriente[]> {
+  getTransCuentaCorriente(idUserNumber: number): Observable<CuentaCorriente[]> {
     return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
+      map(transacciones => transacciones.filter(transaccion => transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente'))
     );
   }
 
-  getTransLineaCredito(): Observable<LineaCredito[]> {
+  getTransLineaCredito(idUserNumber: number): Observable<LineaCredito[]> {
     return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`).pipe(
+      map(transacciones => transacciones.filter(transaccion => transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Línea de Crédito'))
     );
   }
 
-  getTransVisa(): Observable<Visa[]> {
+  getTransVisa(idUserNumber: number): Observable<Visa[]> {
     return this.http.get<Visa[]>(`${this.apiUrl}/mibanco/transacciones/visa`).pipe(
+      map(transacciones => transacciones.filter(transaccion => transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Visa'))
     );
   }
 
-  filtrarTransacciones(transacciones: (CuentaCorriente | LineaCredito | Visa)[], valorBusqueda: string): (CuentaCorriente | LineaCredito | Visa)[] {
+  filtrarTransacciones(idUserNumber: number, transacciones: (CuentaCorriente | LineaCredito | Visa)[], valorBusqueda: string): (CuentaCorriente | LineaCredito | Visa)[] {
     const valorBusquedaLower = valorBusqueda.toLowerCase();
     return transacciones.filter(transaccion => {
       const fecha = transaccion.fecha ? String(transaccion.fecha).toLowerCase() : '';
@@ -93,7 +96,6 @@ export class TransaccionesService {
     });
   }
 
-  
   // Function para guardar transferencias
   guardarNuevaTransferencia(datosTransferencia: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(

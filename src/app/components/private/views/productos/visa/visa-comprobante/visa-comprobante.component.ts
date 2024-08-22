@@ -54,9 +54,11 @@ export class VisaComprobanteComponent implements OnInit {
   }
 
   obtenerTransaccionMasRecienteConAbono(callback: (ultimoAbono: Visa | null) => void): void {
+    const idUser = localStorage.getItem('id_user');
+    const idUserNumber = idUser ? parseInt(idUser) : 0; 
     let ultimoAbono: Visa | null = null;
 
-    this.transaccionesService.getTransVisa().subscribe(transacciones => {
+    this.transaccionesService.getTransVisa(idUserNumber).subscribe(transacciones => {
       const transaccionesConAbono = transacciones.filter(transaccion => transaccion.abono !== null && transaccion.abono !== undefined);
 
       if (transaccionesConAbono.length > 0) {
