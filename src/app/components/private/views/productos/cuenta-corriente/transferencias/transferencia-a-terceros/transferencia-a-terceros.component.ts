@@ -88,8 +88,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   btnContinuar = true;
   btnConfirmar = true;
   destinatarioATransferir: any[] = [];
-  destinatarioATransferirSeleccionado: any;
-  destinatarioSeleccionado: { id_destinatario: any, nombre: any, rut_destinatario:any } | undefined;
+  destinatarioATransferirSeleccionado: any = null;
+  agendaSeleccionado: { id_agenda: any, nombre: any, rut_destinatario:any, rut: any, email: any } | undefined;
   selectedId: any = null;
   nombreDestinatario: any;
   buscadorAgenda = true;
@@ -119,9 +119,11 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   usuarioEliminado = false;
   errorServer = false;
   destinatarioSeleccionadoTabla = false;
+  destinatarioSeleccionado = false;
   destinatarioId: any;
-  id_destinatario: any;
+  id_agenda: any;
   rut_destinatario: any;
+  nombre_destinatario: any;
 
   // Variables para modal nuevo destinatario
   datosNuevoDestinatario: any;
@@ -138,6 +140,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
   tablaConDatos: boolean = true;
   mostrarAlerta: boolean = false;
+
 
   constructor(
     private formatoEmailService: FormatoEmailService,
@@ -238,9 +241,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    const storedIdUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
-    if (storedIdUser) {
-      const idUserNumber = parseInt(storedIdUser, 10);
+    const idUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
+    if (idUser) {
+      const idUserNumber = parseInt(idUser, 0);
       this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
         (data: Agenda[]) => {
           // Aquí capturas los datos de la agenda
@@ -275,44 +278,28 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     }
   }
 
-  seleccionarDestinatario(id_destinatario: any): void {
+  seleccionarDestinatario(id_agenda: number) {
     // Encuentra el destinatario seleccionado en la lista de destinatarios
-    this.destinatarioATransferirSeleccionado = this.agenda.find(agenda => agenda.id === id_destinatario);
+    const destinatario = this.paginatedAgenda.find(agenda => agenda.id_agenda === id_agenda);
+    this.destinatarioSeleccionado = true;
+    this.destinatarioSeleccionadoTabla = true;
+    this.buscadorAgenda = false;
+    // Almacenar el destinatario seleccionado
+    this.destinatarioATransferirSeleccionado = destinatario;
   
-    // Si no se encontró un destinatario con el ID dado, selecciona el último destinatario
-    if (!this.destinatarioATransferirSeleccionado) {
-      this.destinatarioATransferirSeleccionado = this.agenda[this.agenda.length - 1];
-    }
+    // Actualizar el ID seleccionado
+    this.selectedId = id_agenda;
   
-    // Asigna el nombre y rut del destinatario seleccionado
-    this.nombreDestinatario = this.destinatarioATransferirSeleccionado.nombre;
-    this.rut_destinatario = this.destinatarioATransferirSeleccionado.rut;
+    // Mostrar el formulario
+    this.ingresarDatos = true;
+    this.pasosTransferencia = true;
   
-    // Actualiza los campos del formulario
     this.transferenciaATercerosForm.patchValue({
-      montoATransferir: 'Ingresa el monto a transferir', // Vacía el campo 'montoATransferir'
-      mensaje: '', // Vacía el campo 'mensaje'
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
     });
   
-    // Asigna los valores a las propiedades de la clase
-    this.destinatarioSeleccionado = {
-      id_destinatario: id_destinatario,
-      nombre: this.nombreDestinatario,
-      rut_destinatario: this.rut_destinatario
-    };
-    this.destinatarioId = id_destinatario;
-    this.selectedId = id_destinatario;
-    this.pasosTransferencia = true;
-    this.ingresarDatos = true;
-    this.destinatarioSeleccionadoTabla = true;
-    this.id_destinatario = this.destinatarioSeleccionado.id_destinatario;
-  
-    if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
-      this.tablaDestinatarioSeleccionado.nativeElement.classList.add('paso-ok');
-    }
-
-    this.busquedaDestinatarios.disable();
+    // Log para comprobar el destinatario seleccionado
+    console.log('Destinatario seleccionado:', destinatario);
   }
 
   vaciarMontoATransferir(): void {
@@ -444,8 +431,13 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.confirmarDatos = false;
     this.transferenciaARealizar = false;
     this.destinatarioSeleccionadoTabla = false;
-    this.destinatarioSeleccionado = { id_destinatario: undefined, nombre: undefined, rut_destinatario: undefined };
-    this.agendaService.getAgenda().subscribe(data => {
+    this.id_agenda = { id_agenda: undefined, nombre: undefined, rut_destinatario: undefined, rut: undefined, email: undefined };
+  
+    // Obtener el valor de id_user del almacenamiento y convertirlo a número
+    const idUser = Number(localStorage.getItem('id_user'));
+  
+    // Pasar id_user como parámetro al servicio
+    this.agendaService.getAgendaIdUser(idUser).subscribe(data => {
       this.agenda = [...data];
       this.paginatedAgenda = this.agenda.slice(0, this.itemsPerPage).map(agenda => ({
         ...agenda,
@@ -454,22 +446,22 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
       this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
       this.cdr.detectChanges();
     });
+  
     this.selectedId = null;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
     this.mostrarBackdropCustomModalEstado = false;
-
+  
     if (this.tablaDestinatarioSeleccionado && this.tablaDestinatarioSeleccionado.nativeElement) {
       this.tablaDestinatarioSeleccionado.nativeElement.classList.remove('paso-ok');
     }
-
+  
     // Cierra el modal y oculta el backdrop-custom
     const modalCambiosDestinatario = this.modales.find(modal => modal._element.id === 'modalCambiosDestinatario');
     if (modalCambiosDestinatario) {
       modalCambiosDestinatario.hide();
       this.mostrarBackdropCustomModalEstado = true;
     }
-    
   }
 
   soloNumeros(event: { which: any; keyCode: any; }): boolean {
@@ -542,7 +534,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.confirmarDatos = false;
     this.transferenciaARealizar = false;
     this.destinatarioSeleccionadoTabla = false;
-    this.destinatarioSeleccionado = { id_destinatario: undefined, nombre: undefined, rut_destinatario: undefined };
+    this.id_agenda = { id_agenda: undefined, nombre: undefined, rut_destinatario: undefined, rut: undefined, email: undefined };
     this.agendaService.getAgenda().subscribe(data => {
       // Hacer una copia de los datos
       this.agenda = [...data];
@@ -726,7 +718,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
       fecha: fechaFormateada,
       detalle: 'Transferencia a ' + this.nombreDestinatario,
       transferencia: 1,
-      id_destinatario: this.id_destinatario,
+      id_agenda: this.id_agenda,
       nombre_destinatario: this.nombreDestinatario,
       rut_destinatario: this.rut_destinatario,
       mensaje: this.transferenciaATercerosForm.get('mensaje')?.value,

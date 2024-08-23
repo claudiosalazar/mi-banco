@@ -34,6 +34,7 @@ export class TransaccionesService {
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente'))
     );
   }
+  
   getIdTransCtaCte(): Observable<CuentaCorriente[]> {
     return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
@@ -115,6 +116,10 @@ export class TransaccionesService {
 
   // Function para guardar transferencias
   guardarNuevaTransferencia(datosTransferencia: any): Observable<any> {
+    const idUser = localStorage.getItem('id_user');
+    // Agregar id_user al objeto de datos de transacción
+    datosTransferencia.id_user = idUser;
+
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(
       tap(() => console.log('Transferencia guardada correctamente'))
     );

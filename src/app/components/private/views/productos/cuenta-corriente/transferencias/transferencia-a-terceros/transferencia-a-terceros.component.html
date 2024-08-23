@@ -105,7 +105,7 @@
             </tr>
           </thead>
           <tbody role="rowgroup">
-            <tr role="row" *ngFor="let agenda of paginatedAgenda" (click)="seleccionarDestinatario(agenda.id_agenda_agenda);" [ngClass]="{'active': agenda.id_agenda === destinatarioSeleccionado?.id_destinatario}">
+            <tr *ngFor="let agenda of paginatedAgenda" (click)="seleccionarDestinatario(agenda.id_agenda)" [ngClass]="{'active': agenda.id_agenda === selectedId}">
               <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
                 <span class="contenido-celda">{{ agenda.nombre }}</span>
               </td>
@@ -157,7 +157,7 @@
                   <div class="info-destinatario-transferencia d-flex flex-column flex-md-row mb-3 mb-xl-4">
                     <div class="contenedor-nombre-destinatario">
                       <p class="mb-1">La transferencia se realizara a:</p>
-                      <span class="nombre-destinatario-transferencia" *ngIf="destinatarioATransferirSeleccionado?.apodo">
+                      <span class="nombre-destinatario-transferencia" *ngIf="destinatarioATransferirSeleccionado && destinatarioATransferirSeleccionado?.apodo">
                         <strong>{{ destinatarioATransferirSeleccionado?.apodo }}</strong> 
                         <small> ({{destinatarioATransferirSeleccionado?.nombre}})</small>
                       </span>
@@ -185,10 +185,9 @@
                 <div class="d-flex flex-column-reverse flex-lg-row">
                   <div class="col-12 col-lg-7 pe-3" [ngClass]="{'paso-transferencia-oculto': !ingresarDatos, 'paso-transferencia': ingresarDatos}">
                     <div class="form-floating mb-3">
-                      <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" id="montoatransferir"
-                      #inputMontoATransferir [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
-                      (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()"
-                      [value]="transferenciaATercerosForm.controls['montoATransferirOk'].value">
+                      <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" #inputMontoATransferir 
+                      [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
+                      (keypress)="soloNumeros($event)" (blur)="validaMontoATransferir()" [value]="transferenciaATercerosForm.controls['montoATransferirOk'].value">
                       <label for="montoatransferir" class="form-label">Monto <span class="obligatorio">*</span></label>
                       <div *ngIf="error1" class="invalid-feedback">
                         <span>Debes ingresar un monto superior a 0.</span>
@@ -203,13 +202,13 @@
         
                     <!-- Mensaje textarea -->
                     <div class="form-floating mb-3">
-                      <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje" id="mensajetransferencia" style="height: 100px;" #mensaje></textarea>
+                      <textarea type="text" class="form-control" id="mensaje" formControlName="mensaje" style="height: 100px;" #mensaje></textarea>
                       <label for="mensajetransferencia" class="form-label">Mensaje</label>
                     </div>
         
                     <!-- Email -->
                     <div class="input-group form-floating mb-3">
-                      <input type="email" class="form-control " formControlName="emailDestinatario" id="emaildestinatario"
+                      <input type="email" class="form-control" formControlName="emailDestinatario" id="emaildestinatario"
                       [class.is-invalid]="transferenciaATercerosForm.get('email')?.invalid && transferenciaATercerosForm.get('email')?.touched" 
                       [class.is-valid]="transferenciaATercerosForm.get('email')?.valid && transferenciaATercerosForm.get('email')?.touched" 
                       (blur)="validaEmail('email')" (input)="continuarTransferencia = false"> 
@@ -307,7 +306,7 @@
                 <div class="col-12 pe-4">
                   <div class="info-destinatario-transferencia">
                     <div class="titulo-datos mb-2">
-                      Monto a transferir: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('montoATransferir')?.value }}</span>
+                      Monto a transferir: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('montoATransferir')?.value | pesos }}</span>
                     </div>
                     <div class="titulo-datos mb-2">
                       Mensaje: <span class="datos-ingresados">{{ transferenciaATercerosForm.get('mensaje')?.value }}</span>

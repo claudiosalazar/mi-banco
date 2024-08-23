@@ -390,7 +390,7 @@
         td {
           cursor: default !important;
           background-color: $dorado;
-          color: $blanco !important;
+          color: rgb(255, 255, 255, 0.7) !important;
           font-weight: 500 !important;
           &:first-child {
             border-radius: 6px 6px 0 0!important;
