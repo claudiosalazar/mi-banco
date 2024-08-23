@@ -55,11 +55,22 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
   // Fomularios
   busquedaDestinatarios = new FormControl('');
-  resultados: any[] = [];
   transferenciaATercerosForm: FormGroup = new FormGroup({});
+  resultados: any[] = [];
+
   transaccionesCtaCte: CuentaCorriente[] = [];
-  saldoUltimaTransaccionCtaCte: number | null = null;
-  saldo: number | undefined;
+  opcionesDePago: { value: string, label: string }[] = [
+    { value: '0', label: 'Cuenta Corriente' },
+    { value: '1', label: 'Línea de Crédito' },
+  ];
+  productoSeleccionado: any;
+  saldoUltimaTransaccionCtaCte: any;
+  saldoUltimaTransaccionLineaCredito: any;
+  cupoUsadoUltimaTransaccionLineaCredito: any;
+  nuevoSaldoCtaCte: any;
+  nuevoSaldoLineaCredito: any;
+  allTransCtaCte: any[] = [];
+  allTransLineaCredito: any[] = [];
 
   // Variable para animacion de icono en th
   agenda: any[] = [];
@@ -89,9 +100,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   btnConfirmar = true;
   destinatarioATransferir: any[] = [];
   destinatarioATransferirSeleccionado: any = null;
-  agendaSeleccionado: { id_agenda: any, nombre: any, rut_destinatario:any, rut: any, email: any } | undefined;
-  selectedId: any = null;
-  nombreDestinatario: any;
+  agendaSeleccionado: { id_agenda: any, nombre: any, rut: any, email: any } | undefined;
+  selectedIdAgenda: any = null;
+  selectedNombreDestinatario: any;
+  selectedRutDestinatario: any;
   buscadorAgenda = true;
 
   // Variables para botones
@@ -140,6 +152,8 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
   tablaConDatos: boolean = true;
   mostrarAlerta: boolean = false;
+  transferenciaConCtaCte: boolean | undefined;
+  transferenciaConLineaCredito: boolean | undefined;
 
 
   constructor(
@@ -148,7 +162,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     private agendaService: AgendaService,
     private backdropService: BackdropService,
     private transaccionesService: TransaccionesService,
-    private urlBrowserService: UrlBrowserService
+    private urlBrowserService: UrlBrowserService,
   ) { }
 
   ngOnInit() {
@@ -157,12 +171,17 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.transferenciaATercerosForm = new FormGroup({
       destinatarioATransferir: new FormControl(''),
       destinatarioSeleccionado: new FormControl(''),
+      productoParaPago: new FormControl('', [Validators.required]),
       montoATransferir: new FormControl('', [Validators.required]),
       mensaje: new FormControl(''),
       emailDestinatario: new FormControl({ value: '', disabled: true }, [Validators.required]),
       montoATransferirOk: new FormControl(''),
       mensajeOk: new FormControl(''),
       emailDestinatarioOk: new FormControl(''),
+    });
+
+    this.transferenciaATercerosForm.patchValue({
+      productoParaPago: '0'
     });
     
     // Aplica pipe pesos
@@ -190,7 +209,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
             return of(this.originalData);
           }
         } else {
-          console.error('No se encontró id_user en el almacenamiento');
           return of([]);
         }
       })
@@ -244,21 +262,55 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     const idUser = localStorage.getItem('id_user'); // O sessionStorage.getItem('id_user')
     if (idUser) {
       const idUserNumber = parseInt(idUser, 0);
+  
+      // Obtener transacciones de cuenta corriente
+      this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
+        (dataCtaCte: any[]) => {
+          if (dataCtaCte.length > 0) {
+            const ultimaTransCtaCte = dataCtaCte[dataCtaCte.length - 1];
+            this.saldoUltimaTransaccionCtaCte = parseFloat(ultimaTransCtaCte.saldo);
+          }
+        }
+      );
+  
+      // Obtener transacciones de línea de crédito
+      this.transaccionesService.getTransLineaCredito(idUserNumber).subscribe(
+        (dataLineaCredito: any[]) => {
+          if (dataLineaCredito.length > 0) {
+            const ultimaTransLineaCredito = dataLineaCredito[dataLineaCredito.length - 1];
+            this.saldoUltimaTransaccionLineaCredito = parseFloat(ultimaTransLineaCredito.saldo);
+            this.cupoUsadoUltimaTransaccionLineaCredito = parseFloat(ultimaTransLineaCredito.cupo_usado);
+          }
+        }
+      );
+
+      // Obtener transacciones de cuenta corriente
+      this.transaccionesService.getIdTransCtaCte().subscribe(
+        (dataCtaCte: any[]) => {
+          if (dataCtaCte.length > 0) {
+            this.allTransCtaCte = dataCtaCte.map(trans => trans.id_trans_cta_cte);
+          }
+        }
+      );
+  
+      // Obtener transacciones de línea de crédito
+      this.transaccionesService.getIdTransLineaCredito().subscribe(
+        (dataLineaCredito: any[]) => {
+          if (dataLineaCredito.length > 0) {
+            this.allTransLineaCredito = dataLineaCredito.map(trans => trans.id_trans_linea_cre);
+          }
+        }
+      );
+  
+      // Obtener datos de la agenda
       this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
         (data: Agenda[]) => {
-          // Aquí capturas los datos de la agenda
-          console.log('Datos de la agenda:', data);
           // Puedes asignar los datos a una propiedad del componente si es necesario
           this.agenda = data;
           this.originalData = [...data]; // Guardar una copia de los datos originales
           this.paginarAgenda();
-        },
-        (error) => {
-          console.error('Error al obtener la agenda:', error);
         }
       );
-    } else {
-      console.error('No se encontró id_user en el almacenamiento');
     }
   }
 
@@ -278,6 +330,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     }
   }
 
+  onProductoSeleccionado(value: any): void {
+    this.productoSeleccionado = value;
+  }
+
   seleccionarDestinatario(id_agenda: number) {
     // Encuentra el destinatario seleccionado en la lista de destinatarios
     const destinatario = this.paginatedAgenda.find(agenda => agenda.id_agenda === id_agenda);
@@ -288,18 +344,22 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.destinatarioATransferirSeleccionado = destinatario;
   
     // Actualizar el ID seleccionado
-    this.selectedId = id_agenda;
+    this.selectedIdAgenda = id_agenda;
+  
+    // Guardar los datos del destinatario en las variables correspondientes
+    this.selectedIdAgenda = destinatario.id_agenda;
+    this.selectedNombreDestinatario = destinatario.nombre;
+    this.selectedRutDestinatario = destinatario.rut;
   
     // Mostrar el formulario
     this.ingresarDatos = true;
     this.pasosTransferencia = true;
   
     this.transferenciaATercerosForm.patchValue({
+      productoSeleccionado: this.productoSeleccionado, // Carga el producto seleccionado
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
     });
-  
-    // Log para comprobar el destinatario seleccionado
-    console.log('Destinatario seleccionado:', destinatario);
+    console.log('Destinatario seleccionado:', this.destinatarioATransferirSeleccionado);
   }
 
   vaciarMontoATransferir(): void {
@@ -351,21 +411,18 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
         this.error1 = true;
         this.error2 = false;
         this.montoValido = false;
-        console.log('valor 0 o vacío');
       } 
       // Validación 2
       else if (this.saldoUltimaTransaccionCtaCte !== null && numericInputMonto > this.saldoUltimaTransaccionCtaCte) {
         this.error1 = false;
         this.error2 = true;
         this.montoValido = false;
-        console.log('valor superior');
       } 
       // Monto válido
       else {
         this.error1 = false;
         this.error2 = false;
         this.montoValido = true;
-        console.log('valido');
       }
     }
     this.validaDatosTransferencia();
@@ -447,7 +504,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
   
-    this.selectedId = null;
+    this.selectedIdAgenda = null;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
     this.mostrarBackdropCustomModalEstado = false;
@@ -517,17 +574,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.btnConfirmar = false;
   }
 
-  botonValidaDatosTransferencia(){
-    this.ingresarDatos = true;
-    this.confirmarDatos = false;
-  }
-
-  // Agregar nuevo destinatario
-  abrirOffcanvas(): void {
-    this.mostrarBackdropCustomOffcanvas.emit(true);
-    this.mostrarBackdropCustomOffcanvasEstado = true;
-  }
-
   botonCancelarTransferencia(): void {
     this.pasosTransferencia = false;
     this.ingresarDatos = false;
@@ -535,10 +581,10 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     this.transferenciaARealizar = false;
     this.destinatarioSeleccionadoTabla = false;
     this.id_agenda = { id_agenda: undefined, nombre: undefined, rut_destinatario: undefined, rut: undefined, email: undefined };
-    this.agendaService.getAgenda().subscribe(data => {
-      // Hacer una copia de los datos
+    const idUser = Number(localStorage.getItem('id_user'));
+
+    this.agendaService.getAgendaIdUser(idUser).subscribe(data => {
       this.agenda = [...data];
-      this.ordenarDatos('nombre');
       this.paginatedAgenda = this.agenda.slice(0, this.itemsPerPage).map(agenda => ({
         ...agenda,
         selected: false
@@ -546,7 +592,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
       this.totalPages = this.agenda ? Math.ceil(this.agenda.length / this.itemsPerPage) : 0;
       this.cdr.detectChanges();
     });
-    this.selectedId = null;
+    this.selectedIdAgenda = null;
     // this.tablaDestinatarios = true;
     this.buscadorAgenda = true;
     this.cdr.detectChanges();
@@ -568,13 +614,28 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     }
     if (this.inputMontoATransferir && this.inputMontoATransferir.nativeElement) {
       this.inputMontoATransferir.nativeElement.disabled = false;
+      this.inputMontoATransferir.nativeElement.value = '';
     }
     if (this.mensaje && this.mensaje.nativeElement) {
       this.mensaje.nativeElement.disabled = false;
+      this.mensaje.nativeElement.value = '';
     }
     this.btnConfirmar = true;
     this.btnContinuar = true;
   }
+
+  botonValidaDatosTransferencia(){
+    this.ingresarDatos = true;
+    this.confirmarDatos = false;
+  }
+
+  // Agregar nuevo destinatario
+  abrirOffcanvas(): void {
+    this.mostrarBackdropCustomOffcanvas.emit(true);
+    this.mostrarBackdropCustomOffcanvasEstado = true;
+  }
+
+  
 
 
   // Paginación de transacciones
@@ -612,33 +673,6 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
   ocultaMensaje() {
     this.alertaAyuda = false;
-  }
-
-  abrirModalTransferencia(): void {
-    var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
-    modalTransferencia.show();
-    this.realizarTransferencia().subscribe(datosTransferencia => {
-      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
-      this.transaccionesService.guardarNuevaTransferencia(datosTransferencia).subscribe(
-        (response) => {
-          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
-          this.transferenciaOk = true;
-          this.tranferenciaError = false;
-          of(null).pipe(
-            delay(1500)
-          ).subscribe(() => {
-            this.backdropService.hideModalBackdrop();
-            modalTransferencia.hide();
-            this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
-          });
-        },
-        (error) => {
-          console.error('Error al guardar la transferencia:', error); // Manejar errores
-          this.transferenciaOk = false;
-          this.tranferenciaError = true;
-        }
-      );
-    });
   }
 
   abrirModalNuevoDestinatario(): void {
@@ -690,48 +724,207 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     // Convertir montoATransferir a número
     montoATransferir = Number(montoATransferir);
     
-    // Resta montoATransferir a cupoCtaCte
-    if (this.saldoUltimaTransaccionCtaCte !== null) {
-      this.saldoUltimaTransaccionCtaCte -= montoATransferir;
-      console.log('Saldo última transacción:', this.saldoUltimaTransaccionCtaCte);
-    }
+    let nuevoSaldo: number;
+    let nuevoCupoUsado: number;
   
-    return {
-      montoTransferido: montoATransferir,
-      saldoUltimaTransaccionCtaCte: this.saldoUltimaTransaccionCtaCte,
-      montoParaTransferencia: montoATransferir
-    };
+    // Resta montoATransferir a cupoCtaCte
+    if (this.productoSeleccionado === '0') {
+      nuevoSaldo = this.saldoUltimaTransaccionCtaCte - montoATransferir;
+      return {
+        montoTransferido: montoATransferir,
+        nuevoSaldo: nuevoSaldo
+      };
+    } else if (this.productoSeleccionado === '1') {
+      nuevoSaldo = this.saldoUltimaTransaccionLineaCredito - montoATransferir;
+      nuevoCupoUsado = this.cupoUsadoUltimaTransaccionLineaCredito + montoATransferir;
+      return {
+        montoTransferido: montoATransferir,
+        nuevoSaldo: nuevoSaldo,
+        nuevoCupoUsado: nuevoCupoUsado
+      };
+    } else {
+      throw new Error('Producto no válido seleccionado');
+    }
+  }
+
+  abrirModalTransferencia(): void {
+    const modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
+    modalTransferencia.show();
+    
+    this.realizarTransferencia().subscribe(datosTransferencia => {
+      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
+
+      // Detectar el producto seleccionado
+      const productoSeleccionado = this.transferenciaATercerosForm.get('productoParaPago')?.value;
+
+      let guardarTransferenciaObservable: Observable<any>;
+
+      switch (productoSeleccionado) {
+        case '0':
+          // Producto 0: Cuenta Corriente
+          guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaCtaCte(datosTransferencia);
+          break;
+        case '1':
+          // Producto 1: Línea de Crédito
+          guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaLineaCredito(datosTransferencia);
+          break;
+        default:
+          console.error('Producto no válido seleccionado');
+          this.transferenciaOk = false;
+          this.tranferenciaError = true;
+          return;
+      }
+
+      guardarTransferenciaObservable.subscribe(
+        response => {
+          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
+          this.transferenciaOk = true;
+          this.tranferenciaError = false;
+          of(null).pipe(
+            delay(1500)
+          ).subscribe(() => {
+            this.backdropService.hideModalBackdrop();
+            modalTransferencia.hide();
+            this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
+          });
+        },
+        error => {
+          console.error('Error al guardar la transferencia:', error);
+          this.transferenciaOk = false;
+          this.tranferenciaError = true;
+        }
+      );
+    });
   }
 
   // Envia datos de transferencia
   realizarTransferencia(): Observable<any> {
-    const datePipe = new DatePipe('en-US');
-    const fecha = new Date();
-    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
-
+    const productoCtaCte = '0';
+    const productoLineaCredito = '1';
+    const nombreProducto1 = 'Cuenta Corriente';
+    const nombreProducto2 = 'Línea de Crédito';
+  
     const result = this.calculoTransferencia();
-
-    let montoTransferido = result.montoTransferido;
-
+    console.log('Resultado del cálculo:', result);
+  
+    let nombreProducto = '';
+    let tipoProducto = '';
+  
+    const productoParaPagoValue = this.transferenciaATercerosForm.get('productoParaPago')?.value;
+    if (productoParaPagoValue === productoCtaCte) {
+      nombreProducto = nombreProducto1;
+      tipoProducto = 'Cuenta Corriente';
+      this.transferenciaConCtaCte = true;
+      this.transferenciaConLineaCredito = false;
+    } else if (productoParaPagoValue === productoLineaCredito) {
+      nombreProducto = nombreProducto2;
+      tipoProducto = 'Línea de Crédito';
+      this.transferenciaConCtaCte = false;
+      this.transferenciaConLineaCredito = true;
+    }
+  
+    if (this.transferenciaConCtaCte) {
+      return this.realizarTransferenciaConCtaCte(result);
+    } else if (this.transferenciaConLineaCredito) {
+      return this.realizarTransferenciaConLineaCredito(result);
+    }
+  
+    throw new Error('Producto no válido seleccionado');
+  }
+  
+  realizarTransferenciaConCtaCte(result: any): Observable<any> {
+    let nuevoIdTransCtaCte = this.allTransCtaCte.length > 0 ? Math.max(...this.allTransCtaCte) + 1 : 1;
+    this.allTransCtaCte.push(nuevoIdTransCtaCte);
+  
+    let detalle = 'Transferencia a ' + (this.selectedNombreDestinatario || 'Destinatario desconocido');
+    detalle = String(detalle);
+  
     this.datosTransferencia = {
-      id_trans_cta_cte: this.transaccionesCtaCte.length + 1,
-      fecha: fechaFormateada,
-      detalle: 'Transferencia a ' + this.nombreDestinatario,
+      id_trans_cta_cte: nuevoIdTransCtaCte,
+      detalle: detalle,
       transferencia: 1,
-      id_agenda: this.id_agenda,
-      nombre_destinatario: this.nombreDestinatario,
-      rut_destinatario: this.rut_destinatario,
+      id_destinatario: this.selectedIdAgenda,
+      nombre_destinatario: this.selectedNombreDestinatario,
+      rut_destinatario: Number(this.selectedRutDestinatario), // Convertir a número
       mensaje: this.transferenciaATercerosForm.get('mensaje')?.value,
-      cargo: montoTransferido,
-      saldo: this.saldoUltimaTransaccionCtaCte
+      abono: null,
+      cargo: result.montoTransferido,
+      saldo: result.nuevoSaldo
     };
   
-    console.table(this.datosTransferencia);
-    
-  
-    // Llamar al servicio para guardar la nueva transferencia
-    return of (this.datosTransferencia);
+    return of(this.datosTransferencia); // Retornar un Observable
   }
+  
+  realizarTransferenciaConLineaCredito(result: any): Observable<any> {
+    let nuevoIdTransLineaCredito = this.allTransLineaCredito.length > 0 ? Math.max(...this.allTransLineaCredito) + 1 : 1;
+    this.allTransLineaCredito.push(nuevoIdTransLineaCredito);
+  
+    let detalle = 'Transferencia a ' + (this.selectedNombreDestinatario || 'Destinatario desconocido');
+    detalle = String(detalle);
+  
+    this.datosTransferencia = {
+      id_trans_linea_cre: nuevoIdTransLineaCredito,
+      detalle: detalle,
+      transferencia: 1,
+      id_destinatario: this.selectedIdAgenda,
+      nombre_destinatario: this.selectedNombreDestinatario,
+      rut_destinatario: Number(this.selectedRutDestinatario), // Convertir a número
+      mensaje: this.transferenciaATercerosForm.get('mensaje')?.value,
+      cargo: result.montoTransferido,
+      abono: null,
+      saldo: result.nuevoSaldo,
+      cupo_usado: result.nuevoCupoUsado
+    };
+  
+    return of(this.datosTransferencia); // Retornar un Observable
+  }
+  
+  /*abrirModalTransferencia(): void {
+    console.log('Datos de transferencia capturados:', this.datosTransferencia);
+    
+    
+    revisar logica para obtenet todos los datos de datosTransferencia
+    
+    var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
+    modalTransferencia.show();
+    
+    this.realizarTransferencia().subscribe(datosTransferencia => {
+      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
+  
+      // Detectar el producto seleccionado
+      const productoSeleccionado = this.transferenciaATercerosForm.get('productoParaPago')?.value;
+  
+      let guardarTransferenciaObservable: Observable<any>;
+  
+      if (productoSeleccionado === '0') {
+        // Producto 0: Cuenta Corriente
+        guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaCtaCte(datosTransferencia);
+      } else if (productoSeleccionado === '1') {
+        // Producto 1: Línea de Crédito
+        guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaLineaCredito(datosTransferencia);
+      } else {
+        console.error('Producto no válido seleccionado');
+        this.transferenciaOk = false;
+        this.tranferenciaError = true;
+        return;
+      }
+  
+      guardarTransferenciaObservable.subscribe(
+        (response) => {
+          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
+          this.transferenciaOk = true;
+          this.tranferenciaError = false;
+          of(null).pipe(
+            delay(1500)
+          ).subscribe(() => {
+            this.backdropService.hideModalBackdrop();
+            modalTransferencia.hide();
+            this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
+          });
+        }
+      );
+    });
+  }*/
 
   onCancelar(): void {
     this.mostrarBackdropCustomOffcanvas.emit(false);

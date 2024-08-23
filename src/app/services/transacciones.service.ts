@@ -35,17 +35,18 @@ export class TransaccionesService {
     );
   }
   
-  getIdTransCtaCte(): Observable<CuentaCorriente[]> {
-    return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
-      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
-    );
-  }
-
   getTransLineaCredito(idUserNumber: number): Observable<LineaCredito[]> {
     return this.http.get<LineaCredito[]>(`${this.apiUrl}/mibanco/transacciones/linea-credito`).pipe(
       map(transacciones => transacciones.filter(transaccion => transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => transacciones.forEach(trans => trans.nombre_producto_trans = 'Línea de Crédito'))
+    );
+  }
+
+  // Captura todos los datos sin importar el id_user
+  getIdTransCtaCte(): Observable<CuentaCorriente[]> {
+    return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
+      map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
     );
   }
 
@@ -115,12 +116,22 @@ export class TransaccionesService {
   }
 
   // Function para guardar transferencias
-  guardarNuevaTransferencia(datosTransferencia: any): Observable<any> {
+  guardarNuevaTransferenciaCtaCte(datosTransferencia: any): Observable<any> {
+    const idUser = localStorage.getItem('id_user');
+    // Agregar id_user al objeto de datos de transacción
+    datosTransferencia.id_user = idUser;
+    console.log('Datos de transferencia:', datosTransferencia);
+    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(
+      tap(() => console.log('Transferencia guardada correctamente'))
+    );
+  }
+
+  guardarNuevaTransferenciaLineaCredito(datosTransferencia: any): Observable<any> {
     const idUser = localStorage.getItem('id_user');
     // Agregar id_user al objeto de datos de transacción
     datosTransferencia.id_user = idUser;
 
-    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(
+    return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/linea-credito`, datosTransferencia).pipe(
       tap(() => console.log('Transferencia guardada correctamente'))
     );
   }

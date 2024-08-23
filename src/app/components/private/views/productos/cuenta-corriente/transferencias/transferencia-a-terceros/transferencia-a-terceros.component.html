@@ -105,23 +105,23 @@
             </tr>
           </thead>
           <tbody role="rowgroup">
-            <tr *ngFor="let agenda of paginatedAgenda" (click)="seleccionarDestinatario(agenda.id_agenda)" [ngClass]="{'active': agenda.id_agenda === selectedId}">
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+            <tr *ngFor="let agenda of paginatedAgenda" (click)="seleccionarDestinatario(agenda.id_agenda)" [ngClass]="{'active': agenda.id_agenda === selectedIdAgenda}">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.nombre }}</span>
               </td>
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.banco }}</span>
               </td>
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.rut | rut }}</span>
               </td>
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.tipo_cuenta }}</span>
               </td>
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.numero_cuenta }}</span>
               </td>
-              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedId">
+              <td role="cell" class="ancho" *ngIf="!destinatarioSeleccionadoTabla || agenda.id_agenda === selectedIdAgenda">
                 <span class="contenido-celda">{{ agenda.email }}</span>
               </td>
             </tr>
@@ -184,6 +184,23 @@
 
                 <div class="d-flex flex-column-reverse flex-lg-row">
                   <div class="col-12 col-lg-7 pe-3" [ngClass]="{'paso-transferencia-oculto': !ingresarDatos, 'paso-transferencia': ingresarDatos}">
+                    <div class="mb-3">
+                      <small class="pb-2 d-block">Seleccionar el producto para realizar la transferencia:</small>
+                      <mb-custom-select 
+                        [control]="transferenciaATercerosForm.get('productoParaPago')"
+                        [zIndex]="100"
+                        [options]="opcionesDePago"
+                        [labelSelect]="'Productos'"
+                        [errorKey]="'productoInvalido'"
+                        (change)="onProductoSeleccionado($event)"
+                        >
+                      </mb-custom-select>
+                      <small class="pt-2 d-block" *ngIf="productoSeleccionado === '0'">Saldo: <strong>{{ saldoUltimaTransaccionCtaCte | pesos }}</strong></small>
+                      <small class="pt-2 d-block" *ngIf="productoSeleccionado === '1'">Saldo: <strong>{{ saldoUltimaTransaccionLineaCredito | pesos }}</strong></small>
+                      <hr>
+                    </div>
+                    
+                    <!-- Input Monto -->
                     <div class="form-floating mb-3">
                       <input type="text" class="form-control" id="montoATransferir" formControlName="montoATransferir" #inputMontoATransferir 
                       [class.is-invalid]="error1 || error2" [class.is-valid]="montoValido && !error1 && !error2" (focus)="vaciarMontoATransferir()" 
@@ -232,8 +249,8 @@
                     </div>
                   </div>
   
-                  <div class="col-12 col-lg-5 mb-3">
-                    <small class="gris-40 pb-4 ms-lg-3">Los campos monto e email son obligatorios.</small>
+                  <div class="col-12 col-lg-4 mb-3 ms-lg-3">
+                    <small class="gris-40 d-block py-4">Los campos monto e email son obligatorios.</small>
                   </div>
                 </div>
 
@@ -316,7 +333,8 @@
                     </div>
                   </div>
                   <div class="d-flex flex-column-reverse flex-md-row my-3">
-                    <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="abrirModalCancelarTransferencia(); ordenarDatos('nombre');">
+                    <!-- <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="abrirModalCancelarTransferencia(); ordenarDatos('nombre');"> -->
+                    <button class="btn btn-secundario me-0 me-md-3" type="button" (click)="abrirModalCancelarTransferencia()">
                       Cancelar
                     </button>
                     <button class="btn btn-primario mb-3 mb-md-0" type="button" (click)="abrirModalTransferencia()">
@@ -350,7 +368,7 @@
           <span class="icono material-symbols-outlined d-block me-3 mensajes advertencia">
             warning
           </span>
-          <p class="text-start">¿Estás seguro de que quieres cancelar la transferencia?</p>
+          <p class="text-start">¿Estás seguro de que quieres cancelar la transferencia a <strong>{{destinatarioATransferirSeleccionado?.nombre}}</strong>?</p>
         </div>
       </div>
       <div class="modal-footer">
