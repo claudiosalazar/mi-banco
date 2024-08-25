@@ -211,29 +211,29 @@
 
             <div class="form-floating mb-4">
                 <mb-custom-select [control]="misDatosForm.get('region')" [options]="listaRegiones"
-                [selectedValue]="regionSeleccionadaInicial" [zIndex]="600" [submitted]="submitted"
+                [selectedValue]="region" [zIndex]="600" [submitted]="submitted"
                 [labelSelect]="'Región Personal'" [isValid]="customRegionValido"
                 [isInvalid]="customRegionInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customRegionInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una región.
-              </div>
+                <div *ngIf="customRegionInvalidoMensaje" class="invalid-feedback d-block">
+                  Debes seleccionar una región.
+                </div>
             </div>
 
             <div class="form-floating mb-4">
               <mb-custom-select [control]="misDatosForm.get('comuna')" [options]="listaComunas"
-                [selectedValue]="comunaSeleccionadaInicial" [zIndex]="400" [submitted]="submitted"
+                [selectedValue]="comuna" [zIndex]="400" [submitted]="submitted"
                 [labelSelect]="'Comuna Personal'" [isValid]="customComunaValido"
                 [isInvalid]="customComunaInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>
-              <div *ngIf="customComunaInvalidoMensaje" class="invalid-feedback d-block">
-                Debes seleccionar una comuna.
-              </div>
+                <div *ngIf="customComunaInvalidoMensaje" class="invalid-feedback d-block">
+                  Debes seleccionar una comuna.
+                </div>
             </div>
 
             <div class="form-floating mb-4">
               <mb-custom-select [control]="misDatosForm.get('ciudad')" [options]="listaCiudades"
-                [selectedValue]="ciudadSeleccionadaInicial" [zIndex]="500" [submitted]="submitted"
+                [selectedValue]="ciudad" [zIndex]="500" [submitted]="submitted"
                 [labelSelect]="'Ciudad Personal'" [isValid]="customCiudadValido"
                 [isInvalid]="customCiudadInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>
@@ -289,7 +289,7 @@
 
             <div class="form-floating mb-4">
               <mb-custom-select [control]="misDatosForm.get('region_comercial')" [options]="listaRegionesComerciales"
-                [selectedValue]="regionSeleccionadaComercialInicial" [zIndex]="300" [submitted]="submitted"
+                [selectedValue]="region_comercial" [zIndex]="300" [submitted]="submitted"
                 [labelSelect]="'Región Comercial'" [isValid]="customRegionComercialValido"
                 [isInvalid]="customRegionComercialInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>
@@ -300,7 +300,7 @@
 
             <div class="form-floating mb-4">
               <mb-custom-select [control]="misDatosForm.get('comuna_comercial')" [options]="listaComunasComerciales"
-                [selectedValue]="comunaSeleccionadaComercialInicial" [zIndex]="100" [submitted]="submitted"
+                [selectedValue]="comuna_comercial" [zIndex]="100" [submitted]="submitted"
                 [labelSelect]="'Comuna Comercial'" [isValid]="customComunaComercialValido"
                 [isInvalid]="customComunaComercialInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>
@@ -311,7 +311,7 @@
 
             <div class="form-floating mb-4">
               <mb-custom-select [control]="misDatosForm.get('ciudad_comercial')" [options]="listaCiudadesComerciales"
-                [selectedValue]="ciudadSeleccionadaComercialInicial" [zIndex]="200" [submitted]="submitted"
+                [selectedValue]="ciudad_comercial" [zIndex]="200" [submitted]="submitted"
                 [labelSelect]="'Ciudad Comercial'" [isValid]="customCiudadComercialValido"
                 [isInvalid]="customCiudadComercialInvalido"
                 [customDisabled]="customSelectDisabled"></mb-custom-select>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatosUsuarioService } from '../../../../services/datosUsuario.service';
 import { FormatoEmailService } from '../../../../services/formatoEmail.service';
@@ -34,18 +34,18 @@ export class DatosUsuarioComponent implements OnInit {
   listaComunasComerciales: Localidades[] = [];
   listaCiudadesComerciales: Localidades[] = [];
 
-  regionSeleccionadaInicial: any | undefined;
+  // regionSeleccionadaInicial: any | undefined;
   regionSeleccionada: any | undefined;
-  comunaSeleccionadaInicial: any | undefined;
+  // comunaSeleccionadaInicial: any | undefined;
   comunaSeleccionada: any | undefined;
-  ciudadSeleccionadaInicial: any | undefined;
+  // ciudadSeleccionadaInicial: any | undefined;
   ciudadSeleccionada: any | undefined;
 
-  regionSeleccionadaComercialInicial: any | undefined;
+  // regionSeleccionadaComercialInicial: any | undefined;
   regionSeleccionadaComercial: any | undefined;
-  comunaSeleccionadaComercialInicial: any | undefined;
+  // comunaSeleccionadaComercialInicial: any | undefined;
   comunaSeleccionadaComercial: any | undefined;
-  ciudadSeleccionadaComercialInicial: any | undefined;
+  // ciudadSeleccionadaComercialInicial: any | undefined;
   ciudadSeleccionadaComercial: any | undefined;
 
   primer_nombre: any;
@@ -141,7 +141,8 @@ export class DatosUsuarioComponent implements OnInit {
     private telefonoFijoPipe: TelefonoFijoPipe,
     private rutPipe: RutPipe,
     private localidadesService: LocalidadesService,
-    private backdropService: BackdropService
+    private backdropService: BackdropService,
+    private cdr: ChangeDetectorRef
   ) { 
     this.misDatosForm = new FormGroup({
       primer_nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -151,11 +152,11 @@ export class DatosUsuarioComponent implements OnInit {
       rut: new FormControl({value: '', disabled: true}),
       email: new FormControl({value: '', disabled: true}, [Validators.required]),
       email_comercial: new FormControl({value: '', disabled: true}, [Validators.required]),
-      celular: new FormControl({value: '', disabled: true}, [Validators.required]),
-      telefono: new FormControl({value: '', disabled: true}, [Validators.required]),
+      celular: new FormControl({value: '', disabled: true}),
+      telefono: new FormControl({value: '', disabled: true}),
       calle: new FormControl({value: '', disabled: true}, [Validators.required]),
       numero_calle: new FormControl({value: '', disabled: true}, [Validators.required]),
-      depto_villa_block: new FormControl({value: '', disabled: true}, [Validators.required]),
+      depto_villa_block: new FormControl({value: '', disabled: true}),
       ciudad: new FormControl({value: '', disabled: true}, [Validators.required]),
       comuna: new FormControl({value: '', disabled: true}, [Validators.required]),
       region: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -226,12 +227,12 @@ export class DatosUsuarioComponent implements OnInit {
             this.misDatosForm.patchValue(usuario);
   
             // Guardar el valor de la región seleccionada inicialmente
-            this.regionSeleccionadaInicial = this.region;
-            this.comunaSeleccionadaInicial = this.comuna;
-            this.ciudadSeleccionadaInicial = this.ciudad;
-            this.regionSeleccionadaComercialInicial = this.region_comercial;
-            this.comunaSeleccionadaComercialInicial = this.comuna_comercial;
-            this.ciudadSeleccionadaComercialInicial = this.ciudad_comercial;
+            this.region = this.region;
+            this.comuna = this.comuna;
+            this.comuna = this.comuna;
+            this.region_comercial = this.region_comercial;
+            this.comuna_comercial = this.comuna_comercial;
+            this.ciudad_comercial = this.ciudad_comercial;
           } else {
             console.warn('No se encontraron datos del usuario');
           }
@@ -251,8 +252,9 @@ export class DatosUsuarioComponent implements OnInit {
       const selectedRegion = this.listaRegiones.find(region => region.id === selectedRegionId);
       if (selectedRegion) {
         this.region = selectedRegion.label;
-        if (this.regionSeleccionadaInicial !== this.region) {
-          this.regionSeleccionadaInicial = this.regionSeleccionada; // Actualizar si el valor cambia
+        if (this.region !== this.region) {
+          this.region = this.regionSeleccionada; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Región seleccionada:', this.region);
@@ -263,9 +265,10 @@ export class DatosUsuarioComponent implements OnInit {
     this.misDatosForm.get('comuna')?.valueChanges.subscribe(selectedComunaId => {
       const selectedComuna = this.listaComunas.find(comuna => comuna.id === selectedComunaId);
       if (selectedComuna) {
-        this.region = selectedComuna.label;
-        if (this.comunaSeleccionadaInicial !== this.comuna) {
-          this.comunaSeleccionadaInicial = this.comunaSeleccionada; // Actualizar si el valor cambia
+        this.comuna = selectedComuna.label;
+        if (this.comuna !== this.comuna) {
+          this.comuna = this.comunaSeleccionada; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Comuna seleccionada:', this.comuna);
@@ -277,8 +280,9 @@ export class DatosUsuarioComponent implements OnInit {
       const selectedCiudad = this.listaCiudades.find(ciudad => ciudad.id === selectedCiudadId);
       if (selectedCiudad) {
         this.ciudad = selectedCiudad.label;
-        if (this.ciudadSeleccionadaInicial !== this.ciudad) {
-          this.ciudadSeleccionadaInicial = this.ciudadSeleccionada; // Actualizar si el valor cambia
+        if (this.ciudad !== this.ciudad) {
+          this.ciudad = this.ciudadSeleccionada; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Ciudad seleccionada:', this.ciudad);
@@ -290,8 +294,9 @@ export class DatosUsuarioComponent implements OnInit {
       const selectedRegionComercial = this.listaRegionesComerciales.find(region_comercial => region_comercial.id === selectedRegionComercialId);
       if (selectedRegionComercial) {
         this.region_comercial = selectedRegionComercial.label;
-        if (this.regionSeleccionadaComercialInicial !== this.region_comercial) {
-          this.regionSeleccionadaComercialInicial = this.regionSeleccionadaComercial; // Actualizar si el valor cambia
+        if (this.region_comercial !== this.region_comercial) {
+          this.region_comercial = this.regionSeleccionadaComercial; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Región seleccionada:', this.region_comercial);
@@ -303,8 +308,9 @@ export class DatosUsuarioComponent implements OnInit {
       const selectedComunaComercial = this.listaComunasComerciales.find(comuna_comercial => comuna_comercial.id === selectedComunaComercialId);
       if (selectedComunaComercial) {
         this.comuna_comercial = selectedComunaComercial.label;
-        if (this.comunaSeleccionadaComercialInicial !== this.comuna_comercial) {
-          this.comunaSeleccionadaComercialInicial = this.comunaSeleccionadaComercial; // Actualizar si el valor cambia
+        if (this.comuna_comercial !== this.comuna_comercial) {
+          this.comuna_comercial = this.comunaSeleccionadaComercial; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Región seleccionada:', this.comuna_comercial);
@@ -316,8 +322,9 @@ export class DatosUsuarioComponent implements OnInit {
       const selectedCiudadComercial = this.listaCiudadesComerciales.find(ciudad_comercial => ciudad_comercial.id === selectedCiudadComercialId);
       if (selectedCiudadComercial) {
         this.ciudad_comercial = selectedCiudadComercial.label;
-        if (this.ciudadSeleccionadaComercialInicial !== this.ciudad_comercial) {
-          this.ciudadSeleccionadaComercialInicial = this.ciudadSeleccionadaComercial; // Actualizar si el valor cambia
+        if (this.ciudad_comercial !== this.ciudad_comercial) {
+          this.ciudad_comercial = this.ciudadSeleccionadaComercial; // Actualizar si el valor cambia
+          this.cdr.detectChanges();
         }
       }
       console.log('Región seleccionada:', this.ciudad_comercial);
@@ -648,7 +655,112 @@ export class DatosUsuarioComponent implements OnInit {
     this.observarCambiosCiudadComercial();
     this.observarCambiosComunaComercial();
     this.detectarCambios();
+}
+
+actualizarUsuario(id: number, datosUsuarioEditado: any) {
+    this.datosUsuarioService.guardarUsuarioEditado(id, datosUsuarioEditado).subscribe(
+        (response: any) => {
+            console.log('Datos guardados en el servidor:', response);
+            this.actualizarDatosUsuario = false;
+            this.datosGuardadosUsuarioEditado = true;
+        },
+        (error: any) => {
+            console.error('Error al guardar los datos en el servidor:', error);
+            this.actualizarDatosUsuario = false;
+            this.errorServerAlGuardarDatos = true;
+        }
+    );
+}
+
+guardarDatosUsuario(): Observable<any> {
+  this.submitted = true;
+
+  if (!this.misDatosForm) {
+      console.log('El formulario no está definido');
+      return of(null);
   }
+
+  if (this.misDatosForm.invalid) {
+      console.log('El formulario es inválido');
+      // Agregar logs para depuración
+      console.log('Errores del formulario:', this.misDatosForm.errors);
+      Object.keys(this.misDatosForm.controls).forEach(key => {
+          const controlErrors = this.misDatosForm.get(key)?.errors;
+          if (controlErrors) {
+              console.log(`Errores en el campo ${key}:`, controlErrors);
+          }
+      });
+      return of(null);
+  }
+
+  if (this.misDatosForm.valid) {
+      const formValues = this.misDatosForm.value;
+
+      const initialRegionLabel = this.region;
+      const initialComunaLabel = this.comuna;
+      const initialCiudadLabel = this.ciudad;
+      const initialRegionComercialLabel = this.region_comercial;
+      const initialComunaComercialLabel = this.comuna_comercial;
+      const initialCiudadComercialLabel = this.ciudad_comercial;
+      const regionLabel = this.regionSeleccionada ? this.listaRegiones.find(region => region.label === this.regionSeleccionada)?.label : initialRegionLabel;
+      const comunaLabel = this.comunaSeleccionada ? this.listaComunas.find(comuna => comuna.label === this.comunaSeleccionada)?.label : initialComunaLabel;
+      const ciudadLabel = this.ciudadSeleccionada ? this.listaCiudades.find(ciudad => ciudad.label === this.ciudadSeleccionada)?.label : initialCiudadLabel;
+      const regionComercialLabel = this.regionSeleccionadaComercial ? this.listaRegionesComerciales.find(region_comercial => region_comercial.label === this.regionSeleccionadaComercial)?.label : initialRegionComercialLabel;
+      const comunaComercialLabel = this.comunaSeleccionadaComercial ? this.listaComunasComerciales.find(comuna_comercial => comuna_comercial.label === this.comunaSeleccionadaComercial)?.label : initialComunaComercialLabel;
+      const ciudadComercialLabel = this.ciudadSeleccionadaComercial ? this.listaCiudadesComerciales.find(ciudad_comercial => ciudad_comercial.label === this.ciudadSeleccionadaComercial)?.label : initialCiudadComercialLabel;
+      const celular = formValues.celular.replace(/\s/g, '');
+      const telefono = formValues.telefono.replace(/\s/g, '');
+      const celularNumber = celular ? Number(celular) : null;
+      const telefonoNumber = telefono ? Number(telefono) : null;
+
+      const datosUsuarioEditado: any = {
+          id: this.usuarioId = this.usuarioId || 0,
+          primer_nombre: formValues.primer_nombre,
+          segundo_nombre: formValues.segundo_nombre,
+          apellido_paterno: formValues.apellido_paterno,
+          apellido_materno: formValues.apellido_materno,
+          rut: formValues.rut,
+          email: formValues.email,
+          email_comercial: formValues.email_comercial,
+          celular: celularNumber,
+          telefono: telefonoNumber,
+          calle: formValues.calle,
+          numero_calle: formValues.numero_calle,
+          depto_villa_block: formValues.depto_villa_block || null, // Asignar null si está vacío
+          region: regionLabel,
+          comuna: comunaLabel,
+          ciudad: ciudadLabel,
+          calle_comercial: formValues.calle_comercial,
+          numero_calle_comercial: formValues.numero_calle_comercial,
+          oficina: formValues.oficina,
+          region_comercial: regionComercialLabel,
+          comuna_comercial: comunaComercialLabel,
+          ciudad_comercial: ciudadComercialLabel,
+      };
+      
+      // Agregar logs para depuración
+      console.log('Datos del usuario editado:', datosUsuarioEditado);
+      
+      if (!datosUsuarioEditado) {
+          console.log('datosUsuarioEditado no está definido');
+          return of(null);
+      }
+      
+      // Obtener el id_user del almacenamiento
+      const idUser = localStorage.getItem('id_user') || sessionStorage.getItem('id_user');
+      if (idUser) {
+          datosUsuarioEditado.id = parseInt(idUser, 10);
+      } else {
+          console.log('id_user no está definido en el almacenamiento');
+          return of(null);
+      }
+      
+      // Llamar al método actualizarUsuario
+      this.actualizarUsuario(datosUsuarioEditado.id, datosUsuarioEditado);
+  }
+  console.table(this.datosUsuarioEditado);
+  return of(null);
+}
 
   cancelarEdicion(): void {
     location.reload();
@@ -670,101 +782,6 @@ export class DatosUsuarioComponent implements OnInit {
 
   ocultaBackDrop(): void {
     this.backdropService.hideModalBackdrop();
-  }
-
-  actualizarUsuario(id: number, datosUsuarioEditado: any) {
-    this.datosUsuarioService.guardarUsuarioEditado(id, datosUsuarioEditado).subscribe(
-        (response: any) => {
-            console.log('Datos guardados en el servidor:', response);
-            this.actualizarDatosUsuario = false;
-            this.datosGuardadosUsuarioEditado = true;
-        },
-        (error: any) => {
-            console.error('Error al guardar los datos en el servidor:', error);
-            this.actualizarDatosUsuario = false;
-            this.errorServerAlGuardarDatos = true;
-        }
-    );
-}
-
-  guardarDatosUsuario(): Observable<any> {
-    this.submitted = true;
-
-    if (!this.misDatosForm) {
-        console.log('El formulario no está definido');
-        return of(null);
-    }
-
-    if (this.misDatosForm.invalid) {
-        console.log('El formulario es inválido');
-        return of(null);
-    }
-
-    if (this.misDatosForm.valid) {
-        const formValues = this.misDatosForm.value;
-
-        const initialRegionLabel = this.regionSeleccionadaInicial;
-        const initialComunaLabel = this.comunaSeleccionadaInicial;
-        const initialCiudadLabel = this.ciudadSeleccionadaInicial;
-        const initialRegionComercialLabel = this.regionSeleccionadaComercialInicial;
-        const initialComunaComercialLabel = this.comunaSeleccionadaComercialInicial;
-        const initialCiudadComercialLabel = this.ciudadSeleccionadaComercialInicial;
-
-        const regionLabel = this.regionSeleccionada ? this.listaRegiones.find(region => region.label === this.regionSeleccionada)?.label : initialRegionLabel;
-        const comunaLabel = this.comunaSeleccionada ? this.listaComunas.find(comuna => comuna.label === this.comunaSeleccionada)?.label : initialComunaLabel;
-        const ciudadLabel = this.ciudadSeleccionada ? this.listaCiudades.find(ciudad => ciudad.label === this.ciudadSeleccionada)?.label : initialCiudadLabel;
-        const regionComercialLabel = this.regionSeleccionadaComercial ? this.listaRegionesComerciales.find(region_comercial => region_comercial.label === this.regionSeleccionadaComercial)?.label : initialRegionComercialLabel;
-        const comunaComercialLabel = this.comunaSeleccionadaComercial ? this.listaComunasComerciales.find(comuna_comercial => comuna_comercial.label === this.comunaSeleccionadaComercial)?.label : initialComunaComercialLabel;
-        const ciudadComercialLabel = this.ciudadSeleccionadaComercial ? this.listaCiudadesComerciales.find(ciudad_comercial => ciudad_comercial.label === this.ciudadSeleccionadaComercialInicial)?.label : initialCiudadComercialLabel;
-
-        // Agregar logs para depuración
-        console.log('Valores del formulario:', formValues);
-        console.log('Valores adicionales:', {
-          regionSeleccionada: regionLabel,
-          ciudadSeleccionada: ciudadLabel,
-          comunaSeleccionada: comunaLabel,
-          regionSeleccionadaComercial: regionComercialLabel,
-          ciudadSeleccionadaComercial: ciudadComercialLabel,
-          comunaSeleccionadaComercial: comunaComercialLabel,
-        });
-
-        const datosUsuarioEditado: any = {
-            id: this.usuarioId = this.usuarioId || 0,
-            primer_nombre: formValues.primer_nombre,
-            segundo_nombre: formValues.segundo_nombre,
-            apellido_paterno: formValues.apellido_paterno,
-            apellido_materno: formValues.apellido_materno,
-            rut: formValues.rut,
-            email: formValues.email,
-            email_comercial: formValues.email_comercial,
-            celular: formValues.celular.replace(/\s/g, ''),
-            telefono: formValues.telefono.replace(/\s/g, ''),
-            calle: formValues.calle,
-            numero_calle: formValues.numero_calle,
-            depto_villa_block: formValues.depto_villa_block,
-            region: regionLabel,
-            comuna: comunaLabel,
-            ciudad: ciudadLabel,
-            calle_comercial: formValues.calle_comercial,
-            numero_calle_comercial: formValues.numero_calle_comercial,
-            oficina: formValues.oficina,
-            region_comercial: regionComercialLabel,
-            comuna_comercial: comunaComercialLabel,
-            ciudad_comercial: ciudadComercialLabel,
-        };
-
-        // Agregar logs para depuración
-        console.log('Datos del usuario editado:', datosUsuarioEditado);
-
-        if (!datosUsuarioEditado) {
-            console.log('datosUsuarioEditado no está definido');
-            return of(null);
-        }
-
-        // Llamar al método actualizarUsuario
-        this.actualizarUsuario(datosUsuarioEditado.id, datosUsuarioEditado);
-    }
-    return of(null);
   }
 
 }
