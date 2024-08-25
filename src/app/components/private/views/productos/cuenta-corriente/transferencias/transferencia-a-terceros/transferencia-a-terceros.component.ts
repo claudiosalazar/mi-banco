@@ -833,6 +833,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   }
   
   realizarTransferenciaConCtaCte(result: any): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
     let nuevoIdTransCtaCte = this.allTransCtaCte.length > 0 ? Math.max(...this.allTransCtaCte) + 1 : 1;
     this.allTransCtaCte.push(nuevoIdTransCtaCte);
   
@@ -841,6 +844,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   
     this.datosTransferencia = {
       id_trans_cta_cte: nuevoIdTransCtaCte,
+      fecha: fechaFormateada,
       detalle: detalle,
       transferencia: 1,
       id_destinatario: this.selectedIdAgenda,
@@ -856,6 +860,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   }
   
   realizarTransferenciaConLineaCredito(result: any): Observable<any> {
+    const datePipe = new DatePipe('en-US');
+    const fecha = new Date();
+    const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
     let nuevoIdTransLineaCredito = this.allTransLineaCredito.length > 0 ? Math.max(...this.allTransLineaCredito) + 1 : 1;
     this.allTransLineaCredito.push(nuevoIdTransLineaCredito);
   
@@ -864,6 +871,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   
     this.datosTransferencia = {
       id_trans_linea_cre: nuevoIdTransLineaCredito,
+      fecha: fechaFormateada,
       detalle: detalle,
       transferencia: 1,
       id_destinatario: this.selectedIdAgenda,
