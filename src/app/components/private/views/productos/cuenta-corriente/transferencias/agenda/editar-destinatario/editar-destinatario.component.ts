@@ -220,8 +220,8 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         tipo_cuenta: destinatario.tipo_cuenta,
         numero_cuenta: destinatario.numero_cuenta,
         email: destinatario.email,
-        celular: this.celularPipe.transform(destinatario.celular),
-        telefono: this.telefonoFijoPipe.transform(destinatario.telefono),
+        celular: destinatario.celular ? this.celularPipe.transform(destinatario.celular) : '',
+        telefono: destinatario.telefono ? this.telefonoFijoPipe.transform(destinatario.telefono) : '',
       });
 
       this.bancoInicio = destinatario.banco;

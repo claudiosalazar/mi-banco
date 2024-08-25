@@ -878,58 +878,9 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
   
     return of(this.datosTransferencia); // Retornar un Observable
   }
-  
-  /*abrirModalTransferencia(): void {
-    console.log('Datos de transferencia capturados:', this.datosTransferencia);
-    
-    
-    revisar logica para obtenet todos los datos de datosTransferencia
-    
-    var modalTransferencia = new bootstrap.Modal(document.getElementById('modalTransferencia'), {});
-    modalTransferencia.show();
-    
-    this.realizarTransferencia().subscribe(datosTransferencia => {
-      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
-  
-      // Detectar el producto seleccionado
-      const productoSeleccionado = this.transferenciaATercerosForm.get('productoParaPago')?.value;
-  
-      let guardarTransferenciaObservable: Observable<any>;
-  
-      if (productoSeleccionado === '0') {
-        // Producto 0: Cuenta Corriente
-        guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaCtaCte(datosTransferencia);
-      } else if (productoSeleccionado === '1') {
-        // Producto 1: Línea de Crédito
-        guardarTransferenciaObservable = this.transaccionesService.guardarNuevaTransferenciaLineaCredito(datosTransferencia);
-      } else {
-        console.error('Producto no válido seleccionado');
-        this.transferenciaOk = false;
-        this.tranferenciaError = true;
-        return;
-      }
-  
-      guardarTransferenciaObservable.subscribe(
-        (response) => {
-          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
-          this.transferenciaOk = true;
-          this.tranferenciaError = false;
-          of(null).pipe(
-            delay(1500)
-          ).subscribe(() => {
-            this.backdropService.hideModalBackdrop();
-            modalTransferencia.hide();
-            this.urlBrowserService.navegarAComprobanteTransferencia(); // Navegar a comprobante de transferencia
-          });
-        }
-      );
-    });
-  }*/
 
   onCancelar(): void {
     this.mostrarBackdropCustomOffcanvas.emit(false);
     this.mostrarBackdropCustomOffcanvasEstado = false;
   }
 }
-
-
