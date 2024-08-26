@@ -212,23 +212,23 @@ export class DatosUsuarioComponent implements OnInit {
           if (datos.length > 0) {
             const usuario = datos[0];
             this.usuarioId = usuario.id_datos_usuario; // Almacenar el ID del usuario
-  
-            // Asegurarse de que las propiedades sean cadenas antes de aplicar las transformaciones
-            usuario.rut = typeof usuario.rut === 'string' ? this.rutPipe.transform(usuario.rut) : usuario.rut;
-            usuario.celular = typeof usuario.celular === 'string' ? this.celularPipe.transform(usuario.celular) : usuario.celular;
-            usuario.telefono = typeof usuario.telefono === 'string' ? this.telefonoFijoPipe.transform(usuario.telefono) : usuario.telefono;
-  
             this.region = usuario.region;
             this.comuna = usuario.comuna;
             this.ciudad = usuario.ciudad;
             this.region_comercial = usuario.region_comercial;
             this.comuna_comercial = usuario.comuna_comercial;
             this.ciudad_comercial = usuario.ciudad_comercial;
+    
+            // Asegurarse de que las propiedades sean cadenas antes de aplicar las transformaciones
+            usuario.rut = this.rutPipe.transform(usuario.rut);
+            usuario.celular = this.celularPipe.transform(usuario.celular);
+            usuario.telefono = this.telefonoFijoPipe.transform(usuario.telefono);
+    
+            // Aplicar los pipes a los valores antes de asignarlos al formulario
             this.misDatosForm.patchValue(usuario);
-  
+    
             // Guardar el valor de la región seleccionada inicialmente
             this.region = this.region;
-            this.comuna = this.comuna;
             this.comuna = this.comuna;
             this.region_comercial = this.region_comercial;
             this.comuna_comercial = this.comuna_comercial;
