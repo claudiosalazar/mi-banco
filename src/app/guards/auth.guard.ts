@@ -3,6 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { TokenService } from '../services/tokenService.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,12 @@ import { map, catchError } from 'rxjs/operators';
 export class AuthGuard {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) { }
 
   canActivate: CanActivateFn = (): Observable<boolean> => {
-    const token = localStorage.getItem('token');
+    const token = this.tokenService.getToken();
     const idUser = localStorage.getItem('id_user');
     if (!token || !idUser) {
       this.router.navigate(['login']);

@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { tap, Observable, of } from 'rxjs';
+import { TokenService } from './tokenService.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,21 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
-    private router: Router 
+    private router: Router,
+    private tokenService: TokenService
   ) { }
 
   mibanco(user: any) { 
     return this.http.post(`${this.apiUrl}/user/mibanco`, user).pipe(
       tap((res: any) => {
         localStorage.setItem('id_user', res.id_user);
+        this.tokenService.setToken(res.token);
       })
     );
   }
 
   isAuth(): Observable<boolean> {
-    const token = localStorage.getItem('token');
+    const token = this.tokenService.getToken();
     const userId = localStorage.getItem('id_user');
     if (this.jwtHelper.isTokenExpired(token) || !token || !userId) {
       return of(false);
@@ -36,8 +39,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('id_user');
+    this.tokenService.removeToken();
     this.router.navigate(['/login']);
   }
 }

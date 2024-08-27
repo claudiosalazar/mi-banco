@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { LoaderService } from './services/loaderServices.service';
+import { TokenService } from './services/tokenService.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class MiBancoComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router, 
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private tokenService: TokenService
   ) 
   { }
 
@@ -30,5 +32,10 @@ export class MiBancoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     window.onload = null;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(_event: Event) {
+    this.tokenService.removeToken();
   }
 }
