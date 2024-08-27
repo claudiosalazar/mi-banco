@@ -99,7 +99,7 @@
 // Link texto
 .btn-link {
   @include animacion-btn;
-  color: $rojo;
+  color: $tinto;
   text-decoration: none;
   padding: 0;
   font-size: 15px;
@@ -244,6 +244,51 @@
   height: 24px;
   background-size: 24px 24px;
   display: block;
+  &.instagram {
+    @include animacion-btn-rrss;
+    background-image: $instagram;
+    &:hover {
+      background-image: $instagram-hover;
+    }
+  }
+  &.x {
+    @include animacion-btn-rrss;
+    background-image: $x;
+    &:hover {
+      background-image: $x-hover;
+    }
+  }
+  &.facebook {
+    @include animacion-btn-rrss;
+    background-image: $facebook;
+    &:hover {
+      background-image: $facebook-hover;
+    }
+  }
+  &.tiktok {
+    @include animacion-btn-rrss;
+    background-image: $tiktok;
+    &:hover {
+      background-image: $tiktok-hover;
+    }
+  }
+}
+
+.btn-rrss-ayuda {
+  width: fit-content;
+  color: $tinto;
+  height: 20px;
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+  background-position: left 2px;
+  display: block;
+  padding-left: 24px;
+  text-decoration: none;
+  font-weight: 600;
+  &:hover {
+    @include animacion-btn-rrss;
+    color: $dorado;
+  }
   &.instagram {
     @include animacion-btn-rrss;
     background-image: $instagram;
