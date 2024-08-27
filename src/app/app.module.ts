@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
+
+// Interceptors
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 // Modules
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +20,12 @@ import { RutPipe } from './shared/pipes/rut.pipe';
 import { CelularPipe } from './shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from './shared/pipes/telefono-fijo.pipe';
 import { NumeroTarjetaPipe } from './shared/pipes/numero-tarjeta.pipe';
+
+// Services
+import { DatosUsuarioService } from './services/datosUsuario.service';
+import { DatosFiltradosService } from './services/datosFiltrados.service';
+import { AgendaService } from './services/agenda.service';
+import { LoaderService } from './services/loaderServices.service';
 
 // Components
 import { MiBancoComponent } from './mi-banco.component';
@@ -49,16 +58,14 @@ import { CuentaCorrienteComponent } from './components/private/views/productos/c
 import { ProductosComponent } from './components/private/views/productos/productos.component';
 import { ModalConsultasComponent } from './shared/components/header/modal-consultas/modal-consultas.component';
 import { AlertasComponent } from './shared/components/alertas/alertas.component';
-import { DatosUsuarioService } from './services/datosUsuario.service';
 import { BannerCreditoConsumoComponent } from './shared/components/banners/banner-credito-consumo/banner-credito-consumo.component';
 import { BannerSeguroAutoComponent } from './shared/components/banners/banner-seguro-auto/banner-seguro-auto.component';
 import { BannerVisaDescuentoComponent } from './shared/components/banners/banner-visa-descuento/banner-visa-descuento.component';
 import { TablaMovimientosComponent } from './shared/components/tables/tabla-movimientos/tabla-movimientos.component';
 import { BuscadorTablaComponent } from './shared/components/tables/buscador-tabla/buscador-tabla.component';
 import { PaginadorComponent } from './shared/components/tables/paginador/paginador.component';
-import { DatosFiltradosService } from './services/datosFiltrados.service';
 import { CustomSelectComponent } from './shared/components/custom-select/custom-select.component';
-import { AgendaService } from './services/agenda.service';
+import { LoaderComponent } from './shared/components/loader/loader.component'; 
 
 
 @NgModule({
@@ -108,6 +115,7 @@ import { AgendaService } from './services/agenda.service';
     CustomSelectComponent,
     CelularPipe,
     TelefonoFijoPipe,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -118,10 +126,19 @@ import { AgendaService } from './services/agenda.service';
     BrowserAnimationsModule
   ],
   providers: [
-    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    {
+      provide: JWT_OPTIONS, 
+      useValue: JWT_OPTIONS
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    LoaderService,
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: LoaderInterceptor, 
       multi: true
     },
     JwtHelperService,

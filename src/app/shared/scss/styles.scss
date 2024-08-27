@@ -7,17 +7,6 @@
 @import 'mixins';
 
 // Layout
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/table';
-@import 'layout/input';
-@import 'layout/select';
-@import 'layout/icons';
-@import 'layout/tabs';
-@import 'layout/modal';
-@import 'layout/offcanvas';
-@import 'layout/textos';
-@import 'layout/paginador';
 @import 'layout/accordion';
 @import 'layout/alert';
 @import 'layout/backdrop';
@@ -26,7 +15,21 @@
 @import 'layout/card';
 @import 'layout/carousel';
 @import 'layout/colores';
+@import 'layout/footer';
+@import 'layout/header';
+@import 'layout/icons';
+@import 'layout/input';
+@import 'layout/loader';
+@import 'layout/modal';
+@import 'layout/offcanvas';
+@import 'layout/paginador';
+@import 'layout/select';
 @import 'layout/stepper';
+@import 'layout/table';
+@import 'layout/tabs';
+@import 'layout/textos';
+
+// Components
 @import 'components/banner';
 @import 'components/login';
 @import 'components/main';

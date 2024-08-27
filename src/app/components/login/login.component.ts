@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ValidaRutService } from '../../services/validaRut.service';
+import { LoaderService } from '../../services/loaderServices.service';
 
 // Pipes
 import { RutPipe } from '../../shared/pipes/rut.pipe';
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     private validaRutService: ValidaRutService,
     private router: Router,
     private rutPipe: RutPipe,
+    private loaderService: LoaderService
   ) {
     this.formularioLogin = new FormGroup({
       userName: new FormControl('', [Validators.required]),
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
     const userNameControl = this.formularioLogin.get('userName');
     if (userNameControl) {
       const userName = userNameControl.value as any;
-  
+
       if (userName.trim() === '') {
         userNameControl.setErrors({ 'inputErrorVacioRut': true });
       } else {
@@ -55,21 +57,21 @@ export class LoginComponent implements OnInit {
         const rutSinFormato = userName.replace(/[^0-9kK]/g, '');
         const cuerpo = rutSinFormato.slice(0, -1);
         const dv = rutSinFormato.slice(-1).toLowerCase();
-  
+
         if (cuerpo.length < 7 || cuerpo.length > 8) {
           userNameControl.setErrors({ 'rutInvalido': true });
         } else {
           const dvCalculado = this.validaRutService.calcularVerificador(cuerpo);
-  
+
           if (dv !== dvCalculado) {
             userNameControl.setErrors({ 'rutInvalido': true });
           } else {
             userNameControl.setErrors(null);
-  
+
             // Detectar el formato del RUT ingresado
             const tienePunto = userName.includes('.');
             const tieneGuion = userName.includes('-');
-  
+
             if (!tienePunto && !tieneGuion) {
               // Sin '.' ni '-'
               userNameControl.setValue(this.rutPipe.transform(userName));
@@ -82,20 +84,20 @@ export class LoginComponent implements OnInit {
               const partes = userName.split('-');
               let cuerpo = partes[0];
               const dv = partes[1];
-  
+
               // Agregar puntos en las posiciones adecuadas
               if (cuerpo.length === 7) {
                 cuerpo = `${cuerpo.slice(0, 1)}.${cuerpo.slice(1, 4)}.${cuerpo.slice(4)}`;
               } else if (cuerpo.length === 8) {
                 cuerpo = `${cuerpo.slice(0, 2)}.${cuerpo.slice(2, 5)}.${cuerpo.slice(5)}`;
               }
-  
+
               userNameControl.setValue(`${cuerpo}-${dv}`);
             }
           }
         }
       }
-  
+
       this.inputValidoRut = userNameControl.valid;
     }
     return true;
@@ -131,21 +133,31 @@ export class LoginComponent implements OnInit {
           this.mensajeError = true;
           return;
         }
-  
+
         const user = {
           ...this.formularioLogin.value,
           userName: userName
-        };
+ };
+        console.log(user);
+
+        // Mostrar el loader
+        this.loaderService.showLoader();
+
         this.authService.mibanco(user).subscribe(
           (res: any) => {
+            console.log(res);
             localStorage.setItem('token', res.token);
             localStorage.setItem('id_user', res.id_user);
             this.router.navigate(['mibanco']);
+            // Ocultar el loader
+            this.loaderService.hideLoader();
           },
           (err) => {
             if (err.status === 401) {
               this.mensajeError = true;
             }
+            // Ocultar el loader en caso de error
+            this.loaderService.hideLoader();
           }
         );
       }
@@ -153,5 +165,4 @@ export class LoginComponent implements OnInit {
       this.mensajeError = true;
     }
   }
-
 }
