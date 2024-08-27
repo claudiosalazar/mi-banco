@@ -1,11 +1,18 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+// Services
 import { FormatoEmailService } from '../../../../../../../../services/formatoEmail.service';
 import { AgendaService } from '../../../../../../../../services/agenda.service';
-import { Agenda } from '../../../../../../../../models/agenda.model';
+import { ValidaRutService } from '../../../../../../../../services/validaRut.service';
+
+// Pipe
 import { RutPipe } from '../../../../../../../../shared/pipes/rut.pipe';
 import { CelularPipe } from '../../../../../../../../shared/pipes/celular.pipe';
 import { TelefonoFijoPipe } from '../../../../../../../../shared/pipes/telefono-fijo.pipe';
+
+// Model
+import { Agenda } from '../../../../../../../../models/agenda.model';
 
 @Component({
   selector: 'mb-agregar-destinatario',
@@ -115,7 +122,8 @@ export class AgregarDestinatarioComponent implements OnInit {
     private formatoEmailService: FormatoEmailService,
     private rutPipe: RutPipe,
     private celularPipe: CelularPipe,
-    private telefonoFijoPipe: TelefonoFijoPipe
+    private telefonoFijoPipe: TelefonoFijoPipe,
+    private validaRutService: ValidaRutService
    ) {}
 
   ngOnInit(): void {
@@ -158,44 +166,6 @@ export class AgregarDestinatarioComponent implements OnInit {
     return true;
   }
 
-  // Solo permite numeros y letra K en el ultimo digito
-  formatoRut(event: KeyboardEvent): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    const inputElement = event.target as HTMLInputElement;
-    const value = inputElement.value;
-  
-    // Verificar si el valor contiene '.' o '-'
-    if (value.includes('.') || value.includes('-')) {
-      // Permitir la entrada sin restricciones adicionales
-      return true;
-    }
-  
-    // Aplicar restricciones de entrada de caracteres
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      if (charCode === 75 || charCode === 107) { // 'K' o 'k'
-        return value.length === 8;
-      }
-      if (charCode === 46 || charCode === 45) { // '.' o '-'
-        return true;
-      }
-      return false;
-    }
-  
-    // Aplicar la lógica de validación del RUT
-    setTimeout(() => {
-      const rut = this.rutPipe.transform(value);
-      const digitos = rut.replace(/[^0-9]/g, '').length;
-      if (digitos < 8 || digitos > 9) {
-        inputElement.setCustomValidity('RUT inválido');
-      } else {
-        inputElement.value = rut;
-        inputElement.setCustomValidity('');
-      }
-    }, 0);
-  
-    return true;
-  }
-
   resetRut(): void {
     const rutDestinatarioControl = this.crearDestinatarioForm.get('rut');
     if (rutDestinatarioControl) {
@@ -213,12 +183,49 @@ export class AgregarDestinatarioComponent implements OnInit {
   
       if (rutDestinatario.trim() === '') {
         rutDestinatarioControl.setErrors({ 'inputErrorVacioRut': true });
-      } else if (rutDestinatario.length < 8 || rutDestinatario.length > 12) {
-        rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
       } else {
-        rutDestinatarioControl.setErrors(null);
-        if (!rutDestinatario.includes('.') && !rutDestinatario.includes('-')) {
-          rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+        // Eliminar caracteres no numéricos y obtener el cuerpo y el dígito verificador
+        const rutSinFormato = rutDestinatario.replace(/[^0-9kK]/g, '');
+        const cuerpo = rutSinFormato.slice(0, -1);
+        const dv = rutSinFormato.slice(-1).toLowerCase();
+  
+        if (cuerpo.length < 7 || cuerpo.length > 8) {
+          rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+        } else {
+          const dvCalculado = this.validaRutService.calcularVerificador(cuerpo);
+  
+          if (dv !== dvCalculado) {
+            rutDestinatarioControl.setErrors({ 'inputErrorFormatoRut': true });
+          } else {
+            rutDestinatarioControl.setErrors(null);
+  
+            // Detectar el formato del RUT ingresado
+            const tienePunto = rutDestinatario.includes('.');
+            const tieneGuion = rutDestinatario.includes('-');
+  
+            if (!tienePunto && !tieneGuion) {
+              // Sin '.' ni '-'
+              rutDestinatarioControl.setValue(this.rutPipe.transform(rutDestinatario));
+            } else if (tienePunto && !tieneGuion) {
+              // Con '.' pero sin '-'
+              const rutConGuion = `${rutDestinatario.slice(0, -1)}-${rutDestinatario.slice(-1)}`;
+              rutDestinatarioControl.setValue(rutConGuion);
+            } else if (!tienePunto && tieneGuion) {
+              // Sin '.' pero con '-'
+              const partes = rutDestinatario.split('-');
+              let cuerpo = partes[0];
+              const dv = partes[1];
+            
+              // Agregar puntos en las posiciones adecuadas
+              if (cuerpo.length === 7) {
+                cuerpo = `${cuerpo.slice(0, 1)}.${cuerpo.slice(1, 4)}.${cuerpo.slice(4)}`;
+              } else if (cuerpo.length === 8) {
+                cuerpo = `${cuerpo.slice(0, 2)}.${cuerpo.slice(2, 5)}.${cuerpo.slice(5)}`;
+              }
+            
+              rutDestinatarioControl.setValue(`${cuerpo}-${dv}`);
+            }
+          }
         }
       }
   

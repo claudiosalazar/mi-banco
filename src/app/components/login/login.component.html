@@ -16,7 +16,9 @@
           <p class="d-none d-md-block">Ingrese a sus datos.</p>
           <form [formGroup]="formularioLogin" (ngSubmit)="logIn()">
             <div class="form-floating mb-4 mt-md-5 mt-lg-0">
-              <input formControlName="userName" type="text" class="form-control" id="usuario" placeholder="Rut" [ngClass]="{'is-invalid': formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']}" (blur)="formatoRut()" (focus)="resetUserName()">
+              <input formControlName="userName" type="text" class="form-control" id="usuario" placeholder="Rut" 
+              [ngClass]="{'is-invalid': formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']}" 
+              (blur)="validaRut(formularioLogin.get('userName')?.value)" (focus)="resetUserName()">
               <label for="usuario">Rut</label>
               <div *ngIf="formularioLogin.get('userName')?.touched && formularioLogin.get('userName')?.errors?.['rutInvalido']" class="invalid-feedback">
                 <span>El rut ingresado no es válido.</span>

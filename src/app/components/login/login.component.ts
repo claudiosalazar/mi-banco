@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { ValidaRutService } from '../../services/validaRut.service';
 
 // Pipes
 import { RutPipe } from '../../shared/pipes/rut.pipe';
@@ -15,10 +16,12 @@ export class LoginComponent implements OnInit {
   formularioLogin: FormGroup;
   botonLoginDisabled = true;
   mensajeError = false;
-  isPasswordVisible: boolean = false; // Nueva propiedad
+  isPasswordVisible: boolean = false;
+  inputValidoRut: any;
 
   constructor(
     private authService: AuthService,
+    private validaRutService: ValidaRutService,
     private router: Router,
     private rutPipe: RutPipe,
   ) {
@@ -40,40 +43,60 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  formatoRut(): void {
-    const userNameControl = this.formularioLogin.get('userName');
-    if (userNameControl) {
-      const value = userNameControl.value;
-      // Verificar si el valor contiene '.' o '-'
-      if (value.includes('.') || value.includes('-')) {
-        // No aplicar la lógica si contiene '.' o '-'
-        return;
-      }
-      // Aplicar el pipe de RUT
-      const rut = this.rutPipe.transform(value);
-      // Contar los dígitos
-      const digitos = rut.replace(/[^0-9]/g, '').length;
-      if (digitos < 8 || digitos > 9) {
-        userNameControl.setErrors({ 'rutInvalido': true });
-      } else {
-        userNameControl.setValue(rut);
-        userNameControl.setErrors(null);
-      }
-    }
-  }
-
   validaRut(_userName: string): boolean {
     const userNameControl = this.formularioLogin.get('userName');
     if (userNameControl) {
-      userNameControl.markAsTouched();
       const userName = userNameControl.value as any;
   
-      if (userName.length < 8 || userName.length > 9) {
-        userNameControl.setErrors({ 'rutInvalido': true });
+      if (userName.trim() === '') {
+        userNameControl.setErrors({ 'inputErrorVacioRut': true });
       } else {
-        userNameControl.setErrors(null);
-        userNameControl.setValue(this.rutPipe.transform(userName));
+        // Eliminar caracteres no numéricos y obtener el cuerpo y el dígito verificador
+        const rutSinFormato = userName.replace(/[^0-9kK]/g, '');
+        const cuerpo = rutSinFormato.slice(0, -1);
+        const dv = rutSinFormato.slice(-1).toLowerCase();
+  
+        if (cuerpo.length < 7 || cuerpo.length > 8) {
+          userNameControl.setErrors({ 'rutInvalido': true });
+        } else {
+          const dvCalculado = this.validaRutService.calcularVerificador(cuerpo);
+  
+          if (dv !== dvCalculado) {
+            userNameControl.setErrors({ 'rutInvalido': true });
+          } else {
+            userNameControl.setErrors(null);
+  
+            // Detectar el formato del RUT ingresado
+            const tienePunto = userName.includes('.');
+            const tieneGuion = userName.includes('-');
+  
+            if (!tienePunto && !tieneGuion) {
+              // Sin '.' ni '-'
+              userNameControl.setValue(this.rutPipe.transform(userName));
+            } else if (tienePunto && !tieneGuion) {
+              // Con '.' pero sin '-'
+              const rutConGuion = `${userName.slice(0, -1)}-${userName.slice(-1)}`;
+              userNameControl.setValue(rutConGuion);
+            } else if (!tienePunto && tieneGuion) {
+              // Sin '.' pero con '-'
+              const partes = userName.split('-');
+              let cuerpo = partes[0];
+              const dv = partes[1];
+  
+              // Agregar puntos en las posiciones adecuadas
+              if (cuerpo.length === 7) {
+                cuerpo = `${cuerpo.slice(0, 1)}.${cuerpo.slice(1, 4)}.${cuerpo.slice(4)}`;
+              } else if (cuerpo.length === 8) {
+                cuerpo = `${cuerpo.slice(0, 2)}.${cuerpo.slice(2, 5)}.${cuerpo.slice(5)}`;
+              }
+  
+              userNameControl.setValue(`${cuerpo}-${dv}`);
+            }
+          }
+        }
       }
+  
+      this.inputValidoRut = userNameControl.valid;
     }
     return true;
   }
