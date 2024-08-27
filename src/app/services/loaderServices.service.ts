@@ -8,10 +8,15 @@ export class LoaderService {
   private requestsCount = 0;
   private loaderSubject = new BehaviorSubject<boolean>(false);
   loaderState = this.loaderSubject.asObservable();
+  private loaderTimeout: any;
 
   showLoader() {
     this.requestsCount++;
-    this.loaderSubject.next(true);
+    if (this.requestsCount === 1) {
+      this.loaderTimeout = setTimeout(() => {
+        this.loaderSubject.next(true);
+      }, 500);
+    }
   }
 
   hideLoader() {
@@ -19,6 +24,7 @@ export class LoaderService {
       this.requestsCount--;
     }
     if (this.requestsCount === 0) {
+      clearTimeout(this.loaderTimeout);
       this.loaderSubject.next(false);
     }
   }
