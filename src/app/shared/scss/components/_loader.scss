@@ -11,12 +11,12 @@
   z-index: 9999;
 }
 
-.loader {
+.loader-mb {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid red!important;
-  width: 120px;
-  height: 120px;
+  border-top: 16px solid $dorado;
+  width: 60px;
+  height: 60px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }

@@ -18,7 +18,7 @@ import { LoaderService } from 'src/app/services/loaderServices.service';
   ]
 })
 export class LoaderComponent implements OnInit {
-  showLoader = false;
+  showLoader = true;
 
   constructor(private loaderService: LoaderService) { }
 

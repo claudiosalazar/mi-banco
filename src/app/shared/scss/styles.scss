@@ -19,7 +19,6 @@
 @import 'layout/header';
 @import 'layout/icons';
 @import 'layout/input';
-@import 'layout/loader';
 @import 'layout/modal';
 @import 'layout/offcanvas';
 @import 'layout/paginador';
@@ -31,6 +30,7 @@
 
 // Components
 @import 'components/banner';
+@import 'components/loader';
 @import 'components/login';
 @import 'components/main';
 @import 'components/transferencias';
