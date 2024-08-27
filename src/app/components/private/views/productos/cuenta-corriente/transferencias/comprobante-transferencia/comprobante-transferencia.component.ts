@@ -67,7 +67,7 @@ export class ComprobanteTransferenciaComponent implements OnInit {
 
   procesarIdsAgenda() {
     this.loadDataAgenda().subscribe((ids: number[]) => {
-      console.log('IDs de la agenda:', ids);
+      // console.log('IDs de la agenda:', ids);
       const coincidencia = this.agenda.find(item => item.id_agenda === this.idDestinatarioUltimaTransaccionCtaCte);
       if (coincidencia !== undefined) {
         this.emailDestinatario = coincidencia.email;

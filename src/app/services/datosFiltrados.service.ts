@@ -70,7 +70,7 @@ export class DatosFiltradosService {
   }
 
   actualizarDatosFiltrados(datosFiltrados: any[]) {
-    console.log('Datos filtrados recibidos:', datosFiltrados); // Verifica que los datos se reciben
+    // console.log('Datos filtrados recibidos:', datosFiltrados); // Verifica que los datos se reciben
     this.datosFiltradosSource.next(datosFiltrados);
     this.paginationData.next({ itemsPerPage: 10, currentPage: 1 });
   }

@@ -175,7 +175,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
       this.agendaService.getAgendaIdUser(idUserNumber).subscribe(
         (data: Agenda[]) => {
           // Aquí capturas los datos de la agenda
-          console.log('Datos de la agenda:', data);
+          // console.log('Datos de la agenda:', data);
           // Puedes asignar los datos a una propiedad del componente si es necesario
           this.agenda = data;
           this.originalData = [...data]; // Guardar una copia de los datos originales
@@ -242,14 +242,14 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     this.paginatedAgenda = this.agenda.slice();
     this.totalPages = Math.ceil(this.agenda.length / this.itemsPerPage);
     this.cdr.detectChanges();
-    console.log('Agenda paginada:', this.paginatedAgenda);
+    // console.log('Agenda paginada:', this.paginatedAgenda);
   }
 
   // Nuevo método para manejar la actualización de destinatarios
   actualizarDestinatario(id_agenda: number, datos: any): void {
     this.agendaService.guardarDestinatarioEditado(id_agenda, datos).subscribe(
       () => {
-        console.log('El destinatario fue actualizado correctamente');
+        // console.log('El destinatario fue actualizado correctamente');
         this.loadData();
       },
       error => console.error('Hubo un error al actualizar el destinatario', error)
@@ -260,7 +260,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   agregarDestinatario(datos: any): void {
     this.agendaService.guardarNuevoDestinatario(datos).subscribe(
       () => {
-        console.log('El destinatario fue agregado correctamente');
+        // console.log('El destinatario fue agregado correctamente');
         this.loadData();
       },
       error => console.error('Hubo un error al agregar el destinatario', error)
@@ -288,7 +288,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
   }
 
   abrirModalEdicion(): void {
-    console.log('Modal de edición abierto');
+    // console.log('Modal de edición abierto');
     var modalEdicionDestinatario = new bootstrap.Modal(document.getElementById('modalEdicionDestinatario'), {});
     modalEdicionDestinatario.show();
     this.mostrarBackdropCustomOffcanvas.emit(false);
@@ -349,7 +349,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
     if (this.id_agenda) {
       this.agendaService.eliminarIdDestinatario(this.id_agenda).subscribe(
         () => {
-          console.log('El destinatario fue eliminado correctamente');
+          // console.log('El destinatario fue eliminado correctamente');
           this.usuarioEliminado = true;
           // Eliminar el destinatario de la lista local
           this.agenda = this.agenda.filter(d => d.id_agenda !== this.id_agenda);
@@ -371,7 +371,7 @@ export class AgendaDestinatariosComponent implements OnInit, OnDestroy {
 
   abrirModalEliminar(id_agenda: number): void {
     this.id_agenda = id_agenda;
-    console.log(this.id_agenda);
+    // console.log(this.id_agenda);
 
     // Suponiendo que tienes una lista de destinatarios en el componente
     const destinatario = this.agenda.find(d => d.id_agenda === id_agenda);

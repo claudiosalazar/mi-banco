@@ -45,7 +45,7 @@ export class AgendaService {
   }
 
   getAgendaIdUser(idUserNumber: number): Observable<Agenda[]> {
-    console.log('idUserNumber:', idUserNumber);
+    // console.log('idUserNumber:', idUserNumber);
     return this.http.get<Agenda[]>(`${this.apiUrl}/mibanco/agenda`).pipe(
       map(agenda => agenda.filter(item => item.id_user === idUserNumber)),
       map(agenda => agenda.sort((a, b) => a.nombre.localeCompare(b.nombre)))
@@ -114,7 +114,7 @@ export class AgendaService {
   }
 
   actualizarDestinatario(datosEditados: any) {
-    console.log('Emitiendo datos editados:', datosEditados);
+    // console.log('Emitiendo datos editados:', datosEditados);
     this.destinatarioActualizado.next(datosEditados);
   }
   

@@ -16,12 +16,12 @@ export class TransaccionesService {
   constructor(private http: HttpClient) { }
 
   getTransCuentaCorrienteTransferencia(idUserNumber: number): Observable<CuentaCorriente[]> {
-    console.log('Obteniendo transacciones de cuenta corriente con transferencia para el usuario:', idUserNumber);
+    // console.log('Obteniendo transacciones de cuenta corriente con transferencia para el usuario:', idUserNumber);
     return this.http.get<CuentaCorriente[]>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`).pipe(
       map(transacciones => transacciones.filter(transaccion => transaccion.transferencia === 1 && transaccion.id_user === idUserNumber)),
       map(transacciones => transacciones.sort((a, b) => b.fecha.localeCompare(a.fecha))),
       tap(transacciones => {
-        console.log('Transacciones filtradas y ordenadas:', transacciones);
+        // console.log('Transacciones filtradas y ordenadas:', transacciones);
         transacciones.forEach(trans => trans.nombre_producto_trans = 'Cuenta Corriente');
       })
     );
@@ -120,9 +120,9 @@ export class TransaccionesService {
     const idUser = localStorage.getItem('id_user');
     // Agregar id_user al objeto de datos de transacción
     datosTransferencia.id_user = idUser;
-    console.log('Datos de transferencia:', datosTransferencia);
+    // console.log('Datos de transferencia:', datosTransferencia);
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransferencia).pipe(
-      tap(() => console.log('Transferencia guardada correctamente'))
+      tap(() => // console.log('Transferencia guardada correctamente'))
     );
   }
 
@@ -132,7 +132,7 @@ export class TransaccionesService {
     datosTransferencia.id_user = idUser;
 
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/linea-credito`, datosTransferencia).pipe(
-      tap(() => console.log('Transferencia guardada correctamente'))
+      tap(() => // console.log('Transferencia guardada correctamente'))
     );
   }
 
@@ -144,7 +144,7 @@ export class TransaccionesService {
     datosTransaccionCtaCte.id_user = idUser;
   
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/cuenta-corriente`, datosTransaccionCtaCte).pipe(
-      tap(() => console.log('Transferencia guardada correctamente'))
+      tap(() => // console.log('Transferencia guardada correctamente'))
     );
   }
   
@@ -155,7 +155,7 @@ export class TransaccionesService {
     datosTransaccionLineaCredito.id_user = idUser;
   
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/linea-credito`, datosTransaccionLineaCredito).pipe(
-      tap(() => console.log('transaccion guardada correctamente'))
+      tap(() => // console.log('transaccion guardada correctamente'))
     );
   }
   
@@ -167,7 +167,7 @@ export class TransaccionesService {
   
     return this.http.post<any>(`${this.apiUrl}/mibanco/transacciones/visa`, datosTransaccionVisa).pipe(
       tap(() => {
-        console.log('Transacción de pago de Visa guardada correctamente');
+        // console.log('Transacción de pago de Visa guardada correctamente');
       })
     );
   }

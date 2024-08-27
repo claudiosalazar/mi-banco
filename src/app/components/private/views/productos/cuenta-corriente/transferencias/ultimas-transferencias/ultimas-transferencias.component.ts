@@ -83,7 +83,7 @@ export class UltimasTransferenciasComponent implements OnInit {
       this.transaccionesService.getTransCuentaCorrienteTransferencia(idUserNumber).subscribe(
         (data: any[]) => {
           // Aquí capturas los datos de la agenda
-          console.log('Datos de la agenda:', data);
+          // console.log('Datos de la agenda:', data);
           // Puedes asignar los datos a una propiedad del componente si es necesario
           this.transferencias = data;
           this.originalData = [...data]; // Guardar una copia de los datos originales
@@ -158,7 +158,7 @@ export class UltimasTransferenciasComponent implements OnInit {
     this.paginatedTransferencias = this.transferencias.slice(start, end);
     this.totalPages = Math.ceil(this.transferencias.length / this.itemsPerPage);
     this.cdr.detectChanges();
-    console.log('Transferencias paginadas:', this.paginatedTransferencias);
+    // console.log('Transferencias paginadas:', this.paginatedTransferencias);
   }
 
   cambiarPagina(pagina: number): void {

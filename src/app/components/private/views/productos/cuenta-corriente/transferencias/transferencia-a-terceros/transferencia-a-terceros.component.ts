@@ -359,7 +359,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
       productoSeleccionado: this.productoSeleccionado, // Carga el producto seleccionado
       emailDestinatario: this.destinatarioATransferirSeleccionado.email, // Carga el email del destinatario
     });
-    console.log('Destinatario seleccionado:', this.destinatarioATransferirSeleccionado);
+    // console.log('Destinatario seleccionado:', this.destinatarioATransferirSeleccionado);
   }
 
   vaciarMontoATransferir(): void {
@@ -752,7 +752,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     modalTransferencia.show();
     
     this.realizarTransferencia().subscribe(datosTransferencia => {
-      console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
+      // console.log('Datos de transferencia capturados:', datosTransferencia); // Verificar datos capturados
 
       // Detectar el producto seleccionado
       const productoSeleccionado = this.transferenciaATercerosForm.get('productoParaPago')?.value;
@@ -777,7 +777,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
 
       guardarTransferenciaObservable.subscribe(
         response => {
-          console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
+          // console.log('Transferencia guardada correctamente:', response); // Verificar respuesta del servicio
           this.transferenciaOk = true;
           this.tranferenciaError = false;
           of(null).pipe(
@@ -805,7 +805,7 @@ export class TransferenciaATercerosComponent implements OnInit, OnDestroy {
     const nombreProducto2 = 'Línea de Crédito';
   
     const result = this.calculoTransferencia();
-    console.log('Resultado del cálculo:', result);
+    // console.log('Resultado del cálculo:', result);
   
     let nombreProducto = '';
     let tipoProducto = '';

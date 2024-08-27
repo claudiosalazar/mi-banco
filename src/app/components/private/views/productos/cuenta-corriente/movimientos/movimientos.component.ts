@@ -42,7 +42,7 @@ export class MovimientosComponent implements OnInit {
     const idUserNumber = idUser ? parseInt(idUser) : 0;
     this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
       (data: CuentaCorriente[]) => {
-        console.log('Datos cuenta corriente:', data);
+        // console.log('Datos cuenta corriente:', data);
         this.transacciones = data;
         this.originalData = [...data];
       },
@@ -58,7 +58,7 @@ export class MovimientosComponent implements OnInit {
       const idUserNumber = parseInt(idUser, 0);
       this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe(
         (data: CuentaCorriente[]) => {
-          console.log('Datos cuenta corriente:', data);
+          // console.log('Datos cuenta corriente:', data);
           this.transacciones = data;
           this.originalData = [...data]; // Guardar una copia de los datos originales
         },

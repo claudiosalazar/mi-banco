@@ -146,13 +146,13 @@ export class AgregarDestinatarioComponent implements OnInit {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
       this.agenda = agenda;
       this.allIds = agenda.map((item: Agenda) => item.id_agenda); // Almacena todos los IDs del usuario autenticado
-      console.log('Datos obtenidos del usuario autenticado:', agenda); // Muestra los datos en la consola
+      // console.log('Datos obtenidos del usuario autenticado:', agenda); // Muestra los datos en la consola
   
       // Obtener todos los datos de la agenda
       this.agendaService.getAgendaAll().subscribe((allAgenda: any) => {
         const allAgendaIds = allAgenda.map((item: Agenda) => item.id_agenda); // Almacena todos los IDs
         localStorage.setItem('allAgendaIds', JSON.stringify(allAgendaIds)); // Guarda todos los IDs en el almacenamiento local
-        console.log('Todos los datos obtenidos:', allAgenda); // Muestra todos los datos en la consola
+        // console.log('Todos los datos obtenidos:', allAgenda); // Muestra todos los datos en la consola
       });
     });
   }
@@ -447,7 +447,7 @@ export class AgregarDestinatarioComponent implements OnInit {
       const nuevoId = Math.max(...allAgendaIds) + 1;
       datosNuevoDestinatario.id_agenda = nuevoId;
   
-      console.log('Datos que se enviarán:', datosNuevoDestinatario);
+      // console.log('Datos que se enviarán:', datosNuevoDestinatario);
   
       // Envía los datos al servicio
       this.agendaService.emitirDatosNuevoDestinatario(datosNuevoDestinatario);
@@ -468,7 +468,7 @@ export class AgregarDestinatarioComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    console.log('Componente AgregarDestinatario destruido');
+    // console.log('Componente AgregarDestinatario destruido');
   }
 
 }

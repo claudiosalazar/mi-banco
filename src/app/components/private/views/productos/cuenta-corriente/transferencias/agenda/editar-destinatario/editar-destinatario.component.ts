@@ -129,11 +129,11 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
     this.loadData();
 
     this.agendaService.currentId.subscribe(id_agenda => {
-      // console.log('ID:', id);
+      // // console.log('ID:', id);
       this.id_agenda = id_agenda ?? 0;
       this.loadDestinatarioData(this.id_agenda);
-      console.log('Banco Inicio:', this.bancoInicio);
-      console.log('Cuenta Inicio:', this.tipoCuentaInicio);
+      // console.log('Banco Inicio:', this.bancoInicio);
+      // console.log('Cuenta Inicio:', this.tipoCuentaInicio);
     });
 
     this.editarDestinatarioForm = new FormGroup({
@@ -201,7 +201,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         if (selecteCuenta) {
           this.tipoCuentaInicio = selecteCuenta.label;
           this.nuevoValorTipoCuenta = selecteCuenta.label; // Guardar el texto del label
-          console.log('Cuenta seleccionada:', this.nuevoValorTipoCuenta);
+          // console.log('Cuenta seleccionada:', this.nuevoValorTipoCuenta);
         }
       });
     }
@@ -209,7 +209,7 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
 
   loadData(): void {
     this.agendaService.getAgenda().subscribe((agenda: any) => {
-      // console.log('Agenda:', agenda);
+      // // console.log('Agenda:', agenda);
       this.agenda = agenda;
       this.cdr.detectChanges();
     });
@@ -491,12 +491,12 @@ export class EditarDestinatarioComponent implements OnInit, AfterViewInit {
         return;
       }
   
-      console.log('Datos enviados al servicio:', destinatarioData);
+      // console.log('Datos enviados al servicio:', destinatarioData);
       if (this.id_agenda !== null) {
-        console.log('ID del destinatario:', this.id_agenda); 
+        // console.log('ID del destinatario:', this.id_agenda); 
         this.agendaService.guardarDestinatarioEditado(this.id_agenda, destinatarioData).subscribe(
           response => {
-            console.log('Destinatario actualizado:', response);
+            // console.log('Destinatario actualizado:', response);
           },
           error => {
             console.error('Error al actualizar destinatario:', error);

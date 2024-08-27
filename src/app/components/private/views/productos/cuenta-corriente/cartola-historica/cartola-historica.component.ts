@@ -47,7 +47,7 @@ export class CartolaHistoricaComponent implements OnInit {
           this.originalData = [...this.cartolas];
           this.paginaCartola();
           this.cdr.detectChanges();
-          console.log('CartolaHistoricaComponent inicializado', this.cartolas); // Mover aquí el console.log
+          // console.log('CartolaHistoricaComponent inicializado', this.cartolas); // Mover aquí el // console.log
         },
         error: (error) => {
           console.error('Error al obtener las cartolas', error);

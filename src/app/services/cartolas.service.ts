@@ -20,7 +20,7 @@ export class CartolasService {
     return this.http.get<Cartolas[]>(`${this.apiUrl}/mibanco/cartolas`, { params }).pipe(
       tap(cartolas => {
         cartolas.forEach(cartola => {
-          console.log('id_cartola:', cartola.id_cartola);
+          // console.log('id_cartola:', cartola.id_cartola);
         });
       }),
       catchError(error => {

@@ -169,7 +169,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         this.saldoUltimaTransaccionVisa = saldoUltimaTransaccionVisa;
         this.cupoUsadoUltimaTransaccionVisa = cupoUsadoUltimaTransaccionVisa;
       }
-      console.log('Cupo usado en la última transacción Visa:', this.cupoUsadoUltimaTransaccionVisa);
+      // console.log('Cupo usado en la última transacción Visa:', this.cupoUsadoUltimaTransaccionVisa);
     });
 
     this.transaccionesService.getTransCuentaCorriente(idUserNumber).subscribe((transaccionesCtaCte: CuentaCorriente[]) => {
@@ -196,7 +196,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         const ultimoIdTransLineaCre = transaccionesLineaCre[transaccionesLineaCre.length - 1].id_trans_linea_cre;
         const saldoUltimaTransaccionLineaCredito = transaccionesLineaCre[transaccionesLineaCre.length - 1].saldo;
         const cupoUsadoUltimaTransaccionLineaCredito = transaccionesLineaCre[transaccionesLineaCre.length - 1].cupo_usado;
-        console.log('Ultimo ID:', ultimoIdTransLineaCre);
+        // console.log('Ultimo ID:', ultimoIdTransLineaCre);
         
         // Guardar el valor en una variable
         this.ultimoIdTransLineaCre = ultimoIdTransLineaCre;
@@ -209,7 +209,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       if (transaccionesCtaCte) {
         // Obtener todos los valores de id_trans_linea_cre
         const idsTransCtaCte = transaccionesCtaCte.map(transaccion => transaccion.id_trans_cta_cte);
-        console.log('IDs cta cte:', idsTransCtaCte);
+        // console.log('IDs cta cte:', idsTransCtaCte);
         
         // Guardar los valores en una variable
         this.transaccionesCtaCte = transaccionesCtaCte;
@@ -234,7 +234,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       if (transaccionesVisa) {
         // Obtener todos los valores de id_trans_linea_cre
         const idsTransVisa = transaccionesVisa.map(transaccion => transaccion.id_trans_visa);
-        console.log('IDs de transacciones:', idsTransVisa);
+        // console.log('IDs de transacciones:', idsTransVisa);
         
         // Guardar los valores en una variable
         this.transaccionesVisa = transaccionesVisa;
@@ -317,7 +317,7 @@ export class LineaCreditoPagoComponent implements OnInit {
 
   onMontoPagoChange(event: any): void {
     if (event.target.value === 'pagoTotal') {
-      console.log(this.cupoUsadoUltimaTransaccionVisa);
+      // console.log(this.cupoUsadoUltimaTransaccionVisa);
     }
   }
 
@@ -366,16 +366,16 @@ export class LineaCreditoPagoComponent implements OnInit {
       // Validación 1
       if (productoParaPago === '1' && this.saldoUltimaTransaccionCtaCte !== undefined && numericMontoFacturado <= this.saldoUltimaTransaccionCtaCte) {
         this.pagoMinimoValido = true;
-        console.log('valido');
+        // console.log('valido');
       } 
       // Validación 2
       else if (productoParaPago === '2' && this.saldoUltimaTransaccionLineaCredito !== undefined && numericMontoFacturado <= this.saldoUltimaTransaccionLineaCredito) {
         this.pagoMinimoValido = true;
-        console.log('valido');
+        // console.log('valido');
       } 
       else {
         this.error3 = true;
-        console.log('valor superior');
+        // console.log('valor superior');
       }
     }
   }
@@ -392,7 +392,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         // Validación 1
         if (!inputMontoValue || inputMontoValue.trim() === '') {
           this.error1 = true;
-          console.log('valor 0');
+          // console.log('valor 0');
           return; // Detener validaciones si hay error1
         } else {
           this.error1 = false;
@@ -408,7 +408,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         // Validación 2
         if (saldo !== undefined && numericInputMonto > saldo) {
           this.error2 = true;
-          console.log('valor superior');
+          // console.log('valor superior');
           return; // Detener validaciones si hay error2
         } else {
           this.error2 = false;
@@ -417,7 +417,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         // Nueva Validación 4
         if (this.saldoUltimaTransaccionVisa !== undefined && numericInputMonto > this.saldoUltimaTransaccionVisa) {
           this.error4 = true;
-          console.log('monto superior al cupo usado');
+          // console.log('monto superior al cupo usado');
           return; // Detener validaciones si hay error4
         } else {
           this.error4 = false;
@@ -426,7 +426,7 @@ export class LineaCreditoPagoComponent implements OnInit {
         // Validación 3
         if (saldo !== undefined && numericInputMonto <= saldo) {
           this.montoValido = true;
-          console.log('valido');
+          // console.log('valido');
         } else {
           this.montoValido = false;
         }
@@ -445,7 +445,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       if (!inputMontoPagoTotalValue || inputMontoPagoTotalValue.trim() === '') {
         this.error3 = true;
         this.pagoTotalValido = false;
-        console.log('valor 0');
+        // console.log('valor 0');
         return; // Detener validaciones si hay error3
       } else {
         this.error3 = false;
@@ -460,7 +460,7 @@ export class LineaCreditoPagoComponent implements OnInit {
           (this.saldoUltimaTransaccionVisa!== undefined && numericInputMontoPagoTotal > this.saldoUltimaTransaccionVisa)) {
         this.error3 = true;
         this.pagoTotalValido = false;
-        console.log('valor superior');
+        // console.log('valor superior');
         return; // Detener validaciones si hay error3
       } else {
         this.error3 = false;
@@ -470,12 +470,12 @@ export class LineaCreditoPagoComponent implements OnInit {
       if (this.cupoUsadoUltimaTransaccionLineaCredito !== undefined && numericInputMontoPagoTotal > this.cupoUsadoUltimaTransaccionLineaCredito) {
         this.error3 = true;
         this.pagoTotalValido = false;
-        console.log('valor superior al cupo usado');
+        // console.log('valor superior al cupo usado');
         return; // Detener validaciones si hay error3
       } else {
         this.error3 = false;
         this.pagoTotalValido = true;
-        console.log('valido');
+        // console.log('valido');
       }
     }
   }
@@ -514,7 +514,7 @@ export class LineaCreditoPagoComponent implements OnInit {
           let montoPagoTotal = inputMontoPagoTotalControl.value;
           montoPagoTotal = montoPagoTotal.replace(/\$|\.| /g, '');
           this.montoNumberTotal = Number(montoPagoTotal);
-          console.log('montoNumberTotal:', this.montoNumberTotal);
+          // console.log('montoNumberTotal:', this.montoNumberTotal);
         }
       } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'pagoMinimo') {
         this.validaMontoPagoMinimo();
@@ -522,7 +522,7 @@ export class LineaCreditoPagoComponent implements OnInit {
           let montoNumberMinimo = inputMontoPagoMinimoControl.value;
           montoNumberMinimo = montoNumberMinimo.replace(/\$|\.| /g, '');
           this.montoNumberMinimo = Number(montoNumberMinimo);
-          console.log('montoNumberMinimo:', this.montoNumberMinimo);
+          // console.log('montoNumberMinimo:', this.montoNumberMinimo);
         }
       } else if ((productoParaPago.value === '1' || productoParaPago.value === '2') && montoPagoControl.value === 'otroMonto') {
         this.validaMontoOtroMonto();
@@ -530,7 +530,7 @@ export class LineaCreditoPagoComponent implements OnInit {
           let montoOtroMonto = this.pagoLineaCreditoForm.value.inputOtroMonto;
           montoOtroMonto = montoOtroMonto.replace(/\$|\.| /g, '');
           this.montoNumberOtro = Number(montoOtroMonto);
-          console.log('montoNumberOtro:', this.montoNumberOtro);
+          // console.log('montoNumberOtro:', this.montoNumberOtro);
         }
       }
     }
@@ -567,7 +567,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     // Obtener los valores de los controles del formulario
     const montoTotalControl = this.pagoLineaCreditoForm.get('inputMontoPagoTotal');
     const montoOtroControl = this.pagoLineaCreditoForm.get('inputOtroMonto');
-    console.log('inputOtroMonto:', montoOtroControl);
+    // console.log('inputOtroMonto:', montoOtroControl);
   
     // Asignar los valores de los controles a las variables correspondientes
     const montoTotal = montoTotalControl ? montoTotalControl.value : this.cupoUsadoUltimaTransaccionLineaCredito;
@@ -603,7 +603,7 @@ export class LineaCreditoPagoComponent implements OnInit {
       this.abono = abonoNumero;
     }
   
-    console.log('Monto pagado:', abonoNumero);
+    // console.log('Monto pagado:', abonoNumero);
   
     return {
       abono: this.abono,
@@ -692,7 +692,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     const nombreProducto2 = 'Visa';
   
     const result = this.calculoPago();
-    console.log('Resultado del cálculo:', result);
+    // console.log('Resultado del cálculo:', result);
   
     let nombreProducto = '';
     let tipoProducto = '';
@@ -754,7 +754,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
 
     const result = this.calculoPago();
-    console.log('Resultado del cálculo:', result);
+    // console.log('Resultado del cálculo:', result);
 
     //const nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
     let nuevoIdTransCtaCte = this.ultimoIdTransCtaCte + 1;
@@ -788,7 +788,7 @@ export class LineaCreditoPagoComponent implements OnInit {
     const fechaFormateada = datePipe.transform(fecha, 'yyyy-MM-dd');
 
     const result = this.calculoPago();
-    console.log('Resultado del cálculo:', result);
+    // console.log('Resultado del cálculo:', result);
 
     //const nuevoIdTransVisa = this.ultimoIdTransVisa + 1;
     let nuevoIdTransVisa = this.ultimoIdTransVisa + 1;

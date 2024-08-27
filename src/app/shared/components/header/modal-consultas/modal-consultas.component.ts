@@ -58,7 +58,7 @@ export class ModalConsultasComponent implements OnInit {
       this.datosUsuarioService.getDatosUsuario(idUserNumber).subscribe((datos: DatosUsuario[]) => {
         if (datos.length > 0) {
           const usuario = datos[0];
-          console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
+          // console.log('Datos del usuario:', usuario); // Verificar los datos obtenidos
           this.primer_nombre = usuario.primer_nombre;
           this.segundo_nombre = usuario.segundo_nombre;
           this.apellido_paterno = usuario.apellido_paterno;
@@ -68,8 +68,8 @@ export class ModalConsultasComponent implements OnInit {
           this.telefono = usuario.telefono;
 
           // Agregar mensajes de consola para verificar los datos de celular y telefono
-          console.log('Celular:', this.celular);
-          console.log('Telefono:', this.telefono);
+          // console.log('Celular:', this.celular);
+          // console.log('Telefono:', this.telefono);
         } else {
           console.error('No se encontraron datos para el usuario con id:', idUserNumber);
         }
@@ -144,7 +144,7 @@ export class ModalConsultasComponent implements OnInit {
       this.consultaSeleccionada = consultaSeleccionada?.label;
   
       // Agrega un mensaje de consola para mostrar el valor seleccionado
-      console.log('Valor seleccionado:', value);
+      // console.log('Valor seleccionado:', value);
 
       if (value === 0) {
         // Si el valor de 'consulta' es 0, establece 'consultaValida' en false

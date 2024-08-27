@@ -236,7 +236,7 @@ export class DatosUsuarioComponent implements OnInit {
           } else {
             console.warn('No se encontraron datos del usuario');
           }
-          console.log('ID Usuario:', this.usuarioId);
+          // console.log('ID Usuario:', this.usuarioId);
         },
         error: (error) => {
           console.error('Error al obtener los datos del usuario', error);
@@ -268,7 +268,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Región seleccionada:', this.region);
+      // console.log('Región seleccionada:', this.region);
     });
   }
 
@@ -282,7 +282,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Comuna seleccionada:', this.comuna);
+      // console.log('Comuna seleccionada:', this.comuna);
     });
   }
 
@@ -296,7 +296,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Ciudad seleccionada:', this.ciudad);
+      // console.log('Ciudad seleccionada:', this.ciudad);
     });
   }
 
@@ -310,7 +310,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Región seleccionada:', this.region_comercial);
+      // console.log('Región seleccionada:', this.region_comercial);
     });
   }
 
@@ -324,7 +324,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Región seleccionada:', this.comuna_comercial);
+      // console.log('Región seleccionada:', this.comuna_comercial);
     });
   }
 
@@ -338,7 +338,7 @@ export class DatosUsuarioComponent implements OnInit {
           this.cdr.detectChanges();
         }
       }
-      console.log('Región seleccionada:', this.ciudad_comercial);
+      // console.log('Región seleccionada:', this.ciudad_comercial);
     });
   }
 
@@ -390,7 +390,7 @@ export class DatosUsuarioComponent implements OnInit {
         this.comunaSeleccionadaComercial = selectedComunaComercial.label; // Guardar el valor seleccionado
       }
     });
-    console.log('Comuna seleccionada:', this.comuna_comercial);
+    // console.log('Comuna seleccionada:', this.comuna_comercial);
   }
 
   activarSeleccionCiudadComercial(): void {
@@ -670,7 +670,7 @@ export class DatosUsuarioComponent implements OnInit {
 actualizarUsuario(id: number, datosUsuarioEditado: any) {
   this.datosUsuarioService.guardarUsuarioEditado(id, datosUsuarioEditado).subscribe(
     (response: any) => {
-      console.log('Datos guardados en el servidor:', response);
+      // console.log('Datos guardados en el servidor:', response);
       this.actualizarDatosUsuario = false;
       this.datosGuardadosUsuarioEditado = true;
     },
@@ -686,18 +686,18 @@ guardarDatosUsuario(): Observable<any> {
   this.submitted = true;
 
   if (!this.misDatosForm) {
-      console.log('El formulario no está definido');
+      // console.log('El formulario no está definido');
       return of(null);
   }
 
   if (this.misDatosForm.invalid) {
-      console.log('El formulario es inválido');
+      // console.log('El formulario es inválido');
       // Agregar logs para depuración
-      console.log('Errores del formulario:', this.misDatosForm.errors);
+      // console.log('Errores del formulario:', this.misDatosForm.errors);
       Object.keys(this.misDatosForm.controls).forEach(key => {
           const controlErrors = this.misDatosForm.get(key)?.errors;
           if (controlErrors) {
-              console.log(`Errores en el campo ${key}:`, controlErrors);
+              // console.log(`Errores en el campo ${key}:`, controlErrors);
           }
       });
       return of(null);
@@ -749,10 +749,10 @@ guardarDatosUsuario(): Observable<any> {
       };
       
       // Agregar logs para depuración
-      console.log('Datos del usuario editado:', datosUsuarioEditado);
+      // console.log('Datos del usuario editado:', datosUsuarioEditado);
       
       if (!datosUsuarioEditado) {
-          console.log('datosUsuarioEditado no está definido');
+          // console.log('datosUsuarioEditado no está definido');
           return of(null);
       }
       
@@ -761,7 +761,7 @@ guardarDatosUsuario(): Observable<any> {
       if (idUser) {
           datosUsuarioEditado.id = parseInt(idUser, 10);
       } else {
-          console.log('id_user no está definido en el almacenamiento');
+          // console.log('id_user no está definido en el almacenamiento');
           return of(null);
       }
       
