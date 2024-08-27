@@ -17,7 +17,6 @@ export class AuthGuard {
     const token = localStorage.getItem('token');
     const idUser = localStorage.getItem('id_user');
     if (!token || !idUser) {
-      console.log('Token no es válido o expiró o id_user no está presente');
       this.router.navigate(['login']);
       return of(false);
     }

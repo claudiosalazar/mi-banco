@@ -21,7 +21,6 @@ export class AuthService {
   mibanco(user: any) { 
     return this.http.post(`${this.apiUrl}/user/mibanco`, user).pipe(
       tap((res: any) => {
-        // Almacenar el id_user en el localStorage
         localStorage.setItem('id_user', res.id_user);
       })
     );
@@ -38,7 +37,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('id_user'); // Eliminar el id_user del localStorage
+    localStorage.removeItem('id_user');
     this.router.navigate(['/login']);
   }
 }
