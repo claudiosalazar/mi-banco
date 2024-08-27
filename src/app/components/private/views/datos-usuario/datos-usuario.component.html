@@ -136,9 +136,9 @@
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control celular" formControlName="celular" id="celularusuario"
-                [class.is-invalid]="inputErrorCelularVacio || (misDatosForm.get('celular')?.invalid && misDatosForm.get('celular')?.touched)"
+                [class.is-invalid]="inputErrorCelularVacio || (misDatosForm.get('celular')?.invalid && misDatosForm.get('celular')?.dirty)"
                 [class.is-valid]="misDatosForm.get('celular')?.valid && misDatosForm.get('celular')?.dirty && misDatosForm.get('celular')?.value"
-                (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
+                (focus)="onFocus('celular')" (blur)="validaCelular()" (keypress)="soloNumeros($event)" maxlength="11">
               <label for="celularusuario">Celular</label>
               <div class="prefijo-chile"></div>
               <div *ngIf="inputErrorCelularVacio && misDatosForm.get('celular')?.dirty" class="invalid-feedback">
@@ -151,9 +151,9 @@
 
             <div class="form-floating mb-4">
               <input type="text" class="form-control" formControlName="telefono" id="telefonousuario"
-                [class.is-invalid]="inputErrorTelefonoVacio || (misDatosForm.get('telefono')?.invalid && misDatosForm.get('telefono')?.touched)"
+                [class.is-invalid]="inputErrorTelefonoVacio || (misDatosForm.get('telefono')?.invalid && misDatosForm.get('telefono')?.dirty)"
                 [class.is-valid]="misDatosForm.get('telefono')?.valid && misDatosForm.get('telefono')?.dirty && misDatosForm.get('telefono')?.value"
-                (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
+                (focus)="onFocus('telefono')" (blur)="validaTelefono()" (keypress)="soloNumeros($event)" maxlength="11">
               <label for="telefonousuario">Teléfono</label>
               <div *ngIf="inputErrorTelefonoVacio && misDatosForm.get('telefono')?.dirty" class="invalid-feedback">
                 <span>El campo no puede quedar vacio.</span>

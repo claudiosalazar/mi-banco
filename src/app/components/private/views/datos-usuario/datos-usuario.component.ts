@@ -247,6 +247,17 @@ export class DatosUsuarioComponent implements OnInit {
     }
   }
 
+  onFocus(controlName: any): void {
+    this.eliminarPipes(controlName);
+  }
+
+  eliminarPipes(controlName: any): void {
+    const control = this.misDatosForm.get(controlName);
+    if (control && control.value) {
+      control.setValue(control.value.replace(/\s/g, ''));
+    }
+  }
+
   observarCambiosRegion(): void {
     this.misDatosForm.get('region')?.valueChanges.subscribe(selectedRegionId => {
       const selectedRegion = this.listaRegiones.find(region => region.id === selectedRegionId);
@@ -392,7 +403,6 @@ export class DatosUsuarioComponent implements OnInit {
     });
   }
 
-
   validaInput(controlName: string): void {
     const control = this.misDatosForm.get(controlName);
   
@@ -425,7 +435,7 @@ export class DatosUsuarioComponent implements OnInit {
   validaCelular(): void {
     const celularControl = this.misDatosForm.get('celular');
     if (celularControl) {
-      let value = celularControl.value as string;
+      let value = celularControl.value as any;
   
       // Si el campo está vacío, establecer inputErrorCelularVacio en true y retornar
       if (value === '') {
@@ -658,18 +668,18 @@ export class DatosUsuarioComponent implements OnInit {
 }
 
 actualizarUsuario(id: number, datosUsuarioEditado: any) {
-    this.datosUsuarioService.guardarUsuarioEditado(id, datosUsuarioEditado).subscribe(
-        (response: any) => {
-            console.log('Datos guardados en el servidor:', response);
-            this.actualizarDatosUsuario = false;
-            this.datosGuardadosUsuarioEditado = true;
-        },
-        (error: any) => {
-            console.error('Error al guardar los datos en el servidor:', error);
-            this.actualizarDatosUsuario = false;
-            this.errorServerAlGuardarDatos = true;
-        }
-    );
+  this.datosUsuarioService.guardarUsuarioEditado(id, datosUsuarioEditado).subscribe(
+    (response: any) => {
+      console.log('Datos guardados en el servidor:', response);
+      this.actualizarDatosUsuario = false;
+      this.datosGuardadosUsuarioEditado = true;
+    },
+    (error: any) => {
+      console.error('Error al guardar los datos en el servidor:', error);
+      this.actualizarDatosUsuario = false;
+      this.errorServerAlGuardarDatos = true;
+    }
+  );
 }
 
 guardarDatosUsuario(): Observable<any> {
