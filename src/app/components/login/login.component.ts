@@ -137,15 +137,15 @@ export class LoginComponent implements OnInit {
         const user = {
           ...this.formularioLogin.value,
           userName: userName
- };
-        console.log(user);
+        };
+        // console.log(user);
 
         // Mostrar el loader
         this.loaderService.showLoader();
 
         this.authService.mibanco(user).subscribe(
           (res: any) => {
-            console.log(res);
+            // console.log(res);
             localStorage.setItem('token', res.token);
             localStorage.setItem('id_user', res.id_user);
             this.router.navigate(['mibanco']);
