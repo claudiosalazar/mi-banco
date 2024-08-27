@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { LoaderService } from './services/loaderServices.service';
-import { TokenService } from './services/tokenService.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,12 @@ import { TokenService } from './services/tokenService.service';
 export class MiBancoComponent implements OnInit, OnDestroy {
   title = 'Mi Banco';
 
+  private isReloading = false;
+
   constructor(
     private router: Router, 
     private loaderService: LoaderService,
-    private tokenService: TokenService
+    private authService: AuthService
   ) 
   { }
 
@@ -35,7 +37,14 @@ export class MiBancoComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    this.isReloading = true;
+  }
+
+  @HostListener('window:unload', ['$event'])
   unloadHandler(_event: Event) {
-    this.tokenService.removeToken();
+    if (!this.isReloading) {
+      this.authService.logout();
+    }
   }
 }
